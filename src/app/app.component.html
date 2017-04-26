@@ -1,3 +1,22 @@
-<h1>
-  {{title}}
-</h1>
+<div class="ui menu">
+  <div class="ui container">
+    <a href="#" class="header item">
+
+      <img src='../assets/logo-app.png' />
+    </a>
+    <div class="header item borderless">
+      <h1 class="ui header">
+        Repurpos.us: The Open and Expandable Drug Repurposing Portal
+      </h1>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span12">
+      <menu-bar [items]="routeDef"></menu-bar>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
