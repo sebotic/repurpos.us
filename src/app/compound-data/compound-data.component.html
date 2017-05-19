@@ -1,0 +1,56 @@
+<div class="container-fluid">
+  <br>
+  <div class="row-fluid">
+    <div class="col-md-8">
+
+      <h1>{{ label }} <a href="{{'http://www.wikidata.org/entity/' + qid}}">{{qid}}</a></h1>
+
+      {{ concat_aliases }}
+
+    </div>
+  </div>
+</div>
+
+<br>
+<!--<div class="container-fluid">-->
+<div class="row-fluid">
+
+  <div class="col-md-6">
+    <table class="table table-bordered ">
+      <tr *ngFor="let x of table_data">
+        <td scope="row"><b>{{ x['property'] }}</b></td>
+        <td scope="row">{{ x['value'] }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="col-md-6">
+    <graph [sdata]="graphData"></graph>
+    <!--<table class="table table-bordered">-->
+      <!--<tr *ngFor="let x of table_data">-->
+        <!--<td scope="row"><b>{{ x['property'] }}</b></td>-->
+        <!--<td scope="row">{{ x['value'] }}</td>-->
+      <!--</tr>-->
+    <!--</table>-->
+  </div>
+
+</div>
+
+<div class="container-fluid centered">
+  <div class="row-fluid centered">
+  <div class="col-md-8 col-md-offset-2">
+    <app-interaction-table
+      [sdata]="tableData"
+    ></app-interaction-table>
+  </div>
+  </div>
+</div>
+<!--<div class="ui list" *ngFor="let c of aliases">-->
+  <!--<div class="item">{{ c }}</div>-->
+<!--</div>-->
+
+
+
+
+<!--<pre>{{data | json}}</pre>-->
+<!--<br>-->
