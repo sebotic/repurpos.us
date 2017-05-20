@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { IntroComponent } from '/home/sebastian/ng-book-code/built_in_components/app/ts/app/intro_component';
 
 // import { DataTableModule, DataTable, DataTableResource } from 'angular-2-data-table';
 import { DataTableModule, DataTable, DataTableResource } from './table/index';
@@ -34,7 +33,6 @@ import { DiseaseDataComponent } from './disease-data/disease-data.component';
     AppComponent,
     MenuBarComponent,
     MenubarItemComponent,
-    IntroComponent,
     CompoundSearchComponent,
     SearchResultComponent,
     SearchResultTable,
