@@ -26,6 +26,7 @@ import {NgCytoscape} from "./compound-search/ng2-cytoscape";
 import {CompoundDataComponent} from './compound-data/compound-data.component';
 import {InteractionTableComponent, InteractionTableDataService} from './interaction-table/interaction-table.component';
 import { DiseaseDataComponent } from './disease-data/disease-data.component';
+import {CIDService, NglComponent} from './ngl/ngl.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { DiseaseDataComponent } from './disease-data/disease-data.component';
     CompoundDataComponent,
     InteractionTableComponent,
     DiseaseDataComponent,
+    NglComponent,
 
 
   ],
@@ -62,6 +64,7 @@ import { DiseaseDataComponent } from './disease-data/disease-data.component';
     { provide: GraphDataService, useClass: GraphDataService },
     { provide: WDQService, useClass: WDQService },
     { provide: InteractionTableDataService, useClass: InteractionTableDataService },
+    { provide: CIDService, useClass: CIDService}
 
   ],
   bootstrap: [AppComponent]
