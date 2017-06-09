@@ -26,6 +26,7 @@
     "core-js": "^2.4.1",
     "cytoscape": "^3.1.1",
     "json-schema": "^0.2.3",
+    "ngl": "^0.10.1",
     "rxjs": "^5.1.0",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5",
