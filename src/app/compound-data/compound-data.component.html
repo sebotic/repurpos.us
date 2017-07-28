@@ -1,6 +1,10 @@
 <div class="container-fluid">
   <br>
   <div class="row-fluid">
+    <div class="col-md-2">
+      <app-ngl></app-ngl>
+
+    </div>
     <div class="col-md-8">
 
       <h1>{{ label }} <a href="{{'http://www.wikidata.org/entity/' + qid}}">{{qid}}</a></h1>
@@ -8,6 +12,7 @@
       {{ concat_aliases }}
 
     </div>
+
   </div>
 </div>
 
@@ -16,6 +21,7 @@
 <div class="row-fluid">
 
   <div class="col-md-6">
+
     <table class="table table-bordered ">
       <tr *ngFor="let x of table_data">
         <td scope="row"><b>{{ x['property'] }}</b></td>
