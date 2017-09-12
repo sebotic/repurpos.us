@@ -6,9 +6,11 @@ import {SearchResult, WDQService} from "../compound-search/compound-search.compo
 import { InteractionTableDataService } from "../interaction-table/interaction-table.component"
 
 import { gottlieb, gottlieb_pub } from '../../assets/gottlieb_data';
+import {CIDService} from "../ngl/ngl.component";
 
 
 @Component({
+  outputs: ['cid'],
   selector: 'app-compound-data',
   templateUrl: './compound-data.component.html',
   styleUrls: ['./compound-data.component.css'],
@@ -27,11 +29,14 @@ export class CompoundDataComponent implements OnInit {
   propsToDisplay: Array<string> = ['P274', 'P231', 'P662', 'P661', 'P592', 'P715', 'P683', 'P665', 'P233', 'P2017',
     'P234', 'P235', 'P652', 'P595', 'P3636', 'P232', 'P2275', 'P267', 'P2892', 'P3345', 'P486', 'P2115'];
 
+  cid: string;
+
   constructor(
     @Inject(forwardRef(() => WDQService)) public wd: WDQService,
     private route: ActivatedRoute,
     private http: Http,
-    private interactionTableDataService: InteractionTableDataService
+    private interactionTableDataService: InteractionTableDataService,
+    private cidService: CIDService
   ) {
     route.params.subscribe(params => {
       this.qid = params['qid'];
@@ -106,6 +111,10 @@ export class CompoundDataComponent implements OnInit {
           if (tmp.hasOwnProperty(y)) {
             let value = Array.from(tmp[y]).length > 1 ? Array.from(tmp[y]).join(', ') : Array.from(tmp[y]);
             this.table_data.push({'property': this.prop_name_map[y], 'value': value});
+
+            if (y == 'P662') {
+              this.cidService.announceNewCID(value.toString());
+            }
           }
 
         }
