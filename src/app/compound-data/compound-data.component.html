@@ -1,46 +1,39 @@
 <div class="container-fluid">
   <br>
   <div class="row-fluid">
-    <div class="col-md-2">
-      <app-ngl></app-ngl>
-
-    </div>
     <div class="col-md-8">
+    <div class="col-md-12">
 
-      <h1>{{ label }} <a href="{{'http://www.wikidata.org/entity/' + qid}}">{{qid}}</a></h1>
+      <h1>{{ label }}</h1> <a href="{{'http://www.wikidata.org/entity/' + qid}}">Wikidata:{{qid}}</a>
 
       {{ concat_aliases }}
 
+    </div>
+    <div class="col-md-12">
+
+      <table class="table table-bordered">
+
+        <tr *ngFor="let x of table_data">
+          <td scope="row">{{ x['property'] }}</td>
+          <td scope="row">{{ x['value'] }}</td>
+        </tr>
+      </table>
+    </div>
+
+    </div>
+    <div class="col-md-4">
+      <app-ngl></app-ngl>
+
+    <!--</div>-->
+    <!--<div class="col-md-4">-->
+      <app-indications-graph [sdata]="graphData"></app-indications-graph>
     </div>
 
   </div>
 </div>
 
 <br>
-<!--<div class="container-fluid">-->
-<div class="row-fluid">
 
-  <div class="col-md-6">
-
-    <table class="table table-bordered ">
-      <tr *ngFor="let x of table_data">
-        <td scope="row"><b>{{ x['property'] }}</b></td>
-        <td scope="row">{{ x['value'] }}</td>
-      </tr>
-    </table>
-  </div>
-
-  <div class="col-md-6">
-    <graph [sdata]="graphData"></graph>
-    <!--<table class="table table-bordered">-->
-      <!--<tr *ngFor="let x of table_data">-->
-        <!--<td scope="row"><b>{{ x['property'] }}</b></td>-->
-        <!--<td scope="row">{{ x['value'] }}</td>-->
-      <!--</tr>-->
-    <!--</table>-->
-  </div>
-
-</div>
 
 <div class="container-fluid centered">
   <div class="row-fluid centered">

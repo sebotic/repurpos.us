@@ -45,7 +45,7 @@ export class CompoundDataComponent implements OnInit {
 
   ngOnInit() {
     this.wd.search(`
-      SELECT DISTINCT ?prop ?pLabel WHERE {
+      SELECT DISTINCT ?prop ?pLabel WHERE { 
         ?p wikibase:directClaim ?prop .
         SERVICE wikibase:label {bd:serviceParam wikibase:language "en" . }
       }

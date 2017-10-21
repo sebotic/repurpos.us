@@ -1,0 +1,58 @@
+/*table table-bordered tr td:first-child {*/
+  /*width: 30%;*/
+/*}*/
+
+table{
+  border: 1px solid black;
+  table-layout: fixed;
+  width: 100%;
+}
+
+th {
+  border: 1px solid white;
+  font-weight: bold;
+}
+
+td {
+  border: 1px solid black;
+  /*width: 50%;*/
+}
+
+tr td:first-child {
+  font-weight: bold;
+  width: 25%;
+  word-break: normal;
+}
+
+tr td:last-child {
+  width: 75%;
+  word-break: break-all;
+}
+
+tr td sup {
+  vertical-align: super;
+  font-size: xx-small;
+  color: #7a94fc;
+}
+
+tr td.nobreak {
+  width: 75%;
+  word-break: normal;
+}
+
+tr td.right_table:first-child {
+  font-weight: normal;
+  width: 75%;
+  word-break: normal;
+}
+
+tr td.right_table:last-child {
+  font-weight: normal;
+  width: 25%;
+  word-break: normal;
+}
+
+h1 {
+  display: inline-block;
+  margin-bottom: 0;
+}
