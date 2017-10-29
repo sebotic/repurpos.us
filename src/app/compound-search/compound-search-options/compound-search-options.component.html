@@ -1,0 +1,108 @@
+
+<!--<h3>Filters</h3>-->
+<!--<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>-->
+  <!--<input name="first" ngModel required #first="ngModel">-->
+  <!--<input name="last" ngModel>-->
+  <!--<button>Submit</button>-->
+<!--</form>-->
+
+<!--&lt;!&ndash;<p>First name value: {{ first.value }}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;<p>First name valid: {{ first.valid }}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;<p>Form value: {{ f.value | json }}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;<p>Form valid: {{ f.valid }}</p>&ndash;&gt;-->
+<!--<br>-->
+<!--<div>-->
+  <!--<label>Gender</label>-->
+  <!--<div *ngFor="let gender of genders">-->
+    <!--<label>-->
+      <!--<input type="radio" name="gender" [(ngModel)]="user.gender" [value]="gender.value">-->
+      <!--{{gender.display}}-->
+    <!--</label>-->
+  <!--</div>-->
+<!--</div>-->
+
+<!--<div>-->
+  <!--<label>Theme</label>-->
+  <!--<select name="theme" [(ngModel)]="user.theme">-->
+    <!--<option *ngFor="let theme of themes" [ngValue]="theme">-->
+      <!--{{theme.display}}-->
+    <!--</option>-->
+  <!--</select>-->
+<!--</div>-->
+
+
+<div class="container-fluid">
+  <h3>Filters</h3>
+  <form #f="ngForm" novalidate>
+    <!--<div class="form-group">-->
+      <!--<label>Name</label>-->
+      <!--<input type="text" class="form-control" name="name" [(ngModel)]="user.name">-->
+    <!--</div>-->
+
+    <div class="form-group">
+      <label>Search for</label>
+      <div class="radio" *ngFor="let searchMode of searchModes">
+        <label>
+          <input type="radio" name="searchMode" [(ngModel)]="user.searchMode" [value]="searchMode.value">
+          {{searchMode.display}}
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>ATC codes</label>
+      <select multiple name="atc" class="form-control" [(ngModel)]="user.atc">
+        <option *ngFor="let atc of atcCodes" [value]="atc.value">{{atc.display}}</option>
+      </select>
+    </div>
+
+    <!--<div class="form-group">-->
+      <!--<label>Role</label>-->
+      <!--<select name="role" class="form-control" [(ngModel)]="user.role">-->
+        <!--<option *ngFor="let role of roles" [value]="role.value">{{role.display.toLowerCase()}}</option>-->
+      <!--</select>-->
+    <!--</div>-->
+
+    <!--<div class="form-group">-->
+      <!--<label>Theme</label>-->
+      <!--<select name="theme" class="form-control" [(ngModel)]="user.theme">-->
+        <!--<option *ngFor="let theme of themes" [ngValue]="theme">{{theme.display}}</option>-->
+      <!--</select>-->
+    <!--</div>-->
+
+    <div class="form-group">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="isFDAApproved" [(ngModel)]="user.isFDAApproved">
+          Is FDA approved
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Route of Administration</label>
+      <select multiple name="roas" class="form-control" [(ngModel)]="user.roas" (change)="save(f.value, f.valid)">
+        <option *ngFor="let roa of roas" [value]="roa.value">{{roa.display}}</option>
+      </select>
+    </div>
+    <!--<div class="form-group">-->
+      <!--<input type="hidden" name="toggle" [(ngModel)]="user.toggle">-->
+      <!--<div class="checkbox">-->
+        <!--<label>-->
+          <!--<input type="checkbox" [checked]="user.toggle === toggles[0].value"-->
+                 <!--(change)="$event.target.checked? (user.toggle = toggles[0].value) : (user.toggle = toggles[1].value)">-->
+          <!--{{ toggles[0].display }}-->
+        <!--</label>-->
+      <!--</div>-->
+    <!--</div>-->
+    <div class="form-group">
+      <label>Search limit</label>
+      <input type="number" class="form-control" name="limit" [(ngModel)]="user.limit">
+    </div>
+    <!--<button type="submit" (click)="save(f.value, f.valid)" class="btn btn-default">Submit</button>-->
+  </form>
+  <!--<div style="margin-top: 20px" *ngIf="f">-->
+    <!--<div>Form details:-</div>-->
+    <!--<pre>Is form valid?: <br>{{f.valid | json}}</pre>-->
+    <!--<pre>Is form submitted?: <br>{{f.submitted | json}}</pre>-->
+    <!--<pre>submitted value: <br>{{f.value | json}}</pre>-->
+  <!--</div>-->
+</div>
