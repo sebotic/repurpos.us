@@ -1,3 +1,32 @@
-<p>
-  compound-search works!
-</p>
+<div class='container-fluid'>
+
+  <div class="page-header">
+    <h1>Search</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2">
+      <app-compound-search-options></app-compound-search-options>
+    </div>
+    <div class="input-group input-group-lg col-md-9">
+
+      <search-box
+        (loading)="loading = $event"
+        (results)="updateResults($event)"
+      ></search-box>
+
+      <div class='container'></div>
+      <div class="row">
+        <br>
+        <img
+          style="float: right;"
+          *ngIf="loading"
+          src='${loadingGif}' />
+        <search-result
+          *ngFor="let result of results"
+          [result]="result">
+        </search-result>
+      </div>
+    </div>
+  </div>
+</div>
