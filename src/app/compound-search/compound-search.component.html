@@ -21,7 +21,7 @@
         <img
           style="float: right;"
           *ngIf="loading"
-          src='${loadingGif}' />
+          src={{loadingGif}} />
         <search-result
           *ngFor="let result of results"
           [result]="result">

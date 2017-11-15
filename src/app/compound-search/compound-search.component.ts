@@ -10,8 +10,6 @@ import {Observable} from 'rxjs/Rx';
 import { Subject }    from 'rxjs/Subject';
 import {flatMap, map} from 'rxjs/operators';
 
-export let loadingGif: string = './assets/Loading_icon.gif';
-
 import {$} from "protractor";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
@@ -234,6 +232,7 @@ export class SearchResultComponent implements OnInit{
 })
 export class CompoundSearchComponent {
   results: SearchResult[];
+  loadingGif: string = '../../assets/Loading_icon.gif';
 
   updateResults(results: SearchResult[]): void {
     this.results = results;
