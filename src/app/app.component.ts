@@ -56,7 +56,6 @@ export class AppComponent implements OnInit{
         }
 
       ).subscribe((res) => {
-        // do whatever with your response
         let bd = res.body;
 
         console.log(JSON.stringify(bd));

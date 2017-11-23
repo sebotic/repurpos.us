@@ -68,6 +68,9 @@ import {
   // MatTooltipModule,
   // MatStepperModule,
 } from '@angular/material';
+import {
+  MailSignupComponent, MailSignupDialog,
+} from './mail-signup/mail-signup.component';
 
 
 @NgModule({
@@ -92,8 +95,9 @@ import {
     AuthGuard,
     EditItemComponent,
     DialogOverviewExample,
-    DialogOverviewExampleDialog
-
+    DialogOverviewExampleDialog,
+    MailSignupComponent,
+    MailSignupDialog,
 
   ],
   imports: [
@@ -128,6 +132,8 @@ import {
   entryComponents: [
     DialogOverviewExample,
     DialogOverviewExampleDialog,
+
+    MailSignupDialog,
   ],
 
   bootstrap: [AppComponent]
