@@ -53,3 +53,14 @@
   /*width: 100%;*/
 /*}*/
 
+/*make sure the material design modal dialog does not display a scrollbar, as this moves the content each time the
+modal dialog is being displayed. This could have side effects for other material design components using
+cdk-global-scrollblock!!
+*/
+html.cdk-global-scrollblock {
+  /*background-color: #0d71bb;*/
+
+  overflow: hidden;
+  position: fixed;
+  z-index: 1000;
+}
