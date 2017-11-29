@@ -1,0 +1,4 @@
+<button mat-icon-button color="primary" (click)="showMore($event)">
+  <mat-icon aria-label="Show additional data button">more</mat-icon>
+</button>
+<app-show-more-pane *ngIf="displayShowMorePane"></app-show-more-pane>
