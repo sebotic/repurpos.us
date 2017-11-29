@@ -4,22 +4,67 @@
     <div class="col-md-8">
     <div class="col-md-12">
 
-      <h1>{{ label }}</h1> <a href="{{'http://www.wikidata.org/entity/' + qid}}">Wikidata:{{qid}}</a>
+      <h1>{{ label }}</h1> <a href="{{'http://www.wikidata.org/entity/' + qid}}">Wikidata:{{qid}}</a> <span *ngFor="let x of idData"><b>{{x['property'] + ': ' }}</b><span *ngFor="let ii of x['values']">{{ ii + '; '}}</span></span>
 
-      {{ concat_aliases }}
+      <span><b>Aliases: </b></span>{{  concat_aliases }}
 
     </div>
     <div class="col-md-12">
+<br>
 
       <table class="table table-bordered">
 
+        <th><H3>Chemical Properties</H3></th>
+
         <tr *ngFor="let x of table_data">
           <td scope="row">{{ x['property'] }}</td>
-          <td scope="row">{{ x['value'] }}</td>
-        </tr>
-      </table>
-    </div>
+          <td scope="row"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}}<span *ngIf="!x['showMore']">{{i + 1 < x['values'].length ? '; ' : ''}}</span>
+            <span *ngIf="x['showMore']">
+              <app-show-more-button (qid)="x['qids'][i]"></app-show-more-button>
 
+            </span>
+          </span><app-edit-item></app-edit-item></td>
+        </tr>
+
+      </table>
+
+      <div *ngIf="gvkData.length > 0">
+        <H3>Compound class</H3>
+        <table class="table table-bordered" *ngFor="let x of gvkData">
+          <tr>
+            <td>Category</td>
+            <td><span (click)="showMore($event)" id={{y}} *ngFor="let y of x['category']; let i = index ;">{{y}}<span class="reference">[1]</span>{{i + 1 < x['category'].length ? '; ' : ''}}</span></td>
+          </tr>
+           <tr>
+             <td>Mechanism of Action</td>
+             <td><span *ngFor="let y of x['mechanism']; let i = index">{{y}}<span class="reference">[1]</span>{{i + 1 < x['mechanism'].length ? '; ' : ' '}}</span></td>
+           </tr>
+          <tr>
+            <td>Phase</td>
+            <td><span *ngFor="let y of x['phase']; let i = index">{{y}}<span class="reference">[1]</span>{{i + 1 < x['phase'].length ? '; ' : ' '}}</span></td>
+          </tr>
+          <tr>
+            <td>Route of Administration</td>
+            <td><span *ngFor="let y of x['drug_roa']; let i = index">{{y}}<span class="reference">[1]</span>{{i + 1 < x['drug_roa'].length ? '; ' : ' '}}</span></td>
+          </tr>
+        </table>
+      </div>
+      <div *ngIf="assayData.length > 0">
+        <H3>Activity data</H3>
+        <table class="table table-bordered new" style="">
+          <th>Assay type </th>
+          <th>Activity type</th>
+          <th>Measurement</th>
+
+          <tr *ngFor="let x of assayData">
+            <td>{{x['assay_title']}}<sup>{{x['ref']}}</sup></td>
+            <td>{{x['activity_type']}}<sup>{{x['ref']}}</sup></td>
+            <td>{{x['ac50']}}<sup>{{x['ref']}}</sup></td>
+          </tr>
+        </table>
+      </div>
+      <div class="footnote">[1] GVK BioSciences Inc.</div>
+    </div>
     </div>
     <div class="col-md-4">
       <app-ngl></app-ngl>
@@ -48,8 +93,13 @@
   <!--<div class="item">{{ c }}</div>-->
 <!--</div>-->
 
-
-
+<!--<div class="container-fluid centered">-->
+  <!--<div class="row-fluid centered">-->
+    <!--<div class="col-md-8 col-md-offset-2">-->
+    <!--<app-edit-item></app-edit-item>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
 
 <!--<pre>{{data | json}}</pre>-->
 <!--<br>-->
