@@ -20,7 +20,7 @@
           <td scope="row">{{ x['property'] }}</td>
           <td scope="row"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}}<span *ngIf="!x['showMore']">{{i + 1 < x['values'].length ? '; ' : ''}}</span>
             <span *ngIf="x['showMore']">
-              <app-show-more-button (qid)="x['qids'][i]"></app-show-more-button>
+              <app-show-more-button [qid]="x['qids'][i]" [pid]="x['pid']" [mainQID]="qid"></app-show-more-button>
 
             </span>
           </span><app-edit-item></app-edit-item></td>

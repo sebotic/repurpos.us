@@ -1,4 +1,4 @@
-import {Component, OnInit, forwardRef, Inject, Injectable} from '@angular/core';
+import {Component, OnInit, forwardRef, Inject, Injectable, Input} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Http, Response} from "@angular/http";
 
@@ -10,93 +10,10 @@ import {CIDService} from "../ngl/ngl.component";
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 
 
-interface WDQSData {
+export interface WDQSData {
   head: {vars: Array<string>};
   results: {bindings: Array<Object>}
 }
-
-
-@Injectable()
-@Component({
-  styleUrls: ['./compound-data.component.css'],
-  selector: 'app-show-more-pane',
-  template: `
-    <div class="mat-app-background">
-      <h4>More concepts having the same target</h4>
-    <ol>
-    <li>test 1</li>
-    <li>test 2</li>
-    <li>test 3</li>
-  </ol>
-    </div>`
-})
-export class ShowMorePane {
-
-  name: string;
-
-  constructor(private http: HttpClient) {}
-
-  submitData(): void {
-    this.http.post('http://localhost:5000/write', {
-        'id': this.name,
-
-      }, {
-        observe: 'response',
-        withCredentials: true,
-        params: new HttpParams()
-          .set('origin', 'https://repurpos.us')
-          .set('action', 'wbeditentity')
-          .set('format', 'json')
-        ,
-
-        headers: new HttpHeaders()
-        // .set('Authorization', this.auth_creds)
-          .set('content-type', 'application/json')
-          .set('charset', 'utf-8'),
-      }
-
-    ).subscribe((re) => {
-        console.log(JSON.stringify(re));
-      },
-      (err: HttpErrorResponse) => {
-        console.log(err.error.message);
-        console.log(JSON.stringify(err));
-        console.log(err.status);
-      }
-    );
-  }
-}
-
-@Component({
-  selector: 'app-show-more-button',
-  // templateUrl: './edit-item.component.html',
-  template: `
-    <button mat-icon-button color="primary" (click)="showMore($event)">
-      <mat-icon aria-label="Show additional data button">more</mat-icon>
-    </button>
-    <app-show-more-pane *ngIf="displayShowMorePane"></app-show-more-pane>
-  `,
-  styleUrls: ['./compound-data.component.css']
-})
-export class ShowMoreButton implements OnInit {
-  displayShowMorePane: boolean;
-  qid: string;
-
-  constructor() {  }
-
-  ngOnInit() {
-  }
-
-  showMore(clickEvent, qid: string): void {
-    console.log('click workds', clickEvent);
-    let elementID: string = clickEvent.srcElement.id;
-    console.log(elementID, this.qid);
-
-    this.displayShowMorePane = !this.displayShowMorePane;
-  }
-
-}
-
 
 
 @Component({
@@ -118,7 +35,7 @@ export class CompoundDataComponent implements OnInit {
   prop_name_map: Object = {};
   propsToDisplay: Array<string> = ['P274', 'P231', 'P662', 'P661', 'P592', 'P715', 'P683', 'P665', 'P233', 'P2017',
     'P234', 'P235', 'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115', 'P3780',
-  'P3776', 'P3777', 'P3771', 'P129', 'P3489', 'P2868'];
+  'P3776', 'P3777', 'P3771', 'P129', 'P3489', 'P2868', 'P2175'];
 
   idPropsToDisplay: Array<string> = ['P231', 'P662', 'P661', 'P592', 'P715', 'P683', 'P665',
      'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115'];
@@ -129,6 +46,8 @@ export class CompoundDataComponent implements OnInit {
   gvkData: Object = [];
 
   showMoreProperties = ['P3489', 'P2868', 'P129', 'P3776', 'P3777', 'P3771'];
+
+  excludeFromTableDisplay: Array<string> = ['P2175'];
 
   displayShowMorePane: boolean = false;
 
@@ -294,6 +213,7 @@ export class CompoundDataComponent implements OnInit {
               values: [v],
               qids: [],
               showMore: false,
+              pid: ''
             };
 
             if (qid.startsWith('http://www.wikidata.org/entity/Q')){
@@ -312,11 +232,11 @@ export class CompoundDataComponent implements OnInit {
           // let value = Array.from(tmp[y]).length > 1 ? Array.from(tmp[y]).join(', ') : Array.from(tmp[y]);
           let sm: boolean = this.showMoreProperties.includes(y);
 
-          if (this.idPropsToDisplay.includes(y)) {
-            this.idData.push({'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'showMore': sm });
+          if (this.idPropsToDisplay.includes(y) && !this.excludeFromTableDisplay.includes(y)) {
+            this.idData.push({'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'showMore': sm , 'pid': y});
           }
-          else {
-            this.table_data.push({'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'qids': tmp[y]['qids'], 'showMore': sm});
+          else if (!this.excludeFromTableDisplay.includes(y)){
+            this.table_data.push({'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'qids': tmp[y]['qids'], 'showMore': sm , 'pid': y});
           }
 
           if (y == 'P662') {
@@ -330,7 +250,7 @@ export class CompoundDataComponent implements OnInit {
         this.retrieveLabels([]);
       }
       else {
-        this.retrieveLabels(Array.from(tmp['P2175']).map((x: string) => x.split('/').pop()));
+        this.retrieveLabels(Array.from(tmp['P2175']['qids']).map((x: string) => x.split('/').pop()));
       }
       // Concatenate aliases so they can be rendered as one block
       this.concat_aliases = this.aliases.join(', ');
