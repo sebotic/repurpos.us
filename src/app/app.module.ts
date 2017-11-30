@@ -46,7 +46,7 @@ import {
   MatDialogModule,
   // MatExpansionModule,
   // MatGridListModule,
-  // MatIconModule,
+  MatIconModule,
   MatInputModule,
   // MatListModule,
   // MatMenuModule,
@@ -65,12 +65,53 @@ import {
   // MatTableModule,
   // MatTabsModule,
   // MatToolbarModule,
-  // MatTooltipModule,
+  MatTooltipModule,
   // MatStepperModule,
 } from '@angular/material';
 import {
   MailSignupComponent, MailSignupDialog,
 } from './mail-signup/mail-signup.component';
+import { ShowMoreButtonComponent, ShowMorePane } from './compound-data/show-more-button/show-more-button.component';
+// import {CdkTableModule} from "@angular/cdk/table";
+
+@NgModule({
+  exports: [
+    // CdkTableModule,
+    // MatAutocompleteModule,
+    MatButtonModule,
+    // MatButtonToggleModule,
+    // MatCardModule,
+    // MatCheckboxModule,
+    // MatChipsModule,
+    // MatStepperModule,
+    // MatDatepickerModule,
+    MatDialogModule,
+    // MatExpansionModule,
+    // MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    // MatListModule,
+    // MatMenuModule,
+    // MatNativeDateModule,
+    // MatPaginatorModule,
+    // MatProgressBarModule,
+    // MatProgressSpinnerModule,
+    // MatRadioModule,
+    // MatRippleModule,
+    // MatSelectModule,
+    // MatSidenavModule,
+    // MatSliderModule,
+    // MatSlideToggleModule,
+    // MatSnackBarModule,
+    // MatSortModule,
+    // MatTableModule,
+    // MatTabsModule,
+    // MatToolbarModule,
+    MatTooltipModule,
+  ],
+
+})
+export class MaterialModule {}
 
 
 @NgModule({
@@ -98,6 +139,8 @@ import {
     DialogOverviewExampleDialog,
     MailSignupComponent,
     MailSignupDialog,
+    ShowMorePane,
+    ShowMoreButtonComponent,
 
   ],
   imports: [
@@ -114,8 +157,10 @@ import {
     BrowserAnimationsModule,
 
     FormsModule,
-    // MatNativeDateModule,
+
     ReactiveFormsModule,
+
+    MaterialModule
   ],
 
   providers: [
