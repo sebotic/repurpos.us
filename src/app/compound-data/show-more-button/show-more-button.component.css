@@ -12,3 +12,11 @@ sup {
   font-size: xx-small;
   color: #7a94fc;
 }
+
+/*important for correct styling of tooltips, no margin and transparent background*/
+.show-more-button-tooltip {
+  display: inline-flex;
+  align-items: center;
+  margin: 0px;
+}
+

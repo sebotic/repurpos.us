@@ -1,4 +1,6 @@
+<div class="show-more-button-tooltip" matTooltip="show more compounds with same property" >
 <button mat-icon-button color="primary" (click)="showMore($event)">
   <mat-icon aria-label="Show additional data button">more</mat-icon>
 </button>
+</div>
 <app-show-more-pane [pid]="pid" [qid]="qid" [mainQID]="mainQID" *ngIf="displayShowMorePane"></app-show-more-pane>
