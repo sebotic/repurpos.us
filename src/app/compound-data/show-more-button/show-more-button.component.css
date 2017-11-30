@@ -6,3 +6,9 @@ button.mat-icon-button {
   height: 30px;
   line-height: 30px;
 }
+
+sup {
+  vertical-align: super;
+  font-size: xx-small;
+  color: #7a94fc;
+}

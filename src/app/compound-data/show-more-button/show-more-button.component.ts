@@ -1,5 +1,6 @@
 import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
+import {WDQSData} from "../compound-data.component";
 
 
 @Injectable()
@@ -8,47 +9,67 @@ import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/c
   selector: 'app-show-more-pane',
   template: `
     <div class="mat-app-background">
-      <h4>More concepts having the same target</h4>
-    <ol>
-    <li>test 1</li>
-    <li>test 2</li>
-    <li>test 3</li>
-  </ol>
+      <h4>More compounds with the same property:</h4>
+    <ul>
+      <li *ngFor="let x of otherCompounds"><a href="/#/compound_data/{{x['c'].split('/').pop()}}" target="_blank">{{x['cLabel']}}</a> <sup>{{x['refDBLabel']}}</sup></li>
+  </ul>
     </div>`
 })
-export class ShowMorePane {
+export class ShowMorePane implements OnInit {
+  @Input() qid: string;
+  @Input() pid: string;
+  @Input() mainQID: string;
 
-  name: string;
+  otherCompounds: Array<Object> = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient)  {}
 
-  submitData(): void {
-    this.http.post('http://localhost:5000/write', {
-        'id': this.name,
+  ngOnInit(): void {
+    console.log('within button pane', this.qid, this.pid);
 
-      }, {
+    let query: string = `
+      SELECT DISTINCT ?c ?cLabel ?refDB ?refDBLabel WHERE {
+        ?c wdt:${this.pid} wd:${this.qid}  FILTER (?c != wd:${this.mainQID}) .
+        ?c wdt:P31 wd:Q11173 .
+        OPTIONAL { ?c p:${this.pid}/prov:wasDerivedFrom/pr:P248 ?refDB . }
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+      }`;
+
+    console.log(query);
+
+    this.http.get<WDQSData>('https://query.wikidata.org/sparql',  {
         observe: 'response',
-        withCredentials: true,
         params: new HttpParams()
-          .set('origin', 'https://repurpos.us')
-          .set('action', 'wbeditentity')
-          .set('format', 'json')
-        ,
-
+          .set('query', query)
+          .set('format', 'json'),
         headers: new HttpHeaders()
-        // .set('Authorization', this.auth_creds)
-          .set('content-type', 'application/json')
-          .set('charset', 'utf-8'),
+          .set('Accept', 'application/json')
       }
 
-    ).subscribe((re) => {
-        console.log(JSON.stringify(re));
+    ).subscribe(
+      (re) => {
+        let b = re.body;
+
+        for (let i of b.results.bindings){
+          let tmp = {};
+          for(let v of b.head.vars) {
+
+            if (i.hasOwnProperty(v)) {
+              tmp[v] = i[v]['value'];
+            }
+          }
+          this.otherCompounds.push(tmp);
+        }
+        console.log(this.otherCompounds);
       },
       (err: HttpErrorResponse) => {
         console.log(err.error.message);
         console.log(JSON.stringify(err));
         console.log(err.status);
-      }
+      },
+       () => {
+         console.log('query completed')
+       }
     );
   }
 }
@@ -62,6 +83,8 @@ export class ShowMoreButtonComponent implements OnInit {
 
   displayShowMorePane: boolean;
   @Input() qid: string;
+  @Input() pid: string;
+  @Input() mainQID: string;
 
   constructor() {  }
 
@@ -71,7 +94,7 @@ export class ShowMoreButtonComponent implements OnInit {
   showMore(clickEvent): void {
     console.log('click workds', clickEvent);
     // let elementID: string = clickEvent.srcElement.id;
-    console.log( this.qid);
+    console.log(this.qid, this.pid, this.mainQID);
 
     this.displayShowMorePane = !this.displayShowMorePane;
   }
