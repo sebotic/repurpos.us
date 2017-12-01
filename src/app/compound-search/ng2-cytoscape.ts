@@ -2,7 +2,7 @@
  * Created by sebastian on 3/15/17.
  */
 import { Component, OnChanges, Input, OnInit } from '@angular/core';
-import { GraphDataService } from "./compound-search.component";
+import { GraphDataService } from '../compound-data/indications-graph/indications-graph.component';
 
 // import {jQuery} from 'jquery';
 let cytoscape = require('cytoscape');
