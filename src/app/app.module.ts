@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 
 
 // import { DataTableModule, DataTable, DataTableResource } from 'angular-2-data-table';
-import { DataTableModule, DataTable, DataTableResource } from './table/index';
+// import { DataTableModule, DataTable, DataTableResource } from './table/index';
 
 import {
   RouterModule,
@@ -24,12 +24,12 @@ import {cytoscape} from 'cytoscape';
 import {UnlessDirective} from "./compound-search/unless.directive";
 import {NgCytoscape} from "./compound-search/ng2-cytoscape";
 import {CompoundDataComponent} from './compound-data/compound-data.component';
-import {InteractionTableComponent, InteractionTableDataService} from './interaction-table/interaction-table.component';
+// import {InteractionTableComponent, InteractionTableDataService} from './interaction-table/interaction-table.component';
 import { DiseaseDataComponent } from './disease-data/disease-data.component';
 import {CIDService, NglComponent} from './ngl/ngl.component';
 import { CompoundSearchOptionsComponent } from './compound-search/compound-search-options/compound-search-options.component';
 import { IndicationsGraphComponent, GraphDataService } from './compound-data/indications-graph/indications-graph.component';
-import { SearchResultTableComponent } from './compound-search/search-result-table/search-result-table.component';
+// import { SearchResultTableComponent } from './compound-search/search-result-table/search-result-table.component';
 import {HttpClientModule, HttpClientXsrfModule, JsonpClientBackend, JsonpInterceptor} from "@angular/common/http";
 import {AuthComponent, AuthGuard, AuthService} from './auth/auth.component';
 import {DialogOverviewExample, DialogOverviewExampleDialog, EditItemComponent} from './edit-item/edit-item.component';
@@ -51,7 +51,7 @@ import {
   // MatListModule,
   // MatMenuModule,
   // MatNativeDateModule,
-  // MatPaginatorModule,
+  MatPaginatorModule,
   // MatProgressBarModule,
   // MatProgressSpinnerModule,
   // MatRadioModule,
@@ -62,7 +62,7 @@ import {
   // MatSlideToggleModule,
   // MatSnackBarModule,
   // MatSortModule,
-  // MatTableModule,
+  MatTableModule,
   // MatTabsModule,
   // MatToolbarModule,
   MatTooltipModule,
@@ -72,11 +72,12 @@ import {
   MailSignupComponent, MailSignupDialog,
 } from './mail-signup/mail-signup.component';
 import { ShowMoreButtonComponent, ShowMorePane } from './compound-data/show-more-button/show-more-button.component';
-// import {CdkTableModule} from "@angular/cdk/table";
+import { SearchResultsTableComponent } from './compound-search/search-results-table/search-results-table.component';
+import {CdkTableModule} from "@angular/cdk/table";
 
 @NgModule({
   exports: [
-    // CdkTableModule,
+    CdkTableModule,
     // MatAutocompleteModule,
     MatButtonModule,
     // MatButtonToggleModule,
@@ -93,7 +94,7 @@ import { ShowMoreButtonComponent, ShowMorePane } from './compound-data/show-more
     // MatListModule,
     // MatMenuModule,
     // MatNativeDateModule,
-    // MatPaginatorModule,
+    MatPaginatorModule,
     // MatProgressBarModule,
     // MatProgressSpinnerModule,
     // MatRadioModule,
@@ -104,11 +105,13 @@ import { ShowMoreButtonComponent, ShowMorePane } from './compound-data/show-more
     // MatSlideToggleModule,
     // MatSnackBarModule,
     // MatSortModule,
-    // MatTableModule,
+    MatTableModule,
+
     // MatTabsModule,
     // MatToolbarModule,
     MatTooltipModule,
   ],
+  declarations: [],
 
 })
 export class MaterialModule {}
@@ -126,12 +129,12 @@ export class MaterialModule {}
     NgCytoscape,
     IndicationsGraphComponent,
     CompoundDataComponent,
-    InteractionTableComponent,
+    // InteractionTableComponent,
     DiseaseDataComponent,
     NglComponent,
     CompoundSearchOptionsComponent,
     IndicationsGraphComponent,
-    SearchResultTableComponent,
+    // SearchResultTableComponent,
     AuthComponent,
     AuthGuard,
     EditItemComponent,
@@ -141,6 +144,7 @@ export class MaterialModule {}
     MailSignupDialog,
     ShowMorePane,
     ShowMoreButtonComponent,
+    SearchResultsTableComponent
 
   ],
   imports: [
@@ -148,7 +152,7 @@ export class MaterialModule {}
     FormsModule,
     HttpModule,
     RouterModule.forRoot(routes),
-    DataTableModule,
+    // DataTableModule,
     HttpClientModule,
 
     MatDialogModule,
@@ -169,7 +173,7 @@ export class MaterialModule {}
     { provide: SearchResultService, useClass: SearchResultService },
     { provide: GraphDataService, useClass: GraphDataService },
     { provide: WDQService, useClass: WDQService },
-    { provide: InteractionTableDataService, useClass: InteractionTableDataService },
+    // { provide: InteractionTableDataService, useClass: InteractionTableDataService },
     { provide: CIDService, useClass: CIDService},
     { provide: AuthService, useClass: AuthService},
 
