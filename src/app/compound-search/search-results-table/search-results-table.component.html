@@ -1,0 +1,37 @@
+<div class="search-result-container mat-elevation-z0">
+  <mat-table #table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element['name']}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="ikey">
+      <mat-header-cell *matHeaderCellDef> InChI Key </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element['ikey']}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="chemspider">
+      <mat-header-cell *matHeaderCellDef> ChemSpider </mat-header-cell>
+      <mat-cell *matCellDef="let element"><a href="http://www.chemspider.com/Chemical-Structure.{{element['chemspider']}}.html" target="_blank">{{element['chemspider']}}</a></mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="pubchem">
+      <mat-header-cell *matHeaderCellDef> PubChem </mat-header-cell>
+      <mat-cell *matCellDef="let element"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{element['pubchem']}}" target="_blank">{{element['pubchem']}}</a></mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="qid">
+      <mat-header-cell *matHeaderCellDef> Wikidata ID </mat-header-cell>
+      <mat-cell *matCellDef="let element"><a href="{{element['qid']}}" target="_blank">{{element['qid'].split('/').pop()}}</a></mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns; let element;"  (click)="rowClicked($event, element['qid'])"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+</div>
