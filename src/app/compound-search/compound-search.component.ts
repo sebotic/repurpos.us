@@ -10,7 +10,7 @@ import {Observable} from 'rxjs/Rx';
 import { Subject }    from 'rxjs/Subject';
 import {flatMap, map} from 'rxjs/operators';
 
-import {$} from "protractor";
+// import {$} from "protractor";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 
@@ -207,7 +207,7 @@ export class SearchBox implements OnInit {
   inputs: ['result'],
   outputs: ['sdata'],
   selector: 'search-result',
-  template: `<app-search-result-table></app-search-result-table>`,
+  template: `<app-search-results-table [result]="result"></app-search-results-table>`,
 })
 export class SearchResultComponent implements OnInit{
   result: SearchResult;
