@@ -1,0 +1,25 @@
+<!--<div *ngIf="loggedIn">-->
+<form (ngSubmit)="onSubmit($event)" #userForm="ngForm" >
+  <span class="user-form-container">
+    <span></span>
+    <mat-form-field>
+      <input matInput placeholder="Enter your email" [formControl]="email" required class="form-control" id="email"
+             [(ngModel)]="user.email" name="email">
+      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </span>
+  <div class="divider"></div>
+  <span>
+    <mat-form-field>
+      <input matInput placeholder="Password" class="form-control" id="password"
+             required
+             [(ngModel)]="user.name" name="name"
+             #name="ngModel">
+    </mat-form-field>
+
+  </span>
+  <div class="divider"></div>
+  <button mat-button type="submit"  class="btn btn-default" >Login</button>
+
+</form>
+<!--</div>-->
