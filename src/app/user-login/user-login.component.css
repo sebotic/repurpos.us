@@ -12,3 +12,8 @@ body {
 .basic-container {
   padding: 5px;
 }
+
+.login-button {
+  color: #d2d9ea;
+  background-color: #115329;
+}
