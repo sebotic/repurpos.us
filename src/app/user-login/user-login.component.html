@@ -4,7 +4,6 @@
 <ng-template #lgin>
 
   <form (ngSubmit)="onSubmit($event)" #userForm="ngForm">
-    <div class="mat-app-background">
       <span>
       <mat-form-field>
         <input matInput placeholder="Enter your email" [formControl]="email" required  id="email"
@@ -25,8 +24,6 @@
       </span>
       <div class="divider"></div>
       <button class="login-button" mat-raised-button color="primary" type="submit">Login</button>
-    </div>
-
   </form>
   <app-reg-user-dialog></app-reg-user-dialog>
 </ng-template>
