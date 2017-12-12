@@ -10,7 +10,7 @@ import {FormControl, Validators} from "@angular/forms";
 })
 export class UserLoginComponent implements OnInit {
 
-  user: User = new User(0,'','', '');
+  user: User = new User(0,'','', '', '', '', '', '', '', '');
   loggedIn: boolean = false;
 
   email = new FormControl('', [Validators.required, Validators.email]);
@@ -51,8 +51,61 @@ export class UserLoginComponent implements OnInit {
 
   onSubmit(event){
     console.log(this.user.email, this.user.password);
-    console.log(event);
-    // this.loggedIn = false;
+
+    this.http.post('http://localhost:5000/auth/login', {"email": this.user.email, "password": this.user.password}, {
+        observe: 'response',
+        // withCredentials: true,
+        headers: new HttpHeaders()
+          .set('content-type', 'application/json')
+      }
+
+    ).subscribe((re) => {
+        let credentials = re.body;
+        console.log(credentials['auth_token']);
+        localStorage.setItem('auth_token', credentials['auth_token']);
+
+        console.log(JSON.stringify(re));
+        // console.log(re.status);
+        this.loggedIn = true;
+        location.reload();
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err.error.message);
+        console.log(JSON.stringify(err));
+        console.log(err.status);
+      }
+    );
+
+  }
+
+  logout(){
+    this.http.post('http://localhost:5000/auth/logout', {}, {
+        observe: 'response',
+        headers: new HttpHeaders()
+          .set('Authorization', localStorage.getItem('auth_token'))
+          .set('content-type', 'application/json')
+      }
+
+    ).subscribe((re) => {
+        let logoutReply = re.body;
+
+        if(logoutReply['status'] === 'success') {
+          localStorage.removeItem('auth_token');
+          this.loggedIn = false;
+          location.reload();
+        }
+
+
+        console.log(JSON.stringify(re));
+        // console.log(re.status);
+
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err.error.message);
+        console.log(JSON.stringify(err));
+        console.log(err.status);
+      }
+    );
   }
 
   getErrorMessage() {
