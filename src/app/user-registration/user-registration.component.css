@@ -1,0 +1,12 @@
+.user-form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/*.user-form-container > * {*/
+  /*width: 30%;*/
+/*}*/
+
+.btn-xs {
+  color: #2968ed;
+}
