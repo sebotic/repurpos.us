@@ -76,18 +76,14 @@ export class NglComponent implements OnInit {
       sampleLevel: 2
     }  );
 
+    // a way to get the structure data from chemspider.com (example Vemurafenib), filetype is mol, not sdf
+    // 'http://chemspider.com/FilesHandler.ashx?type=str&striph=yes&id=24747352'
+
     let url = 'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/' + this.cid +
       '/record/SDF/?record_type=3d&response_type=save&response_basename=Structure3D_CID_' + this.cid;
 
-    this.http.get(url, {
-        observe: 'response', responseType: 'text',
-      }
-
-    ).subscribe((re) => {
-        let dat = new Blob([re.body]);
-
-        this.makeMolecule(dat, 'sdf');
-
+    this.http.get(url, {observe: 'response', responseType: 'text',}).subscribe((re) => {
+        this.makeMolecule(new Blob([re.body]), 'sdf');
       },
       (err: HttpErrorResponse) => {
           // if 3D structure not available, try getting 2D instead
@@ -96,8 +92,7 @@ export class NglComponent implements OnInit {
           '/record/SDF/?record_type=2d&response_type=save&response_basename=Structure2D_CID_' + this.cid;
 
           this.http.get(u, { observe: 'response', responseType: 'text'}).subscribe((r) => {
-            let dat = new Blob([r.body]);
-            this.makeMolecule(dat, 'sdf');
+            this.makeMolecule(new Blob([r.body]), 'sdf');
           });
       },
     );
