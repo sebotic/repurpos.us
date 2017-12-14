@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, Validators, FormGroup, FormBuilder, AbstractControl} from '@angular/forms';
 import {HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {HttpClient} from "@angular/common/http";
@@ -49,11 +49,47 @@ export class UserRegistrationComponent implements OnInit {
   user = new User(0, '', '', '', '', '', '', '', '','', '');
 
   email = new FormControl('', [Validators.required, Validators.email]);
-  // matchPwd = new FormControl('' , [Validators.required, PasswordValidation.MatchPassword]);
+  // password = new FormControl('' , [Validators.required, PasswordValidation.MatchPassword], );
+  userForm = new FormGroup({
+    'firstName': new FormControl(this.user.firstName, [
+      Validators.required,
+      Validators.minLength(4),
+      // PasswordValidation.MatchPassword
+    ]),
+    // 'alterEgo': new FormControl(this.hero.alterEgo),
+    // 'power': new FormControl(this.hero.power, Validators.required)
+  });
 
-  constructor(private http:HttpClient) {}
+  form: FormGroup;
+
+  constructor(private http: HttpClient, @Inject(FormBuilder) fb: FormBuilder) {
+    this.form = fb.group({
+      name: fb.group({
+        firstName: [this.user.firstName, Validators.minLength(2)],
+        lastName: this.user.lastName,
+      }),
+      email: new FormControl(this.user.email, [Validators.required, Validators.email]),
+      password: fb.group({
+        password: [this.user.password, Validators.minLength(8)],
+        confirmPassword: [this.user.confirmPassword, Validators.minLength(8)],
+      }, {validator: PasswordValidation.MatchPassword}),
+    });
+
+  }
 
   ngOnInit() {
+    console.log(this.form);
+
+    // this.userForm = new FormGroup({
+    //   'firstName': new FormControl(this.user.firstName, [
+    //     Validators.required,
+    //     Validators.minLength(4),
+    //     // PasswordValidation.MatchPassword
+    //   ]),
+    //   // 'alterEgo': new FormControl(this.hero.alterEgo),
+    //   // 'power': new FormControl(this.hero.power, Validators.required)
+    // });
+
   }
 
   onSubmit(event){
@@ -88,13 +124,14 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   getErrorMessage() {
-    return this.email.hasError('required') ? 'You must enter a value' :
-      this.email.hasError('email') ? 'Not a valid email' : '';
+    return this.form.controls['email'].hasError('required') ? 'You must enter a value' :
+      this.form.controls['email'].hasError('email') ? 'Not a valid email' : '';
   }
 
   resolved(captchaResponse: string) {
     console.log(`Resolved captcha with response ${captchaResponse}:`);
   }
+
 }
 
 @Component({
@@ -129,5 +166,4 @@ export class UserRegComponent implements OnInit {
       this.showDialog = true;
     }
   }
-
 }

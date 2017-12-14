@@ -1,77 +1,99 @@
 <h2>User registration</h2>
 <div mat-dialog-content>
 
-<form (ngSubmit)="onSubmit($event)" #userForm="ngForm">
+<form (ngSubmit)="onSubmit($event)" [formGroup]="form">
   <div class="user-form-container">
+    <div formGroupName="name">
+      <div>
     <mat-form-field>
-      <input matInput placeholder="First Name" class="form-control" id="firstName"
+      <input matInput placeholder="First Name" id="firstName"
              required
-             [(ngModel)]="user.firstName" name="name"
-             #name="ngModel">
-    </mat-form-field>
+             name="firstName"
+             formControlName="firstName"
 
+             >
+      <!--<mat-error *ngIf="form.controls['name'].controls.firstName.errors && !form.controls['name'].controls.firstName.pristine" [hidden]="!form.controls['name'].controls.firstName.errors.required">Name is required</mat-error>-->
+      <mat-error *ngIf="form.controls['name'].controls.firstName.errors  && !form.controls['name'].controls.firstName.pristine" [hidden]="!form.controls['name'].controls.firstName.hasError('minLength')">Name too short</mat-error>
+
+    </mat-form-field>
+      <!--<span *ngIf="form.controls['name'].controls.firstName.errors && !form.controls['name'].controls.firstName.pristine" class="mat-error">-->
+      </div>
+      <!--</span>-->
+<div>
     <mat-form-field>
-      <input matInput placeholder="Last Name" class="form-control" id="lastName"
+      <input matInput placeholder="Last Name" id="lastName"
              required
-             [(ngModel)]="user.lastName" name="name"
-             #name="ngModel">
+              name="lastName"
+             formControlName="lastName"
+             >
     </mat-form-field>
+</div>
+    </div>
 
+  <div>
     <mat-form-field>
-      <input matInput placeholder="Email Address (Your User Name)" [formControl]="email" required class="form-control" id="email"
-             [(ngModel)]="user.email" name="email">
+      <input matInput placeholder="Email Address (Your User Name)"
+             formControlName="email"
+             required
+             id="email"
+             name="email">
       <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
+  </div>
 
-    <mat-form-field>
-      <input matInput placeholder="Phone" class="form-control" id="phone"
-             [(ngModel)]="user.phone" name="phone"
-             #name="ngModel">
-    </mat-form-field>
+    <!--<mat-form-field>-->
+      <!--<input matInput placeholder="Phone" class="form-control" id="phone"-->
+             <!--[(ngModel)]="user.phone" name="phone"-->
+             <!--#name="ngModel">-->
+    <!--</mat-form-field>-->
 
+    <!--<mat-form-field>-->
+      <!--<input matInput placeholder="Institution" class="form-control" id="institution"-->
+             <!--required-->
+             <!--[(ngModel)]="user.institution" name="institution"-->
+             <!--#name="ngModel">-->
+    <!--</mat-form-field>-->
+
+    <!--<mat-form-field>-->
+      <!--<input matInput placeholder="Address" class="form-control" id="address"-->
+             <!--required-->
+             <!--[(ngModel)]="user.address" name="address"-->
+             <!--#name="ngModel">-->
+    <!--</mat-form-field>-->
+
+    <!--<mat-form-field>-->
+      <!--<input matInput placeholder="City" class="form-control" id="city"-->
+             <!--required-->
+             <!--[(ngModel)]="user.city" name="city"-->
+             <!--#name="ngModel">-->
+    <!--</mat-form-field>-->
+
+    <!--<mat-form-field>-->
+      <!--<input matInput placeholder="Zip Code" class="form-control" id="zipCode"-->
+             <!--required-->
+             <!--[(ngModel)]="user.zipCode" name="zipCode"-->
+             <!--#name="ngModel">-->
+    <!--</mat-form-field>-->
+
+    <div formGroupName="password">
     <mat-form-field>
-      <input matInput placeholder="Institution" class="form-control" id="institution"
+      <input matInput placeholder="Password" id="password" [type]="'password'"
              required
-             [(ngModel)]="user.institution" name="institution"
-             #name="ngModel">
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput placeholder="Address" class="form-control" id="address"
-             required
-             [(ngModel)]="user.address" name="address"
-             #name="ngModel">
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput placeholder="City" class="form-control" id="city"
-             required
-             [(ngModel)]="user.city" name="city"
-             #name="ngModel">
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput placeholder="Zip Code" class="form-control" id="zipCode"
-             required
-             [(ngModel)]="user.zipCode" name="zipCode"
-             #name="ngModel">
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput placeholder="Password" class="form-control" id="password" [type]="'password'"
-             required
-             [(ngModel)]="user.password" name="password"
-             #name="ngModel">
+             name="password"
+             formControlName="password"
+             >
       <!--<mat-error *ngIf="matchPwd.invalid">{{getErrorMessage()}}</mat-error>-->
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="Confirm Password" class="form-control" id="confirmPassword" [type]="'password'"
+      <input matInput placeholder="Confirm Password" id="confirmPassword" [type]="'password'"
              required
-             [(ngModel)]="user.confirmPassword" name="confirmPassword"
-             #name="ngModel">
+             formControlName="confirmPassword"
+             name="confirmPassword"
+             >
       <!--<mat-error *ngIf="matchPwd.invalid">{{getErrorMessage()}}</mat-error>-->
     </mat-form-field>
+    </div>
 
     <!--<mat-form-field>-->
       <!--<mat-select placeholder="Select">-->
@@ -81,7 +103,7 @@
 
     <re-captcha (resolved)="resolved($event)" siteKey="6Le2wTsUAAAAAO-xiYenSNSONc4uNRB89fVOV0Lc"></re-captcha>
 
-    <button mat-button type="submit" >Submit</button>
+    <button mat-button [disabled]="form.invalid" type="submit" [formGroup]="form">Submit</button>
   </div>
 
 
