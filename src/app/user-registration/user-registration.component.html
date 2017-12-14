@@ -4,7 +4,6 @@
 <form (ngSubmit)="onSubmit($event)" [formGroup]="form">
   <div class="user-form-container">
     <div formGroupName="name">
-      <div>
     <mat-form-field>
       <input matInput placeholder="First Name" id="firstName"
              required
@@ -13,13 +12,12 @@
 
              >
       <!--<mat-error *ngIf="form.controls['name'].controls.firstName.errors && !form.controls['name'].controls.firstName.pristine" [hidden]="!form.controls['name'].controls.firstName.errors.required">Name is required</mat-error>-->
-      <mat-error *ngIf="form.controls['name'].controls.firstName.errors  && !form.controls['name'].controls.firstName.pristine" [hidden]="!form.controls['name'].controls.firstName.hasError('minLength')">Name too short</mat-error>
+      <mat-error *ngIf="form.controls['name'].controls.firstName.errors  && !form.controls['name'].controls.firstName.pristine"
+                 [hidden]="!form.controls['name'].controls.firstName.hasError('minLength')">Name too short</mat-error>
 
     </mat-form-field>
       <!--<span *ngIf="form.controls['name'].controls.firstName.errors && !form.controls['name'].controls.firstName.pristine" class="mat-error">-->
-      </div>
       <!--</span>-->
-<div>
     <mat-form-field>
       <input matInput placeholder="Last Name" id="lastName"
              required
@@ -27,10 +25,9 @@
              formControlName="lastName"
              >
     </mat-form-field>
-</div>
     </div>
 
-  <div>
+
     <mat-form-field>
       <input matInput placeholder="Email Address (Your User Name)"
              formControlName="email"
@@ -39,7 +36,7 @@
              name="email">
       <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
-  </div>
+
 
     <!--<mat-form-field>-->
       <!--<input matInput placeholder="Phone" class="form-control" id="phone"-->
