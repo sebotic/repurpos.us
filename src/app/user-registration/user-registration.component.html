@@ -82,7 +82,10 @@
              name="password"
              formControlName="password"
              >
-      <!--<mat-error *ngIf="matchPwd.invalid">{{getErrorMessage()}}</mat-error>-->
+      <mat-error *ngIf="form.controls['password'].controls.password.errors
+                        && !form.controls['password'].controls.password.pristine"
+                 [hidden]="!form.controls['password'].controls.password.hasError('minLength')"
+      >8 characters minimum</mat-error>
     </mat-form-field>
 
     <mat-form-field>
@@ -91,15 +94,12 @@
              formControlName="confirmPassword"
              name="confirmPassword"
              >
-      <!--<mat-error *ngIf="matchPwd.invalid">{{getErrorMessage()}}</mat-error>-->
+      <mat-error *ngIf="form.controls['password'].controls.confirmPassword.errors
+                        && !form.controls['password'].controls.confirmPassword.pristine"
+                 [hidden]="!form.controls['password'].controls.confirmPassword.hasError('MatchPassword')"
+      >Passwords don't match!</mat-error>
     </mat-form-field>
     </div>
-
-    <!--<mat-form-field>-->
-      <!--<mat-select placeholder="Select">-->
-        <!--<mat-option value="option">Option</mat-option>-->
-      <!--</mat-select>-->
-    <!--</mat-form-field>-->
 
     <re-captcha (resolved)="resolved($event)" siteKey="6Le2wTsUAAAAAO-xiYenSNSONc4uNRB89fVOV0Lc"></re-captcha>
 
