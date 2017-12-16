@@ -26,6 +26,7 @@
     "core-js": "^2.5.1",
     "cytoscape": "^3.2.6",
     "loader-utils": "^1.1.0",
+    "ng-recaptcha": "^3.0.2",
     "ngl": "^0.10.4",
     "object-assign": "^4.1.1",
     "parse-json": "^4.0.0",
