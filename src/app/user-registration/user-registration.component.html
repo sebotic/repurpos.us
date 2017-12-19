@@ -9,7 +9,7 @@
              required
              name="firstName"
              formControlName="firstName"
-
+             [(ngModel)]="user.firstName"
              >
       <!--<mat-error *ngIf="form.controls['name'].controls.firstName.errors && !form.controls['name'].controls.firstName.pristine" [hidden]="!form.controls['name'].controls.firstName.errors.required">Name is required</mat-error>-->
       <mat-error *ngIf="form.controls['name'].controls.firstName.errors  && !form.controls['name'].controls.firstName.pristine"
@@ -23,6 +23,7 @@
              required
               name="lastName"
              formControlName="lastName"
+             [(ngModel)]="user.lastName"
              >
     </mat-form-field>
     </div>
@@ -33,6 +34,7 @@
              formControlName="email"
              required
              id="email"
+             [(ngModel)]="user.email"
              name="email">
 
       <mat-error *ngIf="form.controls['email'].errors && !form.controls['email'].pristine">{{getErrorMessage()}}</mat-error>
@@ -79,6 +81,7 @@
              required
              name="password"
              formControlName="password"
+             [(ngModel)]="user.password"
              >
       <mat-error *ngIf="form.controls['password'].controls.password.errors
                         && !form.controls['password'].controls.password.pristine"
