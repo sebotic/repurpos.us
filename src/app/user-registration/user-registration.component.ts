@@ -3,17 +3,17 @@ import {FormControl, Validators, FormGroup, FormBuilder, AbstractControl} from '
 import {HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {HttpClient} from "@angular/common/http";
 import {MatDialog} from "@angular/material";
+import {isNullOrUndefined} from "util";
 
 export class PasswordValidation {
 
   static MatchPassword(AC: AbstractControl) {
-    let password = AC.get('password').value; // to get value in input tag
-    let confirmPassword = AC.get('confirmPassword').value; // to get value in input tag
+    let password = AC.get('password').value;
+    let confirmPassword = AC.get('confirmPassword').value;
     if(password != confirmPassword) {
-      console.log('false');
-      AC.get('confirmPassword').setErrors( {MatchPassword: true} )
+      AC.get('confirmPassword').setErrors( {MatchPassword: true});
     } else {
-      console.log('true');
+      AC.get('confirmPassword').setErrors( null);
       return null
     }
   }
@@ -47,20 +47,8 @@ export class User {
 })
 export class UserRegistrationComponent implements OnInit {
   user = new User(0, '', '', '', '', '', '', '', '','', '');
-
-  email = new FormControl('', [Validators.required, Validators.email]);
-  // password = new FormControl('' , [Validators.required, PasswordValidation.MatchPassword], );
-  userForm = new FormGroup({
-    'firstName': new FormControl(this.user.firstName, [
-      Validators.required,
-      Validators.minLength(4),
-      // PasswordValidation.MatchPassword
-    ]),
-    // 'alterEgo': new FormControl(this.hero.alterEgo),
-    // 'power': new FormControl(this.hero.power, Validators.required)
-  });
-
   form: FormGroup;
+  recaptchaToken: string;
 
   constructor(private http: HttpClient, @Inject(FormBuilder) fb: FormBuilder) {
     this.form = fb.group({
@@ -77,26 +65,13 @@ export class UserRegistrationComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    console.log(this.form);
-
-    // this.userForm = new FormGroup({
-    //   'firstName': new FormControl(this.user.firstName, [
-    //     Validators.required,
-    //     Validators.minLength(4),
-    //     // PasswordValidation.MatchPassword
-    //   ]),
-    //   // 'alterEgo': new FormControl(this.hero.alterEgo),
-    //   // 'power': new FormControl(this.hero.power, Validators.required)
-    // });
-
-  }
+  ngOnInit() {}
 
   onSubmit(event){
     console.log(this.user.email, this.user.lastName);
-    console.log(event);
 
-    this.http.post('http://localhost:5000/auth/register', {"email": this.user.email, "password": this.user.password}, {
+    this.http.post('http://localhost:5000/auth/register',
+      {"email": this.user.email, "password": this.user.password, "recaptcha_token": this.recaptchaToken}, {
         observe: 'response',
         // withCredentials: true,
         headers: new HttpHeaders()
@@ -129,7 +104,8 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   resolved(captchaResponse: string) {
-    console.log(`Resolved captcha with response ${captchaResponse}:`);
+    // console.log(`Resolved captcha with response ${captchaResponse}:`);
+    this.recaptchaToken = captchaResponse;
   }
 
 }
@@ -140,7 +116,7 @@ export class UserRegistrationComponent implements OnInit {
   styleUrls: ['./user-registration.component.css']
 })
 export class UserRegComponent implements OnInit {
-  showDialog:boolean = false ;
+  showDialog:boolean = false;
 
   constructor(public dialog: MatDialog) {  }
 
@@ -150,7 +126,7 @@ export class UserRegComponent implements OnInit {
   dialogShow() {
 
     let dialogRef = this.dialog.open(UserRegistrationComponent, {
-      width: '500px',
+      // width: '450px',
       data: {},
     });
 
