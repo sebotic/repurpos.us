@@ -3,11 +3,14 @@ import { ActivatedRoute } from '@angular/router';
 import {Http, Response} from "@angular/http";
 
 import {WDQService} from "../compound-search/compound-search.component"
-import { InteractionTableDataService } from "../interaction-table/interaction-table.component"
+// import { InteractionTableDataService } from "../interaction-table/interaction-table.component"
 
 // import { gottlieb, gottlieb_pub } from '../../assets/gottlieb_data';
 import {CIDService} from "../ngl/ngl.component";
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
+import {
+  HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest,
+  HttpResponse
+} from "@angular/common/http";
 
 
 export interface WDQSData {
@@ -50,6 +53,7 @@ export class CompoundDataComponent implements OnInit {
   excludeFromTableDisplay: Array<string> = ['P2175'];
 
   displayShowMorePane: boolean = false;
+  testJson;
 
   propsLabelMap: Object = {
     'P274': 'Chemical Formula',
@@ -83,7 +87,7 @@ export class CompoundDataComponent implements OnInit {
     private route: ActivatedRoute,
     private http: Http,
     private http2: HttpClient,
-    private interactionTableDataService: InteractionTableDataService,
+    // private interactionTableDataService: InteractionTableDataService,
     private cidService: CIDService
   ) {
     route.params.subscribe(params => {
@@ -120,6 +124,7 @@ export class CompoundDataComponent implements OnInit {
       this.buildData();
       this.retrieveAssayData();
       this.retrieveGVKData();
+      // this.testStream();
 
       // console.log(JSON.stringify(b));
 
@@ -322,14 +327,15 @@ export class CompoundDataComponent implements OnInit {
   }
 
   retrieveAssayData(): void {
+    // console.log('retrieve assay data auth key', localStorage.getItem('auth_token'));
     this.http2.get('http://localhost:5000/assaydata', {
       observe: 'response',
       withCredentials: true,
       headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
+        .set('Accept', 'application/json')
+        .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
         .set('qid', this.qid)
-        .set('format', 'json')
     }).subscribe((r) => {
       let v = r.body;
       this.assayData = v;
@@ -338,7 +344,9 @@ export class CompoundDataComponent implements OnInit {
 
       // console.log('calbr assya data', b);
 
-    });
+    },
+    err => {}
+    );
 
   }
 
@@ -347,15 +355,33 @@ export class CompoundDataComponent implements OnInit {
       observe: 'response',
       withCredentials: true,
       headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
+        .set('Accept', 'application/json')
+        .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
         .set('qid', this.qid)
-        .set('format', 'json')
     }).subscribe((r) => {
       let b = r.body;
       this.gvkData = b;
-      // console.log(b);
+    });
 
+  }
+
+  testStream(){
+    const req = new HttpRequest('GET', 'http://localhost:5000/large', {responseType: 'text',
+      reportProgress: true,
+    });
+
+    this.http2.request(req).subscribe(event => {
+      if (event.type === HttpEventType.DownloadProgress) {
+
+        console.log(event['partialText']);
+        this.testJson = JSON.parse('[' + event['partialText'].slice(0, -1) + ']');
+        console.log('event occured', JSON.parse('[' + event['partialText'].slice(0, -1) + ']'));
+
+      } else if (event instanceof HttpResponse) {
+        console.log('Data download complete!');
+      }
+      console.log('event2', event);
     });
 
   }
@@ -412,7 +438,7 @@ export class CompoundDataComponent implements OnInit {
         console.log(this.tableData);
 
         this.graphData = this.prepareGraphData();
-        this.interactionTableDataService.announceNewCompoundData(this.tableData);
+        // this.interactionTableDataService.announceNewCompoundData(this.tableData);
       });
   }
 
