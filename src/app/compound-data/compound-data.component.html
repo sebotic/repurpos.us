@@ -11,10 +11,8 @@
     </div>
     <div class="col-md-12">
 <br>
-
+      <H3>Chemical Properties</H3>
       <table class="table table-bordered">
-
-        <th><H3>Chemical Properties</H3></th>
 
         <tr *ngFor="let x of table_data">
           <td scope="row">{{ x['property'] }}</td>
@@ -33,19 +31,19 @@
         <table class="table table-bordered" *ngFor="let x of gvkData">
           <tr>
             <td>Category</td>
-            <td><span (click)="showMore($event)" id={{y}} *ngFor="let y of x['category']; let i = index ;">{{y}}<span class="reference">[1]</span>{{i + 1 < x['category'].length ? '; ' : ''}}</span></td>
+            <td><span (click)="showMore($event)" id={{y}} *ngFor="let y of x['category']; let i = index ;">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : ''}}</span>{{i + 1 < x['category'].length ? '; ' : ''}}</span></td>
           </tr>
            <tr>
              <td>Mechanism of Action</td>
-             <td><span *ngFor="let y of x['mechanism']; let i = index">{{y}}<span class="reference">[1]</span>{{i + 1 < x['mechanism'].length ? '; ' : ' '}}</span></td>
+             <td><span *ngFor="let y of x['mechanism']; let i = index">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : ''}}</span>{{i + 1 < x['mechanism'].length ? '; ' : ' '}}</span></td>
            </tr>
           <tr>
             <td>Phase</td>
-            <td><span *ngFor="let y of x['phase']; let i = index">{{y}}<span class="reference">[1]</span>{{i + 1 < x['phase'].length ? '; ' : ' '}}</span></td>
+            <td><span *ngFor="let y of x['phase']; let i = index">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : ''}}</span>{{i + 1 < x['phase'].length ? '; ' : ' '}}</span></td>
           </tr>
           <tr>
             <td>Route of Administration</td>
-            <td><span *ngFor="let y of x['drug_roa']; let i = index">{{y}}<span class="reference">[1]</span>{{i + 1 < x['drug_roa'].length ? '; ' : ' '}}</span></td>
+            <td><span *ngFor="let y of x['drug_roa']; let i = index">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : ''}}</span>{{i + 1 < x['drug_roa'].length ? '; ' : ' '}}</span></td>
           </tr>
         </table>
       </div>
@@ -63,7 +61,9 @@
           </tr>
         </table>
       </div>
+      <h4>Data Sources:</h4>
       <div class="footnote">[1] GVK BioSciences Inc.</div>
+      <div class="footnote">[2] Thomson Reuters Integrity</div>
     </div>
     </div>
     <div class="col-md-4">
