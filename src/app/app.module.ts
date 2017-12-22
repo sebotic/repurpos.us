@@ -30,7 +30,7 @@ import {CIDService, NglComponent} from './ngl/ngl.component';
 import { CompoundSearchOptionsComponent } from './compound-search/compound-search-options/compound-search-options.component';
 import { IndicationsGraphComponent, GraphDataService } from './compound-data/indications-graph/indications-graph.component';
 // import { SearchResultTableComponent } from './compound-search/search-result-table/search-result-table.component';
-import {HttpClientModule, HttpClientXsrfModule, JsonpClientBackend, JsonpInterceptor} from "@angular/common/http";
+import {HttpClientModule, HttpClientXsrfModule} from "@angular/common/http";
 import {AuthComponent, AuthGuard, AuthService} from './auth/auth.component';
 import {DialogOverviewExample, DialogOverviewExampleDialog, EditItemComponent} from './edit-item/edit-item.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -48,7 +48,7 @@ import {
   // MatGridListModule,
   MatIconModule,
   MatInputModule,
-  // MatListModule,
+  MatListModule,
   // MatMenuModule,
   // MatNativeDateModule,
   MatPaginatorModule,
@@ -56,7 +56,7 @@ import {
   // MatProgressSpinnerModule,
   // MatRadioModule,
   // MatRippleModule,
-  // MatSelectModule,
+  MatSelectModule,
   // MatSidenavModule,
   // MatSliderModule,
   // MatSlideToggleModule,
@@ -74,6 +74,9 @@ import {
 import { ShowMoreButtonComponent, ShowMorePane } from './compound-data/show-more-button/show-more-button.component';
 import { SearchResultsTableComponent } from './compound-search/search-results-table/search-results-table.component';
 import {CdkTableModule} from "@angular/cdk/table";
+import {UserRegComponent, UserRegistrationComponent} from './user-registration/user-registration.component';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { UserLoginComponent } from './user-login/user-login.component';
 
 @NgModule({
   exports: [
@@ -91,7 +94,7 @@ import {CdkTableModule} from "@angular/cdk/table";
     // MatGridListModule,
     MatIconModule,
     MatInputModule,
-    // MatListModule,
+    MatListModule,
     // MatMenuModule,
     // MatNativeDateModule,
     MatPaginatorModule,
@@ -99,7 +102,7 @@ import {CdkTableModule} from "@angular/cdk/table";
     // MatProgressSpinnerModule,
     // MatRadioModule,
     // MatRippleModule,
-    // MatSelectModule,
+    MatSelectModule,
     // MatSidenavModule,
     // MatSliderModule,
     // MatSlideToggleModule,
@@ -144,27 +147,30 @@ export class MaterialModule {}
     MailSignupDialog,
     ShowMorePane,
     ShowMoreButtonComponent,
-    SearchResultsTableComponent
+    SearchResultsTableComponent,
+    UserRegistrationComponent,
+    UserLoginComponent,
+    UserRegComponent
 
   ],
   imports: [
     BrowserModule,
-    FormsModule,
     HttpModule,
     RouterModule.forRoot(routes),
     // DataTableModule,
     HttpClientModule,
+    MaterialModule,
 
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
     BrowserAnimationsModule,
+    // MatNativeDateModule,
 
     FormsModule,
-
     ReactiveFormsModule,
 
-    MaterialModule
+    RecaptchaModule.forRoot(),
   ],
 
   providers: [
@@ -183,6 +189,9 @@ export class MaterialModule {}
     DialogOverviewExampleDialog,
 
     MailSignupDialog,
+    // UserLoginComponent,
+    // UserRegComponent,
+    UserRegistrationComponent
   ],
 
   bootstrap: [AppComponent]
