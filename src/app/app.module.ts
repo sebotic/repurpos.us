@@ -21,11 +21,10 @@ import {
 
 
 import {cytoscape} from 'cytoscape';
-import {UnlessDirective} from "./compound-search/unless.directive";
 import {NgCytoscape} from "./compound-search/ng2-cytoscape";
 import {CompoundDataComponent} from './compound-data/compound-data.component';
 // import {InteractionTableComponent, InteractionTableDataService} from './interaction-table/interaction-table.component';
-import { DiseaseDataComponent } from './disease-data/disease-data.component';
+// import { DiseaseDataComponent } from './disease-data/disease-data.component';
 import {CIDService, NglComponent} from './ngl/ngl.component';
 import { CompoundSearchOptionsComponent } from './compound-search/compound-search-options/compound-search-options.component';
 import { IndicationsGraphComponent, GraphDataService } from './compound-data/indications-graph/indications-graph.component';
@@ -128,12 +127,11 @@ export class MaterialModule {}
     CompoundSearchComponent,
     SearchResultComponent,
     SearchBox,
-    UnlessDirective,
     NgCytoscape,
     IndicationsGraphComponent,
     CompoundDataComponent,
     // InteractionTableComponent,
-    DiseaseDataComponent,
+    // DiseaseDataComponent,
     NglComponent,
     CompoundSearchOptionsComponent,
     IndicationsGraphComponent,
