@@ -10,7 +10,7 @@ import {Observable} from 'rxjs/Rx';
 import { Subject }    from 'rxjs/Subject';
 import {flatMap, map} from 'rxjs/operators';
 
-// import {$} from "protractor";
+import {$} from "protractor"; // needed by cytoscape.js
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 
