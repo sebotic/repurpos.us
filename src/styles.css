@@ -1,10 +1,10 @@
-@import './app/vendor/semantic.min.css';
+/*@import './app/vendor/semantic.min.css';*/
 
 /*@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';*/
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 /*@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';*/
 /*@import '~@angular/material/prebuilt-themes/purple-green.css';*/
-@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+/*@import 'https://fonts.googleapis.com/icon?family=Material+Icons';*/
 
 /*.ui.menu .item img.logo {*/
   /*margin-right: 1.5em;*/
