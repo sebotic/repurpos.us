@@ -11,6 +11,7 @@ import {
   HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest,
   HttpResponse
 } from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 
 export interface WDQSData {
@@ -328,7 +329,7 @@ export class CompoundDataComponent implements OnInit {
 
   retrieveAssayData(): void {
     // console.log('retrieve assay data auth key', localStorage.getItem('auth_token'));
-    this.http2.get('http://localhost:5000/assaydata', {
+    this.http2.get(environment.host_url + '/assaydata', {
       observe: 'response',
       withCredentials: true,
       headers: new HttpHeaders()
@@ -351,7 +352,7 @@ export class CompoundDataComponent implements OnInit {
   }
 
   retrieveGVKData(): void {
-    this.http2.get('http://localhost:5000/gvk_data', {
+    this.http2.get(environment.host_url + '/gvk_data', {
       observe: 'response',
       withCredentials: true,
       headers: new HttpHeaders()
@@ -367,7 +368,7 @@ export class CompoundDataComponent implements OnInit {
   }
 
   testStream(){
-    const req = new HttpRequest('GET', 'http://localhost:5000/large', {responseType: 'text',
+    const req = new HttpRequest('GET', environment.host_url + '/large', {responseType: 'text',
       reportProgress: true,
     });
 
