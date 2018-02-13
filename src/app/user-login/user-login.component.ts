@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {User} from "../user-registration/user-registration.component";
 import {HttpErrorResponse, HttpHeaders, HttpClient} from "@angular/common/http";
 import {FormControl, Validators} from "@angular/forms";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-user-login',
@@ -20,7 +21,7 @@ export class UserLoginComponent implements OnInit {
   ngOnInit() {
 
     if(localStorage.getItem('auth_token')){
-      this.http.get('http://localhost:5000/auth/status', {
+      this.http.get(environment.host_url + '/auth/status', {
           observe: 'response',
           // withCredentials: true,
           headers: new HttpHeaders()
@@ -52,7 +53,7 @@ export class UserLoginComponent implements OnInit {
   onSubmit(event){
     console.log(this.user.email, this.user.password);
 
-    this.http.post('http://localhost:5000/auth/login', {"email": this.user.email, "password": this.user.password}, {
+    this.http.post(environment.host_url + '/auth/login', {"email": this.user.email, "password": this.user.password}, {
         observe: 'response',
         // withCredentials: true,
         headers: new HttpHeaders()
@@ -79,7 +80,7 @@ export class UserLoginComponent implements OnInit {
   }
 
   logout(){
-    this.http.post('http://localhost:5000/auth/logout', {}, {
+    this.http.post(environment.host_url +  '/auth/logout', {}, {
         observe: 'response',
         headers: new HttpHeaders()
           .set('Authorization', localStorage.getItem('auth_token'))
