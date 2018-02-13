@@ -4,6 +4,7 @@ import {HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {HttpClient} from "@angular/common/http";
 import {MatDialog} from "@angular/material";
 import {isNullOrUndefined} from "util";
+import {environment} from "../../environments/environment";
 
 export class PasswordValidation {
 
@@ -70,7 +71,7 @@ export class UserRegistrationComponent implements OnInit {
   onSubmit(event){
     console.log(this.user.email, this.user.lastName);
 
-    this.http.post('http://localhost:5000/auth/register',
+    this.http.post(environment.host_url + '/auth/register',
       {"email": this.user.email, "password": this.user.password, "recaptcha_token": this.recaptchaToken}, {
         observe: 'response',
         // withCredentials: true,
