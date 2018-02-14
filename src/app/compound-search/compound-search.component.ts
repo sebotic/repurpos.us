@@ -233,6 +233,7 @@ export class SearchResultComponent implements OnInit{
 export class CompoundSearchComponent {
   results: SearchResult[];
   loadingGif: string = '../../assets/Loading_icon.gif';
+  loading: boolean;
 
   updateResults(results: SearchResult[]): void {
     this.results = results;
