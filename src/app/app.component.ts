@@ -11,6 +11,7 @@ import { CompoundSearchComponent } from './compound-search/compound-search.compo
 import { CompoundDataComponent } from "./compound-data/compound-data.component";
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {isDefined} from "@angular/compiler/src/util";
+import {environment} from "../environments/environment";
 
 
 let routeDef: RouteDef[] = [
@@ -39,7 +40,7 @@ export class AppComponent implements OnInit{
   }
 
   login(){
-    this.http.post('http://localhost:5000/auth/login', {"email": "sebastian.burgstaller@gmail.com", "password": "test"}, {
+    this.http.post(environment.host_url + '/auth/login', {"email": "sebastian.burgstaller@gmail.com", "password": "test"}, {
         observe: 'response',
         headers: new HttpHeaders()
           .set('content-type', 'application/json')
@@ -66,7 +67,7 @@ export class AppComponent implements OnInit{
     console.log(this.document.location.href);
 
     if (localStorage.getItem('auth_token') ){
-      this.http.get('http://localhost:5000/auth/status', {
+      this.http.get(environment.host_url + '/auth/status', {
           observe: 'response',
           headers: new HttpHeaders()
             .set('content-type', 'application/json')
