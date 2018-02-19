@@ -331,7 +331,7 @@ export class CompoundDataComponent implements OnInit {
     // console.log('retrieve assay data auth key', localStorage.getItem('auth_token'));
     this.http2.get(environment.host_url + '/assaydata', {
       observe: 'response',
-      withCredentials: true,
+      // withCredentials: true,
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
         .set('Authorization', localStorage.getItem('auth_token')),
@@ -354,7 +354,7 @@ export class CompoundDataComponent implements OnInit {
   retrieveGVKData(): void {
     this.http2.get(environment.host_url + '/gvk_data', {
       observe: 'response',
-      withCredentials: true,
+      // withCredentials: true,
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
         .set('Authorization', localStorage.getItem('auth_token')),
