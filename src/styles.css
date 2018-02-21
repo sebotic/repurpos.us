@@ -103,3 +103,13 @@ a:hover{
 .accent-color {
   color: #fd5457;
 }
+
+/* Search input box */
+.search input {
+  margin-top: 36px;
+  font-size: 1.5em;
+  min-width: 200px;
+  max-width: 500px;
+  width: 33%;
+  height: 1.5em;
+}
