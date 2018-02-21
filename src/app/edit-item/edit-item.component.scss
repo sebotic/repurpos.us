@@ -1,64 +1,38 @@
-//@import '~@angular/material/_theming';
+$light-grey: rgba(33, 37, 41, 0.18);
+$text-grey: rgba(33, 37, 41, 0.8);
+
+
+.grey-btn {
+  opacity: 0.5;
+  background-color: $light-grey;
+}
+
+.mat-raised-button {
+  background-color: #c4ff8652;
+  color: $text-grey;
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.mat-input-element {
+  color: $text-grey;
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+}
+
 //
-//// NOTE: Theming is currently experimental and not yet publicly released!
-//
-//@include mat-core();
-//
-//$primary: mat-palette($mat-deep-purple);
-//$accent:  mat-palette($mat-amber, A200, A100, A400);
-//
-//$theme: mat-light-theme($primary, $accent);
-//
-//@include angular-material-theme($theme);
-//
-//.m2app-dark {
-//  $dark-primary: mat-palette($mat-pink, 700, 500, 900);
-//  $dark-accent:  mat-palette($mat-blue-grey, A200, A100, A400);
-//  $dark-warn:    mat-palette($mat-deep-orange);
-//
-//  $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
-//
-//  @include angular-material-theme($dark-theme);
-//}
-//
-//body {
-//  font-family: Roboto, 'Helvetica Neue', sans-serif;
-//
-//  // Helps fonts on OSX looks more consistent with other systems
-//  // Isn't currently in button styles due to performance concerns
-//  * {
-//    -webkit-font-smoothing: antialiased;
-//    -moz-osx-font-smoothing: grayscale;
-//  }
-//
-//  mat-sidenav {
-//    min-width: 15%;
-//
-//    [mat-button] {
-//      width: 100%;
-//      position: relative;
-//      bottom: 0;
-//      margin: 24px 0;
-//    }
-//  }
-//
-//  .demo-content {
-//    padding: 32px;
-//  }
-//
-//  mat-toolbar {
-//    mat-icon {
-//      cursor: pointer;
-//    }
-//
-//    .demo-toolbar {
-//      display: flex;
-//      justify-content: space-between;
-//      width: 100%;
-//    }
-//  }
-//
-//  h1 {
-//    font-size: 20px;
-//  }
-//}
+// <div class="mat-app-background">
+// <ol>
+// <li>
+//   <mat-form-field>
+//     <input matInput [(ngModel)]="name" placeholder="Enter a drug class">
+
+mat-form-field {
+  font-family: "Lato", Arial, sans-serif;
+  color: red;
+  opacity: 0.6;
+  font-weight: 300;
+  font-size: 18px;
+}
