@@ -1,0 +1,102 @@
+/* -- header -- */
+
+.blue-fill {
+  background-color: #3d6de00d;
+  padding-left: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+}
+
+.logo {
+  display: -webkit-inline-box;
+  border-right: 3px white solid;
+}
+
+.logo img {
+  margin-top: 0px;
+  width: 40px;
+  vertical-align: top;
+}
+
+.name {
+  display: -webkit-inline-box;
+  margin-top: 7px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.name a:hover {
+  text-decoration: none;
+}
+
+.site-name {
+  font-size: 1.4em;
+}
+
+.site-subtitle {
+  font-size: 0.9em;
+  width: 145px;
+  opacity: 0.65;
+  line-height: 1em;
+  margin-left: 12px;
+}
+
+.narrow {
+  letter-spacing: -0.2px;
+}
+
+.wide {
+  letter-spacing: 1px;
+}
+
+header ul, footer ul {
+  list-style-type: none;
+}
+
+header li, footer li {
+  display: inline-block;
+  opacity: 0.8;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+header li {
+  padding-top: 12px;
+}
+
+header a {
+  color: #212529;
+}
+
+/* footer */
+
+footer {
+  border-top: 4px solid #3d6de090;
+  margin-top: 6px;
+  /* padding-top: 3px; */
+  font-size: 1em;
+  margin-top: 48px;
+  margin-bottom: 6px;
+  vertical-align: middle;
+}
+
+footer li {
+  padding-top: 6px;
+  padding-right: 18px;
+}
+
+.calibr-logo {
+  margin-top: 0px;
+  height: 30px;
+  vertical-align: middle;
+}
+
+.gh {
+  height: 20px;
+  margin-right: 6px;
+}
+
+.left-spacer {
+  padding-left: 6px;
+}

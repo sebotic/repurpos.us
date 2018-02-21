@@ -1,42 +1,93 @@
 <div class="ui menu">
-  <div class="container-fluid">
-    <!--<div class="row-fluid">-->
-      <div class="col-md-1">
+  <header class="blue-fill">
+    <div class="container-fluid">
+      <div class="logo pull-left">
+        <a href="/"><img src="../assets/logo-app.png" width="40px" /></a>
 
-        <a href="#" class="header item">
-          <img src='../assets/logo-app.png'/>
-        </a>
+        <div class="name">
+            <div class="site-name">
+              <a href="/"><span class="bold">reframe</span><span class="thin">db</span></a>
+            </div>
 
-      </div>
-      <div class="col-md-12">
-        <div class="header item borderless">
-          <h1 class="ui header">
-            ReFrameDB: Drug Repositioning for Neglected Diseases
-          </h1>
+            <div class="site-subtitle">
+              <a href="/"><span class="wide">open & extendable </span><span class="narrow">drug repurposing data</span></a>
+            </div>
         </div>
+
       </div>
-    <!--</div>-->
-  </div>
+
+      <div class="links pull-right">
+        <ul>
+          <li>
+            <a href="">search</a>
+          </li>
+          <li>
+            <a href="/assays">assays</a>
+          </li>
+          <li>
+            <a href="/about">about</a>
+          </li>
+          <li class="accent-color">
+            sign in
+          </li>
+        </ul>
+      </div>
+
+
+    </div>
+
+    <div class="header item borderless">
+      <app-user-login></app-user-login>
+    </div>
+  </header>
 
   <!--<div class="header item borderless">-->
-    <!--<app-mail-signup></app-mail-signup>-->
+  <!--<app-mail-signup></app-mail-signup>-->
   <!--</div>-->
 
   <!--<div class="header item borderless">-->
-    <!--<app-auth></app-auth>-->
+  <!--<app-auth></app-auth>-->
   <!--</div>-->
 
-  <div class="header item borderless">
-    <app-user-login></app-user-login>
-  </div>
+
 
 </div>
 
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span12">
-      <menu-bar [items]="routeDef"></menu-bar>
+      <!-- <menu-bar [items]="routeDef"></menu-bar> -->
       <router-outlet></router-outlet>
     </div>
   </div>
+</div>
+
+<div class="container-fluid">
+  <footer>
+    <ul>
+      <li>
+        &copy; 2018 <a class="left-spacer" href="http://sulab.org/" target="_blank">Su Lab</a>
+      </li>
+      <li>
+
+      </li>
+      <li>
+        <a href="https://www.scripps.edu/" target="_blank">
+        <img class="gh" alt="The Scripps Research Institute" src="../assets/tsri.jpg"/>
+        <span>The Scripps Research Institute</span></a>
+      </li>
+      <li>
+        <a href="https://www.calibr.org/" target="_blank"><img class="calibr-logo" alt="The California Institute for Biomedical Research" src="../assets/calibr-logo.jpg" /></a>
+      </li>
+
+      <li>
+        <a href="https://github.com/sebotic/repurpos.us" target="_blank"><img class="gh" alt="View code on GitHub repository" src="../assets/GitHub-Mark-32px.png" />
+      view code</a>
+      </li>
+
+      <li>
+        <a rel="license" href="https://creativecommons.org/share-your-work/public-domain/cc0/"><img alt="Creative Commons License" style="border-width:0" src="https://licensebuttons.net/l/publicdomain/80x15.png" /></a>.
+      </li>
+    </ul>
+  </footer>
 </div>
