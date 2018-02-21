@@ -76,6 +76,7 @@ import {CdkTableModule} from "@angular/cdk/table";
 import {UserRegComponent, UserRegistrationComponent} from './user-registration/user-registration.component';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { UserLoginComponent } from './user-login/user-login.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   exports: [
@@ -113,7 +114,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
     // MatToolbarModule,
     MatTooltipModule,
   ],
-  declarations: [],
+  declarations: [AboutComponent],
 
 })
 export class MaterialModule {}
