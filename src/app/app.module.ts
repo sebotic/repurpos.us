@@ -77,6 +77,8 @@ import {UserRegComponent, UserRegistrationComponent} from './user-registration/u
 import { RecaptchaModule } from 'ng-recaptcha';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { AboutComponent } from './about/about.component';
+import { AssaysComponent } from './assays/assays.component';
+import { AssayPlotsComponent } from './assay-plots/assay-plots.component';
 
 @NgModule({
   exports: [
@@ -114,7 +116,7 @@ import { AboutComponent } from './about/about.component';
     // MatToolbarModule,
     MatTooltipModule,
   ],
-  declarations: [AboutComponent],
+  declarations: [AboutComponent, AssaysComponent, AssayPlotsComponent],
 
 })
 export class MaterialModule {}

@@ -10,6 +10,7 @@ import { RouteDef } from "./menu-bar/menu-bar.component";
 import { CompoundSearchComponent } from './compound-search/compound-search.component'
 import { CompoundDataComponent } from "./compound-data/compound-data.component";
 import { AboutComponent } from "./about/about.component";
+import { AssaysComponent } from "./assays/assays.component";
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {isDefined} from "@angular/compiler/src/util";
 import {environment} from "../environments/environment";
@@ -18,13 +19,15 @@ import {environment} from "../environments/environment";
 let routeDef: RouteDef[] = [
   {label: 'Compound Search', name: 'Root', path: '', component: CompoundSearchComponent},
   {label: 'Compound Data', name: 'compound_data', path: 'compound_data/:qid', component: CompoundDataComponent },
-  {label: 'about', name: 'about', path: 'about', component: AboutComponent }
+  {label: 'about', name: 'about', path: 'about', component: AboutComponent },
+  {label: 'Assay Descriptions', name: 'assays', path: 'assays', component: AssaysComponent }
 ];
 
 
 export const routes: Routes = [
   { path: '', component: CompoundSearchComponent, pathMatch: 'full' },
   { path: 'about', component: AboutComponent, pathMatch: 'full' },
+  { path: 'assays', component: AssaysComponent, pathMatch: 'full' },
   { path: 'compound_data/:qid', component: CompoundDataComponent, pathMatch: 'full' }
 ];
 

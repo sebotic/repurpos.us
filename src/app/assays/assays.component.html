@@ -1,0 +1,47 @@
+<div class="container" id="content">
+  <div class="row summary-box">
+    <h1 class="title">Assay descriptions</h1>
+    <div class="summary" id="main_summary">
+      Experimental methodology and data for each high throughput screen
+    </div>
+  </div>
+
+  <div class="row">
+    <table style="width:100%" id="assays">
+      <tr id="label">
+        <th id="table_id">id</th>
+        <th id="table_assay">assay</th>
+        <th id="table_descrip">description</th>
+      </tr>
+
+      <!-- <div>
+        {{assayList.summary[0]}}
+      </div> -->
+
+
+      <!-- <span *ngIf="assayList.length > 0"> -->
+      <span *ngFor="let assay of assayList">
+
+      <tr>
+        <td class="id" id="table_id">
+          {{ assayList.genedata_id[0] }}
+        </td>
+
+        <td class="summary" id="table_assay">
+          <a href="/{{ assayList.id[0] }}">
+            {{ assayList.title[0] }}
+          </a>
+        </td>
+
+        <td id="table_descrip">
+          {{ assayList.summary[0] }}
+        </td>
+
+      </tr>
+
+      </span>
+      <!-- </span> -->
+
+    </table>
+  </div>
+</div>
