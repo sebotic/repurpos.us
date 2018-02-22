@@ -79,6 +79,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { AboutComponent } from './about/about.component';
 import { AssaysComponent } from './assays/assays.component';
 import { AssayPlotsComponent } from './assay-plots/assay-plots.component';
+import { AssayDataComponent } from './assay-data/assay-data.component';
 
 @NgModule({
   exports: [
@@ -116,7 +117,7 @@ import { AssayPlotsComponent } from './assay-plots/assay-plots.component';
     // MatToolbarModule,
     MatTooltipModule,
   ],
-  declarations: [AboutComponent, AssaysComponent, AssayPlotsComponent],
+  declarations: [],
 
 })
 export class MaterialModule {}
@@ -133,6 +134,11 @@ export class MaterialModule {}
     NgCytoscape,
     IndicationsGraphComponent,
     CompoundDataComponent,
+
+    AboutComponent,
+    AssaysComponent,
+    AssayDataComponent,
+    AssayPlotsComponent,
     // InteractionTableComponent,
     // DiseaseDataComponent,
     NglComponent,
