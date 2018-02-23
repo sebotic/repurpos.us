@@ -1,0 +1,328 @@
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+
+a, a.dwnld-link:hover {
+  color: #3D6DE0;
+}
+
+.accent-color {
+  color: #fd5457;
+}
+
+
+.title {
+  width: 85%;
+}
+
+.subtitle {
+  font-size: 20px;
+}
+
+.assay-id, .home-link {
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+
+.assay-id {
+    color: #21252945;
+}
+
+.home-link {
+    color: #3D6DE0;
+}
+
+#viewmore {
+  padding: 10px;
+}
+
+.overview {
+}
+
+.overview > ul {
+  list-style: none;
+  padding: 6px 10px 6px 10px;
+  background: #3d6de00d;
+}
+
+.summary-box {
+  border-bottom: 1px solid #212529;
+  border-top: 1px solid #212529;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.summary {
+  font-size: 20px;
+}
+
+#label{
+  font-weight: 400;
+}
+
+.condits{
+  color: #818182;
+  padding-top: 6px;
+}
+
+
+#content{
+  margin: 15px;
+}
+
+h3#data-title {
+  margin-bottom: 0;
+}
+
+/* nav elements:  tab panes, pagination */
+.data-header{
+  margin-bottom: 24px;
+}
+
+
+.dropdown-menu {
+  background-color: #f4f4f4;
+  min-width: 100px;
+}
+
+.dropdown-menu > li {
+  text-align: center;
+}
+
+.dwnld-link {
+  color: #21252980;
+  font-size: 1rem;
+  font-weight: 300;
+  font-family: 'Lato', sans-serif;
+}
+
+.dwnld-btn {
+  background-color: #2125290d;
+  border-radius: 3px;
+  margin-left: 20px;
+  border: 1px #2125290d solid;
+  -webkit-text-fill-color: #21252940; /*text color*/
+  color: #21252955; /*caret color*/
+  font-size: 1rem;
+  font-weight: 300;
+  font-family: 'Lato', sans-serif;
+}
+
+.dwnld-btn:hover {
+  background-color: #21252921;
+}
+
+/* IC/EC tab buttons */
+.nav-pills {
+  margin-top: -0.5rem;
+}
+
+.nav-pills .nav-link {
+  background-color: #2125290d;
+  border-radius: 3px;
+  margin-left: 4px;
+  border: 0px #2125290d solid;
+  border-bottom-width: 4px;
+  color: #21252935;
+  -webkit-text-fill-color: #21252935;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  background-color: #21252920;
+  border-color: #21252920;
+  -webkit-text-fill-color: #21252980;
+  color: #21252980;
+}
+
+.nav-pills .nav-link:hover {
+  background-color: #3d6de025;
+  color: #3d6de0;
+  border-color: #3d6de025;
+}
+
+.nav-link {
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+/* links */
+
+.y-link {
+  font-size: 1em;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  fill: #212529b0;
+  dominant-baseline: middle;
+  /* dominant-baseline: mathematical; */
+  text-anchor: end;
+}
+
+.cmpd-link {
+  fill: white;
+  stroke: none;
+  opacity: 0;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.active.pointer {
+  text-decoration: underline;
+}
+
+/* Rollover */
+
+.active {
+  opacity: 1;
+}
+
+.inactive {
+  opacity: 0.25;
+}
+
+.cmpd-link.active {
+  opacity: 0;
+}
+
+.cmpd-link.inactive {
+  opacity: 0.8;
+}
+
+#data-headers {
+  border-bottom: 1px solid #21252980;
+  border-top: 1px solid #21252980;
+}
+
+
+.rollover-avg {
+  font-size: 1em;
+  font-weight: 400;
+}
+
+.rollover-indiv {
+  font-size: 0.8em;
+  color: #21252980;
+  padding-left: 12px;
+}
+
+#dotplot-container {
+  position: relative;
+}
+
+#structs {
+  pointer-events: none;
+  padding: 12px;
+  position: absolute;
+  border-radius: 5px;
+  background: #f3f3f4;
+}
+
+#struct-name {
+  margin-top: -8px;
+}
+
+/* Pagination */
+
+ul.pagination {
+  margin-top: -40px;
+}
+
+
+.page-link {
+  color: #21252980;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-top: 0px;
+  margin-bottom: 8px;
+  border-left-width: 0px;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 4px;
+  border-color: white;
+}
+
+.page-link:focus, .page-link:hover {
+    color: #FD5457;
+}
+
+
+.page-selected, .page-link:focus {
+  color: #FD5457;
+  border-color: #FD5457;
+  background-color: transparent;
+}
+
+/* Dot styling */
+
+.assay-avg {
+  stroke: #212529;
+  stroke-width: 0.4;
+  stroke-opacity: 1;
+}
+
+.assay-val {
+  stroke: #212529;
+  stroke-width: 0.4;
+  fill: #c5c9ce;
+}
+
+/* .val-annot {
+} */
+
+.lollipop {
+  stroke: #21252940;
+}
+
+/* Axes */
+
+.axis--y text {
+  font-size: 1.5em;
+  fill: #212529b0;
+  display: none;
+}
+
+.axis path {
+  stroke: #212529;
+  fill: none;
+  stroke-width: 0.4px;
+}
+
+.axis--y path, .axis--y line {
+  display: none;
+}
+
+/* ticks & grid lines */
+
+.axis line {
+  stroke: #212529;
+  fill: none;
+  stroke-width: 0.6px;
+}
+
+.axis .minor line {
+  stroke-width: 0.25px;
+  opacity: 0.4;
+}
+
+/* annotations */
+
+.annotation--x {
+  font-weight: 400;
+  font-size: 1.5em;
+  opacity: 0.2;
+  text-transform: uppercase;
+}
+
+.annotation-right {
+  text-anchor: end;
+}

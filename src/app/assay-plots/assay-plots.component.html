@@ -1,0 +1,75 @@
+<!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
+
+<!-- VIS -->
+<div id="vis" *ngIf="loggedIn; else log_in">
+  <div class="row data-header">
+    <div class="col-10">
+      <h3 id="data-title">Assay data
+        <!-- {{ assayData.length}} -->
+        <div>
+          logged in status: {{loggedIn}}
+        </div>
+
+  <button class="dwnld-btn btn-default dropdown-toggle" type="button" id="downloadMenu"
+  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    download
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+    <li><a href="#" id="tsv-dwnld" class="dwnld-link">tsv</a></li>
+        <li><a href="#" id="json-dwnld" class="dwnld-link">json</a></li>
+  </ul>
+
+    </h3>
+    </div>
+
+
+    <!-- <app-interaction-table
+      [sdata]="tableData"
+    &gt;</app-interaction-table> -->
+    <div class="col-2">
+      <!-- Nav tabs -->
+      <ul class="nav nav-pills justify-content-end" id="tabs" role="tablist">
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div class="tab-pane active" id="ic50" role="tabpanel"></div>
+    <div class="tab-pane" id="ec50" role="tabpanel"></div>
+  </div>
+
+  <!-- SVG dotplot -->
+  <div id="dotplot-container">
+    <!-- Call D3 directive -->
+
+    <!-- <div ng-app="myApp" ng-controller="Ctrl">
+    <bars-chart chart-data="myData"  ></bars-chart>
+</div> -->
+    <!-- <dot-plot data="assayData"></dot-plot> -->
+
+  </div>
+
+  <!-- pagination -->
+  <ul class="nav nav-tabs justify-content-end pagination" role="tablist">
+  </ul>
+
+  <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
+  <!-- <script src="/static/lib/d3v4+jetpack.js"></script>
+  <script src="/static/lib/d3-scale-chromatic.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/plot_assays.js') }}"></script> -->
+
+</div>
+
+<ng-template #log_in>
+  <div class="row data-header">
+    <div class="col-10">
+      <h3 id="data-title">Assay data</h3>
+      <div>
+        <a class="accent-color subtitle login-req" href="">sign in to view activity data</a>
+      </div>
+    </div>
+  </div>
+</ng-template>
