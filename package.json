@@ -25,6 +25,7 @@
     "@angular/router": "^5.2.2",
     "core-js": "^2.5.3",
     "cytoscape": "^3.2.8",
+    "d3": "^4.13.0",
     "loader-utils": "^1.1.0",
     "ng-recaptcha": "^3.0.3",
     "ngl": "^0.10.4",
@@ -39,6 +40,7 @@
   "devDependencies": {
     "@angular/cli": "^1.6.6",
     "@angular/compiler-cli": "^5.2.2",
+    "@types/d3": "^5.0.0",
     "@types/jasmine": "^2.8.6",
     "@types/node": "^9.4.6",
     "codelyzer": "^4.1.0",
