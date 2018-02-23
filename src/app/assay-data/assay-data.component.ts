@@ -46,7 +46,6 @@ export class AssayDataComponent implements OnInit {
         console.log('More than one assay matched')
       }
       this.assayDetails = v[0];
-      console.log(this.assayDetails)
     },
     err => {}
     );

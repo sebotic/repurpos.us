@@ -17,17 +17,12 @@ import {environment} from "../../environments/environment";
 
 export class AssaysComponent implements OnInit {
   assayList: Object = [];
-  // qid: string = "Q57055";
-
 
   constructor(
     private route: ActivatedRoute,
     private http: Http,
     private http2: HttpClient
   ) {
-    // route.params.subscribe(params => {
-    //   this.qid = params['qid'];
-    // });
   }
 
   ngOnInit() {
@@ -38,10 +33,8 @@ export class AssaysComponent implements OnInit {
   retrieveAssayList(): void {
     this.http2.get(environment.host_url + '/assay_list', {
       observe: 'response',
-      // withCredentials: true,
       headers: new HttpHeaders()
-        .set('Accept', 'application/json')
-        .set('Authorization', localStorage.getItem('auth_token'))
+        .set('Accept', 'application/json'),
     }).subscribe((r) => {
       let b = r.body;
       this.assayList = b;

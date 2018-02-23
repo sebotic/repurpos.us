@@ -1,4 +1,4 @@
-<div class = "container" id = "content">
+<div class="container" id="content">
 
 
 
@@ -7,96 +7,93 @@
       <h1 class="title assay-title">   {{ assayDetails.title }} </h1>
       <!-- <h1 class="title assay-title">{{ df.title }}</h1> -->
     </div>
-  <div class="col-2">
-    <p class="text-right assay-id"> {{ assayDetails.assay_id }} </p>
-    <p class="text-right home-link"><a href="/#/assays">return to all assays</a></p>
+    <div class="col-2">
+      <p class="text-right assay-id"> {{ assayDetails.assay_id }} </p>
+      <p class="text-right home-link"><a href="/#/assays">return to all assays</a></p>
     </div>
 
 
-  <!-- SUMMARY -->
-  <div class="row summary-box">
+    <!-- SUMMARY -->
+    <div class="row summary-box">
 
-    <div class="col-sm-9">
-      <div class="summary">
-        {{ assayDetails.summary}}
+      <div class="col-sm-9">
+        <div class="summary">
+          {{ assayDetails.summary}}
+        </div>
+
+        <div id="viewmore">
+          <a href="#protocol">view detailed protocol</a>
+        </div>
+
       </div>
 
-      <div id="viewmore">
-        <a href="#protocol">view detailed protocol</a>
+      <div class="col-sm-3 overview">
+        <ul>
+          <li><span id="label">indication: </span> {{ assayDetails.indication }}</li>
+          <li><span id="label">assay type: </span> {{ assayDetails.assay_type }}</li>
+          <li><span id="label">components: </span> {{ assayDetails.components }}</li>
+          <li><span id="label">detection method: </span> {{ assayDetails.detection_method }}</li>
+        </ul>
       </div>
 
     </div>
+    <!-- end summary -->
 
-    <div class="col-sm-3 overview">
-      <ul>
-        <li><span id="label">indication: </span> {{ assayDetails.indication }}</li>
-        <li><span id="label">assay type: </span> {{ assayDetails.assay_type }}</li>
-        <li><span id="label">components: </span> {{ assayDetails.components }}</li>
-        <li><span id="label">detection method: </span> {{ assayDetails.detection_method }}</li>
-      </ul>
-    </div>
-
-  </div>
-  <!-- end summary -->
-
-<!-- VIS -->
-<!-- TODO: show if authenticated; else prompt to login. -->
+    <!-- VIS -->
     <app-assay-plots></app-assay-plots>
     <!--  end vis -->
 
 
+    <!-- DETAILS -->
+    <div id="protocol">
+      <h3>{{ assayDetails.title }} protocol</h3>
 
+      <div class="description">
+        {{ assayDetails.description }}
+      </div>
 
-  <!-- DETAILS -->
-  <div id="protocol">
-    <h3>{{ assayDetails.title }} protocol</h3>
+      <div class="row">
+        <div class="col-sm-6" id="drug-condits">
+          <div class="row subtitle">Drug incubation conditions</div>
+          <div class="row">
+            <div class="col-sm-7 condits">
+              {{ assayDetails.protocol }}
+            </div>
 
-    <div class="description">
-      {{ assayDetails.description }}
-    </div>
+            <div class="col-sm-5 overview">
+              <ul>
+                <li><span id="label">assay type: </span> {{ assayDetails.assay_type }}</li>
+                <li><span id="label">components: </span> {{ assayDetails.components }} </li>
+                <li><span id="label">drug concentration: </span> {{ assayDetails.drug_conc }} </li>
+              </ul>
+            </div>
 
-    <div class="row">
-      <div class="col-sm-6" id="drug-condits">
-        <div class="row subtitle">Drug incubation conditions</div>
-        <div class="row">
-          <div class="col-sm-7 condits">
-            {{ assayDetails.protocol }}
           </div>
 
-          <div class="col-sm-5 overview">
-            <ul>
-              <li><span id="label">assay type: </span> {{ assayDetails.assay_type }}</li>
-              <li><span id="label">components: </span> {{ assayDetails.components }} </li>
-              <li><span id="label">drug concentration: </span> {{ assayDetails.drug_conc }} </li>
-            </ul>
+        </div>
+
+        <div class="col-sm-6" id="detect-condits">
+          <div class="row subtitle">Detection conditions</div>
+          <div class="row">
+            <div class="col-sm-7 condits">
+              {{ assayDetails.protocol_detection }}
+            </div>
+
+            <div class="col-sm-5 overview">
+              <ul>
+                <li><span id="label">detection method: </span> {{ assayDetails.detection_method }}</li>
+                <li *ngIf="assayDetails.detection_dye"><span id="label">detection dye: </span> {{ assayDetails.detection_dye }}</li>
+
+              </ul>
+            </div>
+
           </div>
 
         </div>
 
       </div>
 
-      <div class="col-sm-6" id="detect-condits">
-        <div class="row subtitle">Detection conditions</div>
-        <div class="row">
-          <div class="col-sm-7 condits">
-            {{ assayDetails.protocol_detection }}
-          </div>
-
-          <div class="col-sm-5 overview">
-            <ul>
-              <li><span id="label">detection method: </span> {{ assayDetails.detection_method }}</li>
-              <li *ngIf="assayDetails.detection_dye"><span id="label">detection dye: </span> {{ assayDetails.detection_dye }}</li>
-
-            </ul>
-          </div>
-
-        </div>
-
-      </div>
-
     </div>
+
 
   </div>
-
-
-</div>
