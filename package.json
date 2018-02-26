@@ -23,6 +23,7 @@
     "@angular/platform-browser": "^5.2.2",
     "@angular/platform-browser-dynamic": "^5.2.2",
     "@angular/router": "^5.2.2",
+    "@ng-bootstrap/ng-bootstrap": "^1.0.0",
     "core-js": "^2.5.3",
     "cytoscape": "^3.2.8",
     "d3": "^4.13.0",
