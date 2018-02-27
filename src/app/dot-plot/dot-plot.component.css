@@ -1,0 +1,182 @@
+/* .d3-chart {	  width: 100%;	  height: 400px;	}
+.d3-chart .axis path,	.d3-chart .axis line {	  stroke: #999;	}
+.d3-chart .axis text {	  fill: #999;	} */
+
+/* Container */
+#dotplot-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+
+/* links */
+
+.y-link {
+  font-size: 1em;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  fill: #212529b0;
+  dominant-baseline: middle;
+  /* dominant-baseline: mathematical; */
+  text-anchor: end;
+}
+
+.cmpd-link {
+  fill: white;
+  stroke: none;
+  opacity: 0;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.active.pointer {
+  text-decoration: underline;
+}
+
+/* Rollover */
+
+.active {
+  opacity: 1;
+}
+
+.inactive {
+  opacity: 0.25;
+}
+
+.cmpd-link.active {
+  opacity: 0;
+}
+
+.cmpd-link.inactive {
+  opacity: 0.8;
+}
+
+#data-headers {
+  border-bottom: 1px solid #21252980;
+  border-top: 1px solid #21252980;
+}
+
+
+.rollover-avg {
+  font-size: 1em;
+  font-weight: 400;
+}
+
+.rollover-indiv {
+  font-size: 0.8em;
+  color: #21252980;
+  padding-left: 12px;
+}
+
+#structs {
+  pointer-events: none;
+  padding: 12px;
+  position: absolute;
+  border-radius: 5px;
+  background: #f3f3f4;
+}
+
+#struct-name {
+  margin-top: -8px;
+}
+
+/* Pagination */
+
+ul.pagination {
+  margin-top: -40px;
+}
+
+
+.page-link {
+  color: #21252980;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-top: 0px;
+  margin-bottom: 8px;
+  border-left-width: 0px;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 4px;
+  border-color: white;
+}
+
+.page-link:focus, .page-link:hover {
+    color: #FD5457;
+}
+
+
+.page-selected, .page-link:focus {
+  color: #FD5457;
+  border-color: #FD5457;
+  background-color: transparent;
+}
+
+/* Dot styling */
+
+.assay-avg {
+  stroke: #212529;
+  stroke-width: 0.4;
+  stroke-opacity: 1;
+}
+
+.assay-val {
+  stroke: #212529;
+  stroke-width: 0.4;
+  fill: #c5c9ce;
+}
+
+/* .val-annot {
+} */
+
+.lollipop {
+  stroke: #21252940;
+}
+
+/* Axes */
+
+.axis--y text {
+  font-size: 1.5em;
+  fill: #212529b0;
+  /* display: none; */
+}
+
+.axis path {
+  stroke: #212529;
+  fill: none;
+  stroke-width: 0.4px;
+}
+
+.axis--y path, .axis--y line {
+  display: none;
+}
+
+/* ticks & grid lines */
+
+.axis line {
+  stroke: #212529;
+  fill: none;
+  stroke-width: 0.6px;
+}
+
+.axis .minor line {
+  stroke-width: 0.25px;
+  opacity: 0.4;
+}
+
+/* annotations */
+
+.annotation--x {
+  font-weight: 400;
+  font-size: 1.5em;
+  opacity: 0.2;
+  text-transform: uppercase;
+}
+
+.annotation-right {
+  text-anchor: end;
+}

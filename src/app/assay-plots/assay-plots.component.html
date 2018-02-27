@@ -1,32 +1,16 @@
 <!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
-
 <!-- VIS -->
 <div id="vis" *ngIf="loggedIn; else log_in">
   <div class="row data-header">
     <div class="col-10">
       <h3 id="data-title">Assay data
-        <!-- {{ assayData.length}} -->
-        <div>
-          logged in status: {{loggedIn}}
-        </div>
-
-  <button class="dwnld-btn btn-default dropdown-toggle" type="button" id="downloadMenu"
-  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    download
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-    <li><a href="#" id="tsv-dwnld" class="dwnld-link">tsv</a></li>
-        <li><a href="#" id="json-dwnld" class="dwnld-link">json</a></li>
-  </ul>
-
+        <app-assay-dwnld *ngIf="assayData" [data]="assayData"></app-assay-dwnld>
     </h3>
     </div>
 
 
-    <!-- <app-interaction-table
-      [sdata]="tableData"
-    &gt;</app-interaction-table> -->
+
+
     <div class="col-2">
       <!-- Nav tabs -->
       <ul class="nav nav-pills justify-content-end" id="tabs" role="tablist">
@@ -41,16 +25,10 @@
     <div class="tab-pane" id="ec50" role="tabpanel"></div>
   </div>
 
-  <!-- SVG dotplot -->
-  <div id="dotplot-container">
-    <!-- Call D3 directive -->
 
-    <!-- <div ng-app="myApp" ng-controller="Ctrl">
-    <bars-chart chart-data="myData"  ></bars-chart>
-</div> -->
-    <!-- <dot-plot data="assayData"></dot-plot> -->
 
-  </div>
+  <!-- Call D3 component -->
+  <app-dot-plot *ngIf="assayData" [data]="filteredData" [assay_domain] = "assayDomain" [assay_type] = "assayType"></app-dot-plot>
 
   <!-- pagination -->
   <ul class="nav nav-tabs justify-content-end pagination" role="tablist">

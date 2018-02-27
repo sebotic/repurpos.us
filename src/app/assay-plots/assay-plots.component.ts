@@ -13,8 +13,15 @@ import {environment} from "../../environments/environment";
   templateUrl: './assay-plots.component.html',
   styleUrls: ['./assay-plots.component.css']
 })
+
 export class AssayPlotsComponent implements OnInit {
     assayData: Object = [];
+    filteredData: Object = [];
+    assayValues: Object = [];
+    assayDomain: Object = [];
+    assayType: string = 'IC';
+    currentPage: number = 0;
+    private numPerPage: number = 15;
     loggedIn: boolean;
     aid: string;
 
@@ -51,7 +58,19 @@ export class AssayPlotsComponent implements OnInit {
 
         this.assayData = v;
 
-        console.log(this.assayData)
+
+        // Pull out the limits for the *entire* dataset
+        let assayValues = this.assayData.map(function(d) { return d.ac50; })
+        this.assayDomain = [Math.max(...assayValues), Math.min(...assayValues)]
+
+        // filter the data for the current page, assay type
+        // filter assay type first, so that the number filters are just for that assay type
+        this.filteredData = this.assayData.filter(d => d.assay_type == this.assayType)
+        .filter(
+        (d,i) =>
+        i < this.numPerPage * (this.currentPage + 1) &&
+        i >= this.numPerPage * this.currentPage)
+
       },
       err => {}
       );
@@ -59,3 +78,30 @@ export class AssayPlotsComponent implements OnInit {
 
 
   }
+
+// tester code based on https://keathmilligan.net/create-a-reusable-chart-component-with-angular-and-d3-js/
+// export class AssayPlotsComponent implements OnInit {
+//   private chartData: Array<any>;
+//
+//   constructor() {}
+//
+//   ngOnInit() {
+//     // give everything a chance to get loaded before starting the animation to reduce choppiness
+//     setTimeout(() => {
+//       this.generateData();
+//
+//       // change the data periodically
+//       setInterval(() => this.generateData(), 3000);
+//     }, 1000);
+//   }
+//
+//   generateData() {
+//     this.chartData = [];
+//     for (let i = 0; i < (8 + Math.floor(Math.random() * 10)); i++) {
+//       this.chartData.push([
+//         `Index ${i}`,
+//         Math.floor(Math.random() * 100)
+//       ]);
+//     }
+//   }
+// }

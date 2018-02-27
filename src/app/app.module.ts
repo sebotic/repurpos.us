@@ -75,11 +75,14 @@ import { SearchResultsTableComponent } from './compound-search/search-results-ta
 import {CdkTableModule} from "@angular/cdk/table";
 import {UserRegComponent, UserRegistrationComponent} from './user-registration/user-registration.component';
 import { RecaptchaModule } from 'ng-recaptcha';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { AboutComponent } from './about/about.component';
 import { AssaysComponent } from './assays/assays.component';
 import { AssayPlotsComponent } from './assay-plots/assay-plots.component';
 import { AssayDataComponent } from './assay-data/assay-data.component';
+import { DotPlotComponent } from './dot-plot/dot-plot.component';
+import { AssayDwnldComponent } from './assay-dwnld/assay-dwnld.component';
 
 @NgModule({
   exports: [
@@ -139,6 +142,8 @@ export class MaterialModule {}
     AssaysComponent,
     AssayDataComponent,
     AssayPlotsComponent,
+    DotPlotComponent,
+    AssayDwnldComponent,
     // InteractionTableComponent,
     // DiseaseDataComponent,
     NglComponent,
@@ -176,6 +181,7 @@ export class MaterialModule {}
 
     FormsModule,
     ReactiveFormsModule,
+    NgbModule.forRoot(),
 
     RecaptchaModule.forRoot(),
   ],
