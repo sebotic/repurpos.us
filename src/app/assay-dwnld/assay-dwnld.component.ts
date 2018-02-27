@@ -11,6 +11,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 export class AssayDwnldComponent {
   @Input() private data: Array<any>;
 
+  // download function from https://code-maven.com/create-and-download-csv-with-javascript
+  // and https://halistechnology.com/2015/05/28/use-javascript-to-export-your-data-as-csv/
   dwnldTSV() {
     const assay_title = 'assay'
 

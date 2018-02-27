@@ -36,7 +36,7 @@ export class UserLoginComponent implements OnInit {
 
           this.loggedIn = true;
 
-          console.log(JSON.stringify(re));
+          // console.log(JSON.stringify(re));
           // console.log(re.status);
         },
         (err: HttpErrorResponse) => {

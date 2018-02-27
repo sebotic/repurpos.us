@@ -71,8 +71,8 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void{
-    console.log(this.document.location.pathname);
-    console.log(this.document.location.href);
+    // console.log(this.document.location.pathname);
+    // console.log(this.document.location.href);
 
     if (localStorage.getItem('auth_token') ){
       this.http.get(environment.host_url + '/auth/status', {
@@ -84,10 +84,10 @@ export class AppComponent implements OnInit{
 
       ).subscribe((re) => {
           let credentials = re.body;
-          console.log(credentials['auth_token']);
+          // console.log(credentials['auth_token']);
           // localStorage.setItem('auth_token', credentials['auth_token']);
 
-          console.log(JSON.stringify(re));
+          // console.log(JSON.stringify(re));
           // console.log(re.status);
         },
         (err: HttpErrorResponse) => {
