@@ -22,6 +22,10 @@
   text-anchor: end;
 }
 
+.y-link:hover {
+    text-decoration: none;
+}
+
 .cmpd-link {
   fill: white;
   stroke: none;
@@ -32,12 +36,11 @@
   cursor: pointer;
 }
 
-.active.pointer {
+.pointer:hover{
   text-decoration: underline;
 }
 
 /* Rollover */
-
 .active {
   opacity: 1;
 }
@@ -60,62 +63,6 @@
 }
 
 
-.rollover-avg {
-  font-size: 1em;
-  font-weight: 400;
-}
-
-.rollover-indiv {
-  font-size: 0.8em;
-  color: #21252980;
-  padding-left: 12px;
-}
-
-#structs {
-  pointer-events: none;
-  padding: 12px;
-  position: absolute;
-  border-radius: 5px;
-  background: #f3f3f4;
-}
-
-#struct-name {
-  margin-top: -8px;
-}
-
-/* Pagination */
-
-ul.pagination {
-  margin-top: -40px;
-}
-
-
-.page-link {
-  color: #21252980;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  margin-top: 0px;
-  margin-bottom: 8px;
-  border-left-width: 0px;
-  border-top-width: 0px;
-  border-right-width: 0px;
-  border-bottom-width: 4px;
-  border-color: white;
-}
-
-.page-link:focus, .page-link:hover {
-    color: #FD5457;
-}
-
-
-.page-selected, .page-link:focus {
-  color: #FD5457;
-  border-color: #FD5457;
-  background-color: transparent;
-}
-
 /* Dot styling */
 
 .assay-avg {
@@ -130,19 +77,17 @@ ul.pagination {
   fill: #c5c9ce;
 }
 
-/* .val-annot {
-} */
-
 .lollipop {
   stroke: #21252940;
 }
 
 /* Axes */
 
-.axis--y text {
-  font-size: 1.5em;
-  fill: #212529b0;
-  /* display: none; */
+.axis--x .tick text {
+  font-size: 1em;
+  fill: #212529;
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 300;
 }
 
 .axis path {
@@ -160,11 +105,14 @@ ul.pagination {
 .axis line {
   stroke: #212529;
   fill: none;
-  stroke-width: 0.6px;
+  stroke-width: 0.8px;
 }
 
 .axis .minor line {
-  stroke-width: 0.25px;
+  stroke-width: 1px;
+  stroke: #212529;
+  stroke-width: 0.4px;
+  stroke: red;
   opacity: 0.4;
 }
 
@@ -172,6 +120,7 @@ ul.pagination {
 
 .annotation--x {
   font-weight: 400;
+  font-family: "Lato", Arial, sans-serif;
   font-size: 1.5em;
   opacity: 0.2;
   text-transform: uppercase;

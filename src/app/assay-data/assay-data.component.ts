@@ -42,9 +42,7 @@ export class AssayDataComponent implements OnInit {
         .set('aid', this.aid)
     }).subscribe((r) => {
       let v = r.body;
-      if(v.length > 1){
-        console.log('More than one assay matched')
-      }
+
       this.assayDetails = v[0];
     },
     err => {}

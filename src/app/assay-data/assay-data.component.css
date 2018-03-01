@@ -36,6 +36,7 @@ a, a.dwnld-link:hover {
   list-style: none;
   padding: 6px 10px 6px 10px;
   background: #3d6de00d;
+  border-radius: 3px;
 }
 
 .summary-box {

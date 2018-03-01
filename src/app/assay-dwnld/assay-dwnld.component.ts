@@ -1,5 +1,4 @@
 import { Component, OnInit, OnChanges, ViewChild, ElementRef, Input, ViewEncapsulation } from '@angular/core';
-// import * as d3 from 'd3';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
