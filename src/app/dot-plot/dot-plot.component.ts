@@ -24,7 +24,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
 
   // --- Selectors ---
   private chart: any; // dotplot
-  private dots: any; // dots + lollipops
+  private dotgrp: any; // dots + lollipops
   private cmpd_names: any; // y-axis: compound names + links
   private defs: any; // defs for svg
 
@@ -82,7 +82,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
       .attr("id", "dotplot")
       .attr("transform", `translate(${this.margin.left}, ${this.margin.top})`);
 
-    this.dots = this.chart.append('g')
+    this.dotgrp = this.chart.append('g')
       .attr("class", "dots");
 
     this.cmpd_names = this.chart.append('g')
@@ -221,7 +221,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
     ylinks.merge(ylinksEnter)
       .transition(t)
       .attr('id', function(d) {
-        return d.name;
+        return d.name; // TODO: change to constant ID
       })
       .attr('xlink:href', function(d) {
         return d.url;
@@ -236,13 +236,14 @@ export class DotPlotComponent implements OnInit, OnChanges {
           return false;
         }
       })
+      .attr('id', d => d.name) // TODO: replace w/ constant ID
       .text(d => d.name)
       .style("fill-opacity", 1e-6)
       // .transition(t)
       .style("fill-opacity", 1);
 
     // --- LOLLIS ---
-    const lollis = this.dots.selectAll('.lollipop')
+    const lollis = this.dotgrp.selectAll('.lollipop')
       .data(this.data);
 
     lollis.exit().remove();
@@ -258,9 +259,10 @@ export class DotPlotComponent implements OnInit, OnChanges {
     lollis.merge(lolliEnter)
       .transition(t)
         .attr('x2', d => this.x(d.ac50))
+        .attr('id', d => d.name); // TODO: replace w/ constant ID
 
     // --- DOTS ---
-    var dotLinks = this.dots.selectAll('.dot-link')
+    var dotLinks = this.dotgrp.selectAll('.dot-link')
       .data(this.data);
 
 
@@ -273,31 +275,17 @@ export class DotPlotComponent implements OnInit, OnChanges {
     // append `a` element to each parent
     var dotlinksEnter = dotLinks
       .enter().append('a')
-      .attr('class', 'dot-link')
-      .attr('href', d => d.name)
-      .classed('pointer', function(d) {
-        if (d.url) {
-          return true;
-        } else {
-          return false;
-        }
-      });
+      .attr('class', 'dot-link');
 
     // Append text (children to `a` wrapper)
     var dotEnter = dotlinksEnter.append('circle')
       .attr('class', 'assay-avg')
       .attr('r', this.dot_size)
-      .attr('cy', d => this.y(d.name))
-      .on('mouseover', function() {
-        console.log('mouse!')
-        // this.showStructs();
-      });
+      .attr('cy', d => this.y(d.name));
 
     // Update the parent links
     dotLinks.merge(dotlinksEnter)
-      .attr('id', function(d) {
-        return d.name;
-      })
+    .attr('id', d => d.name) // TODO: replace w/ constant ID
       .attr('xlink:href', function(d) {
         return d.url;
       })
@@ -321,53 +309,96 @@ export class DotPlotComponent implements OnInit, OnChanges {
       .on('mouseover', function() {
 
         // // var selected = "#" + remove_symbols(this.textContent);
-        // // TODO: add remove_symbols
+        // // TODO:change to constant ID
         // // TODO: group lollis/circles; add IDs to them
         // // TODO: don't double select
         // // TODO: functionalize the turning on/off: everything off, #id selected on.
-        // var selected = "#" + (this.textContent);
-        // console.log(selected)
-        //
-        // // dim the rest of the axis
-        // d3.selectAll(".y-link text")
-        //   .classed("inactive", true);
-        //
-        // // turn off lollipop sticks, circles
-        // d3.selectAll('.assay-avg')
-        //   .classed("inactive", true)
-        //
-        // d3.selectAll('.lollipop')
-        //   .classed("inactive", true)
-        //
-        // // turn on selected
-        // d3.select(this)
-        //   .classed("inactive", false)
-        //   .classed("active", true);
-        //
-        // d3.selectAll(selected)
-        // .classed("active", true)
-        //   .classed("inactive", false);
-        //
+        var selected = "#" + (this.id);
+        console.log(selected)
+
+        // dim the rest of the axis
+        d3.selectAll(".y-link text")
+          .classed("inactive", true);
+
+        // turn off lollipop sticks, circles
+        d3.selectAll('.assay-avg')
+          .classed("inactive", true)
+
+        d3.selectAll('.lollipop')
+          .classed("inactive", true)
+
+        // turn on selected
+        d3.selectAll(selected)
+        .classed("active", true)
+          .classed("inactive", false);
 
         // turn on structures
         // showStruct(this.textContent);
       })
       .on('mouseout', function() {
         // turn the axis back on
-        // d3.selectAll(".y-link text")
-        //   .classed("active", false)
-        //   .classed("inactive", false);
-        //
-        // // turn on lollipop sticks, circles
-        // d3.selectAll(".assay-avg")
-        //   .classed("inactive", false);
-        //
-        //   d3.selectAll(".lollipop")
-        //     .classed("inactive", false);
-        //
-        //
+        d3.selectAll(".y-link text")
+          .classed("active", false)
+          .classed("inactive", false);
+
+        // turn on lollipop sticks, circles
+        d3.selectAll(".assay-avg")
+          .classed("inactive", false);
+
+          d3.selectAll(".lollipop")
+            .classed("inactive", false);
+
+
         // // hideStruct();
       })
+
+      // Rollover behavior: y-axis
+      this.dotgrp.selectAll('.assay-avg')
+        .on('mouseover', function() {
+
+          // // var selected = "#" + remove_symbols(this.textContent);
+          // // TODO:change to constant ID
+          // // TODO: group lollis/circles; add IDs to them
+          // // TODO: don't double select
+          // // TODO: functionalize the turning on/off: everything off, #id selected on.
+          var selected = "#" + (this.id);
+          console.log(selected)
+
+          // dim the rest of the axis
+          d3.selectAll(".y-link text")
+            .classed("inactive", true);
+
+          // turn off lollipop sticks, circles
+          d3.selectAll('.assay-avg')
+            .classed("inactive", true)
+
+          d3.selectAll('.lollipop')
+            .classed("inactive", true)
+
+          // turn on selected
+          d3.selectAll(selected)
+          .classed("active", true)
+            .classed("inactive", false);
+
+          // turn on structures
+          // showStruct(this.textContent);
+        })
+        .on('mouseout', function() {
+          // turn the axis back on
+          d3.selectAll(".y-link text")
+            .classed("active", false)
+            .classed("inactive", false);
+
+          // turn on lollipop sticks, circles
+          d3.selectAll(".assay-avg")
+            .classed("inactive", false);
+
+            d3.selectAll(".lollipop")
+              .classed("inactive", false);
+
+
+          // // hideStruct();
+        })
 
   }
 
