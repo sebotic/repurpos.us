@@ -163,7 +163,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
   }
 
   // Data-dependent calls; will change w/ pagination
-  updateChart() {
+  updateChart($compile) {
     console.log("UPDATING")
     console.log(this.data)
 
@@ -172,7 +172,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
 
     // update domains when data changes
     this.x.domain(this.assay_domain);
-    this.y.domain(this.data.map(function(d) { return d.name; }));
+    this.y.domain(this.data.map(function(d) { return d.calibr_id; }));
 
     // update color domain
     // Code if using d3.scaleSequential
@@ -212,7 +212,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
     var ytextEnter = ylinksEnter.append('text')
       .attr('class', 'cmpd-name')
       .attr('x', -6)
-      .attr('y', d => this.y(d.name))
+      .attr('y', d => this.y(d.calibr_id))
       .style("fill-opacity", 1e-6)
       .transition(t)
       .style("fill-opacity", 1);
@@ -221,7 +221,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
     ylinks.merge(ylinksEnter)
       .transition(t)
       .attr('id', function(d) {
-        return d.name; // TODO: change to constant ID
+        return d.calibr_id;
       })
       .attr('xlink:href', function(d) {
         return d.url;
@@ -236,7 +236,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
           return false;
         }
       })
-      .attr('id', d => d.name) // TODO: replace w/ constant ID
+      .attr('id', d => d.calibr_id)
       .text(d => d.name)
       .style("fill-opacity", 1e-6)
       // .transition(t)
@@ -252,14 +252,14 @@ export class DotPlotComponent implements OnInit, OnChanges {
     var lolliEnter = lollis.enter().append('line')
       .attr('class', 'lollipop')
       .attr('x1', 0)
-      .attr('y1', d => this.y(d.name))
-      .attr('y2', d => this.y(d.name))
+      .attr('y1', d => this.y(d.calibr_id))
+      .attr('y2', d => this.y(d.calibr_id))
       .attr('stroke-dasharray', '6,6');
 
     lollis.merge(lolliEnter)
       .transition(t)
         .attr('x2', d => this.x(d.ac50))
-        .attr('id', d => d.name); // TODO: replace w/ constant ID
+        .attr('id', d => d.calibr_id);
 
     // --- DOTS ---
     var dotLinks = this.dotgrp.selectAll('.dot-link')
@@ -281,11 +281,11 @@ export class DotPlotComponent implements OnInit, OnChanges {
     var dotEnter = dotlinksEnter.append('circle')
       .attr('class', 'assay-avg')
       .attr('r', this.dot_size)
-      .attr('cy', d => this.y(d.name));
+      .attr('cy', d => this.y(d.calibr_id));
 
     // Update the parent links
     dotLinks.merge(dotlinksEnter)
-    .attr('id', d => d.name) // TODO: replace w/ constant ID
+    .attr('id', d => d.calibr_id)
       .attr('xlink:href', function(d) {
         return d.url;
       })
@@ -299,7 +299,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
 
     // Update the children dot values
     dots.merge(dotEnter)
-      .attr('id', d => d.name)
+      .attr('id', d => d.calibr_id)
       .transition(t)
       .attr('cx', d => this.x(d.ac50))
       .style('fill', d => this.colorScale(Math.log10(d.ac50)));
@@ -307,11 +307,6 @@ export class DotPlotComponent implements OnInit, OnChanges {
     // Rollover behavior: y-axis
     this.cmpd_names.selectAll('.y-link text')
       .on('mouseover', function() {
-
-        // // var selected = "#" + remove_symbols(this.textContent);
-        // // TODO:change to constant ID
-        // // TODO: group lollis/circles; add IDs to them
-        // // TODO: don't double select
         // // TODO: functionalize the turning on/off: everything off, #id selected on.
         var selected = "#" + (this.id);
         console.log(selected)
@@ -333,6 +328,8 @@ export class DotPlotComponent implements OnInit, OnChanges {
           .classed("inactive", false);
 
         // turn on structures
+        console.log('mouse!')
+        console.log($compile(this.dot_size))
         // showStruct(this.textContent);
       })
       .on('mouseout', function() {
