@@ -79,6 +79,9 @@ a, a.dwnld-link:hover {
 
 
 /* text */
+#protocol {
+  margin-top: 32px;
+}
 
 #protocol h3 {
   margin-top: 0.5rem;
