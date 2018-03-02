@@ -54,7 +54,21 @@ export class AssayPlotsComponent implements OnInit {
       .filter(
       (d, i) =>
         i < this.numPerPage * (this.currentPage + 1) &&
-        i >= this.numPerPage * this.currentPage);
+        i >= this.numPerPage * this.currentPage
+      );
+
+  }
+
+  // Event listener if the page number is changed
+  onPageChanged(newPageNum: number): void {
+    this.currentPage = newPageNum;
+
+    this.filteredData = this.assayData.filter(d => d.assay_type == this.currentAssay)
+      .filter(
+      (d, i) =>
+        i < this.numPerPage * (this.currentPage + 1) &&
+        i >= this.numPerPage * this.currentPage
+      );
 
   }
 

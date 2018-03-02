@@ -20,7 +20,7 @@
   <app-dot-plot *ngIf="filteredData" [data]="filteredData" [assay_domain]="assayDomain"></app-dot-plot>
 
   <!-- pagination -->
-  <app-assay-pagination *ngIf="assayData" [data]="assayData" [assay_types]="assayTypes"></app-assay-pagination>
+  <app-assay-pagination *ngIf="assayData" [data]="assayData" [current_assay]="currentAssay" (currentPage)="onPageChanged($event)"></app-assay-pagination>
   <!-- <app-cmpd-rollover *ngIf="filteredData" [data]="filteredData"></app-cmpd-rollover> -->
 </div>
 

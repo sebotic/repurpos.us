@@ -1,0 +1,5 @@
+<ul class="nav nav-tabs justify-content-end pull-right" role="tablist">
+  <li class="page" *ngFor="let page of pages">
+    <a class="page-link" [id]="page" [ngClass]="{'page-selected': page == current_page}" (click)="switchPage($event)">{{ page + 1}}</a>
+  </li>
+</ul>

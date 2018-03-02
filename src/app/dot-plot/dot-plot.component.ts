@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, ViewChild, ElementRef, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild, ElementRef, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import * as d3Chromatic from 'd3-scale-chromatic';
 
@@ -13,6 +13,8 @@ export class DotPlotComponent implements OnInit, OnChanges {
   @ViewChild('chart') private chartContainer: ElementRef;
   @Input() private data: Array<any>;
   @Input() private assay_domain: Array<any>;
+
+  @Output() structsOn: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   // --- Plot sizing ---
   private margin: any = { top: 70, bottom: 0, left: 160, right: 40, colorbar: 20, xaxis: 15 };
@@ -53,6 +55,13 @@ export class DotPlotComponent implements OnInit, OnChanges {
       this.updateChart();
     }
   }
+
+  // showStructs() {
+  //   console.log("showing")
+  //   console.log(this.structsOn)
+  //   this.structsOn.emit(true)
+  //   console.log(this.structsOn)
+  // }
 
   // Data-independent setup
   createChart() {
@@ -158,6 +167,9 @@ export class DotPlotComponent implements OnInit, OnChanges {
     console.log("UPDATING")
     console.log(this.data)
 
+    var t = d3.transition()
+      .duration(1000);
+
     // update domains when data changes
     this.x.domain(this.assay_domain);
     this.y.domain(this.data.map(function(d) { return d.name; }));
@@ -182,22 +194,32 @@ export class DotPlotComponent implements OnInit, OnChanges {
       .data(this.data);
 
     // EXIT: remove any rectangles that no longer exist.
-    ylinks.exit().remove();
+    ylinks.exit()
+    // .transition(t)
+    //   .style("fill-opacity", 1e-6)
+      // .duration(2000)
+      .remove();
 
     // // child selector: nested rectangle.
-    var ytext = ylinks.select('#cmpd-name');
+    var ytext = ylinks.select('.cmpd-name');
 
     // append `a` element to each parent
     var ylinksEnter = ylinks
-      .enter().append('a').attr('class', 'y-link');
+      .enter().append('a')
+      .attr('class', 'y-link');
 
-    // // Append rects (children to `a` wrapper)
-    var ytextEnter = ylinksEnter.append('text').attr('id', 'cmpd-name')
+    // Append text (children to `a` wrapper)
+    var ytextEnter = ylinksEnter.append('text')
+      .attr('class', 'cmpd-name')
       .attr('x', -6)
-      .attr('y', d => this.y(d.name));
+      .attr('y', d => this.y(d.name))
+      .style("fill-opacity", 1e-6)
+      .transition(t)
+      .style("fill-opacity", 1);
 
     // Update the parent links
     ylinks.merge(ylinksEnter)
+      .transition(t)
       .attr('id', function(d) {
         return d.name;
       })
@@ -205,9 +227,54 @@ export class DotPlotComponent implements OnInit, OnChanges {
         return d.url;
       });
 
-    // Update the children rectangle values
+    // Update the children text values
     ytext.merge(ytextEnter)
+      .classed('pointer', function(d) {
+        if (d.url) {
+          return true;
+        } else {
+          return false;
+        }
+      })
       .text(d => d.name)
+      .style("fill-opacity", 1e-6)
+      // .transition(t)
+      .style("fill-opacity", 1);
+
+    // --- LOLLIS ---
+    const lollis = this.dots.selectAll('.lollipop')
+      .data(this.data);
+
+    lollis.exit().remove();
+
+
+    var lolliEnter = lollis.enter().append('line')
+      .attr('class', 'lollipop')
+      .attr('x1', 0)
+      .attr('y1', d => this.y(d.name))
+      .attr('y2', d => this.y(d.name))
+      .attr('stroke-dasharray', '6,6');
+
+    lollis.merge(lolliEnter)
+      .transition(t)
+        .attr('x2', d => this.x(d.ac50))
+
+    // --- DOTS ---
+    var dotLinks = this.dots.selectAll('.dot-link')
+      .data(this.data);
+
+
+    dotLinks.exit()
+      // .transition(t)
+      .remove();
+
+    var dots = dotLinks.select('.assay-avg');
+
+    // append `a` element to each parent
+    var dotlinksEnter = dotLinks
+      .enter().append('a')
+      .attr('class', 'dot-link')
+      .attr('href', d => d.name)
       .classed('pointer', function(d) {
         if (d.url) {
           return true;
@@ -216,47 +283,95 @@ export class DotPlotComponent implements OnInit, OnChanges {
         }
       });
 
-    // --- LOLLIS ---
-    const lollis = this.dots.selectAll('.lollipop')
-      .data(this.data);
-
-    lollis.exit().remove();
-
-    // this.chart.selectAll('.lollipop').transition()
-    // .attr('x1', 0)
-    // .attr('x2', d => this.x(d.ac50))
-    // .attr('y1', d => this.y(d.name))
-    // .attr('y2', d => this.y(d.name))
-    // .attr('stroke-dasharray', '6,6');
-
-    lollis.enter().append('line')
-      .attr('class', 'lollipop')
-      .attr('x1', 0)
-      .attr('x2', d => this.x(d.ac50))
-      .attr('y1', d => this.y(d.name))
-      .attr('y2', d => this.y(d.name))
-      .attr('stroke-dasharray', '6,6');
-
-    // --- DOTS ---
-    const update = this.dots.selectAll('.assay-avg')
-      .data(this.data);
-
-    update.exit().remove();
-
-    // this.chart.selectAll('.assay-avg').transition()
-    // .attr('cx', d => this.x(d.ac50))
-    // .attr('cy', d => this.y(d.name))
-    // .attr('r', this.dot_size);
-
-    update.enter().append('circle')
+    // Append text (children to `a` wrapper)
+    var dotEnter = dotlinksEnter.append('circle')
       .attr('class', 'assay-avg')
-      .attr('cx', d => this.x(d.ac50))
+      .attr('r', this.dot_size)
       .attr('cy', d => this.y(d.name))
-      .style('fill', d => this.colorScale(Math.log10(d.ac50)))
-      .attr('r', this.dot_size);
+      .on('mouseover', function() {
+        console.log('mouse!')
+        // this.showStructs();
+      });
 
+    // Update the parent links
+    dotLinks.merge(dotlinksEnter)
+      .attr('id', function(d) {
+        return d.name;
+      })
+      .attr('xlink:href', function(d) {
+        return d.url;
+      })
+      .classed('pointer', function(d) {
+        if (d.url) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+    // Update the children dot values
+    dots.merge(dotEnter)
+      .attr('id', d => d.name)
+      .transition(t)
+      .attr('cx', d => this.x(d.ac50))
+      .style('fill', d => this.colorScale(Math.log10(d.ac50)));
+
+    // Rollover behavior: y-axis
+    this.cmpd_names.selectAll('.y-link text')
+      .on('mouseover', function() {
+
+        // // var selected = "#" + remove_symbols(this.textContent);
+        // // TODO: add remove_symbols
+        // // TODO: group lollis/circles; add IDs to them
+        // // TODO: don't double select
+        // // TODO: functionalize the turning on/off: everything off, #id selected on.
+        // var selected = "#" + (this.textContent);
+        // console.log(selected)
+        //
+        // // dim the rest of the axis
+        // d3.selectAll(".y-link text")
+        //   .classed("inactive", true);
+        //
+        // // turn off lollipop sticks, circles
+        // d3.selectAll('.assay-avg')
+        //   .classed("inactive", true)
+        //
+        // d3.selectAll('.lollipop')
+        //   .classed("inactive", true)
+        //
+        // // turn on selected
+        // d3.select(this)
+        //   .classed("inactive", false)
+        //   .classed("active", true);
+        //
+        // d3.selectAll(selected)
+        // .classed("active", true)
+        //   .classed("inactive", false);
+        //
+
+        // turn on structures
+        // showStruct(this.textContent);
+      })
+      .on('mouseout', function() {
+        // turn the axis back on
+        // d3.selectAll(".y-link text")
+        //   .classed("active", false)
+        //   .classed("inactive", false);
+        //
+        // // turn on lollipop sticks, circles
+        // d3.selectAll(".assay-avg")
+        //   .classed("inactive", false);
+        //
+        //   d3.selectAll(".lollipop")
+        //     .classed("inactive", false);
+        //
+        //
+        // // hideStruct();
+      })
 
   }
+
+
 }
 
 
