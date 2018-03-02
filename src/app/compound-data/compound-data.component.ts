@@ -48,6 +48,8 @@ export class CompoundDataComponent implements OnInit {
 
   assayData: Object = [];
   gvkData: Object = [];
+  informaData: Object = [];
+  integrityData: Object = [];
 
   showMoreProperties = ['P3489', 'P2868', 'P129', 'P3776', 'P3777', 'P3771'];
 
@@ -123,8 +125,9 @@ export class CompoundDataComponent implements OnInit {
       }
 
       this.buildData();
-      this.retrieveAssayData();
-      this.retrieveGVKData();
+      // this.retrieveAssayData();
+      // this.retrieveGVKData();
+      this.retrieveData();
       // this.testStream();
 
       // console.log(JSON.stringify(b));
@@ -363,6 +366,28 @@ export class CompoundDataComponent implements OnInit {
     }).subscribe((r) => {
       let b = r.body;
       this.gvkData = b;
+    });
+
+  }
+
+  retrieveData(): void {
+    this.http2.get(environment.host_url + '/data', {
+      observe: 'response',
+      // withCredentials: true,
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json')
+        .set('Authorization', localStorage.getItem('auth_token')),
+      params: new HttpParams()
+        .set('qid', this.qid)
+    }).subscribe((r) => {
+      let b = r.body[this.qid];
+      console.log(b);
+      this.gvkData = [b['gvk']];
+      this.informaData = b['informa'];
+      this.integrityData = b['integrity'];
+      this.assayData = b['assay'];
+      console.log(this.gvkData);
+      // console.log(this.gvkData);
     });
 
   }
