@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, forwardRef, Inject, Injectable, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, forwardRef, Inject, ViewChild, Injectable, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Http, Response } from "@angular/http";
 
@@ -7,6 +7,8 @@ import {
   HttpResponse
 } from "@angular/common/http";
 import { environment } from "../../environments/environment";
+
+import { AssayPaginationComponent } from '../assay-pagination/assay-pagination.component'
 
 @Component({
   selector: 'app-assay-plots',
@@ -36,6 +38,11 @@ export class AssayPlotsComponent implements OnInit {
     });
   }
 
+  @ViewChild(AssayPaginationComponent)
+  private onAssayChangedComp = AssayPaginationComponent;
+
+
+
   ngOnInit() {
     if (localStorage.getItem('auth_token')) {
       this.loggedIn = true;
@@ -46,7 +53,9 @@ export class AssayPlotsComponent implements OnInit {
     this.retrieveAssayList();
   }
 
+
   // Event listener if the IC/EC50 tab is clicked
+  // change what data are filtered.
   onAssayChanged(newAssayType: string): void {
     this.currentAssay = newAssayType;
 
@@ -57,6 +66,12 @@ export class AssayPlotsComponent implements OnInit {
         i >= this.numPerPage * this.currentPage
       );
 
+  }
+
+// tell page number to reset.
+  onAssayChanged2(newAssayType: string): void {
+      console.log("PARENT CALLING CHILD")
+      this.onAssayChangedComp.resetPage();
   }
 
   // Event listener if the page number is changed

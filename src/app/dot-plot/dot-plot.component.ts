@@ -163,7 +163,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
   }
 
   // Data-dependent calls; will change w/ pagination
-  updateChart($compile) {
+  updateChart() {
     console.log("UPDATING")
     console.log(this.data)
 
@@ -329,7 +329,6 @@ export class DotPlotComponent implements OnInit, OnChanges {
 
         // turn on structures
         console.log('mouse!')
-        console.log($compile(this.dot_size))
         // showStruct(this.textContent);
       })
       .on('mouseout', function() {

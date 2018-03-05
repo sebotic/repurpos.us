@@ -11,7 +11,7 @@
 
     <div class="col-xs-3">
       <!-- Assay tab panes -->
-      <app-assay-type-btn *ngIf="assayTypes.length > 0" [assay_types]="assayTypes" (assayChanged)="onAssayChanged($event)"></app-assay-type-btn>
+      <app-assay-type-btn *ngIf="assayTypes.length > 0" [assay_types]="assayTypes" (assayChanged)="onAssayChanged2($event)" (assayChanged)="onAssayChanged($event)"></app-assay-type-btn>
     </div>
   </div>
 

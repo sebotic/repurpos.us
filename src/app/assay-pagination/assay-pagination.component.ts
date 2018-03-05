@@ -28,6 +28,13 @@ export class AssayPaginationComponent implements OnInit {
     this.calcPages();
   }
 
+//
+  resetPage() {
+    this.current_page = Number(0);
+    this.currentPage.emit(0);
+  }
+
+
   calcPages() {
     console.log(this.current_assay)
 
