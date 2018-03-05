@@ -14,7 +14,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
   @Input() private data: Array<any>;
   @Input() private assay_domain: Array<any>;
 
-  @Output() structsOn: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() tooltipEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   // --- Plot sizing ---
   private margin: any = { top: 70, bottom: 0, left: 160, right: 40, colorbar: 20, xaxis: 15 };
@@ -35,9 +35,6 @@ export class DotPlotComponent implements OnInit, OnChanges {
   private xAxis: any;
   private yAxis: any;
 
-  // --- Selectors for enter/update with data ---
-
-
   // --- Plot contants ---
   private dot_size: number = 5;
 
@@ -55,13 +52,6 @@ export class DotPlotComponent implements OnInit, OnChanges {
       this.updateChart();
     }
   }
-
-  // showStructs() {
-  //   console.log("showing")
-  //   console.log(this.structsOn)
-  //   this.structsOn.emit(true)
-  //   console.log(this.structsOn)
-  // }
 
   // Data-independent setup
   createChart() {
@@ -162,11 +152,55 @@ export class DotPlotComponent implements OnInit, OnChanges {
 
   }
 
+  showTooltip(event) {
+    // --- calc variables for tooltip ---
+    var x = event.x;
+    var y = event.y;
+    var cmpd_id = event.target.id;
+    var filtered_data = this.data.filter(d => d.calibr_id == cmpd_id)[0];
+
+    // --- highlight the current selection ---
+    // dim the rest of the axis
+    d3.selectAll(".y-link text")
+      .classed("inactive", true);
+
+    // turn off lollipop sticks, circles
+    d3.selectAll('.assay-avg')
+      .classed("inactive", true)
+
+    d3.selectAll('.lollipop')
+      .classed("inactive", true)
+
+    // turn on selected
+    d3.selectAll('#' + cmpd_id)
+      .classed("active", true)
+      .classed("inactive", false);
+
+
+    // tell structure to turn on with new info.
+    this.tooltipEmitter.emit({ 'on': true, 'data': filtered_data, 'x': x, 'y': y });
+  }
+
+  hideTooltip(event) {
+    // de-highlight everything
+    // turn the axis back on
+    d3.selectAll(".y-link text")
+      .classed("active", false)
+      .classed("inactive", false);
+
+    // turn on lollipop sticks, circles
+    d3.selectAll(".assay-avg")
+      .classed("inactive", false);
+
+    d3.selectAll(".lollipop")
+      .classed("inactive", false);
+
+    // tell structure to turn off.
+    this.tooltipEmitter.emit({ 'on': false });
+  }
+
   // Data-dependent calls; will change w/ pagination
   updateChart() {
-    console.log("UPDATING")
-    console.log(this.data)
-
     var t = d3.transition()
       .duration(1000);
 
@@ -195,8 +229,8 @@ export class DotPlotComponent implements OnInit, OnChanges {
 
     // EXIT: remove any rectangles that no longer exist.
     ylinks.exit()
-    // .transition(t)
-    //   .style("fill-opacity", 1e-6)
+      // .transition(t)
+      //   .style("fill-opacity", 1e-6)
       // .duration(2000)
       .remove();
 
@@ -258,8 +292,8 @@ export class DotPlotComponent implements OnInit, OnChanges {
 
     lollis.merge(lolliEnter)
       .transition(t)
-        .attr('x2', d => this.x(d.ac50))
-        .attr('id', d => d.calibr_id);
+      .attr('x2', d => this.x(d.ac50))
+      .attr('id', d => d.calibr_id);
 
     // --- DOTS ---
     var dotLinks = this.dotgrp.selectAll('.dot-link')
@@ -285,7 +319,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
 
     // Update the parent links
     dotLinks.merge(dotlinksEnter)
-    .attr('id', d => d.calibr_id)
+      .attr('id', d => d.calibr_id)
       .attr('xlink:href', function(d) {
         return d.url;
       })
@@ -306,116 +340,15 @@ export class DotPlotComponent implements OnInit, OnChanges {
 
     // Rollover behavior: y-axis
     this.cmpd_names.selectAll('.y-link text')
-      .on('mouseover', function() {
-        // // TODO: functionalize the turning on/off: everything off, #id selected on.
-        var selected = "#" + (this.id);
-        console.log(selected)
+      .on('mouseover', () => this.showTooltip(d3.event))
+      .on('mouseout', () => this.hideTooltip(d3.event));
 
-        // dim the rest of the axis
-        d3.selectAll(".y-link text")
-          .classed("inactive", true);
-
-        // turn off lollipop sticks, circles
-        d3.selectAll('.assay-avg')
-          .classed("inactive", true)
-
-        d3.selectAll('.lollipop')
-          .classed("inactive", true)
-
-        // turn on selected
-        d3.selectAll(selected)
-        .classed("active", true)
-          .classed("inactive", false);
-
-        // turn on structures
-        console.log('mouse!')
-        // showStruct(this.textContent);
-      })
-      .on('mouseout', function() {
-        // turn the axis back on
-        d3.selectAll(".y-link text")
-          .classed("active", false)
-          .classed("inactive", false);
-
-        // turn on lollipop sticks, circles
-        d3.selectAll(".assay-avg")
-          .classed("inactive", false);
-
-          d3.selectAll(".lollipop")
-            .classed("inactive", false);
-
-
-        // // hideStruct();
-      })
-
-      // Rollover behavior: y-axis
-      this.dotgrp.selectAll('.assay-avg')
-        .on('mouseover', function() {
-
-          // // var selected = "#" + remove_symbols(this.textContent);
-          // // TODO:change to constant ID
-          // // TODO: group lollis/circles; add IDs to them
-          // // TODO: don't double select
-          // // TODO: functionalize the turning on/off: everything off, #id selected on.
-          var selected = "#" + (this.id);
-          console.log(selected)
-
-          // dim the rest of the axis
-          d3.selectAll(".y-link text")
-            .classed("inactive", true);
-
-          // turn off lollipop sticks, circles
-          d3.selectAll('.assay-avg')
-            .classed("inactive", true)
-
-          d3.selectAll('.lollipop')
-            .classed("inactive", true)
-
-          // turn on selected
-          d3.selectAll(selected)
-          .classed("active", true)
-            .classed("inactive", false);
-
-          // turn on structures
-          // showStruct(this.textContent);
-        })
-        .on('mouseout', function() {
-          // turn the axis back on
-          d3.selectAll(".y-link text")
-            .classed("active", false)
-            .classed("inactive", false);
-
-          // turn on lollipop sticks, circles
-          d3.selectAll(".assay-avg")
-            .classed("inactive", false);
-
-            d3.selectAll(".lollipop")
-              .classed("inactive", false);
-
-
-          // // hideStruct();
-        })
+    // Rollover behavior: y-axis
+    this.dotgrp.selectAll('.assay-avg')
+      // syntax via https://stackoverflow.com/questions/42014434/d3-js-passing-a-parameter-to-event-handler
+      .on('mouseover', () => this.showTooltip(d3.event))
+      .on('mouseout', () => this.hideTooltip(d3.event));
 
   }
 
-
 }
-
-
-// --- helpers ---
-// <<< count_types(array, type) >>>
-// function count_types(array, type) {
-//   var counter = 0;
-//
-//   for (var i = 0; i < array.length; i++) {
-//     if (array[i] === type) {
-//       counter++;
-//     }
-//   }
-//   return counter;
-// }
-//
-// // get rid of symbols in compound names
-// function remove_symbols(d) {
-//   return "_" + d.replace(/ /g, "").replace(/-/g, "").replace(/'/g, "").replace(/,/g, "");
-// }

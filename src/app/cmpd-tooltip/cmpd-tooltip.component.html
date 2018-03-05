@@ -1,0 +1,40 @@
+<div class = "cmpd-details" id = "structs" *ngIf="dataObj.on" [style.left]="left_coord" [style.top]="top_coord">
+  <img *ngIf="imgURL" id="structure" [src]="imgURL"/>
+
+  <div id="struct-name">{{ data.name }}</div>
+  <table>
+
+    <thead>
+      <tr id="data-headers">
+        <th id="tooltip-avgtitle">
+          {{ data.assay_type }} <sub>50</sub>:
+        </th>
+        <th id="tooltip-avg">
+          {{ data.ac50.toExponential(2) }}
+        </th>
+      </tr>
+    </thead>
+
+    <tbody id="tooltip-indiv">
+      <tr id="r2">
+        <td class="meas_id">
+          r<sup>2</sup>:
+        </td>
+        <td class="meas_val">
+          {{ data.r_sq | number:'1.3-3' }}
+        </td>
+      </tr>
+
+      <tr id="efficacy">
+        <td class="meas_id">
+          efficacy:
+        </td>
+        <td class="meas_val">
+          {{ data.efficacy | number:'1.0-0' }}%
+        </td>
+      </tr>
+
+    </tbody>
+
+  </table>
+</div>

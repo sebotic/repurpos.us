@@ -17,11 +17,11 @@
 
   <!-- Call D3 component -->
 
-  <app-dot-plot *ngIf="filteredData" [data]="filteredData" [assay_domain]="assayDomain"></app-dot-plot>
+  <app-dot-plot *ngIf="filteredData" [data]="filteredData" [assay_domain]="assayDomain" (tooltipEmitter)="showTooltip($event)"></app-dot-plot>
 
   <!-- pagination -->
   <app-assay-pagination *ngIf="assayData" [data]="assayData" [current_assay]="currentAssay" (currentPage)="onPageChanged($event)"></app-assay-pagination>
-  <!-- <app-cmpd-rollover *ngIf="filteredData" [data]="filteredData"></app-cmpd-rollover> -->
+  <app-cmpd-tooltip *ngIf="tooltipData" [dataObj]="tooltipData"></app-cmpd-tooltip>
 </div>
 
 

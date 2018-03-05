@@ -85,7 +85,7 @@ import { DotPlotComponent } from './dot-plot/dot-plot.component';
 import { AssayDwnldComponent } from './assay-dwnld/assay-dwnld.component';
 import { AssayTypeBtnComponent } from './assay-type-btn/assay-type-btn.component';
 import { AssayPaginationComponent } from './assay-pagination/assay-pagination.component';
-import { CmpdRolloverComponent } from './cmpd-rollover/cmpd-rollover.component';
+import { CmpdTooltipComponent } from './cmpd-tooltip/cmpd-tooltip.component';
 
 @NgModule({
   exports: [
@@ -149,7 +149,7 @@ export class MaterialModule {}
     AssayDwnldComponent,
     AssayTypeBtnComponent,
     AssayPaginationComponent,
-    CmpdRolloverComponent,
+    CmpdTooltipComponent,
     // InteractionTableComponent,
     // DiseaseDataComponent,
     NglComponent,

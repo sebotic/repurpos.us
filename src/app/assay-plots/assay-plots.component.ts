@@ -19,6 +19,7 @@ import { AssayPaginationComponent } from '../assay-pagination/assay-pagination.c
 export class AssayPlotsComponent implements OnInit {
   assayData: any;
   filteredData: any;
+  tooltipData: any;
   assayValues: any;
   assayDomain: Array<number>;
   assayTypes: Array<string> = [];
@@ -65,13 +66,16 @@ export class AssayPlotsComponent implements OnInit {
         i < this.numPerPage * (this.currentPage + 1) &&
         i >= this.numPerPage * this.currentPage
       );
-
   }
 
 // tell page number to reset.
   onAssayChanged2(newAssayType: string): void {
-      console.log("PARENT CALLING CHILD")
       this.onAssayChangedComp.resetPage();
+  }
+
+// Event listener for tooltip
+  showTooltip(newAssayType: any): void {
+      this.tooltipData = newAssayType;
   }
 
   // Event listener if the page number is changed
@@ -112,9 +116,6 @@ export class AssayPlotsComponent implements OnInit {
       // Find the largest number of assay data types
       let ic_count = this.count_types(this.assayData, 'IC');
       let ec_count = this.count_types(this.assayData, 'EC');
-
-      console.log('IC: ' + ic_count)
-      console.log('EC: ' + ec_count)
 
       if (ic_count > ec_count) {
         this.assayTypes[0] = 'IC';
