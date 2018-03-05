@@ -24,36 +24,31 @@ export class AssayPaginationComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log("CHANGED")
     this.calcPages();
-  }
-
-//
-  resetPage() {
-    this.current_page = Number(0);
-    this.currentPage.emit(0);
   }
 
 
   calcPages() {
-    console.log(this.current_assay)
-
     // calculate length of filtered data to generate pagination
     const filtered = this.data.filter(d => d.assay_type === this.current_assay);
 
     let num_cmpds = filtered.length;
-    console.log(num_cmpds)
 
     // calc number per page
     let num_pages = Math.ceil(num_cmpds / this.num_per_page);
     this.pages = Array.apply(null, {length: num_pages}).map(Number.call, Number);
-    console.log(this.pages)
   }
 
-
+// On event detection with page change, switch the page number.
   switchPage(event) {
     this.current_page = Number(event.target.id);
     this.currentPage.emit(this.current_page);
   }
+
+  // Helper if an IC/EC50 tab is pressed: resets page idx to 0.
+    resetPage() {
+      this.current_page = Number(0);
+      this.currentPage.emit(0);
+    }
 
 }
