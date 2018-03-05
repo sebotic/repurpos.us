@@ -40,28 +40,6 @@
   text-decoration: underline;
 }
 
-/* Rollover */
-.active {
-  opacity: 1;
-}
-
-.inactive {
-  opacity: 0.25;
-}
-
-.cmpd-link.active {
-  opacity: 0;
-}
-
-.cmpd-link.inactive {
-  opacity: 0.8;
-}
-
-#data-headers {
-  border-bottom: 1px solid #21252980;
-  border-top: 1px solid #21252980;
-}
-
 
 /* Dot styling */
 
