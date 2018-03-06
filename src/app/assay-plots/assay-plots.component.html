@@ -17,11 +17,12 @@
 
   <!-- Call D3 component -->
 
-  <app-dot-plot *ngIf="filteredData" [data]="filteredData" [assay_domain]="assayDomain" (tooltipEmitter)="showTooltip($event)"></app-dot-plot>
-
+  <app-dot-plot *ngIf="filteredData.length > 0" [data]="filteredData" [assay_domain]="assayDomain" [tooltipData]="tooltipData"
+  (tooltipEmitter)="showTooltip($event)"></app-dot-plot>
+  <!-- <div <h1>height: {{ chart }}</h1></div> -->
   <!-- pagination -->
-  <app-assay-pagination *ngIf="assayData" [data]="assayData" [current_assay]="currentAssay" (currentPage)="onPageChanged($event)"></app-assay-pagination>
-  <app-cmpd-tooltip *ngIf="tooltipData" [dataObj]="tooltipData"></app-cmpd-tooltip>
+  <app-assay-pagination *ngIf="assayData" [data]="assayData" [current_assay]="currentAssay" [svg_height]="500" (numPerPage)="setNumPage($event)" (currentPage)="onPageChanged($event)"></app-assay-pagination>
+
 </div>
 
 

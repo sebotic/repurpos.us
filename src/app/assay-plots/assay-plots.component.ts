@@ -17,17 +17,18 @@ import { AssayPaginationComponent } from '../assay-pagination/assay-pagination.c
 })
 
 export class AssayPlotsComponent implements OnInit {
-  assayData: any;
-  filteredData: any;
-  tooltipData: any;
+  loggedIn: boolean;
+  aid: string;
+  assayData: any = [];
+  filteredData: any = [];
+  tooltipData: any = {};
   assayValues: any;
   assayDomain: Array<number>;
   assayTypes: Array<string> = [];
   currentAssay: string;
   currentPage: number = 0;
-  private numPerPage: number = 15;
-  loggedIn: boolean;
-  aid: string;
+  numPerPage: number;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -40,8 +41,7 @@ export class AssayPlotsComponent implements OnInit {
   }
 
   @ViewChild(AssayPaginationComponent)
-  private onAssayChangedComp = AssayPaginationComponent;
-
+  private onAssayChangedComp: any = AssayPaginationComponent;
 
 
   ngOnInit() {
@@ -60,35 +60,43 @@ export class AssayPlotsComponent implements OnInit {
   onAssayChanged(newAssayType: string): void {
     this.currentAssay = newAssayType;
 
-    this.filteredData = this.assayData.filter(d => d.assay_type == this.currentAssay)
-      .filter(
-      (d, i) =>
-        i < this.numPerPage * (this.currentPage + 1) &&
-        i >= this.numPerPage * this.currentPage
-      );
+    this.filterData();
   }
 
-// tell page number to reset.
-  onAssayChanged2(newAssayType: string): void {
-      this.onAssayChangedComp.resetPage();
+  // tell page number to reset.
+onAssayChanged2(newAssayType: string): void {
+    this.onAssayChangedComp.resetPage();
+}
+
+  // Event listener for tooltip
+  showTooltip(tooltip_data: any): void {
+    this.tooltipData = tooltip_data;
   }
 
-// Event listener for tooltip
-  showTooltip(newAssayType: any): void {
-      this.tooltipData = newAssayType;
+  // Event listener to set the number per page
+  setNumPage(num_per_page: number): void {
+    console.log("SETTING")
+    console.log(num_per_page)
+    this.numPerPage = num_per_page;
+
+    this.filterData();
   }
 
   // Event listener if the page number is changed
   onPageChanged(newPageNum: number): void {
     this.currentPage = newPageNum;
 
+    this.filterData();
+  }
+
+  // helper: filter the data
+  filterData() {
     this.filteredData = this.assayData.filter(d => d.assay_type == this.currentAssay)
       .filter(
       (d, i) =>
         i < this.numPerPage * (this.currentPage + 1) &&
         i >= this.numPerPage * this.currentPage
       );
-
   }
 
   ngOnChanges() {
@@ -134,13 +142,7 @@ export class AssayPlotsComponent implements OnInit {
         this.currentAssay = this.assayTypes[0];
       }
 
-      // filter the data for the current page, assay type
-      // filter assay type first, so that the number filters are just for that assay type
-      this.filteredData = this.assayData.filter(d => d.assay_type == this.currentAssay)
-        .filter(
-        (d, i) =>
-          i < this.numPerPage * (this.currentPage + 1) &&
-          i >= this.numPerPage * this.currentPage);
+      this.filterData();
 
     },
       error => console.log('error in call to get assay data', error)

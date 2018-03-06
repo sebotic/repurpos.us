@@ -8,23 +8,26 @@ import { Component, OnInit, OnChanges, ElementRef, Input, ViewEncapsulation } fr
   encapsulation: ViewEncapsulation.None
 })
 export class CmpdTooltipComponent implements OnInit {
-  @Input() private dataObj: Array<any>;
+  @Input() private dataObj: any;
   private data: any;
   private left_coord: string;
+  private top_coord: string;
   imgURL: string;
 
   constructor() { }
 
   ngOnInit() {
-    this.data = this.dataObj.data;
+    if (this.dataObj.on) {
+      this.data = this.dataObj.data;
 
-    if (this.data.pubchem_id) {
-      this.imgURL = "../assets/struct_img/" + this.data.pubchem_id.replace("CID", "") + ".png";
+      if (this.data.pubchem_id) {
+        this.imgURL = "../assets/struct_img/" + this.data.pubchem_id.replace("CID", "") + ".png";
+      }
+
+      // find position of the tooltip
+      this.left_coord = String(this.dataObj.x) + 'px'
+      this.top_coord = String(this.dataObj.y) + 'px'
     }
-
-    // find position of the tooltip
-    this.left_coord = String(this.dataObj.x) + 'px'
-    this.top_coord = String(this.dataObj.y) + 'px'
   }
 
   ngOnChanges() {

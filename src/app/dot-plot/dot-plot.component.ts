@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, ViewChild, ElementRef, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import * as d3Chromatic from 'd3-scale-chromatic';
+import { CmpdTooltipComponent } from '../cmpd-tooltip/cmpd-tooltip.component';
 
 @Component({
   selector: 'app-dot-plot',
@@ -12,14 +13,19 @@ import * as d3Chromatic from 'd3-scale-chromatic';
 export class DotPlotComponent implements OnInit, OnChanges {
   @ViewChild('chart') private chartContainer: ElementRef;
   @Input() private data: Array<any>;
+  @Input() private tooltipData: any;
   @Input() private assay_domain: Array<any>;
 
   @Output() tooltipEmitter: EventEmitter<any> = new EventEmitter<any>();
+  // @Output() svgHeightEmitter: EventEmitter<number> = new EventEmitter<number>();
 
   // --- Plot sizing ---
-  private margin: any = { top: 70, bottom: 0, left: 160, right: 40, colorbar: 20, xaxis: 15 };
+  private element: any;
+  private element_dims: any;
+  private margin: any = { top: 70, bottom: 0, left: 160, right: 40, colorbar: 20, xaxis: 15, pages: 40};
   private width: number;
   private height: number;
+  private min_height: number = 400;
 
 
   // --- Selectors ---
@@ -37,10 +43,17 @@ export class DotPlotComponent implements OnInit, OnChanges {
 
   // --- Plot contants ---
   private dot_size: number = 5;
+  private struct_height: number = 320; // empirically determined height of entire structure container, based on structure height of 150 px (since includes table as well)
+  private struct_width = 200; // width of structure, based on image.
+
+  svg_height: number;
 
   constructor() { }
 
   ngOnInit() {
+    this.tooltipEmitter.emit({ 'on': false, 'data': [], 'x': [], 'y': [] });
+
+
     this.createChart();
     if (this.data) {
       this.updateChart();
@@ -53,16 +66,21 @@ export class DotPlotComponent implements OnInit, OnChanges {
     }
   }
 
+
+  getSVGDims() {
+    // Find container; define width/height of svg obj.
+    this.element = this.chartContainer.nativeElement;
+    this.element_dims = this.element.getBoundingClientRect();
+    this.width = this.element.offsetWidth - this.margin.left - this.margin.right;
+    this.height = Math.max(this.min_height, window.innerHeight - this.element_dims.top) - this.margin.top - this.margin.bottom - this.margin.pages;
+  }
+
   // Data-independent setup
   createChart() {
-
-    // Find container; define width/height of svg obj.
-    const element = this.chartContainer.nativeElement;
-    this.width = element.offsetWidth - this.margin.left - this.margin.right;
-    this.height = element.offsetHeight - this.margin.top - this.margin.bottom;
+    this.getSVGDims();
 
     // Append SVG
-    const svg = d3.select(element)
+    const svg = d3.select(this.element)
       .append('svg')
       .attr("width", this.width + this.margin.left + this.margin.right)
       .attr("height", this.height + this.margin.top + this.margin.bottom)
@@ -73,7 +91,8 @@ export class DotPlotComponent implements OnInit, OnChanges {
       .attr("transform", `translate(${this.margin.left}, ${this.margin.top})`);
 
     this.dotgrp = this.chart.append('g')
-      .attr("class", "dots");
+      .attr("class", "dots")
+      .attr("id", "dots");
 
     this.cmpd_names = this.chart.append('g')
       .attr("id", "y-links");
@@ -176,9 +195,10 @@ export class DotPlotComponent implements OnInit, OnChanges {
       .classed("active", true)
       .classed("inactive", false);
 
-
+    // calculate position for the structure
+    // NOTE: this *should* go in the compound rollover component for better modularity
     // tell structure to turn on with new info.
-    this.tooltipEmitter.emit({ 'on': true, 'data': filtered_data, 'x': x, 'y': y });
+    this.tooltipEmitter.emit({ 'on': true, 'data': filtered_data, 'x': this.width - this.struct_width, 'y': 0 });
   }
 
   hideTooltip(event) {
@@ -338,12 +358,12 @@ export class DotPlotComponent implements OnInit, OnChanges {
       .attr('cx', d => this.x(d.ac50))
       .style('fill', d => this.colorScale(Math.log10(d.ac50)));
 
-    // Rollover behavior: y-axis
+    // Mouseover behavior: y-axis
     this.cmpd_names.selectAll('.y-link text')
       .on('mouseover', () => this.showTooltip(d3.event))
       .on('mouseout', () => this.hideTooltip(d3.event));
 
-    // Rollover behavior: y-axis
+    // Mouseover behavior: dots
     this.dotgrp.selectAll('.assay-avg')
       // syntax via https://stackoverflow.com/questions/42014434/d3-js-passing-a-parameter-to-event-handler
       .on('mouseover', () => this.showTooltip(d3.event))
