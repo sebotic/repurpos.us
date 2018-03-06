@@ -58,6 +58,8 @@ export class CompoundDataComponent implements OnInit {
   displayShowMorePane: boolean = false;
   testJson;
 
+  vendors: Array<string> = ['GVK Data', 'Integrity Data', 'Informa Data'];
+
   propsLabelMap: Object = {
     'P274': 'Chemical Formula',
     'P231': 'CAS Registry Number',
@@ -383,8 +385,8 @@ export class CompoundDataComponent implements OnInit {
       let b = r.body[this.qid];
       console.log(b);
       this.gvkData = [b['gvk']];
-      this.informaData = b['informa'];
-      this.integrityData = b['integrity'];
+      this.informaData = [b['informa']];
+      this.integrityData = [b['integrity']];
       this.assayData = b['assay'];
       console.log(this.gvkData);
       // console.log(this.gvkData);
