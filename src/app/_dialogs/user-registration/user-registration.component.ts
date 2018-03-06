@@ -1,10 +1,12 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {FormControl, Validators, FormGroup, FormBuilder, AbstractControl} from '@angular/forms';
 import {HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {HttpClient} from "@angular/common/http";
-import {MatDialog} from "@angular/material";
-import {isNullOrUndefined} from "util";
-import {environment} from "../../environments/environment";
+import {environment} from "../../../environments/environment";
+import { MatDialog } from '@angular/material';
+
+import { User } from '../../_models/user';
+import { TermsComponent } from '../terms/terms.component';
 
 export class PasswordValidation {
 
@@ -20,27 +22,6 @@ export class PasswordValidation {
   }
 }
 
-
-export class User {
-
-  constructor(
-    public id: number,
-    public firstName: string,
-    public lastName: string,
-    public institution: string,
-    public position: string,
-    public address: string,
-    public zipCode: string,
-    public city: string,
-    public email: string,
-    public password: string,
-    public confirmPassword?: string,
-    public phone?: string
-
-  ) {  }
-
-}
-
 @Component({
   selector: 'app-user-registration',
   templateUrl: './user-registration.component.html',
@@ -51,7 +32,7 @@ export class UserRegistrationComponent implements OnInit {
   form: FormGroup;
   recaptchaToken: string;
 
-  constructor(private http: HttpClient, @Inject(FormBuilder) fb: FormBuilder) {
+  constructor(private http: HttpClient, @Inject(FormBuilder) fb: FormBuilder, public dialog: MatDialog) {
     this.form = fb.group({
       name: fb.group({
         firstName: [this.user.firstName, Validators.minLength(2)],
@@ -109,38 +90,16 @@ export class UserRegistrationComponent implements OnInit {
     this.recaptchaToken = captchaResponse;
   }
 
-}
+  openTerms() {
 
-@Component({
-  selector: 'app-reg-user-dialog',
-  template: `<button (click)="dialogShow()" class="btn btn-xs">Create Account ...</button>`,
-  styleUrls: ['./user-registration.component.css']
-})
-export class UserRegComponent implements OnInit {
-  showDialog:boolean = false;
-
-  constructor(public dialog: MatDialog) {  }
-
-  ngOnInit() {
-  }
-
-  dialogShow() {
-
-    let dialogRef = this.dialog.open(UserRegistrationComponent, {
-      // width: '450px',
-      data: {},
+    let dialogRef = this.dialog.open(TermsComponent, {
+      width: '80vw',
+      height: '80vh'
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      console.log('Terms closed');
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-
-    });
-
-    if (this.showDialog) {
-      this.showDialog = false;
-    }
-    else {
-      this.showDialog = true;
-    }
   }
+
 }

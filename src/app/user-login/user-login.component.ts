@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../user-registration/user-registration.component";
+import {User} from "../_models/user";
 import {HttpErrorResponse, HttpHeaders, HttpClient} from "@angular/common/http";
 import {FormControl, Validators} from "@angular/forms";
 import {environment} from "../../environments/environment";
