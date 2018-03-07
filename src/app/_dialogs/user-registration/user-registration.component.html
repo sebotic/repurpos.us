@@ -101,6 +101,9 @@
       >Passwords don't match!</mat-error>
     </mat-form-field>
     </div>
+    <div class="terms">
+      <a (click)="openTerms()">By creating an account, you are agreeing to the Terms of Use.</a>
+    </div>
     <div class="captcha">
       <re-captcha (resolved)="resolved($event)" siteKey="6Le2wTsUAAAAAO-xiYenSNSONc4uNRB89fVOV0Lc"></re-captcha>
     </div>

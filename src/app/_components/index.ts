@@ -1,0 +1,1 @@
+export * from './user-reg-button/user-reg-button.component';

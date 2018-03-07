@@ -1,205 +1,82 @@
-<div class="container-fluid">
 
-  <div class="row-fluid pull-right">
-    <a href="#search">
-      << return to search</a>
-  </div>
-
-  <!-- header: name, aliases -->
-  <div class="cmpd-header">
-
-
-    <div class="row-fluid">
-      <div id="cmpd-names" class="col-md-4 col-sm-6 col-xs-12">
-        <div class="row-fluid cmpd-name">
-          <h1>{{ label }}</h1>
-        </div>
-      </div>
-
-
-      <div id="cmpd-names" class="col-md-8 col-sm-6 col-xs-12">
-        <div class="row-fluid who-name" *ngFor="let x of idData">
-          <span *ngIf="x['property'] == 'World Health Organisation International Nonproprietary Name'">
-            <b>{{x['property'] + ': ' }}</b><span *ngFor="let ii of x['values']">{{ ii }}</span></span>
-        </div>
-
-        <div class="row-fluid alias" *ngIf="concat_aliases">
-          <span><b>Aliases: </b></span>{{ concat_aliases }}
-        </div>
-      </div>
     </div>
-  </div>
+    <div class="col-md-12">
+<br>
+      <H3>Chemical Properties</H3>
+      <table class="table table-bordered">
 
+        <tr *ngFor="let x of table_data">
+          <td scope="row">{{ x['property'] }}</td>
+          <td scope="row"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}}<span *ngIf="!x['showMore']">{{i + 1 < x['values'].length ? '; ' : ''}}</span>
+            <span *ngIf="x['showMore']">
+              <app-show-more-button [qid]="x['qids'][i]" [pid]="x['pid']" [mainQID]="qid"></app-show-more-button>
 
+            </span>
+          </span><app-edit-item></app-edit-item></td>
+        </tr>
 
-  <div class="row-fluid">
-    <!-- left column -->
-    <div class="col-md-4">
+      </table>
 
-      <!-- PubChem 3D structure -->
-      <app-ngl></app-ngl>
-
-      <!-- Chemical ids -->
-      <div class="chem-props alias" *ngFor="let x of table_data">
-        <!-- TODO: transfer to <in>? Change struct of incoming data? -->
-        <span *ngIf="x['property'] == 'chemical formula' || x['property'] == 'InChI' || x['property'] == 'InChIKey' || x['property'] == 'canonical SMILES'">
-        <div class="title" scope="row">{{ x['property'] }}</div>
-        <div scope="row"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}}
-          </span>
-
-      </div>
-      </span>
-
+      <!--<div *ngIf="gvkData.length > 0">-->
+        <!--<H3>Compound class</H3>-->
+        <!--<table class="table table-bordered" *ngFor="let x of gvkData">-->
+          <!--<tr>-->
+            <!--<td>Category</td>-->
+            <!--<td><span (click)="showMore($event)" id={{y}} *ngFor="let y of x['category']; let i = index ;">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : y['ref'] === 'Informa' ? '[3]' : ''}}</span>{{i + 1 < x['category'].length ? '; ' : ''}}</span></td>-->
+          <!--</tr>-->
+           <!--<tr>-->
+             <!--<td>Mechanism of Action</td>-->
+             <!--<td><span *ngFor="let y of x['mechanism']; let i = index">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : y['ref'] === 'Informa' ? '[3]' : ''}}</span>{{i + 1 < x['mechanism'].length ? '; ' : ' '}}</span></td>-->
+           <!--</tr>-->
+          <!--<tr>-->
+            <!--<td>Phase</td>-->
+            <!--<td><span *ngFor="let y of x['phase']; let i = index">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : y['ref'] === 'Informa' ? '[3]' : ''}}</span>{{i + 1 < x['phase'].length ? '; ' : ' '}}</span></td>-->
+          <!--</tr>-->
+          <!--<tr>-->
+            <!--<td>Route of Administration</td>-->
+            <!--<td><span *ngFor="let y of x['drug_roa']; let i = index">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : y['ref'] === 'Informa' ? '[3]' : ''}}</span>{{i + 1 < x['drug_roa'].length ? '; ' : ' '}}</span></td>-->
+          <!--</tr>-->
+        <!--</table>-->
       <!--</div>-->
-      <!--<div class="col-md-4">-->
-      <!--<app-indications-graph [sdata]="graphData"></app-indications-graph>-->
-    </div>
-    <!-- Add in additional ID references -->
-    <div class="chem-ids alias">
-      <div class="title" scope="row">Wikidata</div>
-      <div scope="row">
-        <a href="{{'http://www.wikidata.org/entity/' + qid}}">{{qid}}</a>
-      </div>
 
-      <span *ngFor="let x of idData">
-    <div class="title" scope="row">{{x['property']}}</div>
+      <div *ngFor="let yy of [gvkData, integrityData, informaData]; let i = index;">
+        <div *ngIf="yy.length > 0">
+          <H3>{{vendors[i]}}</H3>
+          <table class="table table-bordered" *ngFor="let x of yy">
+            <tr *ngIf="x.hasOwnProperty('roa') && x['category'].length > 0">
+              <td>Category</td>
+              <td><span (click)="showMore($event)" id={{y}} *ngFor="let y of x['category']; let i = index ;">{{y}}{{i + 1 < x['category'].length ? '; ' : ''}}</span></td>
+            </tr>
+            <tr *ngIf="x['mechanism'].length > 0">
+              <td>Mechanism of Action</td>
+              <td><span *ngFor="let y of x['mechanism']; let i = index">{{y}}{{i + 1 < x['mechanism'].length ? '; ' : ' '}}</span></td>
+            </tr>
+            <tr *ngIf="x['phase'].length > 0">
+              <td>Phase</td>
+              <td><span *ngFor="let y of x['phase']; let i = index">{{y}}{{i + 1 < x['phase'].length ? '; ' : ' '}}</span></td>
+            </tr>
 
-    <div scope="row">
-    <span *ngFor="let ii of x['values']">{{ ii }}</span>
-    </div>
-    </span>
-  </div>
-</div>
-
-<!-- right column -->
-<div class="col-md-8">
-  <!-- Assays -->
-  <div *ngIf="assayData.length > 0">
-    <h3>Activity data</h3>
-    <table class="cmpd-table">
-      <tr>
-        <th class="title assay-name">Assay type</th>
-        <th class="title">Activity type</th>
-        <th class="title">Source</th>
-        <th class="title">Measurement</th>
-      </tr>
-
-
-      <tr *ngFor="let x of assayData">
-        <td><a href="#/{{x['assay_title']}}">{{x['assay_title']}}</a></td>
-        <td>{{x['activity_type']}}</td>
-        <td>
-          {{x['ref']}}
-        </td>
-        <td>{{x['ac50']}}</td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- TODO:  add in if != logged in-->
-  <div *ngIf="assayData.length == 0">
-    <h3>Activity data</h3>
-    <a class="accent-color login-req" href="">sign in to view activity data</a>
-  </div>
-
-
-  <!-- Biological properties -->
-  <!-- TODO: regroup data on input, rather than filter here? -->
-
-  <h3>Biological properties</h3>
-  <table class="cmpd-table">
-
-    <!-- Wikidata results -->
-    <tr *ngFor="let x of table_data">
-      <span *ngIf="x['property'] == 'physically interacts with'">
-        <td class="title" scope="row">{{ x['property'] }}</td>
-        <td scope="row"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}}<span *ngIf="!x['showMore']"><span *ngIf="i + 1 < x['values'].length" class='data-separator'></span></span>
-      <span *ngIf="x['showMore']">
-                    <app-show-more-button [qid]="x['qids'][i]" [pid]="x['pid']" [mainQID]="qid"></app-show-more-button>
-
-                  </span>
-      </span>
-      <app-edit-item></app-edit-item>
-      </td>
-      </span>
-    </tr>
-
-    <!-- GVK data -->
-    <span *ngIf="gvkData.length > 0">
-        <div *ngFor="let x of gvkData">
-          <tr>
-            <td class="title" scope="row">Drug Category</td>
-            <td scope="row"><span (click)="showMore($event)" id={{y}} *ngFor="let y of x['category']; let i = index ;">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : y['ref'] === 'Informa' ? '[3]' : ''}}</span>
-              <span class='data-separator'></span></span>
-      </td>
-      </tr>
-      <tr>
-        <td class="title" scope="row">Mechanism of Action</td>
-        <td scope="row"><span *ngFor="let y of x['mechanism']; let i = index">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : y['ref'] === 'Informa' ? '[3]' : ''}}</span>
-          <span class='data-separator'></span></span>
-        </td>
-      </tr>
-</div>
-</span>
-</table>
-
-<!-- TODO:  change to if != logged in-->
-<div *ngIf="gvkData.length == 0">
-  <a class="accent-color login-req" href="">sign in to view biological properties data</a>
-</div>
-
-
-<!-- Pharma properties -->
-<h3>Pharmaceutical properties</h3>
-<table class="cmpd-table">
-
-  <!-- GVK data -->
-  <span *ngIf="gvkData.length > 0">
-              <div *ngFor="let x of gvkData">
-                <tr>
-                  <td class="title" scope="row">Phase</td>
-                  <td scope="row"><span *ngFor="let y of x['phase']; let i = index">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : y['ref'] === 'Informa' ? '[3]' : ''}}</span>
-                    <span *ngIf="i + 1 < x[ 'phase'].length " class='data-separator'></span></span>
-    </td>
-    </tr>
-    <tr>
-      <td class="title" scope="row">Route of Administration</td>
-      <td scope="row"><span *ngFor="let y of x['drug_roa']; let i = index">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : y['ref'] === 'Informa' ? '[3]' : ''}}</span>
-        <span *ngIf= "i + 1 < x[ 'drug_roa'].length"  class='data-separator'></span></span>
-      </td>
-    </tr>
-    </div>
-    </span>
-
-    <tr *ngFor="let x of table_data">
-      <span *ngIf="(x['property'] == 'pregnancy category')">
-        <td class="title" scope="row">{{ x['property'] }}</td>
-        <td scope="row"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}}<span *ngIf="!x['showMore']">{{i + 1 < x['values'].length ? '; ' : ''}}</span>
-      <span *ngIf="x['showMore']">
-                    <app-show-more-button [qid]="x['qids'][i]" [pid]="x['pid']" [mainQID]="qid"></app-show-more-button>
-
-                  </span>
-      </span>
-      <app-edit-item></app-edit-item>
-      </td>
-      </span>
-    </tr>
-
-
-    <!-- TODO:  change to if != logged in-->
-    <div *ngIf="gvkData.length == 0">
-      <a class="accent-color login-req" href="">sign in to view pharmaceutical properties data</a>
-    </div>
-
-</table>
+            <tr *ngIf="x.hasOwnProperty('roa') && x['roa'].length > 0">
+              <td>Route of Administration</td>
+              <td><span *ngFor="let y of x['roa']; let i = index">{{y}}{{i + 1 < x['roa'].length ? '; ' : ' '}}</span></td>
+            </tr>
+          </table>
 
 
 
 
-<!-- TODO: only display if GVK data / logged in -->
-<h4>Data Sources:</h4>
-<div class="footnote">[1] GVK BioSciences Inc.</div>
-<div class="footnote">[2] Thomson Reuters Integrity</div>
-<div class="footnote">[3] Informa Pharma</div>
-</div>
-</div>
+
+      <div *ngIf="assayData.length > 0">
+        <H3>Activity data</H3>
+        <table class="table table-bordered new" style="">
+          <th>Assay type </th>
+          <th>Activity type</th>
+          <th>Measurement</th>
+
+          <tr *ngFor="let x of assayData">
+            <td>{{x['assay_title']}}<sup>{{x['ref']}}</sup></td>
+            <td>{{x['activity_type']}}<sup>{{x['ref']}}</sup></td>
+            <td>{{x['ac50']}}<sup>{{x['ref']}}</sup></td>
+          </tr>
+        </table>
+

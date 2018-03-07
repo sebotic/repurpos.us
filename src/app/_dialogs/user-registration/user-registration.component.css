@@ -18,3 +18,8 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.terms {
+	padding-bottom: 20px;
+	cursor: pointer;
+}
