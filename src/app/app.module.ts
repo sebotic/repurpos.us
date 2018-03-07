@@ -77,8 +77,7 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { UserLoginComponent } from './user-login/user-login.component';
 
 import { UserRegButtonComponent } from './_components/user-reg-button/user-reg-button.component';
-import { TermsComponent } from './_dialogs/terms/terms.component';
-import { UserRegistrationComponent } from './_dialogs/user-registration/user-registration.component';
+import { LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
 
 @NgModule({
   exports: [
@@ -152,7 +151,8 @@ export class MaterialModule {}
     UserRegistrationComponent,
     UserLoginComponent,
     UserRegButtonComponent,
-    TermsComponent
+    TermsComponent,
+    LoginFailComponent
   ],
   imports: [
     BrowserModule,
@@ -193,7 +193,8 @@ export class MaterialModule {}
     // UserLoginComponent,
     // UserRegComponent,
     UserRegistrationComponent,
-    TermsComponent
+    TermsComponent,
+    LoginFailComponent
   ],
 
   bootstrap: [AppComponent]

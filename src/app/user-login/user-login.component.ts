@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../_models/user";
 import {HttpErrorResponse, HttpHeaders, HttpClient} from "@angular/common/http";
 import {FormControl, Validators} from "@angular/forms";
+import { MatDialog } from '@angular/material';
 import {environment} from "../../environments/environment";
+
+import { User } from "../_models/user";
+import { LoginFailComponent } from '../_dialogs/index';
 
 @Component({
   selector: 'app-user-login',
@@ -16,7 +19,7 @@ export class UserLoginComponent implements OnInit {
 
   email = new FormControl('', [Validators.required, Validators.email]);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -71,6 +74,7 @@ export class UserLoginComponent implements OnInit {
         location.reload();
       },
       (err: HttpErrorResponse) => {
+        this.dialog.open(LoginFailComponent);
         console.log(err.error.message);
         console.log(JSON.stringify(err));
         console.log(err.status);
