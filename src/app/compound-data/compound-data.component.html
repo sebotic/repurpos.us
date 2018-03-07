@@ -1,3 +1,12 @@
+<div class="container-fluid">
+  <br>
+  <div class="row-fluid">
+    <div class="col-md-8">
+    <div class="col-md-12">
+
+      <h1>{{ label }}</h1> <a href="{{'http://www.wikidata.org/entity/' + qid}}">Wikidata:{{qid}}</a> <span *ngFor="let x of idData"><b>{{x['property'] + ': ' }}</b><span *ngFor="let ii of x['values']">{{ ii + '; '}}</span></span>
+
+      <span><b>Aliases: </b></span>{{  concat_aliases }}
 
     </div>
     <div class="col-md-12">
@@ -61,9 +70,8 @@
               <td><span *ngFor="let y of x['roa']; let i = index">{{y}}{{i + 1 < x['roa'].length ? '; ' : ' '}}</span></td>
             </tr>
           </table>
-
-
-
+        </div>
+      </div>
 
 
       <div *ngIf="assayData.length > 0">
@@ -79,4 +87,52 @@
             <td>{{x['ac50']}}<sup>{{x['ref']}}</sup></td>
           </tr>
         </table>
+      </div>
+      <!--<h4>Data Sources:</h4>-->
+      <!--<div class="footnote">[1] GVK BioSciences Inc.</div>-->
+      <!--<div class="footnote">[2] Thomson Reuters Integrity</div>-->
+      <!--<div class="footnote">[3] Informa Pharma</div>-->
+    </div>
+    </div>
+    <div class="col-md-4">
+      <app-ngl></app-ngl>
 
+    <!--</div>-->
+    <!--<div class="col-md-4">-->
+      <!--<app-indications-graph [sdata]="graphData"></app-indications-graph>-->
+    </div>
+
+  </div>
+</div>
+
+<br>
+
+
+<div class="container-fluid centered">
+  <div class="row-fluid centered">
+  <div class="col-md-8 col-md-offset-2">
+    <!--<app-interaction-table-->
+      <!--[sdata]="tableData"-->
+    <!--&gt;</app-interaction-table>-->
+  </div>
+  </div>
+</div>
+
+<!--<app-search-results-table></app-search-results-table>-->
+
+<!--<div *ngFor="let x of testJson">{{x | json}}}</div>-->
+
+<!--<div class="ui list" *ngFor="let c of aliases">-->
+  <!--<div class="item">{{ c }}</div>-->
+<!--</div>-->
+
+<!--<div class="container-fluid centered">-->
+  <!--<div class="row-fluid centered">-->
+    <!--<div class="col-md-8 col-md-offset-2">-->
+    <!--<app-edit-item></app-edit-item>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<!--<pre>{{data | json}}</pre>-->
+<!--<br>-->
