@@ -23,6 +23,7 @@
     "*/interaction-table/interaction-table.component.ts",
     "*/compound-search/search-result-table/search-result-table.component.ts",
     "*/assets/du_data.ts",
-    "*/assets/gottlieb_data.ts"
+    "*/assets/gottlieb_data.ts",
+    "*/table/*"
   ]
 }
