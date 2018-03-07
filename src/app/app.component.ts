@@ -12,7 +12,6 @@ import { CompoundDataComponent } from "./compound-data/compound-data.component";
 import { AboutComponent } from "./about/about.component";
 import { AssaysComponent } from "./assays/assays.component";
 import { AssayDataComponent } from "./assay-data/assay-data.component";
-import { AssayCurvesComponent } from "./assay-curves/assay-curves.component";
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {isDefined} from "@angular/compiler/src/util";
 import {environment} from "../environments/environment";
@@ -23,7 +22,6 @@ let routeDef: RouteDef[] = [
   {label: 'Compound Data', name: 'compound_data', path: 'compound_data/:qid', component: CompoundDataComponent },
   {label: 'about', name: 'about', path: 'about', component: AboutComponent },
   {label: 'Assay Descriptions', name: 'assays', path: 'assays', component: AssaysComponent },
-  {label: 'Assay Curves', name: 'assay_curves', path: 'assay-curves', component: AssayCurvesComponent },
   {label: 'Assay Data', name: 'assay_data', path: 'assays/:aid', component: AssayDataComponent }
 ];
 
@@ -33,7 +31,6 @@ export const routes: Routes = [
   { path: 'about', component: AboutComponent, pathMatch: 'full' },
   { path: 'assays', component: AssaysComponent, pathMatch: 'full' },
   { path: 'assays/:aid', component: AssayDataComponent, pathMatch: 'full' },
-  { path: 'assay-curves', component: AssayCurvesComponent, pathMatch: 'full' },
   { path: 'compound_data/:qid', component: CompoundDataComponent, pathMatch: 'full' }
 ];
 
