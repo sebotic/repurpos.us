@@ -5,6 +5,31 @@
   max-height: 500px;
   min-width: 300px;
   position: relative;
+  margin-left: 24px;
+}
+
+.mat-table{
+  font-family: "Lato", Arial, sans-serif;
+}
+
+mat-row {
+  border-bottom: 1px solid #21252945;
+}
+
+mat-row:first-of-type {
+  border-top: 1px solid #21252945;
+}
+
+.mat-header-row {
+  border: none;
+}
+
+.search-result-container mat-header-cell {
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-size: 1.15em;
+  font-weight: 300;
+  border: none;
 }
 
 .search-result-header {
@@ -44,6 +69,7 @@
 .mat-column-state {
   max-width: 64px;
 }
+
 
 .mat-column-created {
   max-width: 124px;

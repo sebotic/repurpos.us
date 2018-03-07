@@ -1,0 +1,75 @@
+/* general style, used in all assay descriptions */
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+
+a, a.dwnld-link:hover {
+  color: #3D6DE0;
+}
+
+.title {
+  width: 85%;
+}
+
+.summary-box {
+  border-bottom: 1px solid #212529;
+  border-top: 1px solid #212529;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.summary {
+  font-size: 20px;
+}
+
+#label{
+  font-weight: 400;
+}
+
+
+/*Table widths for main assay page*/
+
+#assays {
+  table-layout: fixed;
+}
+
+#table_id {
+  width: 10%;
+  min-width: 70px;
+}
+
+#table_assay {
+  width: 40%;
+}
+
+#table_descrip {
+  width: 50%;
+}
+
+#assays td {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+#label>th {
+  font-size: 1.2em;
+  opacity: 0.5;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.id {
+  color: #21252945;
+  float: left;
+  padding-top: 15%;
+  padding-bottom: 15%;
+  text-align: right;
+}
+
+#assays tr:nth-child(even) {
+  background: #f7f7f7;
+  border-right: #dadada 3px solid;
+}

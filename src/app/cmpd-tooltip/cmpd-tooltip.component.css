@@ -1,0 +1,32 @@
+.tooltip-avg {
+  font-size: 1em;
+  font-weight: 400;
+}
+
+.tooltip-indiv {
+  font-size: 0.8em;
+  color: #21252980;
+  padding-left: 12px;
+}
+
+#structs {
+  pointer-events: none;
+  padding: 12px;
+  position: absolute;
+  border-radius: 5px;
+  background: #f3f3f4;
+  opacity: 0.75;
+}
+
+#struct-name {
+  margin-top: -8px;
+  font-size: 1.25em;
+  font-weight: 400;
+  padding-top: 6px;
+  padding-bottom: 3px;
+}
+
+#data-headers {
+  border-bottom: 1px solid #21252980;
+  border-top: 1px solid #21252980;
+}

@@ -1,0 +1,119 @@
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+
+a, a.dwnld-link:hover {
+  color: #3D6DE0;
+}
+
+.accent-color {
+  color: #fd5457;
+}
+
+
+.title {
+  width: 85%;
+}
+
+.subtitle {
+  font-size: 20px;
+}
+
+.assay-id, .home-link {
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+
+.assay-id {
+    color: #21252945;
+}
+
+.home-link {
+    color: #3D6DE0;
+}
+
+#viewmore {
+  padding: 10px;
+}
+
+.overview {
+}
+
+.overview > ul {
+  list-style: none;
+  padding: 6px 10px 6px 10px;
+  background: #3d6de00d;
+}
+
+.summary-box {
+  border-bottom: 1px solid #212529;
+  border-top: 1px solid #212529;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.summary {
+  font-size: 20px;
+}
+
+#label{
+  font-weight: 400;
+}
+
+.condits{
+  color: #818182;
+  padding-top: 6px;
+}
+
+
+#content{
+  margin: 15px;
+}
+
+h3#data-title {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+/* nav elements:  tab panes, pagination */
+\
+
+/* IC/EC tab buttons */
+.nav-pills {
+  margin-top: -0.5rem;
+}
+
+.nav-pills .nav-link {
+  background-color: #2125290d;
+  border-radius: 3px;
+  margin-left: 4px;
+  border: 0px #2125290d solid;
+  border-bottom-width: 4px;
+  color: #21252935;
+  -webkit-text-fill-color: #21252935;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  background-color: #21252920;
+  border-color: #21252920;
+  -webkit-text-fill-color: #21252980;
+  color: #21252980;
+}
+
+.nav-pills .nav-link:hover {
+  background-color: #3d6de025;
+  color: #3d6de0;
+  border-color: #3d6de025;
+}
+
+.nav-link {
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}

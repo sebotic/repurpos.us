@@ -1,16 +1,14 @@
 <div class='container-fluid'>
 
-  <div class="page-header">
-    <h1>Search</h1>
-  </div>
-
   <div class="row">
+
     <div class="col-md-2" hidden><!-- GitHub Issue # 9 -->
+
       <app-compound-search-options></app-compound-search-options>
-    </div>
+    </div> -->
     <div class="input-group input-group-lg col-md-9">
 
-      <search-box
+      <search-box class="search"
         (loading)="loading = $event"
         (results)="updateResults($event)"
       ></search-box>
@@ -19,7 +17,7 @@
       <div class="row">
         <br>
         <img
-          style="float: right;"
+          style="float: left;"
           *ngIf="loading"
           src={{loadingGif}} />
         <search-result

@@ -9,6 +9,10 @@ import {
 import { RouteDef } from "./menu-bar/menu-bar.component";
 import { CompoundSearchComponent } from './compound-search/compound-search.component'
 import { CompoundDataComponent } from "./compound-data/compound-data.component";
+import { AboutComponent } from "./about/about.component";
+import { AssaysComponent } from "./assays/assays.component";
+import { AssayDataComponent } from "./assay-data/assay-data.component";
+import { AssayCurvesComponent } from "./assay-curves/assay-curves.component";
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {isDefined} from "@angular/compiler/src/util";
 import {environment} from "../environments/environment";
@@ -17,12 +21,19 @@ import {environment} from "../environments/environment";
 let routeDef: RouteDef[] = [
   {label: 'Compound Search', name: 'Root', path: '', component: CompoundSearchComponent},
   {label: 'Compound Data', name: 'compound_data', path: 'compound_data/:qid', component: CompoundDataComponent },
-
+  {label: 'about', name: 'about', path: 'about', component: AboutComponent },
+  {label: 'Assay Descriptions', name: 'assays', path: 'assays', component: AssaysComponent },
+  {label: 'Assay Curves', name: 'assay_curves', path: 'assay-curves', component: AssayCurvesComponent },
+  {label: 'Assay Data', name: 'assay_data', path: 'assays/:aid', component: AssayDataComponent }
 ];
 
 
 export const routes: Routes = [
   { path: '', component: CompoundSearchComponent, pathMatch: 'full' },
+  { path: 'about', component: AboutComponent, pathMatch: 'full' },
+  { path: 'assays', component: AssaysComponent, pathMatch: 'full' },
+  { path: 'assays/:aid', component: AssayDataComponent, pathMatch: 'full' },
+  { path: 'assay-curves', component: AssayCurvesComponent, pathMatch: 'full' },
   { path: 'compound_data/:qid', component: CompoundDataComponent, pathMatch: 'full' }
 ];
 
@@ -63,8 +74,8 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void{
-    console.log(this.document.location.pathname);
-    console.log(this.document.location.href);
+    // console.log(this.document.location.pathname);
+    // console.log(this.document.location.href);
 
     if (localStorage.getItem('auth_token') ){
       this.http.get(environment.host_url + '/auth/status', {
@@ -76,10 +87,10 @@ export class AppComponent implements OnInit{
 
       ).subscribe((re) => {
           let credentials = re.body;
-          console.log(credentials['auth_token']);
+          // console.log(credentials['auth_token']);
           // localStorage.setItem('auth_token', credentials['auth_token']);
 
-          console.log(JSON.stringify(re));
+          // console.log(JSON.stringify(re));
           // console.log(re.status);
         },
         (err: HttpErrorResponse) => {

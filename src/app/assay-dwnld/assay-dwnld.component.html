@@ -1,0 +1,15 @@
+<span class="d-inline-block" ngbDropdown #dwnldBtn="ngbDropdown">
+  <!-- <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button> -->
+  <button class="dwnld-btn btn-default dropdown-toggle" type="button" id="downloadMenu" ngbDropdownToggle
+ aria-haspopup="true" aria-expanded="true">
+  download
+  <span class="caret"></span>
+</button>
+
+
+  <ul ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenu">
+    <li><a id="tsv-dwnld" class="dwnld-link" (click)="dwnldTSV();">tsv</a></li>
+    <li><a id="json-dwnld" class="dwnld-link" (click)="dwnldJSON();">json</a></li>
+  </ul>
+
+</span>

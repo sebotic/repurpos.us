@@ -74,7 +74,17 @@ import { ShowMoreButtonComponent, ShowMorePane } from './compound-data/show-more
 import { SearchResultsTableComponent } from './compound-search/search-results-table/search-results-table.component';
 import {CdkTableModule} from "@angular/cdk/table";
 import { RecaptchaModule } from 'ng-recaptcha';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { UserLoginComponent } from './user-login/user-login.component';
+import { AboutComponent } from './about/about.component';
+import { AssaysComponent } from './assays/assays.component';
+import { AssayPlotsComponent } from './assay-plots/assay-plots.component';
+import { AssayDataComponent } from './assay-data/assay-data.component';
+import { DotPlotComponent } from './dot-plot/dot-plot.component';
+import { AssayDwnldComponent } from './assay-dwnld/assay-dwnld.component';
+import { AssayTypeBtnComponent } from './assay-type-btn/assay-type-btn.component';
+import { AssayPaginationComponent } from './assay-pagination/assay-pagination.component';
+import { CmpdTooltipComponent } from './cmpd-tooltip/cmpd-tooltip.component';
 
 import { UserRegButtonComponent } from './_components/user-reg-button/user-reg-button.component';
 import { LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
@@ -132,6 +142,16 @@ export class MaterialModule {}
     NgCytoscape,
     IndicationsGraphComponent,
     CompoundDataComponent,
+
+    AboutComponent,
+    AssaysComponent,
+    AssayDataComponent,
+    AssayPlotsComponent,
+    DotPlotComponent,
+    AssayDwnldComponent,
+    AssayTypeBtnComponent,
+    AssayPaginationComponent,
+    CmpdTooltipComponent,
     // InteractionTableComponent,
     // DiseaseDataComponent,
     NglComponent,
@@ -170,6 +190,7 @@ export class MaterialModule {}
 
     FormsModule,
     ReactiveFormsModule,
+    NgbModule.forRoot(),
 
     RecaptchaModule.forRoot(),
   ],

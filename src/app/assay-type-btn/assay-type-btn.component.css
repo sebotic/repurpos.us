@@ -1,0 +1,46 @@
+/* nav elements:  tab panes, pagination */
+
+.nav-pills {
+  margin-top: -0.5rem;
+  cursor: pointer;
+}
+
+.nav-pills .nav-link {
+  background-color: #2125290d;
+  border-radius: 3px;
+  margin-left: 4px;
+  border: 0px #2125290d solid;
+  border-bottom-width: 4px;
+  color: #21252935;
+  -webkit-text-fill-color: #21252935;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  background-color: #21252920;
+  border-color: #21252920;
+  -webkit-text-fill-color: #21252980;
+  color: #21252980;
+}
+
+.nav-pills .nav-link:hover {
+  background-color: #3d6de025;
+  color: #3d6de0;
+  border-color: #3d6de025;
+}
+
+.nav>li>a {
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 6px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+span.btn {
+  font-family: "Lato", Arial, sans-serif;
+  font-weight: 300;
+  pointer-events: none;
+  /* Necessary to fix webkit error where child text screws up event firing */
+  padding: 0;
+}

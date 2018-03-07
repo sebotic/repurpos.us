@@ -1,0 +1,91 @@
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+}
+
+a, a.dwnld-link:hover {
+  color: #3D6DE0;
+}
+
+.title {
+  width: 85%;
+}
+
+
+.assay-id, .home-link {
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+
+.assay-id {
+    color: #21252945;
+}
+
+.home-link {
+    color: #3D6DE0;
+}
+
+#viewmore {
+  padding: 10px;
+}
+
+.overview {
+}
+
+.overview > ul {
+  list-style: none;
+  padding: 6px 10px 6px 10px;
+  background: #3d6de00d;
+  border-radius: 3px;
+}
+
+.summary-box {
+  border-bottom: 1px solid #212529;
+  border-top: 1px solid #212529;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.summary {
+  font-size: 20px;
+}
+
+#label{
+  font-weight: 400;
+}
+
+.condits{
+  color: #818182;
+  padding-top: 6px;
+}
+
+.subtitle {
+  font-size: 20px;
+  color: #212529;
+  padding-bottom: 3px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.description {
+  margin-bottom: 15px;
+}
+
+#content{
+  margin: 15px;
+}
+
+
+/* text */
+#protocol {
+  margin-top: 32px;
+}
+
+#protocol h3 {
+  margin-top: 0.5rem;
+  border-top: 1px solid #212529;
+  margin-top: 15px;
+  padding-top: 12px;
+}
