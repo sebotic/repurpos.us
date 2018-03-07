@@ -73,9 +73,11 @@ import {
 import { ShowMoreButtonComponent, ShowMorePane } from './compound-data/show-more-button/show-more-button.component';
 import { SearchResultsTableComponent } from './compound-search/search-results-table/search-results-table.component';
 import {CdkTableModule} from "@angular/cdk/table";
-import {UserRegComponent, UserRegistrationComponent} from './user-registration/user-registration.component';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { UserLoginComponent } from './user-login/user-login.component';
+
+import { UserRegButtonComponent } from './_components/user-reg-button/user-reg-button.component';
+import { LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
 
 @NgModule({
   exports: [
@@ -148,8 +150,9 @@ export class MaterialModule {}
     SearchResultsTableComponent,
     UserRegistrationComponent,
     UserLoginComponent,
-    UserRegComponent
-
+    UserRegButtonComponent,
+    TermsComponent,
+    LoginFailComponent
   ],
   imports: [
     BrowserModule,
@@ -189,7 +192,9 @@ export class MaterialModule {}
     MailSignupDialog,
     // UserLoginComponent,
     // UserRegComponent,
-    UserRegistrationComponent
+    UserRegistrationComponent,
+    TermsComponent,
+    LoginFailComponent
   ],
 
   bootstrap: [AppComponent]
