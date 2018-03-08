@@ -29,7 +29,7 @@ import {CIDService, NglComponent} from './ngl/ngl.component';
 import { CompoundSearchOptionsComponent } from './compound-search/compound-search-options/compound-search-options.component';
 import { IndicationsGraphComponent, GraphDataService } from './compound-data/indications-graph/indications-graph.component';
 // import { SearchResultTableComponent } from './compound-search/search-result-table/search-result-table.component';
-import {HttpClientModule, HttpClientXsrfModule} from "@angular/common/http";
+import {HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import {AuthComponent, AuthGuard, AuthService} from './auth/auth.component';
 import {DialogOverviewExample, DialogOverviewExampleDialog, EditItemComponent} from './edit-item/edit-item.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -52,7 +52,7 @@ import {
   // MatNativeDateModule,
   MatPaginatorModule,
   // MatProgressBarModule,
-  // MatProgressSpinnerModule,
+  MatProgressSpinnerModule,
   // MatRadioModule,
   // MatRippleModule,
   MatSelectModule,
@@ -76,8 +76,10 @@ import {CdkTableModule} from "@angular/cdk/table";
 import { RecaptchaModule } from 'ng-recaptcha';
 import { UserLoginComponent } from './user-login/user-login.component';
 
-import { UserRegButtonComponent } from './_components/user-reg-button/user-reg-button.component';
+import { LoaderComponent, UserRegButtonComponent } from './_components/index';
 import { LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
+import { LoaderInterceptorService } from './_interceptors/loader-interceptor.service';
+import { LoaderStateService } from './_services/loader-state.service';
 
 @NgModule({
   exports: [
@@ -100,7 +102,7 @@ import { LoginFailComponent, TermsComponent, UserRegistrationComponent } from '.
     // MatNativeDateModule,
     MatPaginatorModule,
     // MatProgressBarModule,
-    // MatProgressSpinnerModule,
+    MatProgressSpinnerModule,
     // MatRadioModule,
     // MatRippleModule,
     MatSelectModule,
@@ -152,7 +154,8 @@ export class MaterialModule {}
     UserLoginComponent,
     UserRegButtonComponent,
     TermsComponent,
-    LoginFailComponent
+    LoginFailComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -165,6 +168,7 @@ export class MaterialModule {}
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule,
     // MatNativeDateModule,
 
@@ -183,7 +187,8 @@ export class MaterialModule {}
     // { provide: InteractionTableDataService, useClass: InteractionTableDataService },
     { provide: CIDService, useClass: CIDService},
     { provide: AuthService, useClass: AuthService},
-
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true },
+    LoaderStateService
   ],
   entryComponents: [
     DialogOverviewExample,
