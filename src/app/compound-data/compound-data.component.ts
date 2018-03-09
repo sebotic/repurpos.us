@@ -19,6 +19,61 @@ export interface WDQSData {
   results: {bindings: Array<Object>}
 }
 
+export interface VendorData {
+  ikey: string;
+  gvk: GVKData;
+  integrity: IntegrityData;
+  informa: InformaData;
+  assay: Array<AssayData>;
+}
+
+export interface GVKData {
+  hvac_id: string;
+  gvk_id: string;
+  drug_name: string;
+  phase: Array<string>;
+  roa: Array<string>;
+  category: Array<string>;
+  mechanism: Array<string>;
+  smiles: string;
+  synonyms: Array<string>;
+  ikey: string;
+}
+
+export interface IntegrityData {
+  id: number;
+  smiles: string;
+  drug_name: string;
+  phase: Array<string>;
+  category: Array<string>;
+  mechanism: Array<string>;
+  ikey: string;
+  wikidata: string;
+  pubchem_cid: string;
+}
+
+export interface InformaData {
+  drug_name: string;
+  phase: Array<string>;
+  highest_phase: string;
+  mechanism: Array<string>;
+  smiles: string;
+  ikey: string;
+  wikidata: string;
+  pubchem_cid: string;
+}
+
+export interface AssayData {
+  id: string;
+  ac50: string;
+  datamode: string
+  assay_title: string;
+  smiles: string;
+  ikey: string;
+  wikidata: string;
+  pubchem_cid: string;
+}
+
 
 @Component({
   outputs: ['cid'],
@@ -381,7 +436,7 @@ export class CompoundDataComponent implements OnInit {
   }
 
   retrieveData(): void {
-    this.http2.get(environment.host_url + '/data', {
+    this.http2.get<VendorData>(environment.host_url + '/data', {
       observe: 'response',
       // withCredentials: true,
       headers: new HttpHeaders()
@@ -391,12 +446,11 @@ export class CompoundDataComponent implements OnInit {
         .set('qid', this.qid)
     }).subscribe((r) => {
       let b = r.body[this.qid];
-      console.log(b);
-      this.gvkData = [b['gvk']];
-      this.informaData = [b['informa']];
-      this.integrityData = [b['integrity']];
-      this.assayData = b['assay'];
-      console.log(this.gvkData);
+      // console.log(b);
+      this.gvkData = [b.gvk];
+      this.informaData = [b.informa];
+      this.integrityData = [b.integrity];
+      this.assayData = b.assay;
       // console.log(this.gvkData);
     });
 
