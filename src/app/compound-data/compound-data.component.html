@@ -21,7 +21,9 @@
               <app-show-more-button [qid]="x['qids'][i]" [pid]="x['pid']" [mainQID]="qid"></app-show-more-button>
 
             </span>
-          </span><app-edit-item></app-edit-item></td>
+            </span>
+            <!--<app-edit-item></app-edit-item>-->
+          </td>
         </tr>
 
       </table>
@@ -48,24 +50,24 @@
         <!--</table>-->
       <!--</div>-->
 
-      <div *ngFor="let yy of [gvkData, integrityData, informaData]; let i = index;">
-        <div *ngIf="yy.length > 0">
-          <H3>{{vendors[i]}}</H3>
+      <div *ngFor="let yy of [gvkData, integrityData, informaData]; let k = index;">
+        <div *ngIf="yy[0] && (yy[0].mechanism || yy[0].category)">
+          <H3>{{vendors[k]}}</H3>
           <table class="table table-bordered" *ngFor="let x of yy">
-            <tr *ngIf="x.hasOwnProperty('roa') && x['category'].length > 0">
+            <tr *ngIf="x && x.hasOwnProperty('category') && x['category'].length > 0">
               <td>Category</td>
               <td><span (click)="showMore($event)" id={{y}} *ngFor="let y of x['category']; let i = index ;">{{y}}{{i + 1 < x['category'].length ? '; ' : ''}}</span></td>
             </tr>
-            <tr *ngIf="x['mechanism'].length > 0">
+            <tr *ngIf="x && x.hasOwnProperty('mechanism') && x['mechanism'].length > 0">
               <td>Mechanism of Action</td>
               <td><span *ngFor="let y of x['mechanism']; let i = index">{{y}}{{i + 1 < x['mechanism'].length ? '; ' : ' '}}</span></td>
             </tr>
-            <tr *ngIf="x['phase'].length > 0">
+            <tr *ngIf="x && x.hasOwnProperty('phase') && x['phase'].length > 0">
               <td>Phase</td>
               <td><span *ngFor="let y of x['phase']; let i = index">{{y}}{{i + 1 < x['phase'].length ? '; ' : ' '}}</span></td>
             </tr>
 
-            <tr *ngIf="x.hasOwnProperty('roa') && x['roa'].length > 0">
+            <tr *ngIf="x && x.hasOwnProperty('roa') && x.hasOwnProperty('roa') && x['roa'].length > 0">
               <td>Route of Administration</td>
               <td><span *ngFor="let y of x['roa']; let i = index">{{y}}{{i + 1 < x['roa'].length ? '; ' : ' '}}</span></td>
             </tr>
