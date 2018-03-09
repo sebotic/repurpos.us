@@ -30,6 +30,7 @@ export class CompoundDataComponent implements OnInit {
   qid: string;
   results: Object;
   data: Object;
+  loggedIn: boolean;
   label: string;
   tableData: Array<Object> = [];
   aliases: Array<string> = [];
@@ -105,7 +106,7 @@ export class CompoundDataComponent implements OnInit {
     SELECT ?prop ?propLabel ?furl WHERE {
       VALUES ?prop { wd:${this.propsToDisplay.join(' wd:')} }
       OPTIONAL {?prop wdt:P1630 ?furl .}
-      
+
       SERVICE wikibase:label {bd:serviceParam wikibase:language "en" . }
       }`;
 
@@ -124,6 +125,13 @@ export class CompoundDataComponent implements OnInit {
         let p: string = i['prop']['value'].split('/').pop();
 
         this.prop_name_map[p] = i['propLabel']['value'];
+      }
+
+
+      if (localStorage.getItem('auth_token')) {
+        this.loggedIn = true;
+      } else {
+        this.loggedIn = false;
       }
 
       this.buildData();
@@ -428,7 +436,7 @@ export class CompoundDataComponent implements OnInit {
     let query: string = `
     https://query.wikidata.org/sparql?query=SELECT ?qid ?qidLabel WHERE {
     	VALUES ?qid {wd:${tmp_str}}
-    	SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}  
+    	SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
     }&format=json
     `;
     console.log(query);
