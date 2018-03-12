@@ -28,8 +28,8 @@
           <li>
             <a href="/#/about">about</a>
           </li>
-          <li class="accent-color">
-            sign in
+          <li class="sign-in" (click)="showLogin()">
+            <a>sign in</a>
           </li>
         </ul>
       </div>
@@ -37,8 +37,10 @@
 
     </div>
 
-    <div class="header item borderless">
-      <app-user-login></app-user-login>
+    <div class="container-fluid reveal" [ngClass]="{'open': loginBox}">
+      <div class="pull-right float-right">
+        <app-user-login></app-user-login>
+      </div>
     </div>
   </header>
 
