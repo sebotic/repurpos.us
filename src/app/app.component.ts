@@ -5,6 +5,7 @@ import {
   Router,
   Routes
 } from '@angular/router';
+import { Subscription } from 'rxjs/subscription';
 
 import { RouteDef } from "./menu-bar/menu-bar.component";
 import { CompoundSearchComponent } from './compound-search/compound-search.component'
@@ -15,6 +16,8 @@ import { AssayDataComponent } from "./assay-data/assay-data.component";
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {isDefined} from "@angular/compiler/src/util";
 import {environment} from "../environments/environment";
+import { LoginStateService } from './_services/index';
+import { LoginState } from './_models/index';
 
 
 let routeDef: RouteDef[] = [
@@ -43,8 +46,10 @@ export const routes: Routes = [
 export class AppComponent implements OnInit{
   routeDef: RouteDef[];
   loginBox: boolean = false;
+  loggedIn: boolean = false;
+  private loginSubscription: Subscription;
 
-  constructor(private router: Router, @Inject(DOCUMENT) private document: any, private http: HttpClient,) {
+  constructor(private router: Router, @Inject(DOCUMENT) private document: any, private http: HttpClient, private loginStateService: LoginStateService) {
     this.routeDef = routeDef;
   }
 
@@ -76,9 +81,16 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    // subscribe to the login state
+    this.loginSubscription = this.loginStateService.loginState
+                                .subscribe((state: LoginState) => {
+                                  this.loggedIn = state.loggedIn;
+                                });
     // console.log(this.document.location.pathname);
     // console.log(this.document.location.href);
 
+    /*
+     * This seems to be legacy and has been moved to user-login.component
     if (localStorage.getItem('auth_token') ){
       this.http.get(environment.host_url + '/auth/status', {
           observe: 'response',
@@ -103,7 +115,7 @@ export class AppComponent implements OnInit{
 
     } else {
       this.login();
-    }
+    }*/
 
 
 
