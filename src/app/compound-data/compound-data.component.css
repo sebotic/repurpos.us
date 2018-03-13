@@ -54,10 +54,10 @@ div.footnote {
   font-size: 0.85em;
 }
 
-.chem-props:first-of-type{
+.wikidata:first-of-type{
   font-size: 1.25em;
 }
-.chem-props:first-of-type .title {
+.wikidata:first-of-type .title {
   display: none;
 }
 
