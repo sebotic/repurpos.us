@@ -17,7 +17,7 @@
 
       </div>
 
-      <div class="links pull-right">
+      <div class="links pull-right" [ngClass]="{'logout-wrap': loggedIn}">
         <ul>
           <li>
             <a href="">search</a>
@@ -28,18 +28,21 @@
           <li>
             <a href="/#/about">about</a>
           </li>
-          <li class="accent-color">
-            sign in
+          <li class="sign-in">
+            <a *ngIf="!loggedIn" (click)="showLogin()">sign in</a>
           </li>
         </ul>
+        <div class="container-fluid reveal" [ngClass]="{'open': loginBox, 'logout': loggedIn, 'sign-in-box': !loggedIn}">
+          <div class="pull-right float-right">
+            <app-user-login></app-user-login>
+          </div>
+        </div>
       </div>
 
 
     </div>
 
-    <div class="header item borderless">
-      <app-user-login></app-user-login>
-    </div>
+    
   </header>
 
   <!--<div class="header item borderless">-->

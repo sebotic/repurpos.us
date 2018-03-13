@@ -5,7 +5,7 @@
     <div class="col-md-2" hidden><!-- GitHub Issue # 9 -->
 
       <app-compound-search-options></app-compound-search-options>
-    </div> -->
+    </div>
     <div class="input-group input-group-lg col-md-9">
 
       <search-box class="search"
@@ -16,10 +16,10 @@
       <div class='container'></div>
       <div class="row">
         <br>
-        <img
+        <!--<img
           style="float: left;"
           *ngIf="loading"
-          src={{loadingGif}} />
+          src={{loadingGif}} />-->
         <search-result
           *ngFor="let result of results"
           [result]="result">

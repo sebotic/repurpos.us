@@ -100,3 +100,56 @@ footer li {
 .left-spacer {
   padding-left: 6px;
 }
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.links.logout-wrap {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.links ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.reveal {
+  height:0px;
+  width: 0px;
+  overflow: hidden;
+  -webkit-transition:height, 0.3s linear;
+  -moz-transition: height, 0.3s linear;
+  -ms-transition: height, 0.3s linear;
+  -o-transition: height, 0.3s linear;
+  transition: height, 0.3s linear;
+}
+
+.reveal.open {
+  height: 100px;
+  width: 530px;
+  -webkit-transition:height, 0.3s linear;
+  -moz-transition: height, 0.3s linear;
+  -ms-transition: height, 0.3s linear;
+  -o-transition: height, 0.3s linear;
+  transition: height, 0.3s linear;
+}
+
+.reveal.sign-in {
+  
+  margin-top: 16px;
+}
+
+.reveal.logout {
+  height: auto;
+  width: auto;
+}
+
+.sign-in {
+  cursor: pointer;
+}

@@ -89,7 +89,7 @@ import { CmpdTooltipComponent } from './cmpd-tooltip/cmpd-tooltip.component';
 import { LoaderComponent, UserRegButtonComponent } from './_components/index';
 import { LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
 import { LoaderInterceptorService } from './_interceptors/loader-interceptor.service';
-import { LoaderStateService } from './_services/loader-state.service';
+import { LoaderStateService, LoginStateService } from './_services/index';
 
 @NgModule({
   exports: [
@@ -209,7 +209,8 @@ export class MaterialModule {}
     { provide: CIDService, useClass: CIDService},
     { provide: AuthService, useClass: AuthService},
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true },
-    LoaderStateService
+    LoaderStateService,
+    LoginStateService
   ],
   entryComponents: [
     DialogOverviewExample,

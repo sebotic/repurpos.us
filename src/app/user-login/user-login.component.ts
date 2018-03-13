@@ -6,6 +6,7 @@ import {environment} from "../../environments/environment";
 
 import { User } from "../_models/user";
 import { LoginFailComponent } from '../_dialogs/index';
+import { LoginStateService } from '../_services/index';
 
 @Component({
   selector: 'app-user-login',
@@ -19,7 +20,7 @@ export class UserLoginComponent implements OnInit {
 
   email = new FormControl('', [Validators.required, Validators.email]);
 
-  constructor(private http: HttpClient, public dialog: MatDialog) { }
+  constructor(private http: HttpClient, private loginStateService: LoginStateService, public dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -38,6 +39,7 @@ export class UserLoginComponent implements OnInit {
           // maybe do some checks here for the user, but not really important if the token came back valid
 
           this.loggedIn = true;
+          this.loginStateService.loggedIn();
 
           // console.log(JSON.stringify(re));
           // console.log(re.status);
@@ -45,11 +47,13 @@ export class UserLoginComponent implements OnInit {
         (err: HttpErrorResponse) => {
           console.log('error executed');
           this.loggedIn = false;
+          this.loginStateService.loggedOut();
         }
       );
 
     } else {
       this.loggedIn = false;
+      this.loginStateService.loggedOut();
     }
   }
 
@@ -71,6 +75,7 @@ export class UserLoginComponent implements OnInit {
         console.log(JSON.stringify(re));
         // console.log(re.status);
         this.loggedIn = true;
+        this.loginStateService.loggedIn();
         location.reload();
       },
       (err: HttpErrorResponse) => {
@@ -97,6 +102,7 @@ export class UserLoginComponent implements OnInit {
         if(logoutReply['status'] === 'success') {
           localStorage.removeItem('auth_token');
           this.loggedIn = false;
+          this.loginStateService.loggedOut();
           location.reload();
         }
 
