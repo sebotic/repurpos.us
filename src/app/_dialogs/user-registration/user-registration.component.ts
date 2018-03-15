@@ -31,6 +31,7 @@ export class UserRegistrationComponent implements OnInit {
   user = new User(0, '', '', '', '', '', '', '', '','', '');
   form: FormGroup;
   recaptchaToken: string;
+  loginResponse: string;
 
   constructor(private http: HttpClient, @Inject(FormBuilder) fb: FormBuilder, public dialog: MatDialog) {
     this.form = fb.group({
@@ -70,6 +71,8 @@ export class UserRegistrationComponent implements OnInit {
           location.reload();
           // console.log(re.status);
 
+        } else if (credentials['status'] === 'fail') {
+          this.loginResponse = credentials['message'];
         }
       },
       (err: HttpErrorResponse) => {
