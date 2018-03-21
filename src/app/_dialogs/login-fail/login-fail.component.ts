@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-login-fail',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login-fail.component.css']
 })
 export class LoginFailComponent implements OnInit {
+	errorMessage: string;
 
-  constructor() { }
+  constructor(@Inject(MAT_DIALOG_DATA) private data) { }
 
   ngOnInit() {
+  	this.errorMessage = this.data.error ? this.data.error : 'Login failed. Please try again...';
   }
 
 }
+	

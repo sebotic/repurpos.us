@@ -1,7 +1,7 @@
 <h2>User registration</h2>
 <div mat-dialog-content>
 
-<form (ngSubmit)="onSubmit($event)" [formGroup]="form">
+<form (ngSubmit)="onSubmit($event)" [formGroup]="form" [hidden]="regSuccess">
   <div class="user-form-container">
     <div formGroupName="name">
     <mat-form-field>
@@ -108,9 +108,8 @@
       <re-captcha (resolved)="resolved($event)" siteKey="6Le2wTsUAAAAAO-xiYenSNSONc4uNRB89fVOV0Lc"></re-captcha>
     </div>
     <button mat-raised-button color="primary" [disabled]="form.invalid || !recaptchaToken" type="submit" [formGroup]="form">Submit</button>
-
-    <p *ngIf="loginResponse" class="text-danger">{{ loginResponse }}</p>
   </div>
 
 </form>
+<p *ngIf="loginResponse" class="text-danger">{{ loginResponse }}</p>
 </div>

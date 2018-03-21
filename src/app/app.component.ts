@@ -1,13 +1,8 @@
 import {Component, Inject, Injectable, OnInit} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
-import {
-  Router,
-  Routes
-} from '@angular/router';
 import { Subscription } from 'rxjs/subscription';
 
-import { RouteDef } from "./menu-bar/menu-bar.component";
 import { CompoundSearchComponent } from './compound-search/compound-search.component'
 import { CompoundDataComponent } from "./compound-data/compound-data.component";
 import { AboutComponent } from "./about/about.component";
@@ -17,25 +12,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/c
 import {isDefined} from "@angular/compiler/src/util";
 import {environment} from "../environments/environment";
 import { LoginStateService } from './_services/index';
-import { LoginState } from './_models/index';
-
-
-let routeDef: RouteDef[] = [
-  {label: 'Compound Search', name: 'Root', path: '', component: CompoundSearchComponent},
-  {label: 'Compound Data', name: 'compound_data', path: 'compound_data/:qid', component: CompoundDataComponent },
-  {label: 'about', name: 'about', path: 'about', component: AboutComponent },
-  {label: 'Assay Descriptions', name: 'assays', path: 'assays', component: AssaysComponent },
-  {label: 'Assay Data', name: 'assay_data', path: 'assays/:aid', component: AssayDataComponent }
-];
-
-
-export const routes: Routes = [
-  { path: '', component: CompoundSearchComponent, pathMatch: 'full' },
-  { path: 'about', component: AboutComponent, pathMatch: 'full' },
-  { path: 'assays', component: AssaysComponent, pathMatch: 'full' },
-  { path: 'assays/:aid', component: AssayDataComponent, pathMatch: 'full' },
-  { path: 'compound_data/:qid', component: CompoundDataComponent, pathMatch: 'full' }
-];
+import { LoginState, RouteDef } from './_models/index';
 
 @Injectable()
 @Component({
@@ -49,8 +26,8 @@ export class AppComponent implements OnInit{
   loggedIn: boolean = false;
   private loginSubscription: Subscription;
 
-  constructor(private router: Router, @Inject(DOCUMENT) private document: any, private http: HttpClient, private loginStateService: LoginStateService) {
-    this.routeDef = routeDef;
+  constructor(@Inject(DOCUMENT) private document: any, private http: HttpClient, private loginStateService: LoginStateService) {
+    
   }
 
   login(){

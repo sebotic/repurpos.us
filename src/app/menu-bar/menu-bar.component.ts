@@ -24,14 +24,7 @@ import {
   ActivatedRoute
 } from '@angular/router';
 
-
-export interface RouteDef {
-  label: string;  // link label
-  name: string;   // route name of the example
-  path: string;   // route path
-  component: any; // component class
-  dev?: boolean;  // is it an intermediate step?
-}
+import { RouteDef } from '../_models/index';
 
 @Component({
   selector: 'menubar-item',
