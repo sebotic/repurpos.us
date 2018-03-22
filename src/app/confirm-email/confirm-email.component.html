@@ -1,0 +1,21 @@
+<div class="confirm-wrapper">
+	<p [ngClass]="{'text-danger': confirmFail}">
+	  {{ confirmResponse }}
+	</p>
+	<div class="generate-confirm-email" [hidden]="!confirmFail">
+		<h3>Send new confirmation link</h3>
+		<form (ngSubmit)="onSubmit($event)" [formGroup]="confirmForm" [hidden]="!confirmFail">
+			<mat-form-field>
+		    <input matInput placeholder="Email Address (Your User Name)"
+		           formControlName="email"
+		           required
+		           id="confirm-email"
+		           [(ngModel)]="confirmEmail"
+		           name="confirm-email">
+
+		    <mat-error *ngIf="confirmForm.controls['email'].errors && !confirmForm.controls['email'].pristine">{{getErrorMessage()}}</mat-error>
+		  </mat-form-field>
+		  <button mat-raised-button color="primary" [disabled]="confirmForm.invalid" type="submit" [formGroup]="confirmForm">Submit</button>
+		</form>
+	</div>
+</div>

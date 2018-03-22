@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {FormControl, Validators, FormGroup, FormBuilder, AbstractControl} from '@angular/forms';
-import {HttpErrorResponse, HttpHeaders} from "@angular/common/http";
-import {HttpClient} from "@angular/common/http";
+import { HttpErrorResponse, HttpHeaders, HttpClient } from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import { MatDialog } from '@angular/material';
 
@@ -31,6 +30,8 @@ export class UserRegistrationComponent implements OnInit {
   user = new User(0, '', '', '', '', '', '', '', '','', '');
   form: FormGroup;
   recaptchaToken: string;
+  loginResponse: string;
+  regSuccess: boolean = false;
 
   constructor(private http: HttpClient, @Inject(FormBuilder) fb: FormBuilder, public dialog: MatDialog) {
     this.form = fb.group({
@@ -63,16 +64,21 @@ export class UserRegistrationComponent implements OnInit {
     ).subscribe((re) => {
         let credentials = re.body;
         if (credentials['status'] === 'success') {
-          console.log(credentials['auth_token']);
-          localStorage.setItem('auth_token', credentials['auth_token']);
+          //console.log(credentials['auth_token']);
+          //localStorage.setItem('auth_token', credentials['auth_token']);
 
           console.log(JSON.stringify(re));
-          location.reload();
+          this.loginResponse = credentials['message'];
+          this.regSuccess = true;
+          //location.reload();
           // console.log(re.status);
 
+        } else if (credentials['status'] === 'fail') {
+          this.loginResponse = credentials['message'];
         }
       },
       (err: HttpErrorResponse) => {
+        this.loginResponse = err.error.message;
         console.log(err.error.message);
         console.log(JSON.stringify(err));
         console.log(err.status);

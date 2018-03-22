@@ -1,7 +1,7 @@
 <h2>User registration</h2>
 <div mat-dialog-content>
 
-<form (ngSubmit)="onSubmit($event)" [formGroup]="form">
+<form (ngSubmit)="onSubmit($event)" [formGroup]="form" [hidden]="regSuccess">
   <div class="user-form-container">
     <div formGroupName="name">
     <mat-form-field>
@@ -111,4 +111,5 @@
   </div>
 
 </form>
+<p *ngIf="loginResponse" class="text-danger">{{ loginResponse }}</p>
 </div>

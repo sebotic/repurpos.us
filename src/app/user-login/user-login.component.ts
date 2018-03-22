@@ -76,10 +76,10 @@ export class UserLoginComponent implements OnInit {
         // console.log(re.status);
         this.loggedIn = true;
         this.loginStateService.loggedIn();
-        location.reload();
+        //location.reload();
       },
       (err: HttpErrorResponse) => {
-        this.dialog.open(LoginFailComponent);
+        this.dialog.open(LoginFailComponent, {data: {'error': err.error.message} });
         console.log(err.error.message);
         console.log(JSON.stringify(err));
         console.log(err.status);

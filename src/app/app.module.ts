@@ -12,7 +12,9 @@ import {
   Routes
 } from '@angular/router';
 
-import { AppComponent, routes } from './app.component';
+import { AppRoutingModule, routedComponents } from './app-routing.module';
+
+import { AppComponent } from './app.component';
 import {MenuBarComponent, MenubarItemComponent} from './menu-bar/menu-bar.component';
 import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {
@@ -90,6 +92,7 @@ import { LoaderComponent, UserRegButtonComponent } from './_components/index';
 import { LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
 import { LoaderInterceptorService } from './_interceptors/loader-interceptor.service';
 import { LoaderStateService, LoginStateService } from './_services/index';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 
 @NgModule({
   exports: [
@@ -144,6 +147,7 @@ export class MaterialModule {}
     NgCytoscape,
     IndicationsGraphComponent,
     CompoundDataComponent,
+    ConfirmEmailComponent,
 
     AboutComponent,
     AssaysComponent,
@@ -180,7 +184,7 @@ export class MaterialModule {}
   imports: [
     BrowserModule,
     HttpModule,
-    RouterModule.forRoot(routes),
+    //RouterModule.forRoot(routes),
     // DataTableModule,
     HttpClientModule,
     MaterialModule,
@@ -191,6 +195,7 @@ export class MaterialModule {}
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
     // MatNativeDateModule,
+    AppRoutingModule,
 
     FormsModule,
     ReactiveFormsModule,
