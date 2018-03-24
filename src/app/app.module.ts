@@ -93,6 +93,7 @@ import { ForgotPasswordComponent, LoginFailComponent, TermsComponent, UserRegist
 import { LoaderInterceptorService } from './_interceptors/loader-interceptor.service';
 import { LoaderStateService, LoginStateService } from './_services/index';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   exports: [
@@ -181,7 +182,8 @@ export class MaterialModule {}
     TermsComponent,
     LoginFailComponent,
     LoaderComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

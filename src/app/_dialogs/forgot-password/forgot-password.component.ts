@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormControl, Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { HttpErrorResponse, HttpHeaders, HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 
@@ -27,7 +27,7 @@ export class ForgotPasswordComponent implements OnInit {
    * Submits the form and sends HTTP request for new password link
    */
   onSubmit(event) {
-  	this.http.post(environment.host_url + '/auth/forgot-pass/link',
+  	this.http.post(environment.host_url + '/auth/reset_pass/link',
       {"email": this.forgotPasswordEmail }, {
         observe: 'response',
         // withCredentials: true,

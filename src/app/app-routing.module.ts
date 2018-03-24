@@ -7,6 +7,7 @@ import { AboutComponent } from './about/about.component';
 import { AssaysComponent } from './assays/assays.component';
 import { AssayDataComponent } from './assay-data/assay-data.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const appRoutes: Routes = [
   { path: '', component: CompoundSearchComponent, pathMatch: 'full' },
@@ -14,7 +15,8 @@ const appRoutes: Routes = [
   { path: 'assays', component: AssaysComponent, pathMatch: 'full' },
   { path: 'assays/:aid', component: AssayDataComponent, pathMatch: 'full' },
   { path: 'compound_data/:qid', component: CompoundDataComponent, pathMatch: 'full' },
-  { path: 'confirm/:cid', component: ConfirmEmailComponent, pathMatch: 'full' }
+  { path: 'confirm/:cid', component: ConfirmEmailComponent, pathMatch: 'full' },
+  { path: 'reset_pass/:rid', component: ResetPasswordComponent, pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -25,4 +27,4 @@ const appRoutes: Routes = [
 })
 export class AppRoutingModule { }
 
-export const routedComponents = [CompoundSearchComponent, AboutComponent, AssaysComponent, AssayDataComponent, CompoundDataComponent, ConfirmEmailComponent];
+export const routedComponents = [CompoundSearchComponent, AboutComponent, AssaysComponent, AssayDataComponent, CompoundDataComponent, ConfirmEmailComponent, ResetPasswordComponent];
