@@ -25,7 +25,6 @@ export class UserRegButtonComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-
     });
 
     if (this.showDialog) {
