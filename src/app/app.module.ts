@@ -88,11 +88,12 @@ import { AssayTypeBtnComponent } from './assay-type-btn/assay-type-btn.component
 import { AssayPaginationComponent } from './assay-pagination/assay-pagination.component';
 import { CmpdTooltipComponent } from './cmpd-tooltip/cmpd-tooltip.component';
 
-import { LoaderComponent, UserRegButtonComponent } from './_components/index';
-import { LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
+import { ForgotPassButtonComponent, LoaderComponent, UserRegButtonComponent } from './_components/index';
+import { ForgotPasswordComponent, LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
 import { LoaderInterceptorService } from './_interceptors/loader-interceptor.service';
 import { LoaderStateService, LoginStateService } from './_services/index';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   exports: [
@@ -177,9 +178,12 @@ export class MaterialModule {}
     UserRegistrationComponent,
     UserLoginComponent,
     UserRegButtonComponent,
+    ForgotPassButtonComponent,
     TermsComponent,
     LoginFailComponent,
-    LoaderComponent
+    LoaderComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -226,7 +230,8 @@ export class MaterialModule {}
     // UserRegComponent,
     UserRegistrationComponent,
     TermsComponent,
-    LoginFailComponent
+    LoginFailComponent,
+    ForgotPasswordComponent
   ],
 
   bootstrap: [AppComponent]

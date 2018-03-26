@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { HttpErrorResponse, HttpHeaders, HttpClient } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
@@ -28,8 +28,6 @@ export class ConfirmEmailComponent implements OnInit {
   }
 
   ngOnInit() {
-  	console.log(this.cid);
-  	console.log(environment.host_url + '/auth/confirm' + this.cid);
   	this.http.post(environment.host_url + '/auth/confirm',
   		{"token": this.cid},
   		{
