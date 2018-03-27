@@ -91,7 +91,7 @@ import { CmpdTooltipComponent } from './cmpd-tooltip/cmpd-tooltip.component';
 import { ForgotPassButtonComponent, LoaderComponent, UserRegButtonComponent } from './_components/index';
 import { ForgotPasswordComponent, LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
 import { LoaderInterceptorService } from './_interceptors/loader-interceptor.service';
-import { LoaderStateService, LoginStateService } from './_services/index';
+import { GoogleAnalyticsService, LoaderStateService, LoginStateService } from './_services/index';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
@@ -219,7 +219,8 @@ export class MaterialModule {}
     { provide: AuthService, useClass: AuthService},
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true },
     LoaderStateService,
-    LoginStateService
+    LoginStateService,
+    GoogleAnalyticsService
   ],
   entryComponents: [
     DialogOverviewExample,
