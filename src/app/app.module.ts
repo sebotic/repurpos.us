@@ -77,7 +77,6 @@ import { SearchResultsTableComponent } from './compound-search/search-results-ta
 import {CdkTableModule} from "@angular/cdk/table";
 import { RecaptchaModule } from 'ng-recaptcha';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { UserLoginComponent } from './user-login/user-login.component';
 import { AboutComponent } from './about/about.component';
 import { AssaysComponent } from './assays/assays.component';
 import { AssayPlotsComponent } from './assay-plots/assay-plots.component';
@@ -88,7 +87,7 @@ import { AssayTypeBtnComponent } from './assay-type-btn/assay-type-btn.component
 import { AssayPaginationComponent } from './assay-pagination/assay-pagination.component';
 import { CmpdTooltipComponent } from './cmpd-tooltip/cmpd-tooltip.component';
 
-import { ForgotPassButtonComponent, LoaderComponent, UserRegButtonComponent } from './_components/index';
+import { ForgotPassButtonComponent, LoaderComponent, QuickSearchComponent, UserLoginComponent, UserRegButtonComponent } from './_components/index';
 import { ForgotPasswordComponent, LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
 import { LoaderInterceptorService } from './_interceptors/loader-interceptor.service';
 import { GoogleAnalyticsService, LoaderStateService, LoginStateService } from './_services/index';
@@ -183,7 +182,8 @@ export class MaterialModule {}
     LoginFailComponent,
     LoaderComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    QuickSearchComponent
   ],
   imports: [
     BrowserModule,

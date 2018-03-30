@@ -11,7 +11,7 @@ import { Subject }    from 'rxjs/Subject';
 import {flatMap, map} from 'rxjs/operators';
 
 import {$} from "protractor"; // needed by cytoscape.js
-import {Router} from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 
 
@@ -166,18 +166,35 @@ export class WDQService {
   outputs: ['loading', 'results'],
   selector: 'search-box',
   template: `
-    <input type="text" class="form-control" placeholder="Search: <Enter Drug Name or InChI key>" autofocus>
+    <input type="text" class="form-control" placeholder="Search: <Enter Drug Name or InChI key>" autofocus [(ngModel)]="searchQuery">
   `
 })
 export class SearchBox implements OnInit {
   loading: EventEmitter<boolean> = new EventEmitter<boolean>();
   results: EventEmitter<SearchResult[]> = new EventEmitter<SearchResult[]>();
+  searchQuery: string;
 
   constructor(public wd: WDQService,
-              private el: ElementRef) {
+              private el: ElementRef,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.route.queryParams
+      .subscribe(params => {
+        this.searchQuery = params['query'];
+        
+        this.wd.searchFullText(this.searchQuery.toUpperCase(), ``)
+          .subscribe(
+            (results: SearchResult[]) => {
+              this.results.next(results);
+            },
+            (err: any) => {
+              console.log(err);
+            }
+          );
+      });
+
     Observable.fromEvent(this.el.nativeElement, 'keyup')
       .map((e: any) => e.target.value.toUpperCase()) // extract the value of the input
       .filter((text: string) => text.length > 2) // filter out if shorter than 2 chars
@@ -212,7 +229,7 @@ export class SearchBox implements OnInit {
 export class SearchResultComponent implements OnInit{
   result: SearchResult;
 
-  constructor(public searchResultService: SearchResultService) {
+  constructor(public searchResultService: SearchResultService, private route: ActivatedRoute) {
 
   }
 
@@ -223,7 +240,7 @@ export class SearchResultComponent implements OnInit{
 
   ngOnInit(){
     this.announce();
-  }
+   }
 }
 
 @Component({
@@ -232,8 +249,10 @@ export class SearchResultComponent implements OnInit{
 })
 export class CompoundSearchComponent {
   results: SearchResult[];
-  loadingGif: string = '../../assets/Loading_icon.gif';
-  loading: boolean;
+
+  constructor() {
+
+  }
 
   updateResults(results: SearchResult[]): void {
     this.results = results;

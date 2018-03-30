@@ -1,0 +1,10 @@
+.quick-search {
+  -webkit-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+  transition: all .3s ease;
+  float: right;
+}
+
+.quick-search:focus {
+  width: 300px;
+}

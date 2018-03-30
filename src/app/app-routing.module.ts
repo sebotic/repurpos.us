@@ -34,7 +34,6 @@ export class AppRoutingModule {
       if (event instanceof NavigationEnd) {
         (<any>window).ga('set', 'page', event.urlAfterRedirects);
         (<any>window).ga('send', 'pageview');
-        console.log(event);
       }
     });
   }
