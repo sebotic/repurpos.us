@@ -1,12 +1,14 @@
 import {Component, OnInit, forwardRef, Inject, Injectable, Input} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Http, Response} from "@angular/http";
-import {AssayPlotsComponent} from '../assay-plots/assay-plots.component'
-
 import {
   HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest,
   HttpResponse
 } from "@angular/common/http";
+
+import {AssayPlotsComponent} from '../assay-plots/assay-plots.component'
+import { AssayDetails } from '../_models/assay-details';
+
 import {environment} from "../../environments/environment";
 
 @Component({
@@ -15,7 +17,7 @@ import {environment} from "../../environments/environment";
   styleUrls: ['./assay-data.component.css']
 })
 export class AssayDataComponent implements OnInit {
-  assayDetails: Object = [];
+  assayDetails: AssayDetails;
   aid: string;
 
   constructor(

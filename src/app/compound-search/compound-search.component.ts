@@ -163,14 +163,13 @@ export class WDQService {
 
 
 @Component({
-  outputs: ['loading', 'results'],
+  outputs: ['results'],
   selector: 'search-box',
   template: `
     <input type="text" class="form-control" placeholder="Search: <Enter Drug Name or InChI key>" autofocus [(ngModel)]="searchQuery">
   `
 })
 export class SearchBox implements OnInit {
-  loading: EventEmitter<boolean> = new EventEmitter<boolean>();
   results: EventEmitter<SearchResult[]> = new EventEmitter<SearchResult[]>();
   searchQuery: string = '';
 
@@ -202,21 +201,17 @@ export class SearchBox implements OnInit {
       .map((e: any) => e.target.value.toUpperCase()) // extract the value of the input
       .filter((text: string) => text.length > 2) // filter out if shorter than 2 chars
       .debounceTime(500)                         // only once every 500ms
-      .do(() => this.loading.next(true))         // enable loading
       .map((query: string) => this.wd.searchFullText(query ,``))
       .switch()
       // act on the return of the search
       .subscribe(
         (results: SearchResult[]) => { // on sucesss
-          this.loading.next(false);
           this.results.next(results);
         },
         (err: any) => { // on error
           console.log(err);
-          this.loading.next(false);
         },
         () => { // on completion
-          this.loading.next(false);
         }
       );
 
