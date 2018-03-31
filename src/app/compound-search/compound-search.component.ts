@@ -172,28 +172,31 @@ export class WDQService {
 export class SearchBox implements OnInit {
   loading: EventEmitter<boolean> = new EventEmitter<boolean>();
   results: EventEmitter<SearchResult[]> = new EventEmitter<SearchResult[]>();
-  searchQuery: string;
+  searchQuery: string = '';
 
   constructor(public wd: WDQService,
               private el: ElementRef,
               private route: ActivatedRoute) {
+    this.route.queryParams
+      .subscribe(params => {
+        if (params['query']){
+          this.searchQuery = params['query'];
+          
+          this.wd.searchFullText(this.searchQuery.toUpperCase(), ``)
+            .subscribe(
+              (results: SearchResult[]) => {
+                this.results.next(results);
+              },
+              (err: any) => {
+                console.log(err);
+              }
+            );
+        }
+      });
   }
 
   ngOnInit(): void {
-    this.route.queryParams
-      .subscribe(params => {
-        this.searchQuery = params['query'];
-        
-        this.wd.searchFullText(this.searchQuery.toUpperCase(), ``)
-          .subscribe(
-            (results: SearchResult[]) => {
-              this.results.next(results);
-            },
-            (err: any) => {
-              console.log(err);
-            }
-          );
-      });
+
 
     Observable.fromEvent(this.el.nativeElement, 'keyup')
       .map((e: any) => e.target.value.toUpperCase()) // extract the value of the input
