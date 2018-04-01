@@ -11,7 +11,7 @@ import { Subject }    from 'rxjs/Subject';
 import {flatMap, map} from 'rxjs/operators';
 
 import {$} from "protractor"; // needed by cytoscape.js
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 
 
@@ -175,7 +175,8 @@ export class SearchBox implements OnInit {
 
   constructor(public wd: WDQService,
               private el: ElementRef,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
     this.route.queryParams
       .subscribe(params => {
         if (params['query']){
@@ -200,20 +201,24 @@ export class SearchBox implements OnInit {
     Observable.fromEvent(this.el.nativeElement, 'keyup')
       .map((e: any) => e.target.value.toUpperCase()) // extract the value of the input
       .filter((text: string) => text.length > 2) // filter out if shorter than 2 chars
-      .debounceTime(500)                         // only once every 500ms
-      .map((query: string) => this.wd.searchFullText(query ,``))
-      .switch()
-      // act on the return of the search
-      .subscribe(
-        (results: SearchResult[]) => { // on sucesss
-          this.results.next(results);
-        },
-        (err: any) => { // on error
-          console.log(err);
-        },
-        () => { // on completion
-        }
-      );
+      .debounceTime(500)  // only once every 500ms
+      .subscribe((query: string) => {
+        this.router.navigate(['.'], { queryParams: {query: query }});
+      });
+      // .map((query: string) => this.wd.searchFullText(query ,``))
+      // .switch()
+      // // act on the return of the search
+      // .subscribe(
+      //   (results: SearchResult[]) => { // on sucesss
+      //     this.results.next(results);
+      //     console.log(results);
+      //   },
+      //   (err: any) => { // on error
+      //     console.log(err);
+      //   },
+      //   () => { // on completion
+      //   }
+      // );
 
   }
 }
