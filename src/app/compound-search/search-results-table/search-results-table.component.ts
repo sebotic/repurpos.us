@@ -1,7 +1,9 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
-import {SearchResult, SearchResultService} from "../compound-search.component";
 import {Router} from "@angular/router";
+
+import { SearchResult } from '../../_models/index';
+import { SearchResultService } from '../../_services/index';
 
 export interface Compound {
   qid: string;

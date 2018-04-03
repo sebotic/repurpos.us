@@ -17,10 +17,7 @@ import { AppRoutingModule, routedComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {MenuBarComponent, MenubarItemComponent} from './menu-bar/menu-bar.component';
 import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy} from "@angular/common";
-import {
-  CompoundSearchComponent, SearchResultComponent, SearchBox, SearchResultService, WDQService
-} from './compound-search/compound-search.component';
-
+import { CompoundSearchComponent, CompoundSearchOptionsComponent, SearchBoxComponent, SearchResultComponent, SearchResultsTableComponent } from './compound-search/index';
 
 import {cytoscape} from 'cytoscape';
 import {NgCytoscape} from "./compound-search/ng2-cytoscape";
@@ -28,7 +25,6 @@ import {CompoundDataComponent} from './compound-data/compound-data.component';
 // import {InteractionTableComponent, InteractionTableDataService} from './interaction-table/interaction-table.component';
 // import { DiseaseDataComponent } from './disease-data/disease-data.component';
 import {CIDService, NglComponent} from './ngl/ngl.component';
-import { CompoundSearchOptionsComponent } from './compound-search/compound-search-options/compound-search-options.component';
 import { IndicationsGraphComponent, GraphDataService } from './compound-data/indications-graph/indications-graph.component';
 // import { SearchResultTableComponent } from './compound-search/search-result-table/search-result-table.component';
 import {HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from "@angular/common/http";
@@ -73,7 +69,6 @@ import {
   MailSignupComponent, MailSignupDialog,
 } from './mail-signup/mail-signup.component';
 import { ShowMoreButtonComponent, ShowMorePane } from './compound-data/show-more-button/show-more-button.component';
-import { SearchResultsTableComponent } from './compound-search/search-results-table/search-results-table.component';
 import {CdkTableModule} from "@angular/cdk/table";
 import { RecaptchaModule } from 'ng-recaptcha';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -90,7 +85,7 @@ import { CmpdTooltipComponent } from './cmpd-tooltip/cmpd-tooltip.component';
 import { ForgotPassButtonComponent, LoaderComponent, QuickSearchComponent, UserLoginComponent, UserRegButtonComponent } from './_components/index';
 import { ForgotPasswordComponent, LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
 import { LoaderInterceptorService } from './_interceptors/loader-interceptor.service';
-import { GoogleAnalyticsService, LoaderStateService, LoginStateService } from './_services/index';
+import { GoogleAnalyticsService, LoaderStateService, LoginStateService, SearchResultService, WDQService } from './_services/index';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
@@ -143,7 +138,7 @@ export class MaterialModule {}
     MenubarItemComponent,
     CompoundSearchComponent,
     SearchResultComponent,
-    SearchBox,
+    SearchBoxComponent,
     NgCytoscape,
     IndicationsGraphComponent,
     CompoundDataComponent,

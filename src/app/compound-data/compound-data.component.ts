@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import {Http, Response} from "@angular/http";
 import { Location } from '@angular/common';
 
-import {WDQService} from "../compound-search/compound-search.component"
 // import { InteractionTableDataService } from "../interaction-table/interaction-table.component"
 
 // import { gottlieb, gottlieb_pub } from '../../assets/gottlieb_data';
@@ -14,7 +13,8 @@ import {
 } from "@angular/common/http";
 
 import { AssayData, GVKData, IntegrityData, InformaData, VendorData, WDQSData } from '../_models/index';
-import {environment} from "../../environments/environment";
+import { WDQService } from '../_services/index';
+import { environment } from "../../environments/environment";
 
 
 @Component({
