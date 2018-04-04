@@ -1,6 +1,6 @@
 import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {Subject} from "rxjs/Subject";
-import {SearchResultService} from "../../compound-search/compound-search.component";
+import { SearchResultService } from "../../_services/index";
 
 @Injectable()
 export class GraphDataService {

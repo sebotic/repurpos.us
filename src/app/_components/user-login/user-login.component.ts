@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {HttpErrorResponse, HttpHeaders, HttpClient} from "@angular/common/http";
 import {FormControl, Validators} from "@angular/forms";
 import { MatDialog } from '@angular/material';
-import {environment} from "../../environments/environment";
+import {environment} from "../../../environments/environment";
 
-import { User } from "../_models/user";
-import { LoginFailComponent } from '../_dialogs/index';
-import { LoginStateService } from '../_services/index';
+import { User } from '../../_models/index';
+import { LoginFailComponent } from '../../_dialogs/index';
+import { LoginStateService } from '../../_services/index';
 
 @Component({
   selector: 'app-user-login',
@@ -15,7 +15,7 @@ import { LoginStateService } from '../_services/index';
 })
 export class UserLoginComponent implements OnInit {
 
-  user: User = new User(0,'','', '', '', '', '', '', '', '');
+  user: User;
   loggedIn: boolean = false;
 
   email = new FormControl('', [Validators.required, Validators.email]);

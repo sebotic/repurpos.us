@@ -8,7 +8,7 @@ import { Component, OnInit, OnChanges, ElementRef, Input, ViewEncapsulation } fr
   encapsulation: ViewEncapsulation.None
 })
 export class CmpdTooltipComponent implements OnInit {
-  @Input() private dataObj: any;
+  @Input() public dataObj: any;
   private data: any;
   private left_coord: string;
   private top_coord: string;

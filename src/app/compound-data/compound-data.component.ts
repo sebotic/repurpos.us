@@ -1,8 +1,8 @@
 import {Component, OnInit, forwardRef, Inject, Injectable, Input} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {Http, Response} from "@angular/http";
+import { Location } from '@angular/common';
 
-import {WDQService} from "../compound-search/compound-search.component"
 // import { InteractionTableDataService } from "../interaction-table/interaction-table.component"
 
 // import { gottlieb, gottlieb_pub } from '../../assets/gottlieb_data';
@@ -11,68 +11,10 @@ import {
   HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest,
   HttpResponse
 } from "@angular/common/http";
-import {environment} from "../../environments/environment";
 
-
-export interface WDQSData {
-  head: {vars: Array<string>};
-  results: {bindings: Array<Object>}
-}
-
-export interface VendorData {
-  ikey: string;
-  gvk: GVKData;
-  integrity: IntegrityData;
-  informa: InformaData;
-  assay: Array<AssayData>;
-}
-
-export interface GVKData {
-  hvac_id: string;
-  gvk_id: string;
-  drug_name: string;
-  phase: Array<string>;
-  roa: Array<string>;
-  category: Array<string>;
-  mechanism: Array<string>;
-  smiles: string;
-  synonyms: Array<string>;
-  ikey: string;
-}
-
-export interface IntegrityData {
-  id: number;
-  smiles: string;
-  drug_name: string;
-  phase: Array<string>;
-  category: Array<string>;
-  mechanism: Array<string>;
-  ikey: string;
-  wikidata: string;
-  pubchem_cid: string;
-}
-
-export interface InformaData {
-  drug_name: string;
-  phase: Array<string>;
-  highest_phase: string;
-  mechanism: Array<string>;
-  smiles: string;
-  ikey: string;
-  wikidata: string;
-  pubchem_cid: string;
-}
-
-export interface AssayData {
-  id: string;
-  ac50: string;
-  datamode: string
-  assay_title: string;
-  smiles: string;
-  ikey: string;
-  wikidata: string;
-  pubchem_cid: string;
-}
+import { AssayData, GVKData, IntegrityData, InformaData, VendorData, WDQSData } from '../_models/index';
+import { WDQService } from '../_services/index';
+import { environment } from "../../environments/environment";
 
 
 @Component({
@@ -151,7 +93,8 @@ export class CompoundDataComponent implements OnInit {
     private http: Http,
     private http2: HttpClient,
     // private interactionTableDataService: InteractionTableDataService,
-    private cidService: CIDService
+    private cidService: CIDService,
+    private _location: Location
   ) {
     route.params.subscribe(params => {
       this.qid = params['qid'];
@@ -226,6 +169,10 @@ export class CompoundDataComponent implements OnInit {
     //
     //   }
     // );
+  }
+
+  backClick() {
+    this._location.back();
   }
 
   buildData(): void {

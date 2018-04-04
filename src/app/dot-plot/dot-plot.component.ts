@@ -13,7 +13,7 @@ import { CmpdTooltipComponent } from '../cmpd-tooltip/cmpd-tooltip.component';
 export class DotPlotComponent implements OnInit, OnChanges {
   @ViewChild('chart') private chartContainer: ElementRef;
   @Input() private data: Array<any>;
-  @Input() private tooltipData: any;
+  @Input() public tooltipData: any;
   @Input() private assay_domain: Array<any>;
 
   @Output() tooltipEmitter: EventEmitter<any> = new EventEmitter<any>();

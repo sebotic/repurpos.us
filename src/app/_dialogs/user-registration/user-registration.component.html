@@ -11,12 +11,12 @@
              formControlName="firstName"
              [(ngModel)]="user.firstName"
              >
-      <!--<mat-error *ngIf="form.controls['name'].controls.firstName.errors && !form.controls['name'].controls.firstName.pristine" [hidden]="!form.controls['name'].controls.firstName.errors.required">Name is required</mat-error>-->
-      <mat-error *ngIf="form.controls['name'].controls.firstName.errors  && !form.controls['name'].controls.firstName.pristine"
-                 [hidden]="!form.controls['name'].controls.firstName.hasError('minLength')">Name too short</mat-error>
+      <!--<mat-error *ngIf="form['controls'].name['controls'].firstName.errors && !form['controls'].name['controls'].firstName.pristine" [hidden]="!form['controls'].name['controls'].firstName.errors.required">Name is required</mat-error>-->
+      <mat-error *ngIf="form['controls'].name['controls'].firstName.errors  && !form['controls'].name['controls'].firstName.pristine"
+                 [hidden]="!form['controls'].name['controls'].firstName.hasError('minLength')">Name too short</mat-error>
 
     </mat-form-field>
-      <!--<span *ngIf="form.controls['name'].controls.firstName.errors && !form.controls['name'].controls.firstName.pristine" class="mat-error">-->
+      <!--<span *ngIf="form['controls'].name['controls'].firstName.errors && !form['controls'].name['controls'].firstName.pristine" class="mat-error">-->
       <!--</span>-->
     <mat-form-field>
       <input matInput placeholder="Last Name" id="lastName"
@@ -37,7 +37,7 @@
              [(ngModel)]="user.email"
              name="email">
 
-      <mat-error *ngIf="form.controls['email'].errors && !form.controls['email'].pristine">{{getErrorMessage()}}</mat-error>
+      <mat-error *ngIf="form['controls'].email.errors && !form['controls'].email.pristine">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
 
 
@@ -83,9 +83,9 @@
              formControlName="password"
              [(ngModel)]="user.password"
              >
-      <mat-error *ngIf="form.controls['password'].controls.password.errors
-                        && !form.controls['password'].controls.password.pristine"
-                 [hidden]="!form.controls['password'].controls.password.hasError('minLength')"
+      <mat-error *ngIf="form['controls'].password['controls'].password.errors
+                        && !form['controls'].password['controls'].password.pristine"
+                 [hidden]="!form['controls'].password['controls'].password.hasError('minLength')"
       >8 characters minimum</mat-error>
     </mat-form-field>
 
@@ -95,9 +95,9 @@
              formControlName="confirmPassword"
              name="confirmPassword"
              >
-      <mat-error *ngIf="form.controls['password'].controls.confirmPassword.errors
-                        && !form.controls['password'].controls.confirmPassword.pristine"
-                 [hidden]="!form.controls['password'].controls.confirmPassword.hasError('MatchPassword')"
+      <mat-error *ngIf="form['controls'].password['controls'].confirmPassword.errors
+                        && !form['controls'].password['controls'].confirmPassword.pristine"
+                 [hidden]="!form['controls'].password['controls'].confirmPassword.hasError('MatchPassword')"
       >Passwords don't match!</mat-error>
     </mat-form-field>
     </div>

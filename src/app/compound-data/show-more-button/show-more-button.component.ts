@@ -1,6 +1,6 @@
 import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
-import {WDQSData} from "../compound-data.component";
+import {WDQSData} from "../../_models/index";
 
 
 @Injectable()

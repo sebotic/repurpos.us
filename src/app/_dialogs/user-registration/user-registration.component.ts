@@ -4,7 +4,7 @@ import { HttpErrorResponse, HttpHeaders, HttpClient } from "@angular/common/http
 import {environment} from "../../../environments/environment";
 import { MatDialog } from '@angular/material';
 
-import { User } from '../../_models/user';
+import { User } from '../../_models/index';
 import { TermsComponent } from '../terms/terms.component';
 
 export class PasswordValidation {
@@ -27,7 +27,7 @@ export class PasswordValidation {
   styleUrls: ['./user-registration.component.css']
 })
 export class UserRegistrationComponent implements OnInit {
-  user = new User(0, '', '', '', '', '', '', '', '','', '');
+  user: User;
   form: FormGroup;
   recaptchaToken: string;
   loginResponse: string;

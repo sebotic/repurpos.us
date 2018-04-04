@@ -111,3 +111,7 @@ table#cmpd-names, table.cmpd-table, .cmpd-table {
 .assay-name{
   width: 33%;
 }
+
+a {
+  cursor: pointer;
+}
