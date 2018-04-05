@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, ViewChild, ElementRef, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import * as d3Chromatic from 'd3-scale-chromatic';
-import { CmpdTooltipComponent } from '../cmpd-tooltip/cmpd-tooltip.component';
+import { CmpdTooltipComponent } from './cmpd-tooltip/cmpd-tooltip.component';
 
 @Component({
   selector: 'app-dot-plot',

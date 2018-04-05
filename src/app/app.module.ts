@@ -74,15 +74,24 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AboutComponent } from './about/about.component';
 import { AssaysComponent } from './assays/assays.component';
-import { AssayPlotsComponent } from './assay-plots/assay-plots.component';
-import { AssayDataComponent } from './assay-data/assay-data.component';
-import { DotPlotComponent } from './dot-plot/dot-plot.component';
-import { AssayDwnldComponent } from './assay-dwnld/assay-dwnld.component';
-import { AssayTypeBtnComponent } from './assay-type-btn/assay-type-btn.component';
-import { AssayPaginationComponent } from './assay-pagination/assay-pagination.component';
-import { CmpdTooltipComponent } from './cmpd-tooltip/cmpd-tooltip.component';
+import {
+  AssayDataComponent,
+  AssayPaginationComponent,
+  AssayPlotsComponent,
+  DotPlotComponent,
+  CmpdTooltipComponent
+} from './assay-data/index';
 
-import { ForgotPassButtonComponent, LoaderComponent, QuickSearchComponent, UserLoginComponent, UserRegButtonComponent } from './_components/index';
+import { 
+  AssayDwnldComponent,
+  AssayTypeBtnComponent,
+  ForgotPassButtonComponent,
+  LoaderComponent,
+  QuickSearchComponent,
+  UserLoginComponent,
+  UserRegButtonComponent
+} from './_components/index';
+
 import { ForgotPasswordComponent, LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
 import { LoaderInterceptorService } from './_interceptors/loader-interceptor.service';
 import { GoogleAnalyticsService, LoaderStateService, LoginStateService, SearchResultService, WDQService } from './_services/index';
