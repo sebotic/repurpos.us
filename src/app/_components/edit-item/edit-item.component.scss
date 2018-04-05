@@ -1,0 +1,17 @@
+$light-grey: rgba(33, 37, 41, 0.18);
+$text-grey: rgba(33, 37, 41, 0.8);
+
+
+.grey-btn {
+  opacity: 0.5;
+  background-color: $light-grey;
+}
+
+//
+// <div class="mat-app-background">
+// <ol>
+// <li>
+//   <mat-form-field>
+//     <input matInput [(ngModel)]="name" placeholder="Enter a drug class">
+
+

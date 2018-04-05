@@ -29,7 +29,6 @@ import { IndicationsGraphComponent, GraphDataService } from './compound-data/ind
 // import { SearchResultTableComponent } from './compound-search/search-result-table/search-result-table.component';
 import {HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import {AuthComponent, AuthGuard, AuthService} from './auth/auth.component';
-import {DialogOverviewExample, DialogOverviewExampleDialog, EditItemComponent} from './edit-item/edit-item.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 import {
@@ -65,6 +64,7 @@ import {
   MatTooltipModule,
   // MatStepperModule,
 } from '@angular/material';
+
 import {
   MailSignupComponent, MailSignupDialog,
 } from './mail-signup/mail-signup.component';
@@ -89,7 +89,10 @@ import {
   LoaderComponent,
   QuickSearchComponent,
   UserLoginComponent,
-  UserRegButtonComponent
+  UserRegButtonComponent,
+  DialogOverviewExample,
+  DialogOverviewExampleDialog,
+  EditItemComponent
 } from './_components/index';
 
 import { ForgotPasswordComponent, LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
