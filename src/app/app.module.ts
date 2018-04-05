@@ -15,7 +15,6 @@ import {
 import { AppRoutingModule, routedComponents } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import {MenuBarComponent, MenubarItemComponent} from './menu-bar/menu-bar.component';
 import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy} from "@angular/common";
 import { CompoundSearchComponent, CompoundSearchOptionsComponent, SearchBoxComponent, SearchResultComponent, SearchResultsTableComponent } from './compound-search/index';
 
@@ -92,7 +91,9 @@ import {
   UserRegButtonComponent,
   DialogOverviewExample,
   DialogOverviewExampleDialog,
-  EditItemComponent
+  EditItemComponent,
+  MenuBarComponent,
+  MenubarItemComponent
 } from './_components/index';
 
 import { ForgotPasswordComponent, LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
