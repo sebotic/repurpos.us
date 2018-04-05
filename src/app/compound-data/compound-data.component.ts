@@ -31,7 +31,9 @@ export class CompoundDataComponent implements OnInit {
   label: string;
   tableData: Array<Object> = [];
   aliases: Array<string> = [];
-  concat_aliases: string = '';
+  // concat_aliases: string = '';
+  // concat_aliases: Set<string>;
+  // vendor_aliases: Array<string> = [];
   table_data: Array<Object> = [];
   graphData;
   prop_name_map: Object = {};
@@ -274,7 +276,17 @@ export class CompoundDataComponent implements OnInit {
         this.retrieveLabels(Array.from(tmp['P2175']['qids']).map((x: string) => x.split('/').pop()));
       }
       // Concatenate aliases so they can be rendered as one block
-      this.concat_aliases = this.aliases.join(', ');
+      // this.concat_aliases = this.aliases.join(', ');
+
+            // Sort aliases by name (case-insensitive)
+            this.aliases = this.aliases.sort(function(a:string, b:string){
+              if (a.toLowerCase() > b.toLowerCase()) {
+                return 1;
+              } else{
+                return -1;
+              };
+            })
+
 
 
 
@@ -398,7 +410,21 @@ export class CompoundDataComponent implements OnInit {
       this.informaData = [b.informa];
       this.integrityData = [b.integrity];
       this.assayData = b.assay;
-      // console.log(this.gvkData);
+
+      // pull out the aliases if no Wikidata available
+      // TODO: add in a check if QID exists.
+      this.aliases = Array.from(new Set(this.aliases.concat(this.gvkData[0]['synonyms'].concat(this.gvkData[0]['drug_name']).concat(this.informaData[0]['drug_name'].split('\n')))));
+
+      // Sort aliases by name (case-insensitive)
+      this.aliases= this.aliases.sort(function(a:string, b:string){
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        } else{
+          return -1;
+        };
+      })
+
+
     });
 
   }
@@ -472,7 +498,7 @@ export class CompoundDataComponent implements OnInit {
         //     })
         //   }
         // }
-        console.log(this.tableData);
+        // console.log(this.tableData);
 
         this.graphData = this.prepareGraphData();
         // this.interactionTableDataService.announceNewCompoundData(this.tableData);
