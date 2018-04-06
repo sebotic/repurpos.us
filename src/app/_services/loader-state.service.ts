@@ -2,7 +2,7 @@
  * Need to keep track of the state so the loader isn't opened twice
  */
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/subject';
+import { Subject } from 'rxjs/Subject';
 
 import { LoaderState } from '../_models/index';
 

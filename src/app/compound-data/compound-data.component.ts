@@ -6,14 +6,13 @@ import { Location } from '@angular/common';
 // import { InteractionTableDataService } from "../interaction-table/interaction-table.component"
 
 // import { gottlieb, gottlieb_pub } from '../../assets/gottlieb_data';
-import {CIDService} from "../ngl/ngl.component";
 import {
   HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest,
   HttpResponse
 } from "@angular/common/http";
 
 import { AssayData, GVKData, IntegrityData, InformaData, VendorData, WDQSData } from '../_models/index';
-import { WDQService } from '../_services/index';
+import { CIDService, WDQService } from '../_services/index';
 import { environment } from "../../environments/environment";
 
 

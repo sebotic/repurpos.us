@@ -15,21 +15,18 @@ import {
 import { AppRoutingModule, routedComponents } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import {MenuBarComponent, MenubarItemComponent} from './menu-bar/menu-bar.component';
 import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy} from "@angular/common";
 import { CompoundSearchComponent, CompoundSearchOptionsComponent, SearchBoxComponent, SearchResultComponent, SearchResultsTableComponent } from './compound-search/index';
 
 import {cytoscape} from 'cytoscape';
 import {NgCytoscape} from "./compound-search/ng2-cytoscape";
-import {CompoundDataComponent} from './compound-data/compound-data.component';
-// import {InteractionTableComponent, InteractionTableDataService} from './interaction-table/interaction-table.component';
+import { CompoundDataComponent } from './compound-data/compound-data.component';
+import { NglComponent } from './compound-data/ngl/ngl.component';
+// import {InteractionTableComponent, InteractionTableDataService} from './compound-data/interaction-table/interaction-table.component';
 // import { DiseaseDataComponent } from './disease-data/disease-data.component';
-import {CIDService, NglComponent} from './ngl/ngl.component';
-import { IndicationsGraphComponent, GraphDataService } from './compound-data/indications-graph/indications-graph.component';
+import { IndicationsGraphComponent } from './compound-data/indications-graph/indications-graph.component';
 // import { SearchResultTableComponent } from './compound-search/search-result-table/search-result-table.component';
 import {HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import {AuthComponent, AuthGuard, AuthService} from './auth/auth.component';
-import {DialogOverviewExample, DialogOverviewExampleDialog, EditItemComponent} from './edit-item/edit-item.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 import {
@@ -65,27 +62,51 @@ import {
   MatTooltipModule,
   // MatStepperModule,
 } from '@angular/material';
-import {
-  MailSignupComponent, MailSignupDialog,
-} from './mail-signup/mail-signup.component';
+
 import { ShowMoreButtonComponent, ShowMorePane } from './compound-data/show-more-button/show-more-button.component';
 import {CdkTableModule} from "@angular/cdk/table";
 import { RecaptchaModule } from 'ng-recaptcha';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AboutComponent } from './about/about.component';
 import { AssaysComponent } from './assays/assays.component';
-import { AssayPlotsComponent } from './assay-plots/assay-plots.component';
-import { AssayDataComponent } from './assay-data/assay-data.component';
-import { DotPlotComponent } from './dot-plot/dot-plot.component';
-import { AssayDwnldComponent } from './assay-dwnld/assay-dwnld.component';
-import { AssayTypeBtnComponent } from './assay-type-btn/assay-type-btn.component';
-import { AssayPaginationComponent } from './assay-pagination/assay-pagination.component';
-import { CmpdTooltipComponent } from './cmpd-tooltip/cmpd-tooltip.component';
+import {
+  AssayDataComponent,
+  AssayPaginationComponent,
+  AssayPlotsComponent,
+  DotPlotComponent,
+  CmpdTooltipComponent
+} from './assay-data/index';
 
-import { ForgotPassButtonComponent, LoaderComponent, QuickSearchComponent, UserLoginComponent, UserRegButtonComponent } from './_components/index';
+import { 
+  AssayDwnldComponent,
+  AssayTypeBtnComponent,
+  ForgotPassButtonComponent,
+  LoaderComponent,
+  MailSignupComponent,
+  MailSignupDialogComponent,
+  QuickSearchComponent,
+  UserLoginComponent,
+  UserRegButtonComponent,
+  DialogOverviewExample,
+  DialogOverviewExampleDialog,
+  EditItemComponent,
+  MenuBarComponent,
+  MenubarItemComponent
+} from './_components/index';
+
 import { ForgotPasswordComponent, LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
+import { AuthGuard } from './_guards/auth.guard';
 import { LoaderInterceptorService } from './_interceptors/loader-interceptor.service';
-import { GoogleAnalyticsService, LoaderStateService, LoginStateService, SearchResultService, WDQService } from './_services/index';
+import {
+  AuthService,
+  CIDService,
+  GoogleAnalyticsService,
+  GraphDataService,
+  LoaderStateService,
+  LoginStateService,
+  SearchResultService,
+  WDQService
+} from './_services/index';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
@@ -159,13 +180,12 @@ export class MaterialModule {}
     CompoundSearchOptionsComponent,
     IndicationsGraphComponent,
     // SearchResultTableComponent,
-    AuthComponent,
     AuthGuard,
     EditItemComponent,
     DialogOverviewExample,
     DialogOverviewExampleDialog,
     MailSignupComponent,
-    MailSignupDialog,
+    MailSignupDialogComponent,
     ShowMorePane,
     ShowMoreButtonComponent,
     SearchResultsTableComponent,
@@ -221,7 +241,7 @@ export class MaterialModule {}
     DialogOverviewExample,
     DialogOverviewExampleDialog,
 
-    MailSignupDialog,
+    MailSignupDialogComponent,
     // UserLoginComponent,
     // UserRegComponent,
     UserRegistrationComponent,

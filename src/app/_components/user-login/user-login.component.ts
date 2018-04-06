@@ -15,7 +15,7 @@ import { LoginStateService } from '../../_services/index';
 })
 export class UserLoginComponent implements OnInit {
 
-  user: User;
+  user = new User(0, '', '', '', '', '', '', '', '','', '');
   loggedIn: boolean = false;
 
   email = new FormControl('', [Validators.required, Validators.email]);

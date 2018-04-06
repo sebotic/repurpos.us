@@ -6,7 +6,7 @@ import {
   HttpResponse
 } from "@angular/common/http";
 
-import {AssayPlotsComponent} from '../assay-plots/assay-plots.component'
+import {AssayPlotsComponent} from './assay-plots/assay-plots.component'
 import { AssayDetails } from '../_models/assay-details';
 
 import {environment} from "../../environments/environment";

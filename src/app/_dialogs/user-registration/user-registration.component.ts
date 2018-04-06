@@ -27,7 +27,7 @@ export class PasswordValidation {
   styleUrls: ['./user-registration.component.css']
 })
 export class UserRegistrationComponent implements OnInit {
-  user: User;
+  user = new User(0, '', '', '', '', '', '', '', '','', '');
   form: FormGroup;
   recaptchaToken: string;
   loginResponse: string;

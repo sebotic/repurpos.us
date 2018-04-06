@@ -1,0 +1,16 @@
+<div class="mat-app-background">
+  <ol>
+	  <li>
+	    <mat-form-field>
+	      <input matInput [(ngModel)]="name" placeholder="Enter a drug class">
+	    </mat-form-field>
+	  </li>
+	  <li>
+	    <!--<button mat-raised-button (click)="openDialog()">Pick one</button>-->
+	    <button mat-raised-button (click)="submitData()">Submit</button>
+	  </li>
+	  <li *ngIf="animal">
+	    You chose: <i>{{animal}}</i>
+	  </li>
+	</ol>
+</div>
