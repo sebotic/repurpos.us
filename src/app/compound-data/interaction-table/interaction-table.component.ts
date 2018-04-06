@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Injectable, Input, OnChanges } from '@angular/core';
-import { DataTable, DataTableResource } from '../../table/index';
-import { Subject } from "rxjs";
+import { DataTableResource } from '../../table/index';
+import { Subject } from 'rxjs/Subject';
 
 import {Router} from "@angular/router";
 

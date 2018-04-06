@@ -24,7 +24,7 @@ import { CompoundDataComponent } from './compound-data/compound-data.component';
 import { NglComponent } from './compound-data/ngl/ngl.component';
 // import {InteractionTableComponent, InteractionTableDataService} from './compound-data/interaction-table/interaction-table.component';
 // import { DiseaseDataComponent } from './disease-data/disease-data.component';
-import { IndicationsGraphComponent, GraphDataService } from './compound-data/indications-graph/indications-graph.component';
+import { IndicationsGraphComponent } from './compound-data/indications-graph/indications-graph.component';
 // import { SearchResultTableComponent } from './compound-search/search-result-table/search-result-table.component';
 import {HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -101,6 +101,7 @@ import {
   AuthService,
   CIDService,
   GoogleAnalyticsService,
+  GraphDataService,
   LoaderStateService,
   LoginStateService,
   SearchResultService,

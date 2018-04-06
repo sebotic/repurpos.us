@@ -1,22 +1,7 @@
 import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {Subject} from "rxjs/Subject";
-import { SearchResultService } from "../../_services/index";
 
-@Injectable()
-export class GraphDataService {
-  // Observable string sources
-  private newGraphDataSource = new Subject<any>();
-
-  // Observable string streams
-  newGraphData$ = this.newGraphDataSource.asObservable();
-
-  // Service message commands
-  announceGraphData(data: any) {
-    this.newGraphDataSource.next(data);
-    console.log(data);
-  }
-}
-
+import { GraphDataService, SearchResultService } from "../../_services/index";
 
 @Component({
   selector: 'app-indications-graph',
