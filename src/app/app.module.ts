@@ -20,10 +20,10 @@ import { CompoundSearchComponent, CompoundSearchOptionsComponent, SearchBoxCompo
 
 import {cytoscape} from 'cytoscape';
 import {NgCytoscape} from "./compound-search/ng2-cytoscape";
-import {CompoundDataComponent} from './compound-data/compound-data.component';
-// import {InteractionTableComponent, InteractionTableDataService} from './interaction-table/interaction-table.component';
+import { CompoundDataComponent } from './compound-data/compound-data.component';
+import { NglComponent } from './compound-data/ngl/ngl.component';
+// import {InteractionTableComponent, InteractionTableDataService} from './compound-data/interaction-table/interaction-table.component';
 // import { DiseaseDataComponent } from './disease-data/disease-data.component';
-import {CIDService, NglComponent} from './ngl/ngl.component';
 import { IndicationsGraphComponent, GraphDataService } from './compound-data/indications-graph/indications-graph.component';
 // import { SearchResultTableComponent } from './compound-search/search-result-table/search-result-table.component';
 import {HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from "@angular/common/http";
@@ -63,9 +63,6 @@ import {
   // MatStepperModule,
 } from '@angular/material';
 
-import {
-  MailSignupComponent, MailSignupDialog,
-} from './mail-signup/mail-signup.component';
 import { ShowMoreButtonComponent, ShowMorePane } from './compound-data/show-more-button/show-more-button.component';
 import {CdkTableModule} from "@angular/cdk/table";
 import { RecaptchaModule } from 'ng-recaptcha';
@@ -85,6 +82,8 @@ import {
   AssayTypeBtnComponent,
   ForgotPassButtonComponent,
   LoaderComponent,
+  MailSignupComponent,
+  MailSignupDialogComponent,
   QuickSearchComponent,
   UserLoginComponent,
   UserRegButtonComponent,
@@ -100,6 +99,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { LoaderInterceptorService } from './_interceptors/loader-interceptor.service';
 import {
   AuthService,
+  CIDService,
   GoogleAnalyticsService,
   LoaderStateService,
   LoginStateService,
@@ -184,7 +184,7 @@ export class MaterialModule {}
     DialogOverviewExample,
     DialogOverviewExampleDialog,
     MailSignupComponent,
-    MailSignupDialog,
+    MailSignupDialogComponent,
     ShowMorePane,
     ShowMoreButtonComponent,
     SearchResultsTableComponent,
@@ -240,7 +240,7 @@ export class MaterialModule {}
     DialogOverviewExample,
     DialogOverviewExampleDialog,
 
-    MailSignupDialog,
+    MailSignupDialogComponent,
     // UserLoginComponent,
     // UserRegComponent,
     UserRegistrationComponent,

@@ -1,21 +1,10 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { Stage, Selection } from 'ngl';
-import {Subject} from "rxjs/Subject";
-import {isNullOrUndefined} from "util";
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import { Subject } from "rxjs/Subject";
+import { isNullOrUndefined } from "util";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 
-@Injectable()
-export class CIDService {
-  private newCIDSource = new Subject<string>();
-
-  newCID$ = this.newCIDSource.asObservable();
-
-  announceNewCID(cid: string) {
-    this.newCIDSource.next(cid);
-    // console.log(result);
-  }
-}
-
+import { CIDService } from '../../_services/index';
 
 @Component({
   selector: 'app-ngl',

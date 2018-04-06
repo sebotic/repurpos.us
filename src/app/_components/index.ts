@@ -3,6 +3,7 @@ export * from './assay-type-btn/assay-type-btn.component';
 export * from './edit-item/index';
 export * from './forgot-pass-button/forgot-pass-button.component';
 export * from './loader/loader.component';
+export * from './mail-signup/index';
 export * from './menu-bar/index';
 export * from './quick-search/quick-search.component';
 export * from './user-login/user-login.component';

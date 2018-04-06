@@ -1,12 +1,4 @@
-import {Inject, Component, OnInit, Injectable} from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-
-
-@Component({
-  styleUrls: ['mail-signup.component.css'],
-  selector: 'mail-signup-dialog',
-  template: `
-  <div mat-dialog-content>
+<div mat-dialog-content>
     <!-- Begin MailChimp Signup Form -->
     <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
     <style type="text/css">
@@ -43,53 +35,3 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
     </div>
     <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
   </div>
-  `,
-})
-export class MailSignupDialog {
-  constructor(
-    public dialogRef: MatDialogRef<MailSignupDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-}
-
-@Injectable()
-@Component({
-  selector: 'app-mail-signup',
-  templateUrl: './mail-signup.component.html',
-  styleUrls: ['./mail-signup.component.css']
-})
-export class MailSignupComponent implements OnInit {
-  showDialog = false;
-
-  constructor(public dialog: MatDialog) { }
-
-  ngOnInit() {
-  }
-
-  dialogShow(){
-
-    let dialogRef = this.dialog.open(MailSignupDialog, {
-      width: '350px',
-      // height: '400px',
-      data: {  },
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-
-    });
-
-    if (this.showDialog) {
-      this.showDialog = false;
-    }
-    else {
-      this.showDialog = true;
-    }
-
-  }
-
-}
