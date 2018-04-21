@@ -20,12 +20,12 @@ export const ROW_TEMPLATE = `
     <td *ngFor="let column of dataTable.columns" [hide]="!column.visible" [ngClass]="column.styleClassObject" class="data-column"
         [style.background-color]="column.getCellColor(_this, index)">
         <div *ngIf="!column.cellTemplate" [textContent]="item[column.property]"></div>
-        <div *ngIf="column.cellTemplate" [ngTemplateOutlet]="column.cellTemplate" [ngOutletContext]="{column: column, row: _this, item: item}"></div>
+        <div *ngIf="column.cellTemplate" [ngTemplateOutlet]="column.cellTemplate" [ngTemplateOutletContext]="{column: column, row: _this, item: item}"></div>
     </td>
 </tr>
 <tr *ngIf="dataTable.expandableRows" [hide]="!expanded" class="row-expansion">
     <td [attr.colspan]="dataTable.columnCount">
-        <div [ngTemplateOutlet]="dataTable.expandTemplate" [ngOutletContext]="{row: _this, item: item}"></div>
+        <div [ngTemplateOutlet]="dataTable.expandTemplate" [ngTemplateOutletContext]="{row: _this, item: item}"></div>
     </td>
 </tr>
 `;
