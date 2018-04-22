@@ -7,10 +7,14 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "target": "es2015",
+    "module": "es2015",
     "lib": [
       "es2016",
       "dom"
     ]
-  }
+  },
+  "files": [
+    "src/main.ts"
+  ]
 }

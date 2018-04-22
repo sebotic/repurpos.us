@@ -64,7 +64,7 @@ import {
 } from '@angular/material';
 
 import { ShowMoreButtonComponent, ShowMorePane } from './compound-data/show-more-button/show-more-button.component';
-import {CdkTableModule} from "@angular/cdk/table";
+// import {CdkTableModule} from "@angular/cdk/table";
 import { RecaptchaModule } from 'ng-recaptcha';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AboutComponent } from './about/about.component';
@@ -112,7 +112,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 
 @NgModule({
   exports: [
-    CdkTableModule,
+    // CdkTableModule,
     // MatAutocompleteModule,
     MatButtonModule,
     // MatButtonToggleModule,
@@ -208,10 +208,10 @@ export class MaterialModule {}
     HttpClientModule,
     MaterialModule,
 
-    MatDialogModule,
-    MatButtonModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
+    // MatDialogModule,
+    // MatButtonModule,
+    // MatInputModule,
+    // MatProgressSpinnerModule,
     BrowserAnimationsModule,
     // MatNativeDateModule,
     AppRoutingModule,
