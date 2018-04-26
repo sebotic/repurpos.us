@@ -8,49 +8,56 @@
 
 
 
-
-  <!-- header: name, aliases -->
+  <!-- HEADER: name, aliases -->
   <div class="cmpd-header">
     <div class="row-fluid">
+
+      <!-- Drug Name -->
       <div id="cmpd-names" class="col-md-4 col-sm-6 col-xs-12">
-          <!-- BUG: check If statement is correct -->
+        <!-- BUG: check If statement is correct -->
         <div class="row-fluid cmpd-name" *ngIf="idData.length > 0; else vendor_names;">
           <h1>{{ label }}</h1>
         </div>
       </div>
 
-        <div id="cmpd-names" class="col-md-8 col-sm-6 col-xs-12">
+      <!-- WHO Name -->
+      <div id="cmpd-names" class="col-md-8 col-sm-6 col-xs-12">
         <div class="row-fluid who-name" *ngFor="let x of idData">
           <span *ngIf="x['property'] == 'World Health Organisation International Nonproprietary Name'">
             <b>{{x['property'] + ': ' }}</b><span *ngFor="let ii of x['values']">{{ ii }}</span></span>
         </div>
 
+        <!-- Aliases -->
         <div class="row-fluid alias">
           <b>Aliases: </b>
           <span *ngFor="let alias of aliases; let i=index;">{{alias}}<span *ngIf="i + 1 < aliases.length" class='data-separator'></span></span>
-          <!-- <span *ngIf="gvkData[0]['drug_name']">{{ gvkData[0]['drug_name'] }}</span>
-          <span *ngIf="gvkData[0]['synonyms']">{{ gvkData[0]['synonyms'] }}</span>
-          <span *ngIf="informaData[0]['drug_name']">{{ informaData[0]['drug_name'] }}</span> -->
-          <!-- <span *ngIf="integrityData[0]['drug_name']">{{ integrityData[0]['drug_name'] }}</span> -->
         </div>
-      </div>
 
+
+        <ng-template #vendor_names>
+          <div class="row-fluid cmpd-name" *ngIf="integrityData.length > 0">
+            <h1>{{ integrityData[0]['drug_name'] }}</h1>
+          </div>
+        </ng-template>
+
+        <!-- Reframe ID -->
+        <!-- <div class="row-fluid alias" *ngIf="reframeID">
+          <b>ReFRAME ID: </b>{{reframeID}}
+        </div> -->
+
+
+      </div>
     </div>
+
   </div>
 
-    <ng-template #vendor_names>
-            <div class="row-fluid cmpd-name" *ngIf="integrityData.length > 0">
-              <h1>{{ integrityData[0]['drug_name'] }}</h1>
-              <!-- <span *ngIf="informaData[0]['drug_name']">{{ informaData[0]['drug_name'] }}</span> -->
-              <!-- <span *ngIf="integrityData[0]['drug_name']">{{ integrityData[0]['drug_name'] }}</span> -->
-            </div>
-    </ng-template>
+
 
 
 
 
   <div class="row-fluid">
-    <!-- left column -->
+    <!-- LEFT COLUMN -->
     <div class="col-md-4">
 
       <!-- PubChem 3D structure -->
@@ -58,12 +65,15 @@
 
       <!-- Chemical ids -->
       <!-- BUG: CHECK that if condition is properly called-->
+      <h4>Chemical data (Wikidata)</h4>
       <ng-container *ngIf="table_data.length > 0; else vendor_cheminfo">
         <div class="chem-props alias wikidata" *ngFor="let x of table_data">
           <!-- TODO: transfer to <in>? Change struct of incoming data? -->
           <span *ngIf="x['property'] == 'chemical formula' || x['property'] == 'InChI' || x['property'] == 'InChIKey' || x['property'] == 'canonical SMILES' || x['property'] == 'isomeric SMILES'">
         <div class="title" scope="row">{{ x['property'] }}</div>
-        <div scope="row"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}}
+        <div scope="row" [ngClass]="{'smiles': x['property'] == 'canonical SMILES' || x['property'] == 'isomeric SMILES'}">
+          <span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">
+            {{z}}
           </span>
         </div>
         </span>
@@ -110,7 +120,7 @@
 
   <div class="chem-props alias" *ngIf="gvkData.length > 0">
     <div class="title" scope="row">SMILES (<a href="/#/about/#gvk" target="_blank">GVK Excelra GoStar</a>)</div>
-    <div scope="row">
+    <div scope="row" class="smiles">
       {{ gvkData[0]['smiles']}}
     </div>
   </div>
@@ -118,14 +128,14 @@
   <div class="chem-props alias" *ngIf="informaData.length > 0">
     <div class="title" scope="row">
       SMILES (<a href="/#/about/#informa" target="_blank">Citeline Pharmaprojects</a>)</div>
-    <div scope="row">
+    <div scope="row" class="smiles">
       {{informaData[0]['smiles']}}
     </div>
   </div>
 
   <div class="chem-props alias" *ngIf="integrityData.length > 0">
     <div class="title" scope="row">SMILES (<a href="/#/about/#integrity" target="_blank">Clarivate Integrity</a>)</div>
-    <div scope="row">
+    <div scope="row" class="smiles">
       {{integrityData[0]['smiles']}}
     </div>
   </div>
@@ -135,7 +145,7 @@
 
 </div>
 
-<!-- right column -->
+<!-- RIGHT COLUMN -->
 <div class="col-md-8">
 
   <!-- Assays -->
@@ -147,17 +157,37 @@
           <tr>
             <th class="title assay-name">Assay type</th>
             <th class="title">Activity type</th>
-            <th class="title">Source</th>
+            <th class="title">Assay Source</th>
+            <th class="title">ReFRAME ID</th>
+            <th class="title">Compound Vendor</th>
+            <th class="title">Compound Vendor ID</th>
             <th class="title">Measurement</th>
           </tr>
 
 
           <tr *ngFor="let x of assayData">
+            <!-- Assay Name -->
             <td><a href="#/{{x['assay_id']}}">{{x['assay_title']}}</a></td>
+
+            <!-- Assay type (IC/EC50) -->
             <td>{{x['activity_type']}}</td>
+
+            <!-- Assay Source -->
             <td>
               <a href="https://www.calibr.org/" target="_blank">Calibr</a>
             </td>
+
+            <!-- RFM ID -->
+            <td>{{x['reframe_id']}}</td>
+
+            <!-- Compound Source -->
+            <td>{{x['chem_vendor']}}</td>
+
+            <!-- Compound Source ID -->
+            <td>{{x['chem_vendor_id']}}</td>
+
+
+            <!-- Assay Measurement -->
             <td>{{x['ac50'].toExponential(2)}}</td>
           </tr>
         </table>
@@ -182,7 +212,7 @@
 
 
   <div id="wikidata">
-    <H3>Chemical properties</H3>
+    <H3>Wikidata data</H3>
     <table class="table cmpd-table">
 
       <tr *ngFor="let x of table_data">
@@ -225,41 +255,119 @@
   <!--</table>-->
   <!--</div>-->
 
+  <!-- VENDOR DATA -->
   <div id="vendor-data" *ngIf="loggedIn; else login_vendor">
     <div *ngFor="let yy of [gvkData, integrityData, informaData]; let k = index;">
       <div *ngIf="yy[0] && (yy[0].mechanism || yy[0].category)">
-        <H3>{{vendors[k]}} Data</H3>
+        <H3>{{vendors[k]}} data</H3>
+
         <table class="table cmpd-table" *ngFor="let x of yy">
+
+          <!-- Category -->
           <tr *ngIf="x && x.hasOwnProperty('category') && x['category'].length > 0">
             <td class="title">Category</td>
             <td><span (click)="showMore($event)" id={{y}} *ngFor="let y of x['category']; let i = index ;">{{y}}<span *ngIf="i + 1 < x['category'].length" class='data-separator'></span></span>
             </td>
           </tr>
 
+          <!-- Mechanism -->
           <tr *ngIf="x && x.hasOwnProperty('mechanism') && x['mechanism'].length > 0">
             <td class="title">Mechanism of Action</td>
             <td><span *ngFor="let y of x['mechanism']; let i = index">{{y}}<span *ngIf="i + 1 < x['mechanism'].length" class='data-separator'></span></span>
             </td>
           </tr>
 
-
+          <!-- Phase -->
           <tr *ngIf="x && x.hasOwnProperty('phase') && x['phase'].length > 0">
             <td class="title">Phase</td>
             <td><span *ngFor="let y of x['phase']; let i = index">{{y}}<span *ngIf="i + 1 < x['phase'].length" class='data-separator'></span></span>
             </td>
           </tr>
 
+          <!-- Highest phase -->
           <tr *ngIf="x && x.hasOwnProperty('highest_phase') && x['highest_phase'].length > 0">
             <td class="title">Highest Phase</td>
             <td>{{x['highest_phase']}}<span *ngIf="i + 1 < x['highest_phase'].length" class='data-separator'></span>
             </td>
           </tr>
 
+          <!-- Route of Administration -->
           <tr *ngIf="x && x.hasOwnProperty('roa') && x.hasOwnProperty('roa') && x['roa'].length > 0">
             <td class="title">Route of Administration</td>
             <td><span *ngFor="let y of x['roa']; let i = index">{{y}}<span *ngIf="i + 1 < x['roa'].length" class='data-separator'></span></span>
             </td>
           </tr>
+
+          <!-- Target Name -->
+          <tr *ngIf="x && x.hasOwnProperty('target_name') && x['target_name'].length > 0">
+            <td class="title">Target Name</td>
+            <td><span *ngFor="let y of x['target_name']; let i = index">{{y}}<span *ngIf="i + 1 < x['target_name'].length" class='data-separator'></span></span>
+            </td>
+          </tr>
+
+
+          <!-- Target Family -->
+          <tr *ngIf="x && x.hasOwnProperty('target_family') && x['target_family'].length > 0">
+            <td class="title">Target Family</td>
+            <td><span *ngFor="let y of x['target_family']; let i = index">{{y}}<span *ngIf="i + 1 < x['target_family'].length" class='data-separator'></span></span>
+            </td>
+          </tr>
+
+
+          <!-- Vendor name -->
+          <tr *ngIf="x && x.hasOwnProperty('drug_name') && x['drug_name'].length > 0">
+            <td class="title">name</td>
+            <td><span *ngFor="let y of x['drug_name']; let i = index">{{y}}<span *ngIf="i + 1 < x['drug_name'].length" class='data-separator'></span></span>
+            </td>
+          </tr>
+
+
+          <!-- Aliases -->
+          <tr *ngIf="x && x.hasOwnProperty('synonyms') && x['synonyms'].length > 0">
+            <td class="title">aliases</td>
+            <td><span *ngFor="let y of x['synonyms']; let i = index">{{y}}<span *ngIf="i + 1 < x['synonyms'].length" class='data-separator'></span></span>
+            </td>
+          </tr>
+
+          <!-- Chemical name -->
+          <tr *ngIf="x && x.hasOwnProperty('cas_name') && x['cas_name'].length > 0">
+            <td class="title">Chemical name</td>
+            <td>{{ x['cas_name'] }}
+            </td>
+          </tr>
+
+
+          <!-- Vendor ID: GVK -->
+          <tr *ngIf="x && x.hasOwnProperty('gvk_id')">
+            <td class="title">{{vendors[k]}} ID</td>
+            <td>{{ x['gvk_id'] }}
+            </td>
+          </tr>
+          <!-- Vendor ID: Integrity -->
+          <tr *ngIf="x && x.hasOwnProperty('id')">
+            <td class="title">{{vendors[k]}} ID</td>
+            <td>{{ x['id'] }}
+            </td>
+          </tr>
+
+          <!-- Vendor Origin -->
+          <tr *ngIf="x && x.hasOwnProperty('origin') && x['origin'].length > 0">
+            <td class="title">Compound Origin</td>
+            <td>{{ x['origin'] }}
+            </td>
+          </tr>
+
+          <!-- Vendor SMILES -->
+          <tr *ngIf="x && x.hasOwnProperty('smiles') && x['smiles'].length > 0">
+            <td class="title">SMILES</td>
+            <td class="smiles">{{ x['smiles'] }}
+            </td>
+          </tr>
+
+
+
+
+
         </table>
       </div>
     </div>
