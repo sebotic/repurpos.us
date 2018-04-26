@@ -156,11 +156,11 @@
         <table class="cmpd-table">
           <tr>
             <th class="title assay-name">Assay type</th>
-            <th class="title">Activity type</th>
             <th class="title">Assay Source</th>
-            <th class="title">ReFRAME ID</th>
+            <th class="title">ReFRAME<br/>ID</th>
             <th class="title">Compound Vendor</th>
             <th class="title">Compound Vendor ID</th>
+            <th class="title">Activity<br/>type</th>
             <th class="title">Measurement</th>
           </tr>
 
@@ -168,9 +168,6 @@
           <tr *ngFor="let x of assayData">
             <!-- Assay Name -->
             <td><a href="#/{{x['assay_id']}}">{{x['assay_title']}}</a></td>
-
-            <!-- Assay type (IC/EC50) -->
-            <td>{{x['activity_type']}}</td>
 
             <!-- Assay Source -->
             <td>
@@ -186,6 +183,8 @@
             <!-- Compound Source ID -->
             <td>{{x['chem_vendor_id']}}</td>
 
+            <!-- Assay type (IC/EC50) -->
+            <td>{{x['activity_type']}}</td>
 
             <!-- Assay Measurement -->
             <td>{{x['ac50'].toExponential(2)}}</td>
