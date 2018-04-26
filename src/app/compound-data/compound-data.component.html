@@ -109,7 +109,7 @@
 <ng-template #vendor_cheminfo>
 
   <div class="chem-props alias" *ngIf="gvkData.length > 0">
-    <div class="title" scope="row">SMILES (<a href="/#/about/#gvk" target="_blank">GVK BioSciences</a>)</div>
+    <div class="title" scope="row">SMILES (<a href="/#/about/#gvk" target="_blank">GVK Excelra GoStar</a>)</div>
     <div scope="row">
       {{ gvkData[0]['smiles']}}
     </div>
@@ -117,14 +117,14 @@
 
   <div class="chem-props alias" *ngIf="informaData.length > 0">
     <div class="title" scope="row">
-      SMILES (<a href="/#/about/#informa" target="_blank">Informa</a>)</div>
+      SMILES (<a href="/#/about/#informa" target="_blank">Citeline Pharmaprojects</a>)</div>
     <div scope="row">
       {{informaData[0]['smiles']}}
     </div>
   </div>
 
   <div class="chem-props alias" *ngIf="integrityData.length > 0">
-    <div class="title" scope="row">SMILES (<a href="/#/about/#integrity" target="_blank">Integrity</a>)</div>
+    <div class="title" scope="row">SMILES (<a href="/#/about/#integrity" target="_blank">Clarivate Integrity</a>)</div>
     <div scope="row">
       {{integrityData[0]['smiles']}}
     </div>
@@ -228,7 +228,7 @@
   <div id="vendor-data" *ngIf="loggedIn; else login_vendor">
     <div *ngFor="let yy of [gvkData, integrityData, informaData]; let k = index;">
       <div *ngIf="yy[0] && (yy[0].mechanism || yy[0].category)">
-        <H3>{{vendors[k]}}</H3>
+        <H3>{{vendors[k]}} Data</H3>
         <table class="table cmpd-table" *ngFor="let x of yy">
           <tr *ngIf="x && x.hasOwnProperty('category') && x['category'].length > 0">
             <td class="title">Category</td>

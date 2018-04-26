@@ -57,7 +57,7 @@ export class CompoundDataComponent implements OnInit {
   displayShowMorePane: boolean = false;
   testJson;
 
-  vendors: Array<string> = ['GVK Data', 'Integrity Data', 'Informa Data'];
+  vendors: Array<string> = ['GVK Excelra GoStar', 'Clarivate Integrity',  'Citeline Pharmaprojects'];
 
   propsLabelMap: Object = {
     'P274': 'Chemical Formula',
