@@ -412,7 +412,7 @@ export class CompoundDataComponent implements OnInit {
 
       // pull out the aliases if no Wikidata available
       // TODO: add in a check if QID exists.
-      this.aliases = Array.from(new Set(this.aliases.concat(this.gvkData[0]['synonyms'].concat(this.gvkData[0]['drug_name']).concat(this.informaData[0]['drug_name'].split('\n')))));
+      this.aliases = Array.from(new Set(this.aliases.concat(this.gvkData[0]['synonyms'].concat(this.gvkData[0]['drug_name']).concat(this.informaData[0]['drug_name']))));
 
       // Sort aliases by name (case-insensitive)
       this.aliases= this.aliases.sort(function(a:string, b:string){
