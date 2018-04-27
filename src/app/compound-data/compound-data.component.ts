@@ -28,6 +28,7 @@ export class CompoundDataComponent implements OnInit {
   results: Object;
   data: Object;
   loggedIn: boolean;
+  showVendor: boolean = false;
   label: string;
   tableData: Array<Object> = [];
   aliases: Array<string> = [];
