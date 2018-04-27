@@ -152,42 +152,45 @@
   <div id='assays'>
     <div *ngIf="loggedIn; else login_assay">
       <div *ngIf="assayData.length > 0">
-        <h3>Activity data</h3>
+        <h3 class = "title-plus-btn">Activity data</h3>
+        <button class="pull-right" (click)="showVendor = !showVendor">show vendor source</button>
+
         <table class="cmpd-table">
           <tr>
             <th class="title assay-name">Assay type</th>
             <th class="title">Assay Source</th>
-            <th class="title">ReFRAME<br/>ID</th>
-            <th class="title">Compound Vendor</th>
-            <th class="title">Compound Vendor ID</th>
             <th class="title">Activity<br/>type</th>
             <th class="title">Measurement</th>
+            <th class="title" *ngIf="showVendor">ReFRAME<br/>ID</th>
+            <th class="title" *ngIf="showVendor">Compound Vendor</th>
+            <th class="title" *ngIf="showVendor">Compound Vendor ID</th>
           </tr>
 
 
           <tr *ngFor="let x of assayData">
             <!-- Assay Name -->
-            <td><a href="#/{{x['assay_id']}}">{{x['assay_title']}}</a></td>
+            <td><a href="#/assays/{{x['assay_id']}}">{{x['assay_title']}}</a></td>
 
             <!-- Assay Source -->
             <td>
               <a href="https://www.calibr.org/" target="_blank">Calibr</a>
             </td>
 
-            <!-- RFM ID -->
-            <td>{{x['reframe_id']}}</td>
-
-            <!-- Compound Source -->
-            <td>{{x['chem_vendor']}}</td>
-
-            <!-- Compound Source ID -->
-            <td>{{x['chem_vendor_id']}}</td>
 
             <!-- Assay type (IC/EC50) -->
             <td>{{x['activity_type']}}</td>
 
             <!-- Assay Measurement -->
             <td>{{x['ac50'].toExponential(2)}}</td>
+
+            <!-- RFM ID -->
+            <td *ngIf="showVendor">{{x['reframe_id']}}</td>
+
+            <!-- Compound Source -->
+            <td *ngIf="showVendor">{{x['chem_vendor']}}</td>
+
+            <!-- Compound Source ID -->
+            <td *ngIf="showVendor">{{x['chem_vendor_id']}}</td>
           </tr>
         </table>
       </div>

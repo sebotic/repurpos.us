@@ -127,3 +127,11 @@ a {
 .smiles {
   word-break: break-all !important;
 }
+
+.title-plus-btn {
+  display: inline-block;
+}
+
+.pull-right {
+  margin-top: 15px;
+}
