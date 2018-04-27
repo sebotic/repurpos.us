@@ -1,20 +1,55 @@
-<section class='about'>
-  <h2><span class="bold">About reframe</span><span class="thin">db</span></h2>
-  <div class='about-descrip'>
-    brief description
-  </div>
-</section>
-
-<section class='about'>
-  <h2>Assay data</h2>
+<div class="container-fluid">
+  <section class='about row col-md-8'>
+    <h2><span class="bold">About reframe</span><span class="thin">db</span></h2>
     <div class='about-descrip'>
+      <p>
+        The chemical diversity and known safety profiles of drugs already tested in humans makes them a valuable set of compounds to explore potential therapeutic utility in indications outside those originally targeted. This practice of “drug repurposing” has
+        become commonplace in academic and other non-profit drug discovery efforts, with the appeal that significantly less time and resources are required to advance a candidate into the clinic. This is especially the case in phenotypic and other cell-based
+        screens in which this collection is being screened against a large number of known and novel targets in parallel.
+      </p>
+      <p>
+        Here we report a comprehensive open-access, drug repositioning screening set of 12,000 compounds (termed ReFRAME) that was assembled by combining three widely-used commercial drug competitive intelligence databases (Clarivate Integrity, GVK Excelra GoStar
+        and Citeline Pharmaprojects), together with extensive patent mining of small molecules that have been dosed in humans. To date ~12,000 compounds (~80% of compounds identified from data mining) have been purchased or synthesized, and subsequently
+        plated for screening.
+      </p>
+    </div>
+  </section>
 
-  </div>
-</section>
-
-<section class='about'>
-  <h2>Data sources</h2>
+  <section class='about row col-md-8'>
+    <h2>Data sources</h2>
+    <h3><span class="bold">reframe</span><span class="thin">db</span> compounds</h3>
     <div class='about-descrip'>
-    <h4>wikidata</h4>
-  </div>
-</section>
+      Data was initially pooled from three of the largest and most commonly used commercial databases, <a href="https://www.gostardb.com/" target="_blank">GVK-Excelra GOSTAR</a> (Global Online Structure Relationship Database),
+      <a href="https://clarivate.com/products/integrity/" target="_blank">Clarivate Integrity</a>, and
+      <a href="https://pharmaintelligence.informa.com/products-and-services/data-and-analysis/pharmaprojects" target="_blank">Citeline Pharmaprojects</a>, to arrive at a prioritized compound list of approximately 14,000 compounds. For each data provider,
+      the list of clinical compounds with structures was filtered to remove drug combinations of individual compounds already included in the collection, isotopically labelled compounds, diagnostic agents, and chemosensitizers, removing ~2,000 compounds.
+    </div>
+
+    <h3 id="gvk">GVK-Excelra GOSTAR (Global Online Structure Relationship Database)</h3>
+    <div class='about-descrip'>
+      <a href="https://www.gostardb.com/" target="_blank">GVK GOSTAR</a> has over 22 million structure-activity relationship data points covering 6 million structures from 2.2 million patents and greater than 348,000 journal articles; it also includes
+      rich lead optimization datasets with integrated clinical-stage compound data. The Excelra GOSTAR database includes a 5,000-approved drug database (encompassing 569 molecular targets) and a 29,000-compound clinical candidate compound collection.
+
+      <h3 id="integrity">Clarivate Integrity</h3>
+      <div class='about-descrip'>
+        <a href="https://clarivate.com/products/integrity/" target="_blank">Clarivate Integrity</a> also has extensive drug information with over 500,000 drug entries, and over 74,000 assays containing more than 2.1 million SAR data points. Clarivate
+        Integrity database has comprehensive patent literature and chemical structure coverage, drawing upon broader sources, such as patent applications, scientific conference presentations, and peer-reviewed literature.
+      </div>
+
+      <h3 id="informa">Citeline Pharmaprojects</h3>
+      <div class='about-descrip'>
+        <a href="https://pharmaintelligence.informa.com/products-and-services/data-and-analysis/pharmaprojects" target="_blank">Citeline Pharmaprojects</a> has over 35 years of drug development data from various sources including relevant pharmacokinetic
+        and clinical trial information. Citeline Pharmaprojects database has comprehensive patent literature and chemical structure coverage, drawing upon broader sources, such as patent applications, scientific conference presentations, and peer-reviewed
+        literature.
+      </div>
+
+
+      <h3>Wikidata</h3>
+      <div class='about-descrip'>
+        Other compound data is pulled from <a href="https://www.wikidata.org/" target="_blank">Wikidata</a>, a free and open knowledge base that can be read and edited by both humans and machines.
+      </div>
+
+    </div>
+  </section>
+
+</div>
