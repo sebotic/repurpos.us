@@ -7,4 +7,6 @@ export interface AssayData {
   ikey: string;
   wikidata: string;
   pubchem_cid: string;
+  chem_vendor: string;
+  chem_vendor_id: string;
 }

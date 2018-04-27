@@ -58,7 +58,7 @@ export class UserLoginComponent implements OnInit {
   }
 
   onSubmit(event){
-    console.log(this.user.email, this.user.password);
+    // console.log(this.user.email, this.user.password);
 
     this.http.post(environment.host_url + '/auth/login', {"email": this.user.email, "password": this.user.password}, {
         observe: 'response',
@@ -69,10 +69,10 @@ export class UserLoginComponent implements OnInit {
 
     ).subscribe((re) => {
         let credentials = re.body;
-        console.log(credentials['auth_token']);
+        // console.log(credentials['auth_token']);
         localStorage.setItem('auth_token', credentials['auth_token']);
 
-        console.log(JSON.stringify(re));
+        // console.log(JSON.stringify(re));
         // console.log(re.status);
         this.loggedIn = true;
         this.loginStateService.loggedIn();
@@ -107,7 +107,7 @@ export class UserLoginComponent implements OnInit {
         }
 
 
-        console.log(JSON.stringify(re));
+        // console.log(JSON.stringify(re));
         // console.log(re.status);
 
       },

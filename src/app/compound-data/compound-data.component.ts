@@ -24,6 +24,7 @@ import { environment } from "../../environments/environment";
 })
 export class CompoundDataComponent implements OnInit {
   qid: string;
+  reframeID: string;
   results: Object;
   data: Object;
   loggedIn: boolean;
@@ -44,7 +45,6 @@ export class CompoundDataComponent implements OnInit {
      'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115'];
 
   idData: Array<Object> = [];
-
   assayData: Object = [];
   gvkData: Object = [];
   informaData: Object = [];
@@ -57,7 +57,7 @@ export class CompoundDataComponent implements OnInit {
   displayShowMorePane: boolean = false;
   testJson;
 
-  vendors: Array<string> = ['GVK Data', 'Integrity Data', 'Informa Data'];
+  vendors: Array<string> = ['GVK Excelra GoStar', 'Clarivate Integrity',  'Citeline Pharmaprojects'];
 
   propsLabelMap: Object = {
     'P274': 'Chemical Formula',
@@ -288,7 +288,6 @@ export class CompoundDataComponent implements OnInit {
 
 
 
-
       // console.log(JSON.stringify(b));
 
     });
@@ -371,6 +370,7 @@ export class CompoundDataComponent implements OnInit {
 
       // console.log('calbr assya data', b);
 
+
     },
     err => {}
     );
@@ -405,10 +405,12 @@ export class CompoundDataComponent implements OnInit {
     }).subscribe((r) => {
       let b = r.body[this.qid];
       // console.log(b);
+      this.reframeID = b.reframe_id;
       this.gvkData = [b.gvk];
       this.informaData = [b.informa];
       this.integrityData = [b.integrity];
       this.assayData = b.assay;
+
 
       // pull out the aliases if no Wikidata available
       // TODO: add in a check if QID exists.
