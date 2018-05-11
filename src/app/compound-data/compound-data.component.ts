@@ -58,7 +58,9 @@ export class CompoundDataComponent implements OnInit {
   displayShowMorePane: boolean = false;
   testJson;
 
-  vendors: Array<string> = ['GVK Excelra GoStar', 'Clarivate Integrity',  'Citeline Pharmaprojects'];
+  vendors: Array<Object> = [{'name': 'GVK Excelra GoStar', 'link': 'https://gostardb.com/gostar/loginEntry.do'},
+  {'name': 'Clarivate Integrity', 'link': 'https://integrity.thomson-pharma.com/integrity/xmlxsl/pk_home.util_home'},
+  {'name': 'Citeline Pharmaprojects', 'link': 'https://pharmaintelligence.informa.com/contact/contact-us'}];
 
   propsLabelMap: Object = {
     'P274': 'Chemical Formula',
