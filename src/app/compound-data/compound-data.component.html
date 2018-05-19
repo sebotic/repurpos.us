@@ -199,13 +199,13 @@
     <!-- Log-in default -->
     <ng-template #login_assay>
       <h3>Activity data</h3>
-      <a class="accent-color login-req" href="">sign in to view activity data</a>
+      <span class="accent-color login-req">sign in to view activity data</span>
     </ng-template>
 
     <!-- Log-in default -->
     <ng-template #login_vendor>
       <h3>Pharmacological and Biological data</h3>
-      <a class="accent-color login-req" href="">sign in to view compound annotation data from our commercial partners</a>
+      <span class="accent-color login-req">sign in to view compound annotation data from our commercial partners</span>
     </ng-template>
 
   </div>
@@ -257,11 +257,12 @@
   <!--</table>-->
   <!--</div>-->
 
+
   <!-- VENDOR DATA -->
   <div id="vendor-data" *ngIf="loggedIn; else login_vendor">
     <div *ngFor="let yy of [gvkData, integrityData, informaData]; let k = index;">
       <div *ngIf="yy[0] && (yy[0].mechanism || yy[0].category)">
-        <H3>{{vendors[k]}} data</H3>
+        <H3><a href="{{vendors[k].link}}" target="_blank">{{vendors[k].name}} data</a></H3>
 
         <table class="table cmpd-table" *ngFor="let x of yy">
 
@@ -341,13 +342,13 @@
 
           <!-- Vendor ID: GVK -->
           <tr *ngIf="x && x.hasOwnProperty('gvk_id')">
-            <td class="title">{{vendors[k]}} ID</td>
+            <td class="title">{{vendors[k].name}} ID</td>
             <td>{{ x['gvk_id'] }}
             </td>
           </tr>
           <!-- Vendor ID: Integrity -->
           <tr *ngIf="x && x.hasOwnProperty('id')">
-            <td class="title">{{vendors[k]}} ID</td>
+            <td class="title">{{vendors[k].name}} ID</td>
             <td>{{ x['id'] }}
             </td>
           </tr>
