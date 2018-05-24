@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import 'hammerjs';
+
 
 // import { DataTableModule, DataTable, DataTableResource } from 'angular-2-data-table';
 // import { DataTableModule, DataTable, DataTableResource } from './table/index';
@@ -48,16 +50,16 @@ import {
   MatPaginatorModule,
   // MatProgressBarModule,
   MatProgressSpinnerModule,
-  // MatRadioModule,
+  MatRadioModule,
   // MatRippleModule,
   MatSelectModule,
   // MatSidenavModule,
-  // MatSliderModule,
-  // MatSlideToggleModule,
+  MatSliderModule,
+  MatSlideToggleModule,
   // MatSnackBarModule,
-  // MatSortModule,
+  MatSortModule,
   MatTableModule,
-  // MatTabsModule,
+  MatTabsModule,
   // MatToolbarModule,
   MatTooltipModule,
   // MatStepperModule,
@@ -77,7 +79,7 @@ import {
   CmpdTooltipComponent
 } from './assay-data/index';
 
-import { 
+import {
   AssayDwnldComponent,
   AssayTypeBtnComponent,
   ForgotPassButtonComponent,
@@ -132,17 +134,16 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     MatPaginatorModule,
     // MatProgressBarModule,
     MatProgressSpinnerModule,
-    // MatRadioModule,
+    MatRadioModule,
     // MatRippleModule,
     MatSelectModule,
     // MatSidenavModule,
-    // MatSliderModule,
-    // MatSlideToggleModule,
+    MatSliderModule,
+    MatSlideToggleModule,
     // MatSnackBarModule,
-    // MatSortModule,
+    MatSortModule,
     MatTableModule,
-
-    // MatTabsModule,
+    MatTabsModule,
     // MatToolbarModule,
     MatTooltipModule,
   ],
