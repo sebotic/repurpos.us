@@ -37,7 +37,7 @@ div.footnote {
 }
 
 
-.alias {
+.alias, .cmpd-source, .related  {
   padding-bottom: 3px;
   font-size: 0.75em;
 }
@@ -134,4 +134,17 @@ a {
 
 .pull-right {
   margin-top: 15px;
+}
+
+/* Related compounds */
+.cmpd-2D {
+  background-color: aliceblue;
+}
+
+.available {
+  color: green;
+}
+
+.not_available {
+  color: red;
 }

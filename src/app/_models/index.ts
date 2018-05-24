@@ -6,3 +6,4 @@ export * from './route-def';
 export * from './search-result';
 export * from './vendor-data/index';
 export * from './WDQSData';
+export * from './similarity-data';

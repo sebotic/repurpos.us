@@ -1,6 +1,6 @@
-import {Component, OnInit, forwardRef, Inject, Injectable, Input} from '@angular/core';
+import { Component, OnInit, forwardRef, Inject, Injectable, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {Http, Response} from "@angular/http";
+import { Http, Response } from "@angular/http";
 import { Location } from '@angular/common';
 
 // import { InteractionTableDataService } from "../interaction-table/interaction-table.component"
@@ -11,7 +11,7 @@ import {
   HttpResponse
 } from "@angular/common/http";
 
-import { AssayData, GVKData, IntegrityData, InformaData, VendorData, WDQSData } from '../_models/index';
+import { AssayData, GVKData, IntegrityData, InformaData, VendorData, WDQSData, SimilarityData } from '../_models/index';
 import { CIDService, WDQService } from '../_services/index';
 import { environment } from "../../environments/environment";
 
@@ -40,16 +40,20 @@ export class CompoundDataComponent implements OnInit {
   prop_name_map: Object = {};
   propsToDisplay: Array<string> = ['P274', 'P231', 'P662', 'P661', 'P592', 'P715', 'P683', 'P665', 'P233', 'P2017',
     'P234', 'P235', 'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115', 'P3780',
-  'P3776', 'P3777', 'P3771', 'P129', 'P3489', 'P2868', 'P2175'];
+    'P3776', 'P3777', 'P3771', 'P129', 'P3489', 'P2868', 'P2175'];
 
   idPropsToDisplay: Array<string> = ['P231', 'P662', 'P661', 'P592', 'P715', 'P683', 'P665',
-     'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115'];
+    'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115'];
 
   idData: Array<Object> = [];
   assayData: Object = [];
   gvkData: Object = [];
   informaData: Object = [];
   integrityData: Object = [];
+  similarityData: Array<SimilarityData> = [
+    { name: 'compound1', rfm_cmpd: true, assay_hits: false, gvk: true, integrity: true, informa: false, match_type: 'tanimoto', pubchem: 'CID', qid: 'Q27286421', tanimoto: 0.82 },
+    { name: 'compound2', rfm_cmpd: true, assay_hits: true, gvk: false, integrity: true, informa: true, match_type: 'stero-free', pubchem: 'CID', qid: 'Q27286421'},
+    { name: 'compound3', rfm_cmpd: true, assay_hits: true, gvk: true, integrity: false, informa: false, match_type: 'tanimoto', tanimoto: 0.94 }];
 
   showMoreProperties = ['P3489', 'P2868', 'P129', 'P3776', 'P3777', 'P3771'];
 
@@ -58,9 +62,9 @@ export class CompoundDataComponent implements OnInit {
   displayShowMorePane: boolean = false;
   testJson;
 
-  vendors: Array<Object> = [{'name': 'GVK Excelra GoStar', 'link': 'https://gostardb.com/gostar/loginEntry.do'},
-  {'name': 'Clarivate Integrity', 'link': 'https://integrity.thomson-pharma.com/integrity/xmlxsl/pk_home.util_home'},
-  {'name': 'Citeline Pharmaprojects', 'link': 'https://pharmaintelligence.informa.com/contact/contact-us'}];
+  vendors: Array<Object> = [{ 'name': 'GVK Excelra GoStar', 'link': 'https://gostardb.com/gostar/loginEntry.do' },
+  { 'name': 'Clarivate Integrity', 'link': 'https://integrity.thomson-pharma.com/integrity/xmlxsl/pk_home.util_home' },
+  { 'name': 'Citeline Pharmaprojects', 'link': 'https://pharmaintelligence.informa.com/contact/contact-us' }];
 
   propsLabelMap: Object = {
     'P274': 'Chemical Formula',
@@ -122,7 +126,7 @@ export class CompoundDataComponent implements OnInit {
     }).subscribe((r) => {
       let b = r.body;
 
-      for (let i of b.results.bindings){
+      for (let i of b.results.bindings) {
         // console.log(i);
         let p: string = i['prop']['value'].split('/').pop();
 
@@ -134,15 +138,19 @@ export class CompoundDataComponent implements OnInit {
         this.loggedIn = true;
       } else {
         this.loggedIn = false;
+        this.loggedIn = true; // TODO: revert
       }
 
       this.buildData();
       // this.retrieveAssayData();
       // this.retrieveGVKData();
       this.retrieveData();
+
       // this.testStream();
 
       // console.log(JSON.stringify(b));
+      // Sort the related data
+      // this.similarityData = this.similarityData.sort((a:any, b: any) => b.tanimoto - a.tanimoto)
 
     });
 
@@ -200,14 +208,14 @@ export class CompoundDataComponent implements OnInit {
       let tmp: Object = {};
       // console.log(b);
 
-      for (let i of b.results.bindings){
+      for (let i of b.results.bindings) {
         this.label = i['compoundLabel']['value'];
 
         // console.log(i);
         let p: string = i['prop']['value'].split('/').pop();
 
         // for some reason, the sparql endpoint returns a result for properties which actually not on that item
-        if (!i.hasOwnProperty('id')){
+        if (!i.hasOwnProperty('id')) {
           continue;
         }
 
@@ -225,11 +233,11 @@ export class CompoundDataComponent implements OnInit {
         // }
 
 
-        if (p.startsWith('P')){
+        if (p.startsWith('P')) {
           if (tmp.hasOwnProperty(p)) {
 
             tmp[p]['values'].push(v);
-            if (qid.startsWith('http://www.wikidata.org/entity/Q')){
+            if (qid.startsWith('http://www.wikidata.org/entity/Q')) {
               tmp[p]['qids'].push(qid.split('/').pop());
             }
           }
@@ -241,7 +249,7 @@ export class CompoundDataComponent implements OnInit {
               pid: ''
             };
 
-            if (qid.startsWith('http://www.wikidata.org/entity/Q')){
+            if (qid.startsWith('http://www.wikidata.org/entity/Q')) {
               tmp[p]['qids'].push(qid.split('/').pop());
             }
           }
@@ -258,10 +266,10 @@ export class CompoundDataComponent implements OnInit {
           let sm: boolean = this.showMoreProperties.includes(y);
 
           if (this.idPropsToDisplay.includes(y) && !this.excludeFromTableDisplay.includes(y)) {
-            this.idData.push({'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'showMore': sm , 'pid': y});
+            this.idData.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'showMore': sm, 'pid': y });
           }
-          else if (!this.excludeFromTableDisplay.includes(y)){
-            this.table_data.push({'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'qids': tmp[y]['qids'], 'showMore': sm , 'pid': y});
+          else if (!this.excludeFromTableDisplay.includes(y)) {
+            this.table_data.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'qids': tmp[y]['qids'], 'showMore': sm, 'pid': y });
           }
 
           if (y == 'P662') {
@@ -280,14 +288,14 @@ export class CompoundDataComponent implements OnInit {
       // Concatenate aliases so they can be rendered as one block
       // this.concat_aliases = this.aliases.join(', ');
 
-            // Sort aliases by name (case-insensitive)
-            this.aliases = this.aliases.sort(function(a:string, b:string){
-              if (a.toLowerCase() > b.toLowerCase()) {
-                return 1;
-              } else{
-                return -1;
-              };
-            })
+      // Sort aliases by name (case-insensitive)
+      this.aliases = this.aliases.sort(function(a: string, b: string) {
+        if (a.toLowerCase() > b.toLowerCase()) {
+          return 1;
+        } else {
+          return -1;
+        };
+      })
 
 
 
@@ -375,7 +383,7 @@ export class CompoundDataComponent implements OnInit {
 
 
     },
-    err => {}
+      err => { }
     );
 
   }
@@ -401,8 +409,8 @@ export class CompoundDataComponent implements OnInit {
       observe: 'response',
       // withCredentials: true,
       headers: new HttpHeaders()
-        .set('Accept', 'application/json')
-        .set('Authorization', localStorage.getItem('auth_token')),
+        .set('Accept', 'application/json'), // TODO: revert
+        // .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
         .set('qid', this.qid)
     }).subscribe((r) => {
@@ -420,10 +428,10 @@ export class CompoundDataComponent implements OnInit {
       this.aliases = Array.from(new Set(this.aliases.concat(this.gvkData[0]['synonyms'].concat(this.gvkData[0]['drug_name']).concat(this.informaData[0]['drug_name']))));
 
       // Sort aliases by name (case-insensitive)
-      this.aliases= this.aliases.sort(function(a:string, b:string){
+      this.aliases = this.aliases.sort(function(a: string, b: string) {
         if (a.toLowerCase() > b.toLowerCase()) {
           return 1;
-        } else{
+        } else {
           return -1;
         };
       })
@@ -433,8 +441,9 @@ export class CompoundDataComponent implements OnInit {
 
   }
 
-  testStream(){
-    const req = new HttpRequest('GET', environment.host_url + '/large', {responseType: 'text',
+  testStream() {
+    const req = new HttpRequest('GET', environment.host_url + '/large', {
+      responseType: 'text',
       reportProgress: true,
     });
 
@@ -511,7 +520,7 @@ export class CompoundDataComponent implements OnInit {
 
   prepareGraphData(): any {
     // console.log(data, 'hoo');
-    let nodes = [{data: {id: this.qid, name: this.label, faveColor: '#7a94fc', faveShape: 'rectangle'}}];
+    let nodes = [{ data: { id: this.qid, name: this.label, faveColor: '#7a94fc', faveShape: 'rectangle' } }];
     let edges = [];
     let edge_color_pred: string = '#a84435';
 
@@ -519,16 +528,16 @@ export class CompoundDataComponent implements OnInit {
     for (let x of this.tableData) {
       nodes.push({
         data: {
-          id: x['disease_qid']  ,
+          id: x['disease_qid'],
           name: x['disease_name'],
           faveColor: '#fc4e2b',
           faveShape: 'ellipse'
         }
       });
       let edge_color = x['reference'].startsWith('PMID') ? edge_color_pred : '#06a809';
-      edges.push({data: {source: this.qid, target: x['disease_qid'], faveColor: edge_color}})
+      edges.push({ data: { source: this.qid, target: x['disease_qid'], faveColor: edge_color } })
     }
 
-    return {nodes, edges};
+    return { nodes, edges };
   }
 }
