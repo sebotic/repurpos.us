@@ -24,13 +24,15 @@ mat-row:first-of-type {
   border: none;
 }
 
-.search-result-container mat-header-cell {
-  opacity: 0.6;
-  text-transform: uppercase;
-  font-size: 1.15em;
+.search-result-container mat-header-cell, .search-result-container mat-sort-header-button {
+  opacity: 0.7;
+  /* text-transform: uppercase; */
+  text-align: center;
+  font-size: 0.75em;
   font-weight: 300;
   border: none;
 }
+
 
 .search-result-header {
   min-height: 64px;
@@ -73,4 +75,33 @@ mat-row:first-of-type {
 
 .mat-column-created {
   max-width: 124px;
+}
+
+mat-cell.mat-cell.cdk-column-tanimoto.mat-column-tanimoto.ng-star-inserted {
+  text-align: center;
+}
+
+
+.circle {
+  height: 15px;
+  width: 15px;
+  border: #212529 solid 1px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+  font-size: 0;
+}
+
+
+.cmpd-avail {
+  background-color: #ff8884;
+  /* fc5457; */
+}
+
+.assay-avail {
+  background-color: #21252945;
+}
+
+.no-assay {
+  background-color: none;
 }
