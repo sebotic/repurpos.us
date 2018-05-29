@@ -1,0 +1,30 @@
+.search-opt {
+  margin-top: 15px;
+  padding-right: 30px;
+}
+
+/deep/ .mat-radio-label-content {
+  font-weight: 300;
+  font-family: "Lato", Arial, sans-serif;
+}
+
+/deep/ .mat-tab-label {
+  font-weight: 700;
+  font-family: "Lato", Arial, sans-serif;
+  text-transform: uppercase;
+}
+
+
+.search-label {
+  text-transform: uppercase;
+  padding-right: 45px;
+  color: #73797d;
+}
+
+#tanimoto {
+  display: inline-block;
+}
+
+#tanimoto-slider {
+  width: 200px;
+}

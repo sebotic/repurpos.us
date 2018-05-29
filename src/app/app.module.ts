@@ -117,7 +117,9 @@ import { CompoundAssayDataComponent } from './compound-data/compound-assay-data/
 import { CompoundVendorDataComponent } from './compound-data/compound-vendor-data/compound-vendor-data.component';
 import { CompoundWikidataComponent } from './compound-data/compound-wikidata/compound-wikidata.component';
 import { CompoundWikidataIdsComponent } from './compound-data/compound-wikidata-ids/compound-wikidata-ids.component';
-import { StructureSearchOptionsComponent } from './compound-search/structure-search-options/structure-search-options.component';
+import { StructureSearchOptionsComponent } from './compound-search/search-box/structure-search/structure-search-options/structure-search-options.component';
+import { StructureSearchComponent } from './compound-search/search-box/structure-search/structure-search.component';
+import { TextSearchComponent } from './compound-search/search-box/text-search/text-search.component';
 
 @NgModule({
   exports: [
@@ -213,7 +215,9 @@ export class MaterialModule {}
     CompoundVendorDataComponent,
     CompoundWikidataComponent,
     CompoundWikidataIdsComponent,
-    StructureSearchOptionsComponent
+    StructureSearchOptionsComponent,
+    StructureSearchComponent,
+    TextSearchComponent
   ],
   imports: [
     BrowserModule,

@@ -14,15 +14,7 @@ import { WDQService } from '../../_services/WDQ.service';
 export class SearchBoxComponent implements OnInit {
   results: EventEmitter<SearchResult[]> = new EventEmitter<SearchResult[]>();
   searchQuery: string = '';
-  tanimotoThresh: number = 0.85;
 
-  searchOptions: any = [
-    { 'id': 'exact', 'label': 'exact match', 'tooltip': 'search only exact matches' },
-    { 'id': 'stereo', 'label': 'stereofree exact match', 'tooltip': 'ignoring stereochemistry, return only exact matches' },
-    { 'id': 'tanimoto', 'label': 'search similar compounds', 'tooltip': 'search based on a Tanimoto similarity score' }
-  ]
-
-	searchMode: string = 'exact';
 
   constructor(public wd: WDQService,
     private el: ElementRef,
