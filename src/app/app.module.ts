@@ -111,6 +111,13 @@ import {
 } from './_services/index';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { CompoundHeaderComponent } from './compound-data/compound-header/compound-header.component';
+import { SimilarCompoundsComponent } from './compound-data/similar-compounds/similar-compounds.component';
+import { CompoundAssayDataComponent } from './compound-data/compound-assay-data/compound-assay-data.component';
+import { CompoundVendorDataComponent } from './compound-data/compound-vendor-data/compound-vendor-data.component';
+import { CompoundWikidataComponent } from './compound-data/compound-wikidata/compound-wikidata.component';
+import { CompoundWikidataIdsComponent } from './compound-data/compound-wikidata-ids/compound-wikidata-ids.component';
+import { StructureSearchOptionsComponent } from './compound-search/structure-search-options/structure-search-options.component';
 
 @NgModule({
   exports: [
@@ -199,7 +206,14 @@ export class MaterialModule {}
     LoaderComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    QuickSearchComponent
+    QuickSearchComponent,
+    CompoundHeaderComponent,
+    SimilarCompoundsComponent,
+    CompoundAssayDataComponent,
+    CompoundVendorDataComponent,
+    CompoundWikidataComponent,
+    CompoundWikidataIdsComponent,
+    StructureSearchOptionsComponent
   ],
   imports: [
     BrowserModule,

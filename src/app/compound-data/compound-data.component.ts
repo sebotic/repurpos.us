@@ -32,11 +32,12 @@ export class CompoundDataComponent implements OnInit {
   label: string;
   tableData: Array<Object> = [];
   aliases: Array<string> = [];
+  chemVendors: Array<Object> = [];
   // concat_aliases: string = '';
   // concat_aliases: Set<string>;
   // vendor_aliases: Array<string> = [];
   table_data: Array<Object> = [];
-  graphData;
+  // graphData;
   prop_name_map: Object = {};
   propsToDisplay: Array<string> = ['P274', 'P231', 'P662', 'P661', 'P592', 'P715', 'P683', 'P665', 'P233', 'P2017',
     'P234', 'P235', 'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115', 'P3780',
@@ -46,14 +47,22 @@ export class CompoundDataComponent implements OnInit {
     'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115'];
 
   idData: Array<Object> = [];
-  assayData: Object = [];
+  assayData: Array<Object> = [];
   gvkData: Object = [];
   informaData: Object = [];
   integrityData: Object = [];
-  similarityData: Array<SimilarityData> = [
-    { name: 'compound1', rfm_cmpd: true, assay_hits: false, gvk: true, integrity: true, informa: false, match_type: 'tanimoto', pubchem: 'CID', qid: 'Q27286421', tanimoto: 0.82 },
-    { name: 'compound2', rfm_cmpd: true, assay_hits: true, gvk: false, integrity: true, informa: true, match_type: 'stero-free', pubchem: 'CID', qid: 'Q27286421'},
-    { name: 'compound3', rfm_cmpd: true, assay_hits: true, gvk: true, integrity: false, informa: false, match_type: 'tanimoto', tanimoto: 0.94 }];
+  // TODO: replace (temporary, for testing purposes)
+  similarityResults: Array<SimilarityData> = [
+    { name: 'compound1', match_type: 'tanimoto', url: 'Q27286421', tanimoto: 0.77, pubchem_id: 'CID1691', properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: false }, { name: 'assay hits', value: true }, { name: 'Wikidata ', value: false }, { name: 'GVK', value: false }, { name: 'Integrity', value: true }, { name: 'Citeline', value: true }] },
+    { name: 'compound2', match_type: 'stereo-free', url: 'Q27286421', tanimoto: 0.22, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
+    { name: 'compound2', match_type: 'stereo-free', url: 'Q27286421', tanimoto: 0.42, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
+    { name: 'compound2', match_type: 'stereo-free', url: 'Q27286421', tanimoto: 0.62, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
+    { name: 'compound2', match_type: 'stereo-free', url: 'Q27286421', tanimoto: 0.87, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
+    { name: 'compound2', match_type: 'stereo-free', url: 'Q27286421', tanimoto: 0.83, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
+    { name: 'compound2', match_type: 'stereo-free', url: 'Q27286421', tanimoto: 0.52, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
+    { name: 'compound2', match_type: 'stereo-free', url: 'Q27286421', tanimoto: 0.72, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
+    { name: 'compound3', match_type: 'tanimoto', url: 'Q27286421', tanimoto: 0.95, pubchem_id: 'CID3401', properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: true }, { name: 'Wikidata', value: false }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] }
+  ];
 
   showMoreProperties = ['P3489', 'P2868', 'P129', 'P3776', 'P3777', 'P3771'];
 
@@ -62,34 +71,36 @@ export class CompoundDataComponent implements OnInit {
   displayShowMorePane: boolean = false;
   testJson;
 
-  vendors: Array<Object> = [{ 'name': 'GVK Excelra GoStar', 'link': 'https://gostardb.com/gostar/loginEntry.do' },
-  { 'name': 'Clarivate Integrity', 'link': 'https://integrity.thomson-pharma.com/integrity/xmlxsl/pk_home.util_home' },
-  { 'name': 'Citeline Pharmaprojects', 'link': 'https://pharmaintelligence.informa.com/contact/contact-us' }];
+  vendors: Array<Object> = [
+    { 'name': 'GVK Excelra GoStar', 'link': 'https://gostardb.com/gostar/loginEntry.do' },
+    { 'name': 'Clarivate Integrity', 'link': 'https://integrity.thomson-pharma.com/integrity/xmlxsl/pk_home.util_home' },
+    { 'name': 'Citeline Pharmaprojects', 'link': 'https://pharmaintelligence.informa.com/contact/contact-us' }
+  ];
 
-  propsLabelMap: Object = {
-    'P274': 'Chemical Formula',
-    'P231': 'CAS Registry Number',
-    'P662': 'PubChem CID',
-    'P661': 'ChemSpider ID',
-    'P592': 'CHEMBL ID',
-    'P715': 'DrugBank ID',
-    'P683': 'ChEBI ID',
-    'P665': 'KEGG ID',
-    'P233': 'canonical SMILES',
-    'P2017': 'isomeric SMILES',
-    'P234': 'InChI',
-    'P235': 'InChI Key',
-    'P652': 'FDA UNII',
-    'P595': 'Guide to Pharmacology Ligand ID',
-    'P3636': 'PDB Ligand ID',
-    'P232': 'EINECS Number',
-    'P2275': 'WHO International Nonproprietary Name',
-    'P267': 'ATC code',
-    'P2892': 'UMLS CUI',
-    'P3345': 'RxNorm CUI',
-    'P486': 'MeSH ID',
-    'P2115': 'NDF-RT ID'
-  };
+  // propsLabelMap: Object = {
+  //   'P274': 'Chemical Formula',
+  //   'P231': 'CAS Registry Number',
+  //   'P662': 'PubChem CID',
+  //   'P661': 'ChemSpider ID',
+  //   'P592': 'CHEMBL ID',
+  //   'P715': 'DrugBank ID',
+  //   'P683': 'ChEBI ID',
+  //   'P665': 'KEGG ID',
+  //   'P233': 'canonical SMILES',
+  //   'P2017': 'isomeric SMILES',
+  //   'P234': 'InChI',
+  //   'P235': 'InChI Key',
+  //   'P652': 'FDA UNII',
+  //   'P595': 'Guide to Pharmacology Ligand ID',
+  //   'P3636': 'PDB Ligand ID',
+  //   'P232': 'EINECS Number',
+  //   'P2275': 'WHO International Nonproprietary Name',
+  //   'P267': 'ATC code',
+  //   'P2892': 'UMLS CUI',
+  //   'P3345': 'RxNorm CUI',
+  //   'P486': 'MeSH ID',
+  //   'P2115': 'NDF-RT ID'
+  // };
 
   cid: string;
 
@@ -256,12 +267,12 @@ export class CompoundDataComponent implements OnInit {
 
         }
       }
-      console.log(tmp);
+      // console.log(tmp);
 
       for (let y of this.propsToDisplay) {
 
         if (tmp.hasOwnProperty(y)) {
-          console.log(y);
+          // console.log(y);
           // let value = Array.from(tmp[y]).length > 1 ? Array.from(tmp[y]).join(', ') : Array.from(tmp[y]);
           let sm: boolean = this.showMoreProperties.includes(y);
 
@@ -410,7 +421,7 @@ export class CompoundDataComponent implements OnInit {
       // withCredentials: true,
       headers: new HttpHeaders()
         .set('Accept', 'application/json'), // TODO: revert
-        // .set('Authorization', localStorage.getItem('auth_token')),
+      // .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
         .set('qid', this.qid)
     }).subscribe((r) => {
@@ -437,8 +448,38 @@ export class CompoundDataComponent implements OnInit {
       })
 
 
+      this.chemVendors = this.getChemVendors();
+      // this.assayData.map(function(d) {
+      //   return {
+      //     chem_vendor: d.chem_vendor,
+      //     chem_vendor_id: d.chem_vendor_id
+      //   }
+      // })
     });
+  }
 
+  getChemVendors(): Array<Object> {
+    let uniqueVendors = [];
+
+    this.assayData.forEach(function(d: any) {
+      let sel_vendor = uniqueVendors.find(x => x.chem_vendor === d.chem_vendor);
+
+      if (sel_vendor == null) {
+        uniqueVendors.push({
+          'chem_vendor': d.chem_vendor,
+          'chem_vendor_id': d.chem_vendor_id
+        })
+      } else {
+        if (sel_vendor['chem_vendor_id'] !== d.chem_vendor_id) {
+          uniqueVendors.push({
+            'chem_vendor': d.chem_vendor,
+            'chem_vendor_id': d.chem_vendor_id
+          })
+        }
+      }
+    })
+
+    return (uniqueVendors);
   }
 
   testStream() {

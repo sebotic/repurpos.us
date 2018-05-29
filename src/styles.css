@@ -115,3 +115,15 @@ a:hover{
   width: 33%;
   height: 1.5em;
 }
+
+/* • separator */
+.data-separator:after {
+  content: "\2022";
+  color: #21252975;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.smiles {
+  word-break: break-all !important;
+}
