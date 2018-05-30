@@ -3,9 +3,9 @@
   <h3 class="similar-title" id="similar">Similar molecules</h3>
 
 
-  <div class="similar-grp clearfix">
+  <div class="similar-grp">
     <div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let related of similarityData; let i=index">
-      <div class="similar-cmpds" *ngIf="i < num_results">
+      <div class="similar-cmpds" *ngIf="i < num_results" id="{{related.url}}">
         <a routerLink="/compound_data/{{related.url}}" target="_blank">
           <!-- Compound name -->
           <div class="similar-label">
@@ -13,7 +13,7 @@
           </div>
 
           <!-- Tanimoto score -->
-          <div class="similar-tanimoto" [ngStyle]="{'background-color': tanimotoScale(related.tanimoto).alpha(0.4).css(), 'border-top-color': tanimotoScale(related.tanimoto), 'border-bottom-color': tanimotoScale(related.tanimoto)}">
+          <div class="similar-tanimoto" [ngStyle]="{'background-color': tanimotoScale(related.tanimoto, 0.4), 'border-top-color': tanimotoScale(related.tanimoto), 'border-bottom-color': tanimotoScale(related.tanimoto)}">
             Tanimoto Similarity Score: {{ related.tanimoto }}
 
             <div *ngIf="related.match_type =='stereo-free'" class="stereo-free"><i class="material-icons">grade</i> stereo-free exact structure match</div>
@@ -48,11 +48,14 @@
           <!-- end of structure + available data -->
         </a>
       </div>
-      </div>
+      <!-- end of ngIf -->
+      <div class="clearfix" id="hidden" *ngIf="!((i+1) % 4)">.</div>
+    </div>
     <!-- end of for loop over similar compounds -->
+    <div class="clearfix"></div>
 
     <!-- Button to load more results -->
-    <button *ngIf="num_results < similarityData.length" (click)="showMore()">show more</button>
+    <button *ngIf="num_results < similarityData.length" id="more" (click)="showMore()" class="center-block">show more</button>
   </div>
 
 </div>

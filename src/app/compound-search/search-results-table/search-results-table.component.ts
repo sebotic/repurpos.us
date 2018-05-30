@@ -4,8 +4,8 @@ import { Router } from "@angular/router";
 
 import { SearchResult } from '../../_models/index';
 import { SearchResultService } from '../../_services/index';
-
-import * as Chroma from 'chroma-js';
+import { TanimotoScaleService } from '../../_services/index';
+// import * as Chroma from 'chroma-js';
 
 export interface Compound {
 
@@ -36,20 +36,22 @@ export class SearchResultsTableComponent implements OnInit {
 
   sdata: SearchResult;
 
-
-  assays: string[] = ['HEK293T 72-h cytotoxicity assay',
-    'HepG2 72-h cytotoxicity assay',
-    'HEK293T Cytotoxicity 72H Assay',
-    'Crypto-C. parvum HCI proliferation assay - Sterling Lab',
-    'Crypto-C. parvum HCI proliferation assay - Bunch Grass Farm',
-    'Crypto-HCT-8 Host Cells - Sterling Lab C. parvum',
-    'Crypto-HCT-8 Host Cells - Bunch Grass Farm C. parvum'];
-  displayedColumns = ['name', 'id', 'qid', 'tanimoto', 'reframe'].concat(this.assays);
+  // TODO: get the list of all the possible assays
+  assays: string[];
+  // = ['HEK293T 72-h cytotoxicity assay',
+  //  'HepG2 72-h cytotoxicity assay',
+  //  'HEK293T Cytotoxicity 72H Assay',
+  //  'Crypto-C. parvum HCI proliferation assay - Sterling Lab',
+  //  'Crypto-C. parvum HCI proliferation assay - Bunch Grass Farm',
+  //  'Crypto-HCT-8 Host Cells - Sterling Lab C. parvum',
+  //  'Crypto-HCT-8 Host Cells - Bunch Grass Farm C. parvum'];
+  displayedColumns = ['name', 'id', 'qid', 'reframe'];
+  // .concat(this.assays);
   dataSource = new MatTableDataSource<Compound>();
 
   testData: Compound[] = [
     {
-'id': 'Q7842225',
+      'id': 'Q7842225',
       'qid': 'Q7842225',
       'reframeid': 'RFM-011-161-5',
       'main_label': 'trimetrexate',
@@ -58,7 +60,7 @@ export class SearchResultsTableComponent implements OnInit {
     },
 
     {
-'id': 'Q27088554',
+      'id': 'Q27088554',
       'qid': 'Q27088554',
       'reframeid': 'RFM-011-161-5',
       'main_label': 'rilapladib',
@@ -70,34 +72,43 @@ export class SearchResultsTableComponent implements OnInit {
         'Crypto-HCT-8 Host Cells - Bunch Grass Farm C. parvum',
         'HEK293T 72-h cytotoxicity assay',
         'HEK293T Cytotoxicity 72H Assay']
-},
+    },
     {
       'id': 'Q177094',
       'qid': 'Q177094',
       'main_label': 'imatinib',
       'tanimoto_score': 0.24,
       'assay_types': []
-}
+    }
   ]
 
-  tanimotoScale = Chroma.scale(['#ffffff', '#ffb6b0', '#f36664', '#c3152e']).mode('lab');
+    tanimotoScale: any; // color scale for tanimoto scores
+    getFontColor: any; // function to get the font color for a tanimoto score
 
 
   constructor(
     private searchResultService: SearchResultService,
     private el: ElementRef,
     private router: Router,
+    private tanimotoSvc: TanimotoScaleService
   ) {
+    // get search results
     this.searchResultService.newSearchResult$.subscribe(
       result => {
         // this.sdata = result;
         // this.dataSource.data = this.prepareViewData(this.sdata.data);
         this.dataSource.data = this.testData;
       });
+
+      // get tanimoto color function
+      this.tanimotoScale = tanimotoSvc.getScale();
+      this.getFontColor = tanimotoSvc.getFontColor();
   }
 
   ngOnInit() {
+    this.getColumns();
     this.dataSource.sort = this.sort;
+    console.log(this.dataSource.data)
     // in conjunction with the result input, this would work as a data provider for th table at component initialization
     // this.dataSource.data = this.prepareViewData(this.result.data);
   }
@@ -116,12 +127,26 @@ export class SearchResultsTableComponent implements OnInit {
 
   }
 
-  getFontColor(background_color: any) {
-    if (Chroma.contrast(background_color, '#212529') > 4.5) {
-      return '#212529';
+  // TODO: change to results
+  getColumns() {
+    // pull out the variable names for each result, collapse to a list, and remove dupes
+    let get_unique_values = function(arr: Array<any>, var_name: string): Array<any> {
+      let values = arr.map(d => d[var_name]);
+      // console.
+      let unique_vals = new Set(values.reduce((acc, val) => acc.concat(val), []));
+
+      return (Array.from(unique_vals.values()))
     }
 
-    return '#ffffff';
+    // if tanimoto exists, add it to the displayed properties.
+    let tm_scores = get_unique_values(this.testData, 'tanimoto_score');
+    if (tm_scores.some(el => el !== null)) {
+      this.displayedColumns.push('tanimoto')
+    }
+
+    // append assay name
+    this.assays = get_unique_values(this.testData, 'assay_types').sort();
+    this.displayedColumns = this.displayedColumns.concat(this.assays);
   }
 
   // TODO:

@@ -107,7 +107,8 @@ import {
   LoaderStateService,
   LoginStateService,
   SearchResultService,
-  WDQService
+  WDQService,
+  TanimotoScaleService
 } from './_services/index';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -248,6 +249,7 @@ export class MaterialModule {}
     { provide: SearchResultService, useClass: SearchResultService },
     { provide: GraphDataService, useClass: GraphDataService },
     { provide: WDQService, useClass: WDQService },
+    { provide: TanimotoScaleService, useClass: TanimotoScaleService },
     // { provide: InteractionTableDataService, useClass: InteractionTableDataService },
     { provide: CIDService, useClass: CIDService},
     { provide: AuthService, useClass: AuthService},

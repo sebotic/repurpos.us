@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { SimilarityData } from '../../_models/index';
 
-import * as Chroma from 'chroma-js';
+import { TanimotoScaleService } from '../../_services/index';
 
 
 @Component({
@@ -13,33 +13,28 @@ import * as Chroma from 'chroma-js';
 
 export class SimilarCompoundsComponent implements OnInit {
   @Input() similarityResults: Array<SimilarityData>;
+  @Input() results_per_page: number;
 
   similarityData: Array<SimilarityData> = [];
 
-  tanimotoScale = Chroma.scale(['#ffffff', '#ffb6b0', '#f36664', '#c3152e']).mode('lab');
+  tanimotoScale: any; // color scale for tanimoto scores
 
-  results_per_page: number = 4;
-  num_results: number = this.results_per_page;
+  num_results: number; // current number of results displayed
 
 
-  constructor() { }
+  constructor(private tanimotoSvc: TanimotoScaleService) {
+    this.tanimotoScale = tanimotoSvc.getScale();
+  }
 
   ngOnInit() {
+    this.num_results = this.results_per_page;
     this.prepSimilarityData();
   }
 
   prepSimilarityData(){
-
     this.similarityData = this.similarityResults;
     this.similarityData = this.similarityData.sort((a:any, b:any) => b.tanimoto - a.tanimoto);
 
-  }
-
-  getFontColor(background_color: any) {
-    if (Chroma.contrast(background_color, '#212529') > 4.5) {
-      return '#212529';
-    }
-    return '#ffffff';
   }
 
   showMore() {
