@@ -44,8 +44,8 @@
       <!-- Related compounds -->
       <div class="row-fluid related" *ngIf="similarityData.length > 0">
         <b>Similar compounds: </b>
-        <span *ngFor="let related of similarityData | slice: 0:5; let i=index;"><a href="/#{{related.name}}">{{related.name}}</a><span *ngIf="i + 1 < similarityData.length" class='data-separator'></span></span>
-        <span *ngIf="similarityData.length > 5"><a href="/#similar">more</a></span>
+        <span *ngFor="let related of similarityData | slice: 0:results_per_page; let i=index;"><a (click)="onAnchorClick(related.url)">{{related.name}}</a><span *ngIf="i + 1 < similarityData.length" class='data-separator'></span></span>
+        <span *ngIf="similarityData.length > results_per_page"><a (click)="onAnchorClick('more')">more</a></span>
       </div>
 
 

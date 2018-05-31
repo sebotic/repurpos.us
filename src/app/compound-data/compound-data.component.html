@@ -1,6 +1,8 @@
 <div class="container-fluid clearfix">
 
-  <app-compound-header [label]='label' [integrityData]='integrityData' [chemVendors]='chemVendors' [idData]='idData' [aliases]='aliases' [similarityData]='similarityResults'></app-compound-header>
+  <app-compound-header [label]='label' [integrityData]='integrityData' [chemVendors]='chemVendors' [idData]='idData'
+  [aliases]='aliases' [results_per_page] ='num_similar_per_page' [similarityData]='similarityResults'></app-compound-header>
+
 
 
   <div class="row-fluid">
@@ -39,7 +41,7 @@
   <div class="clearfix">
   </div>
 
-  <app-similar-compounds [similarityResults]='similarityResults'></app-similar-compounds>
+  <app-similar-compounds [similarityResults]='similarityResults' [results_per_page] ='num_similar_per_page'></app-similar-compounds>
 
 </div>
 
