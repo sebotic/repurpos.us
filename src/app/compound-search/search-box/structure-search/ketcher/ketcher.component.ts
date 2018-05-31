@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 
@@ -14,8 +14,6 @@ import { StructureService } from '../../../../_services/index';
 export class KetcherComponent implements OnInit {
   structQuery: string;
   iframe: any;
-
-  @Output() structEmitter = new EventEmitter<string>();
 
   testMol: string =
     [
