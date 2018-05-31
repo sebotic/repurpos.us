@@ -14,10 +14,5 @@ export class StructureSearchComponent implements OnInit {
   ngOnInit() {
   }
 
-  sendStructure(struct_smiles: string) {
-    console.log('heard')
-    this.structureQuery = struct_smiles;
-    console.log(this.structureQuery)
-  }
 
 }
