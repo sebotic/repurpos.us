@@ -2,6 +2,4 @@
 <app-structure-search-options [structure_query] = "structureQuery"></app-structure-search-options>
 
 <!-- Ketcher-based structure drawing input -->
-<div class="ketcher">
-
-</div>
+<app-ketcher (structEmitter)="sendStructure($event)"></app-ketcher>

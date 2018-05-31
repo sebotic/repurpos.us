@@ -1,0 +1,14 @@
+.ketcher {
+  width: 80%;
+  padding: 0px;
+  margin: auto;
+}
+
+.ketcher-iframe {
+  width:100%;
+
+  border-style: none;
+  min-width: 500px;
+  min-height: 500px;
+  /* style="min-width:910px;min-height:510px;width:100%;border-style:none"  from ketcher*/
+}

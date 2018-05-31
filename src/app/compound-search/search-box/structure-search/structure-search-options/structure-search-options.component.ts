@@ -1,5 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { Subscription } from 'rxjs';
+import { StructureService } from '../../../../_services/index';
 
 @Component({
   selector: 'app-structure-search-options',
@@ -8,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class StructureSearchOptionsComponent implements OnInit {
   @Input() structure_query: string;
+  structureSubscription: Subscription;
 
   // initial options + placeholders to save from user input
   searchMode: string = 'exact';
@@ -21,12 +25,27 @@ export class StructureSearchOptionsComponent implements OnInit {
 
 
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private structSvc: StructureService) {
+
+    // look for pass back of the structure SMILES string
+    this.structureSubscription = structSvc.structureAnnounced$.subscribe(
+      struct => {
+        this.structure_query = struct;
+      });
+
+  }
 
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.structureSubscription.unsubscribe();
+  }
+
   onSubmit() {
+    console.log('calling svc')
+    this.structSvc.announceSubmit(true);
+
     console.log('input structure:')
     console.log(this.structure_query);
 

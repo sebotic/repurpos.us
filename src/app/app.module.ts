@@ -108,6 +108,7 @@ import {
   LoginStateService,
   SearchResultService,
   WDQService,
+  StructureService,
   TanimotoScaleService
 } from './_services/index';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
@@ -121,6 +122,7 @@ import { CompoundWikidataIdsComponent } from './compound-data/compound-wikidata-
 import { StructureSearchOptionsComponent } from './compound-search/search-box/structure-search/structure-search-options/structure-search-options.component';
 import { StructureSearchComponent } from './compound-search/search-box/structure-search/structure-search.component';
 import { TextSearchComponent } from './compound-search/search-box/text-search/text-search.component';
+import { KetcherComponent } from './compound-search/search-box/structure-search/ketcher/ketcher.component';
 
 @NgModule({
   exports: [
@@ -218,7 +220,8 @@ export class MaterialModule {}
     CompoundWikidataIdsComponent,
     StructureSearchOptionsComponent,
     StructureSearchComponent,
-    TextSearchComponent
+    TextSearchComponent,
+    KetcherComponent
   ],
   imports: [
     BrowserModule,
@@ -250,6 +253,7 @@ export class MaterialModule {}
     { provide: GraphDataService, useClass: GraphDataService },
     { provide: WDQService, useClass: WDQService },
     { provide: TanimotoScaleService, useClass: TanimotoScaleService },
+    { provide: StructureService, useClass: StructureService },
     // { provide: InteractionTableDataService, useClass: InteractionTableDataService },
     { provide: CIDService, useClass: CIDService},
     { provide: AuthService, useClass: AuthService},
