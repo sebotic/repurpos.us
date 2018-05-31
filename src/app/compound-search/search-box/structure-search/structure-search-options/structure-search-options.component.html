@@ -10,7 +10,7 @@
   </mat-radio-group>
 
   <!-- Add Tanimoto slider if searching for similar compounds -->
-  <div id="tanimoto" *ngIf="searchMode === 'tanimoto'">
+  <div id="tanimoto" *ngIf="searchMode === 'similarity'">
     <div class="slider-label">
       Tanimoto threshold: {{ tanimotoThresh | number: '1.2-2'}}
     </div>
@@ -23,6 +23,10 @@
 
   </div>
 
-   <button mat-raised-button color="accent" class="pull-right">search</button>
+  <button mat-icon-button class='search search-btn'>
+  <mat-icon aria-label="search" color="accent" (click)="onSubmit()">search</mat-icon>
+</button>
+
+   <!-- <button mat-raised-button color="accent" class="pull-right">search</button> -->
 
 </div>

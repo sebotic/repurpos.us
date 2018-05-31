@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./quick-search.component.css']
 })
 export class QuickSearchComponent implements OnInit {
-	query: string;
+  query: string;
 
   constructor(private router: Router) { }
 
@@ -15,8 +15,14 @@ export class QuickSearchComponent implements OnInit {
   }
 
   onEnter() {
-  	console.log(this.router.url);
-  	this.router.navigate([''], {queryParams: {query: this.query}});
+    // console.log(this.router.url);
+    this.router.navigate([''], {
+      queryParams:
+        {
+          query: this.query,
+          type: 'string'
+        }
+    });
   }
 
 }

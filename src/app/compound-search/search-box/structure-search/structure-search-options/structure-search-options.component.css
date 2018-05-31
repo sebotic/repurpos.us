@@ -28,3 +28,11 @@
 #tanimoto-slider {
   width: 200px;
 }
+
+
+.search-btn {
+  margin-left: 10px;
+  background: #fc54574f;
+  border-radius: 15%;
+  display: inline-block;
+}
