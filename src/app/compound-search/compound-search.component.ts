@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { $ } from "protractor"; // needed by cytoscape.js
+// import { $ } from "protractor"; // needed by cytoscape.js
 
 import { SearchResult } from '../_models/index';
 import { SearchResultService, WDQService } from '../_services/index';
@@ -21,7 +21,3 @@ export class CompoundSearchComponent {
     this.results = results;
   }
 }
-
-
-
-

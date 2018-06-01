@@ -47,7 +47,7 @@ export class CompoundDataComponent implements OnInit {
     'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115'];
 
   idData: Array<Object> = [];
-  assayData: Array<Object> = [];
+  assayData: any = [];
   gvkData: Object = [];
   informaData: Object = [];
   integrityData: Object = [];
@@ -557,7 +557,7 @@ export class CompoundDataComponent implements OnInit {
         // }
         // console.log(this.tableData);
 
-        this.graphData = this.prepareGraphData();
+        // this.graphData = this.prepareGraphData();
         // this.interactionTableDataService.announceNewCompoundData(this.tableData);
       });
   }

@@ -16,15 +16,13 @@ export class StructureService {
   submitPressed$ = this.submitPressedSource.asObservable();
 
   // Service message commands
+  // Announce that structure has been set
   announceStructure(structure: string) {
-  console.log('within svc, setting struct')
-  console.log(structure)
     this.structureAnnouncedSource.next(structure);
   }
 
+  // anncounce that submit button has been pressed
   announceSubmit(pressed: boolean) {
-    console.log('getting pressed from announceSubmit()')
-    console.log(pressed)
     this.submitPressedSource.next(pressed);
   }
 
