@@ -38,15 +38,7 @@ export class SearchResultsTableComponent implements OnInit {
 
   // TODO: get the list of all the possible assays
   assays: string[];
-  // = ['HEK293T 72-h cytotoxicity assay',
-  //  'HepG2 72-h cytotoxicity assay',
-  //  'HEK293T Cytotoxicity 72H Assay',
-  //  'Crypto-C. parvum HCI proliferation assay - Sterling Lab',
-  //  'Crypto-C. parvum HCI proliferation assay - Bunch Grass Farm',
-  //  'Crypto-HCT-8 Host Cells - Sterling Lab C. parvum',
-  //  'Crypto-HCT-8 Host Cells - Bunch Grass Farm C. parvum'];
-  displayedColumns = ['name', 'id', 'qid', 'reframe'];
-  // .concat(this.assays);
+  displayedColumns = ['name', 'id', 'qid', 'reframe']; // minimal set of columns to include
   dataSource = new MatTableDataSource<Compound>();
 
   testData: Compound[] = [
@@ -95,7 +87,8 @@ export class SearchResultsTableComponent implements OnInit {
     // get search results
     this.searchResultService.newSearchResult$.subscribe(
       result => {
-        // this.sdata = result;
+        this.sdata = result;
+        console.log(this.sdata.data)
         // this.dataSource.data = this.prepareViewData(this.sdata.data);
         this.dataSource.data = this.testData;
       });
@@ -109,7 +102,7 @@ export class SearchResultsTableComponent implements OnInit {
     this.getColumns();
     this.dataSource.sort = this.sort;
     console.log(this.dataSource.data)
-    // in conjunction with the result input, this would work as a data provider for th table at component initialization
+    // in conjunction with the result input, this would work as a data provider for the table at component initialization
     // this.dataSource.data = this.prepareViewData(this.result.data);
   }
 

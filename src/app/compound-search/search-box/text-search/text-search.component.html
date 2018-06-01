@@ -16,7 +16,7 @@
     <h6>example queries</h6>
     <div class="ex-query" *ngFor="let example of examples">
       <a [routerLink]="['/']" [queryParams]="{ query: example.query, type: example.type }">
-        {{example.description}}</a>
+        <span class="ex-type">{{example.label}}</span>: {{example.description}}</a>
     </div>
   </div>
 

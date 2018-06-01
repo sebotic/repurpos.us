@@ -43,11 +43,8 @@ export class StructureSearchOptionsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('calling svc')
+    // tell ketcher that submit button has been pressed, so it can send back the SMILES structure
     this.structSvc.announceSubmit(true);
-
-    console.log('input structure:')
-    console.log(this.structure_query);
 
     let query = {
       query: this.structure_query,

@@ -10,10 +10,10 @@ export class TextSearchComponent implements OnInit {
   @Input() searchQuery: string;
 
   examples: Array<any> = [
-    { 'type': 'string', 'query': 'imatinib%20mesylate', 'description': 'drug search: imatinib mesylate' },
-    { 'type': 'string', 'query': 'KKYABQBFGDZVNQ-UHFFFAOYSA-N', 'description': 'InChI key search: KKYABQBFGDZVNQ-UHFFFAOYSA-N' },
-    { 'type': 'string', 'query': 'kinase', 'description': 'class search: kinases' },
-    { 'type': 'string', 'query': 'malaria', 'description': 'class search: malaria' }
+    { 'type': 'string', 'query': 'imatinib%20mesylate', 'label': 'drug search', 'description': 'imatinib mesylate' },
+    { 'type': 'string', 'query': 'KKYABQBFGDZVNQ-UHFFFAOYSA-N', 'label': 'InChI key search', 'description': 'KKYABQBFGDZVNQ-UHFFFAOYSA-N' },
+    { 'type': 'string', 'query': 'kinase', 'label': 'class search', 'description': 'kinases' },
+    { 'type': 'string', 'query': 'malaria', 'label': 'class search', 'description': 'malaria' }
   ]
 
   constructor(private router: Router) { }

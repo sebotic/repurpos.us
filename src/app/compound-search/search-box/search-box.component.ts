@@ -46,6 +46,7 @@ export class SearchBoxComponent implements OnInit {
 
   // when changing between tabs, reset (delete) the search parameters
   resetInput(event) {
+  this.searchQuery = '';
     // console.log(event)
     let search_type: string;
 

@@ -32,6 +32,16 @@ h6 {
     /* display: inline-block; */
 }
 
+.ex-type {
+  text-decoration: underline;
+}
+
+/* .ex-type::after {
+  content: ": ";
+  display: inline-block;
+  text-decoration: none;
+} */
+
 .ex-query {
   font-size: 0.85em;
 }

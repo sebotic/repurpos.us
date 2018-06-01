@@ -13,7 +13,7 @@ import { StructureService } from '../../../../_services/index';
 
 export class KetcherComponent implements OnInit {
   structQuery: string;
-  iframe: any;
+  iframe: any; // holder for ketcher HTML
 
   testMol: string =
     [
@@ -80,6 +80,35 @@ export class KetcherComponent implements OnInit {
       "  8 10  1  0  0  0  0",
       "M  END"
     ].join("\n");
+
+    imatinib_core: string = [
+"      ",
+"  Ketcher  5311816552D 1   1.00000     0.00000     0",
+"",
+"  7  7  0     0  0            999 V2000",
+"    3.3251   -4.4001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
+"    4.1911   -4.9001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
+"    4.1911   -5.9001    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0",
+"    3.3251   -6.4001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
+"    2.4590   -5.9001    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0",
+"    2.4590   -4.9001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
+"    5.0571   -4.4001    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0",
+"  1  2  1  0     0  0",
+"  2  3  2  0     0  0",
+"  3  4  1  0     0  0",
+"  4  5  2  0     0  0",
+"  5  6  1  0     0  0",
+"  6  1  2  0     0  0",
+"  2  7  1  0     0  0",
+"M  END"
+    ].join("\n");
+    // from eyeballing some kinase inhibitors; molfile from ketcher
+
+  examples: Array<any> = [
+    { 'type': 'structure', 'smiles': this.acetaminophen, 'mode': 'exact', 'query': 'C1=C(C=CC(O)=C1)NC(=O)C', 'label': 'exact search', 'description': 'acetaminophen (Tylenol)' },
+    { 'type': 'structure', 'smiles': this.imatinib_core, 'mode': 'similarity', 'tanimoto': 0.85, 'query': 'C1=CN=CN=C1N', 'label': 'similarity search', 'description': 'kinase inhibitor backbone' }
+  ]
+
 
   submitSubscription: Subscription;
 
