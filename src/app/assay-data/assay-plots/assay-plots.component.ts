@@ -64,9 +64,9 @@ export class AssayPlotsComponent implements OnInit {
   }
 
   // tell page number to reset.
-onAssayChanged2(newAssayType: string): void {
+  onAssayChanged2(newAssayType: string): void {
     this.onAssayChangedComp.resetPage();
-}
+  }
 
   // Event listener for tooltip
   showTooltip(tooltip_data: any): void {
@@ -93,9 +93,9 @@ onAssayChanged2(newAssayType: string): void {
   filterData() {
     this.filteredData = this.assayData.filter(d => d.assay_type == this.currentAssay)
       .filter(
-      (d, i) =>
-        i < this.numPerPage * (this.currentPage + 1) &&
-        i >= this.numPerPage * this.currentPage
+        (d, i) =>
+          i < this.numPerPage * (this.currentPage + 1) &&
+          i >= this.numPerPage * this.currentPage
       );
   }
 
@@ -104,50 +104,52 @@ onAssayChanged2(newAssayType: string): void {
   }
 
   retrieveAssayList(): void {
-    this.http2.get(environment.host_url + '/assaydata_plot', {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json')
-        .set('Authorization', localStorage.getItem('auth_token')),
-      params: new HttpParams()
-        .set('aid', this.aid)
-    }).subscribe((r) => {
-      // assign data to assayData object
-      let v = r.body;
-      this.assayData = v;
-      console.log(this.assayData)
+    if (this.loggedIn) {
+      this.http2.get(environment.host_url + '/assaydata_plot', {
+        observe: 'response',
+        headers: new HttpHeaders()
+          .set('Accept', 'application/json')
+          .set('Authorization', localStorage.getItem('auth_token')),
+        params: new HttpParams()
+          .set('aid', this.aid)
+      }).subscribe((r) => {
+        // assign data to assayData object
+        let v = r.body;
+        this.assayData = v;
+        // console.log(this.assayData)
 
-      // Pull out the limits for the *entire* dataset
-      let assayValues = this.assayData.map(function(d) { return d.ac50; });
-      this.assayDomain = [Math.max(...assayValues), Math.min(...assayValues)];
+        // Pull out the limits for the *entire* dataset
+        let assayValues = this.assayData.map(function(d) { return d.ac50; });
+        this.assayDomain = [Math.max(...assayValues), Math.min(...assayValues)];
 
-      // Find the largest number of assay data types
-      let ic_count = this.count_types(this.assayData, 'IC');
-      let ec_count = this.count_types(this.assayData, 'EC');
+        // Find the largest number of assay data types
+        let ic_count = this.count_types(this.assayData, 'IC');
+        let ec_count = this.count_types(this.assayData, 'EC');
 
-      if (ic_count > ec_count) {
-        this.assayTypes[0] = 'IC';
+        if (ic_count > ec_count) {
+          this.assayTypes[0] = 'IC';
 
-        if (ec_count > 0) {
-          this.assayTypes[1] = 'EC';
+          if (ec_count > 0) {
+            this.assayTypes[1] = 'EC';
+          }
+        } else {
+          this.assayTypes[0] = 'EC';
+          if (ic_count > 0) {
+            this.assayTypes[1] = 'IC';
+          }
         }
-      } else {
-        this.assayTypes[0] = 'EC';
-        if (ic_count > 0) {
-          this.assayTypes[1] = 'IC';
+        // set current assay: default == largest number
+        if (!this.currentAssay) {
+          this.currentAssay = this.assayTypes[0];
         }
-      }
-      // set current assay: default == largest number
-      if (!this.currentAssay) {
-        this.currentAssay = this.assayTypes[0];
-      }
 
-      this.filterData();
+        this.filterData();
 
-    },
-      error => console.log('error in call to get assay data', error)
+      },
+        error => console.log('error in call to get assay data', error)
 
       );
+    }
   }
 
   // <<< count_types(array, type) >>>
