@@ -1,0 +1,58 @@
+.alias, .cmpd-source, .related  {
+  padding-bottom: 3px;
+  font-size: 0.75em;
+}
+
+.chem-source {
+  font-size: 0.75em;
+  opacity: 0.65;
+  padding-left: 15px;
+  margin-top: 50px;
+}
+
+
+.chem-props{
+  margin-bottom: 6px;
+}
+
+.title {
+  text-transform: uppercase;
+  font-weight: 300;
+  opacity: 0.6;
+  font-size: 0.85em;
+}
+
+.wikidata:first-of-type{
+  font-size: 1.25em;
+}
+.wikidata:first-of-type .title {
+  display: none;
+}
+
+.cmpd-header {
+  margin-top: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #212529;
+  overflow: hidden;
+}
+
+#cmpd-names td{
+  vertical-align: top;
+}
+
+
+#cmpd-names td {
+  /* white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap; */
+    border: none;
+    word-break: normal;
+}
+
+
+
+a {
+  cursor: pointer;
+}

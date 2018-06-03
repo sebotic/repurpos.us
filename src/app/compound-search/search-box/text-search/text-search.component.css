@@ -1,0 +1,47 @@
+/* Search input box */
+input, .input-group .form-control {
+  /* margin-top: 36px; */
+  font-size: 1.5em;
+  min-width: 375px !important;
+  max-width: 500px !important;
+  width: 33% !important;
+  height: 1.5em;
+}
+
+.search {
+  display: inline-block;
+  /* width: 100%; */
+  margin-top: 36px;
+}
+
+.examples {
+  margin-left: 125px;
+  margin-top: 0px;
+}
+
+h6 {
+  margin-bottom: 0;
+}
+
+.search-btn {
+  margin-left: 10px;
+  background: #fc54574f;
+  border-radius: 15%;
+  margin-top: 33px;
+  position: absolute;
+    /* display: inline-block; */
+}
+
+.ex-type {
+  text-decoration: underline;
+}
+
+/* .ex-type::after {
+  content: ": ";
+  display: inline-block;
+  text-decoration: none;
+} */
+
+.ex-query {
+  font-size: 0.85em;
+}

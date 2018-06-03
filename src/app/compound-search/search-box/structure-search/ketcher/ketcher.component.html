@@ -1,0 +1,16 @@
+<!-- Example searches -->
+  <div class="search examples">
+    <h6>example queries</h6>
+    <div class="ex-query" *ngFor="let example of examples">
+      <a [routerLink]="['/']" (click) = "setMol(example.smiles)"
+      [queryParams]="{ query: example.query, type: example.type, mode: example.mode, tanimoto: example.tanimoto }">
+      <!-- <a -->
+        <span class="ex-type">{{example.label}}</span>: {{example.description}}</a>
+    </div>
+  </div>
+
+
+<div class="ketcher">
+    <iframe id="ketcherFrame" name="ketcherFrame" class="ketcher-iframe" [src]="iframe" scrolling="no"></iframe>
+    <!-- <iframe onload="loadMol()" id="ketcherFrame" name="ketcherFrame" style="min-width:910px;min-height:510px;width:100%;border-style:none" src="ketcher.html?ketcher_maximize" scrolling="no"></iframe> -->
+</div>

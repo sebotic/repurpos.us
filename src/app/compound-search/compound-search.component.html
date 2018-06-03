@@ -2,15 +2,14 @@
 
   <div class="row">
 
-    <div class="col-md-2" hidden><!-- GitHub Issue # 9 -->
-
+    <div class="col-md-2" hidden>
+      <!-- GitHub Issue # 9 -->
       <app-compound-search-options></app-compound-search-options>
     </div>
+    
     <div class="input-group input-group-lg col-md-9">
 
-      <search-box class="search"
-        (results)="updateResults($event)"
-      ></search-box>
+      <search-box class="search" (results)="updateResults($event)"></search-box>
 
       <div class='container'></div>
       <div class="row">
@@ -19,9 +18,7 @@
           style="float: left;"
           *ngIf="loading"
           src={{loadingGif}} />-->
-        <search-result
-          *ngFor="let result of results"
-          [result]="result">
+        <search-result *ngFor="let result of results" [result]="result">
         </search-result>
       </div>
     </div>

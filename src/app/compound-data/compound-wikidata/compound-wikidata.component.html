@@ -1,0 +1,22 @@
+<div id="wikidata">
+  <H3>Wikidata data</H3>
+  <table class="table cmpd-table">
+
+    <tr *ngFor="let x of table_data">
+      <ng-container *ngIf="x['property'] != 'InChI' && x['property'] != 'InChIKey' && x['property'] != 'canonical SMILES'">
+        <td class="title" scope="row">{{ x['property'] }}</td>
+        <td scope="row"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}}
+      <!-- <span *ngIf="!x['showMore']"></span> -->
+          <span *ngIf="i + 1 < x['values'].length" class='data-separator'></span>
+          <!-- <span *ngIf="x['showMore']">
+            <app-show-more-button [qid]="x['qids'][i]" [pid]="x['pid']" [mainQID]="qid"></app-show-more-button>
+
+          </span> -->
+          </span>
+          <!--<app-edit-item></app-edit-item>-->
+        </td>
+      </ng-container>
+    </tr>
+
+  </table>
+</div>

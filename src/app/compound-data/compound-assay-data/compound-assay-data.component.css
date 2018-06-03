@@ -1,0 +1,37 @@
+.title-plus-btn {
+  display: inline-block;
+}
+
+.pull-right {
+  margin-top: 15px;
+}
+
+
+.title {
+  text-transform: uppercase;
+  font-weight: 300;
+  opacity: 0.6;
+  font-size: 0.85em;
+}
+
+.assay-name{
+  width: 50%;
+}
+
+table#cmpd-names, table.cmpd-table, .cmpd-table {
+  width: 100%;
+  table-layout: fixed;
+  border:none;
+  margin-bottom: 50px;
+}
+
+.cmpd-table>tbody, th {
+  /* border-top: #21252990 1px solid; */
+  border-bottom: #21252990 1px solid;
+}
+
+
+td {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}

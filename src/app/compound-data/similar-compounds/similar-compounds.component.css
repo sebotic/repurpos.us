@@ -1,0 +1,109 @@
+/* Reset link to other pages */
+.similar-cmpds>a {
+  color: #212529;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.similar-title {
+  border-top: 10px #21252930 solid;
+  padding-top: 15px;
+  margin-bottom: 10px;
+  margin-top: 35px;
+}
+
+h4 {
+  margin-top: 0;
+}
+
+h5 {
+  font-size: 1.25em;
+  /* font-weight: 300; */
+  color: #21252955;
+  text-transform: uppercase;
+}
+
+/* Related compounds -- outer container */
+.similar-cmpds {
+  border: #21252955 solid 1px;
+  border-radius: 5px;
+  padding: 10px;
+  overflow: hidden;
+  margin-bottom: 25px;
+  /* border-top: 1px solid #212529; */
+}
+
+/* Tanimoto score */
+
+.similar-tanimoto {
+  padding: 5px;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  /* border-top: #212529 solid 1px;
+  border-bottom: #212529 solid 1px; */
+  margin-bottom: 10px;
+}
+
+.stereo-free {
+  color: #21252999;
+  text-align: right;
+}
+
+.material-icons {
+  font-size: 0.75em;
+}
+
+/* Binary buttons if available */
+
+.avail-table {
+  width: 100%;
+}
+
+td {
+  padding-bottom: 10px;
+  text-align: right;
+  vertical-align: baseline;
+  padding-right: 5px;
+}
+
+.circle {
+  height: 15px;
+  width: 15px;
+  border: #212529 solid 1px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+  font-size: 0;
+}
+
+.available {
+  background-color: #ff8884;
+  /* fc5457; */
+}
+
+.assay-avail {
+  background-color: #21252945;
+}
+
+.not-available {
+  background-color: none;
+}
+
+/* Clearfix */
+@mixin clearfix() {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+.element {
+  @include clearfix;
+}
+
+#hidden {
+  opacity: 0;
+}

@@ -6,3 +6,5 @@ export * from './loader-state.service';
 export * from './login-state.service';
 export * from './search-results.service';
 export * from './WDQ.service';
+export * from './tanimoto-scale.service';
+export * from './structure.service';

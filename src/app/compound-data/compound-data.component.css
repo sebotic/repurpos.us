@@ -1,137 +1,29 @@
-tr td sup {
-  vertical-align: super;
-  font-size: xx-small;
-  color: #7a94fc;
-}
-
-tr td sup.red {
-  vertical-align: super;
-  font-size: xx-small;
-  color: #fc0f21;
-}
-
-tr td span.reference {
-  vertical-align: super;
-  font-size: xx-small;
-  color: #08940d;
-}
-
-tr td.nobreak {
-  width: 75%;
-  word-break: normal;
-}
-
-td {
-    padding-left: 6px;
-    padding-right: 6px;
-}
-
 h1 {
   display: inline-block;
   margin-bottom: 0;
   margin-top: 0;
 }
 
-div.footnote {
-  font-size: small;
-}
-
-
-.alias {
-  padding-bottom: 3px;
-  font-size: 0.75em;
-}
-
-.chem-source {
-  font-size: 0.75em;
-  opacity: 0.65;
-  padding-left: 15px;
-  margin-top: 50px;
-}
-
-
-.chem-props{
-  margin-bottom: 6px;
-}
-
-.title {
-  text-transform: uppercase;
-  font-weight: 300;
-  opacity: 0.6;
-  font-size: 0.85em;
-}
-
-.wikidata:first-of-type{
-  font-size: 1.25em;
-}
-.wikidata:first-of-type .title {
-  display: none;
-}
-
-.cmpd-header {
-  margin-top: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #212529;
-  overflow: hidden;
-}
-
-#cmpd-names td{
-  vertical-align: top;
-}
-
-/* table#cmpd-names, table.cmpd-table {
-  table-layout: auto;
-  width: 100%;
-  border: none;
-} */
-
-#cmpd-names td {
-  /* white-space: -o-pre-wrap;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    white-space: -moz-pre-wrap;
-    white-space: -pre-wrap; */
-    border: none;
-    word-break: normal;
-}
-
-table#cmpd-names, table.cmpd-table, .cmpd-table {
-  width: 100%;
-  table-layout: fixed;
-  border:none;
-}
-
-
-.cmpd-table td {
-  border-top: 1px solid #21252945;
-  border-bottom: 1px solid #21252945;
-  word-break: normal;
-}
-
-.data-separator:after {
-  content: "\2022";
-  color: #21252975;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-
-.assay-name{
-  width: 33%;
-}
 
 a {
   cursor: pointer;
 }
 
 
-.smiles {
-  word-break: break-all !important;
-}
-
-.title-plus-btn {
-  display: inline-block;
-}
 
 .pull-right {
   margin-top: 15px;
+}
+
+/* Clearfix */
+@mixin clearfix() {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+.element {
+  @include clearfix;
 }

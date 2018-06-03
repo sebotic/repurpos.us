@@ -1,12 +1,13 @@
 import { Component, OnInit, ElementRef, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
+import { switchMap } from 'rxjs/operators';
 
 import { SearchResult } from '../../_models/index';
 import { WDQService } from '../../_services/WDQ.service';
 
 @Component({
-	outputs: ['results'],
+  outputs: ['results'],
   selector: 'search-box',
   templateUrl: './search-box.component.html',
   styleUrls: ['./search-box.component.css']
@@ -15,15 +16,21 @@ export class SearchBoxComponent implements OnInit {
   results: EventEmitter<SearchResult[]> = new EventEmitter<SearchResult[]>();
   searchQuery: string = '';
 
+  // Change if the order of the search tabs change.
+  textSearch_tabIdx: number = 0;
+  structSearch_tabIdx: number = 1;
+  selectedTab: number = this.textSearch_tabIdx;
+
   constructor(public wd: WDQService,
-              private el: ElementRef,
-              private route: ActivatedRoute,
-              private router: Router) {
+    // private el: ElementRef,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.queryParams
       .subscribe(params => {
-        if (params['query']){
+        if (params['query']) {
           this.searchQuery = params['query'];
-          
+
           this.wd.searchFullText(this.searchQuery.toUpperCase(), ``)
             .subscribe(
               (results: SearchResult[]) => {
@@ -37,30 +44,59 @@ export class SearchBoxComponent implements OnInit {
       });
   }
 
+  // when changing between tabs, reset (delete) the search parameters
+  resetInput(event) {
+  this.searchQuery = '';
+    // console.log(event)
+    let search_type: string;
+
+    // make sure the tab is set to the correct search mode.
+    if (event.index === this.textSearch_tabIdx) {
+      search_type = "string";
+    } else if (event.index === this.structSearch_tabIdx) {
+      search_type = "structure"
+    }
+    // reset the route to the search or structure page, sans any input
+    this.router.navigate(['.'], { queryParams: { type: search_type } });
+  }
+
   ngOnInit(): void {
 
+    // Set the tab in the route to the correct
+    this.route.queryParams.subscribe(values => {
+      // console.log(values);
+      if (values.type === 'string') {
+        this.selectedTab = this.textSearch_tabIdx;
+      } else if (values.type === 'structure') {
+        this.selectedTab = this.structSearch_tabIdx;
+      }
+    });
 
-    Observable.fromEvent(this.el.nativeElement, 'keyup')
-      .map((e: any) => e.target.value) // extract the value of the input
-      .filter((text: string) => text.length > 2) // filter out if shorter than 2 chars
-      .debounceTime(500)  // only once every 500ms
-      .subscribe((query: string) => {
-        this.router.navigate(['.'], { queryParams: {query: query }});
-      });
-      // .map((query: string) => this.wd.searchFullText(query ,``))
-      // .switch()
-      // // act on the return of the search
-      // .subscribe(
-      //   (results: SearchResult[]) => { // on sucesss
-      //     this.results.next(results);
-      //     console.log(results);
-      //   },
-      //   (err: any) => { // on error
-      //     console.log(err);
-      //   },
-      //   () => { // on completion
-      //   }
-      // );
+
+    // functioning code as of 30 May 2018; based on auto-launching searchQuery
+    // Observable.fromEvent(this.el.nativeElement, 'keyup')
+    //   .map((e: any) => e.target.value) // extract the value of the input
+    //   .filter((text: string) => text.length > 2) // filter out if shorter than 2 chars
+    //   .debounceTime(500)  // only once every 500ms
+    //   .subscribe((query: string) => {
+    //     this.router.navigate(['.'], { queryParams: { query: query } });
+    //   });
+    // --- end working code ---
+
+    // .map((query: string) => this.wd.searchFullText(query ,``))
+    // .switch()
+    // // act on the return of the search
+    // .subscribe(
+    //   (results: SearchResult[]) => { // on sucesss
+    //     this.results.next(results);
+    //     console.log(results);
+    //   },
+    //   (err: any) => { // on error
+    //     console.log(err);
+    //   },
+    //   () => { // on completion
+    //   }
+    // );
 
   }
 }

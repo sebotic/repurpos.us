@@ -1,0 +1,21 @@
+/* // Reset bootstrap */
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  border: none;
+}
+
+.cmpd-table>tbody{
+  border-top: #21252990 1px solid;
+  border-bottom: #21252990 1px solid;
+}
+
+
+td {
+  padding: 1px;
+}
+
+table#cmpd-names, table.cmpd-table, .cmpd-table {
+  width: 100%;
+  table-layout: fixed;
+  border:none;
+  margin-bottom: 50px;
+}

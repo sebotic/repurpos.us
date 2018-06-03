@@ -1,0 +1,63 @@
+<!-- Back button -->
+<div class="row-fluid pull-right">
+  <a (click)="backClick()">
+    << return to search</a>
+</div>
+
+<!-- HEADER: name, aliases -->
+<div class="cmpd-header">
+  <div class="row-fluid">
+
+    <!-- Drug Name -->
+    <div id="cmpd-names" class="col-md-4 col-sm-6 col-xs-12">
+      <div class="row-fluid cmpd-name" *ngIf="idData.length > 0; else vendor_names;">
+        <h1>{{ label }}</h1>
+      </div>
+
+      <ng-template #vendor_names>
+        <div class="row-fluid cmpd-name" *ngIf="integrityData.length > 0">
+          <h1>{{ integrityData[0]['drug_name'] }}</h1>
+        </div>
+      </ng-template>
+
+      <div class="row-fluid cmpd-source" *ngIf="chemVendors.length > 0">
+        available via <span *ngFor="let vendor of chemVendors; let i = index;">
+          {{ vendor['chem_vendor'] }} ({{ vendor['chem_vendor_id'] }})
+          <span class='data-separator' *ngIf="i + 1 < chemVendors.length"></span></span>
+      </div>
+    </div>
+
+    <!-- WHO Name -->
+    <div id="cmpd-names" class="col-md-8 col-sm-6 col-xs-12">
+      <div class="row-fluid who-name" *ngFor="let x of idData">
+        <span *ngIf="x['property'] == 'World Health Organisation International Nonproprietary Name'">
+          <b>{{x['property'] + ': ' }}</b><span *ngFor="let ii of x['values']">{{ ii }}</span></span>
+      </div>
+
+      <!-- Aliases -->
+      <div class="row-fluid alias">
+        <b>Aliases: </b>
+        <span *ngFor="let alias of aliases; let i=index;">{{alias}}<span *ngIf="i + 1 < aliases.length" class='data-separator'></span></span>
+      </div>
+
+
+      <!-- Related compounds -->
+      <div class="row-fluid related" *ngIf="similarityData.length > 0">
+        <b>Similar compounds: </b>
+        <span *ngFor="let related of similarityData | slice: 0:results_per_page; let i=index;"><a (click)="onAnchorClick(related.url)">{{related.name}}</a><span *ngIf="i + 1 < similarityData.length" class='data-separator'></span></span>
+        <span *ngIf="similarityData.length > results_per_page"><a (click)="onAnchorClick('more')">more</a></span>
+      </div>
+
+
+
+
+      <!-- Reframe ID -->
+      <!-- <div class="row-fluid alias" *ngIf="reframeID">
+        <b>ReFRAME ID: </b>{{reframeID}}
+      </div> -->
+
+
+    </div>
+  </div>
+
+</div>

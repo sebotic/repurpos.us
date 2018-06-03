@@ -91,7 +91,7 @@ export class NglComponent implements OnInit {
   }
 
   getSelection(){
-    return this.hasHydrogens ? "not #h and " + this.modelSele : this.modelSele;
+    return this.hasHydrogens ? "not _h and " + this.modelSele : this.modelSele;
   }
 
   hasNaNCoords( structure, sele ){

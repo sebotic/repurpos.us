@@ -1,0 +1,61 @@
+<div *ngIf="similarityData.length > 0" class="clearfix">
+
+  <h3 class="similar-title" id="similar">Similar molecules</h3>
+
+
+  <div class="similar-grp">
+    <div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let related of similarityData; let i=index">
+      <div class="similar-cmpds" *ngIf="i < num_results" id="{{related.url}}">
+        <a routerLink="/compound_data/{{related.url}}" target="_blank">
+          <!-- Compound name -->
+          <div class="similar-label">
+            <h4>{{ related.name }}</h4>
+          </div>
+
+          <!-- Tanimoto score -->
+          <div class="similar-tanimoto" [ngStyle]="{'background-color': tanimotoScale(related.tanimoto, 0.4), 'border-top-color': tanimotoScale(related.tanimoto), 'border-bottom-color': tanimotoScale(related.tanimoto)}">
+            Tanimoto Similarity Score: {{ related.tanimoto }}
+
+            <div *ngIf="related.match_type =='stereo-free'" class="stereo-free"><i class="material-icons">grade</i> stereo-free exact structure match</div>
+          </div>
+
+          <div class="similar-content">
+            <!-- <div> -->
+            <!-- 2D Chemical structure -->
+            <div class="col-sm-6 col-xs-12 similar-struct">
+              <ng-container *ngIf="related.pubchem_id">
+                <img src="../assets/struct_img/{{related.pubchem_id.replace('CID', '')}}.png" class="img-responsive" alt="structure {{related.name}}">
+              </ng-container>
+              <!-- this.imgURL = "../assets/struct_img/" + this.data.pubchem_id.replace("CID", "") + ".png"; -->
+            </div>
+
+            <!-- List of available data -->
+            <div class="col-sm-6 col-xs-12 similar-avail">
+              <h5 class="pull-right">Available data</h5>
+              <table class="avail-table">
+                <tr *ngFor="let property of related.properties">
+                  <td matTooltip="{{property.tooltip}}" matTooltipPosition="left">
+                    {{property.name}}
+                  </td>
+                  <td [ngClass]="property.value ? 'circle available' : 'circle not-available'">
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <!-- end of available data -->
+
+          </div>
+          <!-- end of structure + available data -->
+        </a>
+      </div>
+      <!-- end of ngIf -->
+      <div class="clearfix" id="hidden" *ngIf="!((i+1) % 4)">.</div>
+    </div>
+    <!-- end of for loop over similar compounds -->
+    <div class="clearfix"></div>
+
+    <!-- Button to load more results -->
+    <button *ngIf="num_results < similarityData.length" id="more" (click)="showMore()" class="center-block">show more</button>
+  </div>
+
+</div>

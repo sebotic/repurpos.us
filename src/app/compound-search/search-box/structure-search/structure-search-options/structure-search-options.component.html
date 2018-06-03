@@ -1,0 +1,32 @@
+<div class="search-opts">
+  <!-- Label: search -->
+  <span class="search-label">search options</span>
+
+  <!-- Loop over search options to create radio buttons -->
+  <mat-radio-group [(ngModel)]="searchMode">
+    <mat-radio-button class="search-opt" *ngFor="let opt of searchOptions" [value]="opt.id" matTooltip="{{opt.tooltip}}">
+      {{opt.label}}
+    </mat-radio-button>
+  </mat-radio-group>
+
+  <!-- Add Tanimoto slider if searching for similar compounds -->
+  <div id="tanimoto" *ngIf="searchMode === 'similarity'">
+    <div class="slider-label">
+      Tanimoto threshold: {{ tanimotoThresh | number: '1.2-2'}}
+    </div>
+
+    <div class="slider">
+      <span class="slider-limit">0</span>
+      <mat-slider id="tanimoto-slider" min="0" max="1" step="0.05" [(ngModel)]="tanimotoThresh" thumbLabel></mat-slider>
+      <span class="slider-limit">1</span>
+    </div>
+
+  </div>
+
+  <button mat-icon-button class='search search-btn'>
+  <mat-icon aria-label="search" color="accent" (click)="onSubmit()">search</mat-icon>
+</button>
+
+   <!-- <button mat-raised-button color="accent" class="pull-right">search</button> -->
+
+</div>

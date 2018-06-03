@@ -1,10 +1,12 @@
 /*@import './app/vendor/semantic.min.css';*/
 
+/* Angular material themes */
 /*@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';*/
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
-/*@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';*/
-/*@import '~@angular/material/prebuilt-themes/purple-green.css';*/
+/* @import '~@angular/material/prebuilt-themes/indigo-pink.css'; */
+/* @import '~@angular/material/prebuilt-themes/pink-bluegrey.css'; */
+/* @import '~@angular/material/prebuilt-themes/purple-green.css'; */
 /*@import 'https://fonts.googleapis.com/icon?family=Material+Icons';*/
+
 
 /*.ui.menu .item img.logo {*/
   /*margin-right: 1.5em;*/
@@ -104,12 +106,16 @@ a:hover{
   color: #fd5457;
 }
 
-/* Search input box */
-.search input {
-  margin-top: 36px;
-  font-size: 1.5em;
-  min-width: 200px;
-  max-width: 500px;
-  width: 33%;
-  height: 1.5em;
+
+
+/* • separator */
+.data-separator:after {
+  content: "\2022";
+  color: #21252975;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.smiles {
+  word-break: break-all !important;
 }

@@ -1,0 +1,77 @@
+<h4>Chemical data (Wikidata)</h4>
+<ng-container *ngIf="table_data.length > 0; else vendor_cheminfo">
+  <!-- Chemical formula, InChIKey, SMILES -->
+  <div class="chem-props alias wikidata" *ngFor="let x of table_data">
+    <span *ngIf="x['property'] == 'chemical formula' || x['property'] == 'InChI' || x['property'] == 'InChIKey' || x['property'] == 'canonical SMILES' || x['property'] == 'isomeric SMILES'">
+  <div class="title" scope="row">{{ x['property'] }}</div>
+  <div scope="row" [ngClass]="{'smiles': x['property'] == 'canonical SMILES' || x['property'] == 'isomeric SMILES'}">
+    <span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">
+      {{z}}
+    </span>
+  </div>
+  </span>
+  </div>
+
+  <!-- Add in additional ID references -->
+  <div class="chem-ids alias">
+    <div class="col-xs-6" id="left">
+
+
+      <div class="title" scope="row">Wikidata</div>
+      <div scope="row">
+        <a href="{{'http://www.wikidata.org/entity/' + qid}}">{{qid}}</a>
+      </div>
+
+      <span *ngFor="let x of idData; let i=index">
+  <ng-container *ngIf="i < idData.length/2">
+  <div class="title" scope="row">{{x['property']}}</div>
+
+  <div scope="row">
+  <span *ngFor="let ii of x['values']">{{ ii }}</span>
+    </div>
+</ng-container>
+</span>
+</div>
+
+<span *ngFor="let x of idData; let i=index">
+  <div class="col-xs-6" id="right" *ngIf="i >= idData.length/2">
+  <div class="title" scope="row">{{x['property']}}</div>
+
+  <div scope="row">
+  <span *ngFor="let ii of x['values']">{{ ii }}</span>
+</div>
+</div>
+</span>
+
+
+</div>
+
+</ng-container>
+
+<!-- If no wikidata data are available, use the information from the vendors -->
+<ng-template #vendor_cheminfo>
+
+  <div class="chem-props alias" *ngIf="gvkData.length > 0">
+    <div class="title" scope="row">SMILES (<a href="/#/about/#gvk" target="_blank">GVK Excelra GoStar</a>)</div>
+    <div scope="row" class="smiles">
+      {{ gvkData[0]['smiles']}}
+    </div>
+  </div>
+
+  <div class="chem-props alias" *ngIf="informaData.length > 0">
+    <div class="title" scope="row">
+      SMILES (<a href="/#/about/#informa" target="_blank">Citeline Pharmaprojects</a>)</div>
+    <div scope="row" class="smiles">
+      {{informaData[0]['smiles']}}
+    </div>
+  </div>
+
+  <div class="chem-props alias" *ngIf="integrityData.length > 0">
+    <div class="title" scope="row">SMILES (<a href="/#/about/#integrity" target="_blank">Clarivate Integrity</a>)</div>
+    <div scope="row" class="smiles">
+      {{integrityData[0]['smiles']}}
+    </div>
+  </div>
+
+
+</ng-template>

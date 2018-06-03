@@ -1,4 +1,5 @@
 /* Structure */
+
 .search-result-container {
   display: flex;
   flex-direction: column;
@@ -8,7 +9,7 @@
   margin-left: 24px;
 }
 
-.mat-table{
+.mat-table {
   font-family: "Lato", Arial, sans-serif;
 }
 
@@ -24,11 +25,12 @@ mat-row:first-of-type {
   border: none;
 }
 
-.search-result-container mat-header-cell {
-  opacity: 0.6;
-  text-transform: uppercase;
-  font-size: 1.15em;
-  font-weight: 300;
+.search-result-container mat-header-cell, .search-result-container mat-sort-header-button {
+  opacity: 0.9;
+  /* text-transform: uppercase; */
+  text-align: center;
+  font-size: 0.75em;
+  font-weight: 400;
   border: none;
 }
 
@@ -65,12 +67,45 @@ mat-row:first-of-type {
 }
 
 /* Column Widths */
-.mat-column-number,
-.mat-column-state {
+
+.mat-column-number, .mat-column-state {
   max-width: 64px;
 }
 
-
 .mat-column-created {
   max-width: 124px;
+}
+
+mat-cell.mat-cell.cdk-column-tanimoto.mat-column-tanimoto.ng-star-inserted {
+  text-align: center;
+}
+
+/* Radio buttons if data exist */
+.circle {
+  height: 15px;
+  width: 15px;
+  border: #212529 solid 1px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+  font-size: 0;
+}
+
+.cmpd-avail {
+  background-color: #ff8884;
+  /* fc5457; */
+}
+
+.assay-avail {
+  background-color: #21252945;
+}
+
+.no-assay {
+  background-color: none;
+}
+
+/* Message if no data sound */
+.no-results {
+  margin-left: 25px;
+  font-size: 1.5em;
 }

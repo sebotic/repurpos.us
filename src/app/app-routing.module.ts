@@ -13,6 +13,7 @@ import { environment } from '../environments/environment';
 
 const appRoutes: Routes = [
   { path: '', component: CompoundSearchComponent, pathMatch: 'full' },
+  { path: 'search', component: CompoundSearchComponent, pathMatch: 'full' },
   { path: 'about', component: AboutComponent, pathMatch: 'full' },
   { path: 'assays', component: AssaysComponent, pathMatch: 'full' },
   { path: 'assays/:aid', component: AssayDataComponent, pathMatch: 'full' },

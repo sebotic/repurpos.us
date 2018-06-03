@@ -1,4 +1,63 @@
-<div class="search-result-container mat-elevation-z0">
+<div class="search-result-container mat-elevation-z0" *ngIf="dataSource.data.length > 0; else no_data">
+  <mat-table #table matSort [dataSource]="dataSource">
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element['main_label']}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element['id']}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="qid">
+      <mat-header-cell *matHeaderCellDef> Wikidata ID </mat-header-cell>
+      <mat-cell *matCellDef="let element"><a href="http://www.wikidata.org/entity/{{element['qid']}}" target="_blank">{{element['qid'].split('/').pop()}}</a></mat-cell>
+    </ng-container>
+
+    <!-- File Statuses Column -->
+    <span *ngFor="let assay of assays; let i=index">
+<ng-container matColumnDef="{{ assay }}">
+  <mat-header-cell *matHeaderCellDef class="assay-label"> {{ assay }} </mat-header-cell>
+  <mat-cell *matCellDef="let element">
+    <span [ngClass]="element['assay_types'].indexOf(assay) > -1 ? 'circle assay-avail' : 'circle no-assay'"></span>
+    </mat-cell>
+    </ng-container>
+    </span>
+
+    <ng-container matColumnDef="reframe">
+      <mat-header-cell *matHeaderCellDef>Screening Collection</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span [ngClass]="element['reframeid'] ? 'circle cmpd-avail' : 'circle no-assay'"></span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="tanimoto">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Tanimoto Similarity Score </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngStyle]="{'background-color': tanimotoScale(element['tanimoto_score']),
+    'color': getFontColor(element['tanimoto_score'])}">
+        {{element['tanimoto_score']}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns; let element;" (click)="rowClicked($event, element['qid'])"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+</div>
+
+
+<!-- Display "nothing found" if no data -->
+<ng-template #no_data>
+  <div class="no-results">
+    No results found
+  </div>
+</ng-template>
+
+<!-- Original table design, heavy on compound ids -->
+<!-- <div class="search-result-container mat-elevation-z0">
   <mat-table #table [dataSource]="dataSource">
 
     <ng-container matColumnDef="name">
@@ -34,4 +93,4 @@
                  [pageSize]="10"
                  [pageSizeOptions]="[5, 10, 20]">
   </mat-paginator>
-</div>
+</div> -->

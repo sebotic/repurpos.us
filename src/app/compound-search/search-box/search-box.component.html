@@ -1,1 +1,14 @@
-<input type="text" class="form-control" placeholder="Search: <Enter Drug Name or InChI key>" autofocus [(ngModel)]="searchQuery">
+<mat-tab-group [(selectedIndex)]="selectedTab" (selectedTabChange)="resetInput($event)">
+
+  <!-- Text-based search -->
+  <mat-tab label="text search">
+    <app-text-search [searchQuery]="searchQuery"></app-text-search>
+  </mat-tab>
+
+
+  <!-- Structure-based search -->
+  <mat-tab label="structure search">
+    <app-structure-search></app-structure-search>
+  </mat-tab>
+
+</mat-tab-group>

@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import 'hammerjs';
+
 
 // import { DataTableModule, DataTable, DataTableResource } from 'angular-2-data-table';
 // import { DataTableModule, DataTable, DataTableResource } from './table/index';
@@ -48,16 +50,16 @@ import {
   MatPaginatorModule,
   // MatProgressBarModule,
   MatProgressSpinnerModule,
-  // MatRadioModule,
+  MatRadioModule,
   // MatRippleModule,
   MatSelectModule,
   // MatSidenavModule,
-  // MatSliderModule,
-  // MatSlideToggleModule,
+  MatSliderModule,
+  MatSlideToggleModule,
   // MatSnackBarModule,
-  // MatSortModule,
+  MatSortModule,
   MatTableModule,
-  // MatTabsModule,
+  MatTabsModule,
   // MatToolbarModule,
   MatTooltipModule,
   // MatStepperModule,
@@ -77,7 +79,7 @@ import {
   CmpdTooltipComponent
 } from './assay-data/index';
 
-import { 
+import {
   AssayDwnldComponent,
   AssayTypeBtnComponent,
   ForgotPassButtonComponent,
@@ -105,10 +107,22 @@ import {
   LoaderStateService,
   LoginStateService,
   SearchResultService,
-  WDQService
+  WDQService,
+  StructureService,
+  TanimotoScaleService
 } from './_services/index';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { CompoundHeaderComponent } from './compound-data/compound-header/compound-header.component';
+import { SimilarCompoundsComponent } from './compound-data/similar-compounds/similar-compounds.component';
+import { CompoundAssayDataComponent } from './compound-data/compound-assay-data/compound-assay-data.component';
+import { CompoundVendorDataComponent } from './compound-data/compound-vendor-data/compound-vendor-data.component';
+import { CompoundWikidataComponent } from './compound-data/compound-wikidata/compound-wikidata.component';
+import { CompoundWikidataIdsComponent } from './compound-data/compound-wikidata-ids/compound-wikidata-ids.component';
+import { StructureSearchOptionsComponent } from './compound-search/search-box/structure-search/structure-search-options/structure-search-options.component';
+import { StructureSearchComponent } from './compound-search/search-box/structure-search/structure-search.component';
+import { TextSearchComponent } from './compound-search/search-box/text-search/text-search.component';
+import { KetcherComponent } from './compound-search/search-box/structure-search/ketcher/ketcher.component';
 
 @NgModule({
   exports: [
@@ -132,17 +146,16 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     MatPaginatorModule,
     // MatProgressBarModule,
     MatProgressSpinnerModule,
-    // MatRadioModule,
+    MatRadioModule,
     // MatRippleModule,
     MatSelectModule,
     // MatSidenavModule,
-    // MatSliderModule,
-    // MatSlideToggleModule,
+    MatSliderModule,
+    MatSlideToggleModule,
     // MatSnackBarModule,
-    // MatSortModule,
+    MatSortModule,
     MatTableModule,
-
-    // MatTabsModule,
+    MatTabsModule,
     // MatToolbarModule,
     MatTooltipModule,
   ],
@@ -198,7 +211,17 @@ export class MaterialModule {}
     LoaderComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    QuickSearchComponent
+    QuickSearchComponent,
+    CompoundHeaderComponent,
+    SimilarCompoundsComponent,
+    CompoundAssayDataComponent,
+    CompoundVendorDataComponent,
+    CompoundWikidataComponent,
+    CompoundWikidataIdsComponent,
+    StructureSearchOptionsComponent,
+    StructureSearchComponent,
+    TextSearchComponent,
+    KetcherComponent
   ],
   imports: [
     BrowserModule,
@@ -229,6 +252,8 @@ export class MaterialModule {}
     { provide: SearchResultService, useClass: SearchResultService },
     { provide: GraphDataService, useClass: GraphDataService },
     { provide: WDQService, useClass: WDQService },
+    { provide: TanimotoScaleService, useClass: TanimotoScaleService },
+    { provide: StructureService, useClass: StructureService },
     // { provide: InteractionTableDataService, useClass: InteractionTableDataService },
     { provide: CIDService, useClass: CIDService},
     { provide: AuthService, useClass: AuthService},

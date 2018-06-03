@@ -1,0 +1,24 @@
+<div class="search">
+  <!-- <input type="text" placeholder="search"/>
+  <button>send</button>
+  < -->
+  <!-- Search bar -->
+  <input type="text" class="search form-control" placeholder="search" autofocus [(ngModel)]="searchQuery" (keyup.enter)="onSubmit()">
+
+  <button mat-icon-button class='search-btn'>
+  <mat-icon aria-label="search" color="accent" (click)="onSubmit()">search</mat-icon>
+</button>
+
+
+
+<!-- Example searches -->
+  <div class="search examples">
+    <h6>example queries</h6>
+    <div class="ex-query" *ngFor="let example of examples">
+      <a [routerLink]="['/']" [queryParams]="{ query: example.query, type: example.type }">
+        <span class="ex-type">{{example.label}}</span>: {{example.description}}</a>
+    </div>
+  </div>
+
+  <!-- <button mat-raised-button color="accent" class="pull-right">search</button> -->
+</div>
