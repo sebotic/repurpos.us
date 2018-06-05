@@ -31,6 +31,10 @@ export class CompoundHeaderComponent implements OnInit {
     }
   }
 
+  backClick() {
+
+  }
+
   ngOnInit() {
   }
 

@@ -30,9 +30,27 @@
 }
 
 
+/*.search-btn {*/
+  /*margin-left: 10px;*/
+  /*background: #fc54574f;*/
+  /*border-radius: 15%;*/
+  /*display: inline-block;*/
+/*}*/
+
+
 .search-btn {
   margin-left: 10px;
   background: #fc54574f;
   border-radius: 15%;
+  margin-top: 10px;
+  position: absolute;
+  margin-bottom: 10px;
+  /* display: inline-block; */
+}
+
+.search {
   display: inline-block;
+  /* width: 100%; */
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

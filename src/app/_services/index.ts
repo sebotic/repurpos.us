@@ -8,3 +8,4 @@ export * from './search-results.service';
 export * from './WDQ.service';
 export * from './tanimoto-scale.service';
 export * from './structure.service';
+export * from './backendsearch.service'

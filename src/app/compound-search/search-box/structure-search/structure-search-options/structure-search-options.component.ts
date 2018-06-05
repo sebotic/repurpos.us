@@ -11,6 +11,7 @@ import { StructureService } from '../../../../_services/index';
 })
 export class StructureSearchOptionsComponent implements OnInit {
   @Input() structure_query: string;
+  @Input() searchQuery: string;
   structureSubscription: Subscription;
 
   // initial options + placeholders to save from user input
@@ -45,6 +46,10 @@ export class StructureSearchOptionsComponent implements OnInit {
   onSubmit() {
     // tell ketcher that submit button has been pressed, so it can send back the SMILES structure
     this.structSvc.announceSubmit(true);
+
+    if (!this.structure_query && this.searchQuery) {
+      this.structure_query = this.searchQuery;
+    }
 
     let query = {
       query: this.structure_query,

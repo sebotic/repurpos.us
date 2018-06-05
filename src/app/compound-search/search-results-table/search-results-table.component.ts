@@ -88,9 +88,11 @@ export class SearchResultsTableComponent implements OnInit {
     this.searchResultService.newSearchResult$.subscribe(
       result => {
         this.sdata = result;
-        console.log(this.sdata.data)
+        console.log(this.sdata.data);
         // this.dataSource.data = this.prepareViewData(this.sdata.data);
-        this.dataSource.data = this.testData;
+        this.dataSource.data = this.sdata.data['body']['results'];
+        this.getColumns();
+        this.dataSource.sort = this.sort;
       });
 
       // get tanimoto color function
@@ -99,9 +101,9 @@ export class SearchResultsTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getColumns();
-    this.dataSource.sort = this.sort;
-    console.log(this.dataSource.data)
+    // this.getColumns();
+    // this.dataSource.sort = this.sort;
+    // console.log(this.dataSource.data)
     // in conjunction with the result input, this would work as a data provider for the table at component initialization
     // this.dataSource.data = this.prepareViewData(this.result.data);
   }
@@ -129,16 +131,16 @@ export class SearchResultsTableComponent implements OnInit {
       let unique_vals = new Set(values.reduce((acc, val) => acc.concat(val), []));
 
       return (Array.from(unique_vals.values()))
-    }
+    };
 
     // if tanimoto exists, add it to the displayed properties.
-    let tm_scores = get_unique_values(this.testData, 'tanimoto_score');
+    let tm_scores = get_unique_values(this.dataSource.data, 'tanimoto_score');
     if (tm_scores.some(el => el !== null)) {
       this.displayedColumns.push('tanimoto')
     }
 
     // append assay name
-    this.assays = get_unique_values(this.testData, 'assay_types').sort();
+    this.assays = get_unique_values(this.dataSource.data, 'assay_types').sort();
     this.displayedColumns = this.displayedColumns.concat(this.assays);
   }
 

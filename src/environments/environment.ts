@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  host_url: 'http://localhost:5000',
+  host_url: 'http://localhost:8000',
   googleAnalyticsKey: ''
 };

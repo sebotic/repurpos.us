@@ -3,10 +3,10 @@
   <button>send</button>
   < -->
   <!-- Search bar -->
-  <input type="text" class="search form-control" placeholder="search" autofocus [(ngModel)]="searchQuery" (keyup.enter)="onSubmit()">
+  <input type="text" class="search form-control" placeholder="search" autofocus [(ngModel)]="searchQuery" (keyup.enter)="onSubmit()" >
 
-  <button mat-icon-button class='search-btn'>
-  <mat-icon aria-label="search" color="accent" (click)="onSubmit()">search</mat-icon>
+  <button mat-icon-button class='search-btn' (click)="onSubmit()">
+  <mat-icon aria-label="search" color="accent" >search</mat-icon>
 </button>
 
 

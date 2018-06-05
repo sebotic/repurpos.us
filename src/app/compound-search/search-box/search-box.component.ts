@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import { switchMap } from 'rxjs/operators';
 
 import { SearchResult } from '../../_models/index';
-import { WDQService } from '../../_services/WDQ.service';
+import { WDQService, BackendSearchService } from '../../_services/index';
 
 @Component({
   outputs: ['results'],
@@ -21,17 +21,17 @@ export class SearchBoxComponent implements OnInit {
   structSearch_tabIdx: number = 1;
   selectedTab: number = this.textSearch_tabIdx;
 
-  constructor(public wd: WDQService,
+  constructor(public wd: BackendSearchService,
     // private el: ElementRef,
     private route: ActivatedRoute,
     private router: Router
   ) {
     this.route.queryParams
       .subscribe(params => {
-        if (params['query']) {
+        if (params['query'] && 'type' in params && params['type'] === 'string') {
           this.searchQuery = params['query'];
 
-          this.wd.searchFullText(this.searchQuery.toUpperCase(), ``)
+          this.wd.search(this.searchQuery)
             .subscribe(
               (results: SearchResult[]) => {
                 this.results.next(results);
@@ -41,7 +41,52 @@ export class SearchBoxComponent implements OnInit {
               }
             );
         }
+
+        if (params['query'] && 'tanimoto' in params) {
+          this.searchQuery = params['query'];
+
+          this.wd.searchSimilarity(this.searchQuery, params['tanimoto'])
+            .subscribe(
+              (results: SearchResult[]) => {
+                this.results.next(results);
+              },
+              (err: any) => {
+                console.log(err);
+              }
+            );
+        }
+
+        if (params['query'] && 'type' in params && params['type'] === 'structure' && params['mode'] === 'exact') {
+          this.searchQuery = params['query'];
+
+          this.wd.searchStructExact(this.searchQuery, 'exact')
+            .subscribe(
+              (results: SearchResult[]) => {
+                this.results.next(results);
+              },
+              (err: any) => {
+                console.log(err);
+              }
+            );
+        } else if (params['query'] && 'type' in params && params['type'] === 'structure' && params['mode'] === 'stereofree') {
+          this.searchQuery = params['query'];
+
+          this.wd.searchStructExact(this.searchQuery, 'exact')
+            .subscribe(
+              (results: SearchResult[]) => {
+                this.results.next(results);
+              },
+              (err: any) => {
+                console.log(err);
+              }
+            );
+        }
+
+
+
       });
+
+
   }
 
   // when changing between tabs, reset (delete) the search parameters

@@ -22,7 +22,7 @@ export class TextSearchComponent implements OnInit {
   }
 
   onSubmit() {
-    this.router.navigate(['search/'], {
+    this.router.navigate(['search'], {
       queryParams:
         { query: this.searchQuery,
           type: 'string'}

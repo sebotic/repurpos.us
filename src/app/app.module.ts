@@ -20,8 +20,8 @@ import { AppComponent } from './app.component';
 import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy} from "@angular/common";
 import { CompoundSearchComponent, CompoundSearchOptionsComponent, SearchBoxComponent, SearchResultComponent, SearchResultsTableComponent } from './compound-search/index';
 
-import {cytoscape} from 'cytoscape';
-import {NgCytoscape} from "./compound-search/ng2-cytoscape";
+// import {cytoscape} from 'cytoscape';
+// import {NgCytoscape} from "./compound-search/ng2-cytoscape";
 import { CompoundDataComponent } from './compound-data/compound-data.component';
 import { NglComponent } from './compound-data/ngl/ngl.component';
 // import {InteractionTableComponent, InteractionTableDataService} from './compound-data/interaction-table/interaction-table.component';
@@ -109,7 +109,8 @@ import {
   SearchResultService,
   WDQService,
   StructureService,
-  TanimotoScaleService
+  TanimotoScaleService,
+  BackendSearchService
 } from './_services/index';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -173,7 +174,7 @@ export class MaterialModule {}
     CompoundSearchComponent,
     SearchResultComponent,
     SearchBoxComponent,
-    NgCytoscape,
+    // NgCytoscape,
     IndicationsGraphComponent,
     CompoundDataComponent,
     ConfirmEmailComponent,
@@ -254,6 +255,7 @@ export class MaterialModule {}
     { provide: WDQService, useClass: WDQService },
     { provide: TanimotoScaleService, useClass: TanimotoScaleService },
     { provide: StructureService, useClass: StructureService },
+    { provide: BackendSearchService, useClass: BackendSearchService},
     // { provide: InteractionTableDataService, useClass: InteractionTableDataService },
     { provide: CIDService, useClass: CIDService},
     { provide: AuthService, useClass: AuthService},
