@@ -35,9 +35,9 @@
 
     <ng-container matColumnDef="tanimoto">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Tanimoto Similarity Score </mat-header-cell>
-      <mat-cell *matCellDef="let element" [ngStyle]="{'background-color': tanimotoScale(element['tanimoto_score']),
-    'color': getFontColor(element['tanimoto_score'])}">
-        {{element['tanimoto_score']}}</mat-cell>
+      <mat-cell *matCellDef="let element" [ngStyle]="{'background-color': tanimotoScale(element['tanimoto']),
+    'color': getFontColor(element['tanimoto'])}">
+        {{element['tanimoto']}}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
