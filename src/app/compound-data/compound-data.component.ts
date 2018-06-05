@@ -24,6 +24,7 @@ import { environment } from "../../environments/environment";
 })
 export class CompoundDataComponent implements OnInit {
   qid: string;
+  id: string;
   reframeID: string;
   results: Object;
   data: Object;
@@ -118,6 +119,8 @@ export class CompoundDataComponent implements OnInit {
   ) {
     route.params.subscribe(params => {
       this.qid = params['qid'];
+      this.id = params['id'];
+      console.log('the params:', params)
     });
   }
 
@@ -155,7 +158,9 @@ export class CompoundDataComponent implements OnInit {
         this.loggedIn = true; // TODO: revert
       }
 
-      this.buildData();
+      if (this.qid) {
+        this.buildData();
+      }
       // this.retrieveAssayData();
       // this.retrieveGVKData();
       this.retrieveData();
@@ -418,6 +423,27 @@ export class CompoundDataComponent implements OnInit {
 
   }
 
+  set_cid(): void {
+    for (let i of [this.gvkData[0], this.informaData[0], this.integrityData[0]]) {
+      if ('PubChem CID' in i && ! this.cid) {
+        this.cid = i['PubChem CID'].substring(3);
+        this.cidService.announceNewCID(this.cid);
+
+        break;
+      }
+    }
+
+
+  }
+
+  // if no cid exists, try to find one, announce it and trigger rendering of compound
+  set_label(label: string): void {
+    if (! this.label) {
+      this.label = label;
+      console.log('label set', this.label, label);
+    }
+  }
+
   retrieveData(): void {
     this.http2.get<VendorData>(environment.host_url + '/data', {
       observe: 'response',
@@ -426,9 +452,9 @@ export class CompoundDataComponent implements OnInit {
         .set('Accept', 'application/json'), // TODO: revert
       // .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
-        .set('qid', this.qid)
+        .set('qid', this.id)
     }).subscribe((r) => {
-      let b = r.body[this.qid];
+      let b = r.body[this.id];
       // console.log(b);
       this.reframeID = b.reframe_id;
       this.gvkData = [b.gvk];
@@ -436,10 +462,35 @@ export class CompoundDataComponent implements OnInit {
       this.integrityData = [b.integrity];
       this.assayData = b.assay;
 
+      this.set_cid();
 
-      // pull out the aliases if no Wikidata available
-      // TODO: add in a check if QID exists.
-      this.aliases = Array.from(new Set(this.aliases.concat(this.gvkData[0]['synonyms'].concat(this.gvkData[0]['drug_name']).concat(this.informaData[0]['drug_name']))));
+      // extract aliases an make sure label is set
+      let aliases = new Set();
+
+      for(let i in this.gvkData[0]['drug_name']) {
+        let name = this.gvkData[0]['drug_name'][i];
+        this.set_label(name);
+        aliases.add(name);
+      }
+
+      for(let i in this.gvkData[0]['synonyms']) {
+        aliases.add(this.gvkData[0]['synonyms'][i]);
+      }
+
+      for(let i in this.integrityData[0]['drug_name']) {
+        let name = this.integrityData[0]['drug_name'][i];
+        this.set_label(name);
+        aliases.add(name);
+      }
+
+      for(let i in this.informaData[0]['drug_name']) {
+        let name = this.informaData[0]['drug_name'][i];
+        this.set_label(name);
+        aliases.add(name);
+      }
+
+      this.aliases = Array.from(aliases);
+
 
       // Sort aliases by name (case-insensitive)
       this.aliases = this.aliases.sort(function(a: string, b: string) {

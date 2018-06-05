@@ -1,4 +1,4 @@
-<h4>Chemical data (Wikidata)</h4>
+<h4>Chemical data <span *ngIf="qid">(Wikidata)</span></h4>
 <ng-container *ngIf="table_data.length > 0; else vendor_cheminfo">
   <!-- Chemical formula, InChIKey, SMILES -->
   <div class="chem-props alias wikidata" *ngFor="let x of table_data">

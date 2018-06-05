@@ -17,7 +17,7 @@ const appRoutes: Routes = [
   { path: 'about', component: AboutComponent, pathMatch: 'full' },
   { path: 'assays', component: AssaysComponent, pathMatch: 'full' },
   { path: 'assays/:aid', component: AssayDataComponent, pathMatch: 'full' },
-  { path: 'compound_data/:qid', component: CompoundDataComponent, pathMatch: 'full' },
+  { path: 'compound_data/:id', component: CompoundDataComponent, pathMatch: 'full' },
   { path: 'confirm/:cid', component: ConfirmEmailComponent, pathMatch: 'full' },
   { path: 'reset_pass/:rid', component: ResetPasswordComponent, pathMatch: 'full' }
 ];

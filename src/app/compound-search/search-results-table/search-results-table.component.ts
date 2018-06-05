@@ -108,8 +108,8 @@ export class SearchResultsTableComponent implements OnInit {
     // this.dataSource.data = this.prepareViewData(this.result.data);
   }
 
-  rowClicked(event, qid) {
-    this.router.navigate([`compound_data/${qid.split('/').pop()}`]);
+  rowClicked(event, qid, id) {
+    this.router.navigate([`compound_data/${id.split('/').pop()}`,  {qid: qid.split('/').pop()}]);
   }
 
 

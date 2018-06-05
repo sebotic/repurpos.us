@@ -41,7 +41,7 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns; let element;" (click)="rowClicked($event, element['qid'])"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns; let element;" (click)="rowClicked($event, element['qid'], element['id'])"></mat-row>
   </mat-table>
 
   <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
