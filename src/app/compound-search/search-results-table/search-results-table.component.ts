@@ -134,8 +134,8 @@ export class SearchResultsTableComponent implements OnInit {
     };
 
     // if tanimoto exists, add it to the displayed properties.
-    let tm_scores = get_unique_values(this.dataSource.data, 'tanimoto_score');
-    if (tm_scores.some(el => el !== null)) {
+    let tm_scores = get_unique_values(this.dataSource.data, 'tanimoto');
+    if (tm_scores.some(el => el > 0)) {
       this.displayedColumns.push('tanimoto')
     }
 
