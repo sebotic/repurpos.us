@@ -1,3 +1,6 @@
+<div class="container">
+  <h3>Search results</h3>
+
 <div class="search-result-container mat-elevation-z0" *ngIf="dataSource.data.length > 0; else no_data">
   <mat-table #table matSort [dataSource]="dataSource">
 
@@ -37,7 +40,7 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header> Tanimoto Similarity Score </mat-header-cell>
       <mat-cell *matCellDef="let element" [ngStyle]="{'background-color': tanimotoScale(element['tanimoto']),
     'color': getFontColor(element['tanimoto'])}">
-        {{element['tanimoto']}}</mat-cell>
+        {{element['tanimoto'] | number: '1.2-2'}}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -55,6 +58,8 @@
     No results found
   </div>
 </ng-template>
+
+</div>
 
 <!-- Original table design, heavy on compound ids -->
 <!-- <div class="search-result-container mat-elevation-z0">
