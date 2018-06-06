@@ -11,10 +11,14 @@ import {map} from "rxjs/operators";
 export class BackendSearchService {
 
   constructor(public http: HttpClient) {
+    if (! localStorage.getItem('auth_token')){
+      localStorage.setItem('auth_token', '')
+    }
 
   }
 
   search(query: string): Observable<SearchResult[]> {
+
 
     return this.http.get(environment.host_url + '/search', {
       observe: 'response',
