@@ -1,63 +1,99 @@
 <div class="container">
   <h3>Search results</h3>
 
-<div class="search-result-container mat-elevation-z0" *ngIf="dataSource.data.length > 0; else no_data">
-  <mat-table #table matSort [dataSource]="dataSource">
+  <div class="search-result-container mat-elevation-z0" *ngIf="dataSource.data.length > 0; else no_data">
+    <mat-table #table matSort [dataSource]="dataSource">
 
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element['main_label']}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Name
+          <mat-icon class='sort-icon'>sort</mat-icon>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"><a [routerLink]="['compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]" target="_blank">{{element['main_label']}}</a></mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element['id']}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element['id']}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="qid">
+      <!-- <ng-container matColumnDef="qid">
       <mat-header-cell *matHeaderCellDef> Wikidata ID </mat-header-cell>
       <mat-cell *matCellDef="let element"><a href="http://www.wikidata.org/entity/{{element['qid']}}" target="_blank">{{element['qid'].split('/').pop()}}</a></mat-cell>
-    </ng-container>
+    </ng-container> -->
 
-    <!-- File Statuses Column -->
-    <span *ngFor="let assay of assays; let i=index">
+
+      <!-- In physical library -->
+      <ng-container matColumnDef="reframe">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Sample in Screening Library
+          <mat-icon class='sort-icon'>sort</mat-icon>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span [ngClass]="element['reframeid'] ? 'circle cmpd-avail' : 'circle no-assay'"></span>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Tanimoto score -->
+      <ng-container matColumnDef="tanimoto">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Tanimoto Similarity Score
+          <mat-icon class='sort-icon'>sort</mat-icon>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" [ngStyle]="{'background-color': tanimotoScale(element['tanimoto']),
+    'color': getFontColor(element['tanimoto'])}">
+          {{element['tanimoto'] | number: '1.2-2'}}</mat-cell>
+      </ng-container>
+
+      <!-- File Statuses Column: splayed out-->
+
+      <ng-container matColumnDef="assays">
+        <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header> assay hits
+          <mat-icon class='sort-icon'>sort</mat-icon>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <span class="circle" [ngStyle]="{'background-color': 'rgba(85, 98, 109,' + getColor(element.assay_types) + ')'}"></span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="assay_titles">
+        <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <ul class="assay-list">
+            <li class="assay-title" *ngFor="let assay of element.assay_types; let i=index">
+              <a [routerLink]="['assays', assay]" target="_blank">{{assay}}</a>
+              <span *ngIf="i + 1 < element.assay_types.length" class='data-separator'></span>
+            </li>
+          </ul>
+          <!-- <span [ngClass]="element['assay_types'].indexOf(assay) > -1 ? 'circle assay-avail' : 'circle no-assay'"></span> -->
+        </mat-cell>
+      </ng-container>
+
+      <!-- File Statuses Column: splayed out-->
+      <!-- <span *ngFor="let assay of assays; let i=index">
 <ng-container matColumnDef="{{ assay }}">
   <mat-header-cell *matHeaderCellDef class="assay-label"> {{ assay }} </mat-header-cell>
   <mat-cell *matCellDef="let element">
     <span [ngClass]="element['assay_types'].indexOf(assay) > -1 ? 'circle assay-avail' : 'circle no-assay'"></span>
-    </mat-cell>
-    </ng-container>
-    </span>
-
-    <ng-container matColumnDef="reframe">
-      <mat-header-cell *matHeaderCellDef>Screening Collection</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <span [ngClass]="element['reframeid'] ? 'circle cmpd-avail' : 'circle no-assay'"></span>
       </mat-cell>
-    </ng-container>
+      </ng-container>
+      </span> -->
 
-    <ng-container matColumnDef="tanimoto">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Tanimoto Similarity Score </mat-header-cell>
-      <mat-cell *matCellDef="let element" [ngStyle]="{'background-color': tanimotoScale(element['tanimoto']),
-    'color': getFontColor(element['tanimoto'])}">
-        {{element['tanimoto'] | number: '1.2-2'}}</mat-cell>
-    </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns; let element;"></mat-row>
+      <!-- Original routing, where row click directs to compound page -->
+      <!-- <mat-row *matRowDef="let row; columns: displayedColumns; let element;" (click)="rowClicked($event, element['qid'], element['id'])"></mat-row> -->
+    </mat-table>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns; let element;" (click)="rowClicked($event, element['qid'], element['id'])"></mat-row>
-  </mat-table>
-
-  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
-  </mat-paginator>
-</div>
-
-
-<!-- Display "nothing found" if no data -->
-<ng-template #no_data>
-  <div class="no-results">
-    No results found
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+    </mat-paginator>
   </div>
-</ng-template>
+
+
+  <!-- Display "nothing found" if no data -->
+  <ng-template #no_data>
+    <div class="no-results">
+      No results found
+    </div>
+  </ng-template>
 
 </div>
 

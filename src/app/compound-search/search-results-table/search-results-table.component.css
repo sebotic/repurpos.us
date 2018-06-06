@@ -60,6 +60,10 @@ mat-row:first-of-type {
   justify-content: center;
 }
 
+.sort-icon {
+  padding-left: 3px;
+}
+
 .search-result-rate-limit-reached {
   color: #980000;
   max-width: 360px;
@@ -70,6 +74,14 @@ mat-row:first-of-type {
 
 .mat-column-number, .mat-column-state {
   max-width: 64px;
+}
+
+.mat-column-assays {
+  flex: 0 0 30px;
+}
+
+.mat-column-assay_titles {
+  flex: 0 0 600px;
 }
 
 .mat-column-created {
@@ -95,6 +107,16 @@ mat-cell.mat-cell.cdk-column-tanimoto.mat-column-tanimoto.ng-star-inserted {
   background-color: #ff8884;
   /* fc5457; */
 }
+
+/* Assay lists */
+ul.assay-list {
+  list-style-type: none;
+}
+
+li.assay-title {
+  display: inline-block;
+}
+
 
 .assay-avail {
   background-color: #21252945;

@@ -36,9 +36,9 @@ export class SearchResultsTableComponent implements OnInit {
 
   sdata: SearchResult;
 
-  // TODO: get the list of all the possible assays
   assays: string[];
-  displayedColumns = ['name', 'id', 'qid', 'reframe']; // minimal set of columns to include
+  max_num_assays: number = 16;
+  displayedColumns = ['name', 'id', 'reframe']; // minimal set of columns to include
   dataSource = new MatTableDataSource<Compound>();
 
   testData: Compound[] = [
@@ -90,9 +90,12 @@ export class SearchResultsTableComponent implements OnInit {
         this.sdata = result;
         console.log(this.sdata.data);
         // this.dataSource.data = this.prepareViewData(this.sdata.data);
-        this.dataSource.data = this.sdata.data['body']['results'];
+        let results = this.sdata.data['body']['results'];
+        this.dataSource.data = this.sortResults(results);
+        console.log('this.dataSource.data')
+        console.log(this.dataSource.data)
         this.getColumns();
-        this.dataSource.sort = this.sort;
+
       });
 
       // get tanimoto color function
@@ -119,10 +122,48 @@ export class SearchResultsTableComponent implements OnInit {
    */
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    console.log(this.dataSource)
 
+    this.dataSource.sort = this.sort;
+    console.log(this.dataSource)
   }
 
-  // TODO: change to results
+  sortResults(results) {
+    // sequential sorting function
+    console.log('results')
+    console.log(results)
+
+    let sort_func = function (a,b) {
+      // sort first by tanimoto score, descending
+      if(a.tanimoto.toFixed(2) !== b.tanimoto.toFixed(2)) return b.tanimoto - a.tanimoto;
+      // sort next by # assay hits, descending
+      if(a.assay_types.length !== b.assay_types.length) return b.assay_types.length - a.assay_types.length;
+
+      // then by in screening library:
+      let a_rfm = a.reframeid !== ""; // true if compound exists
+      let b_rfm = b.reframeid !== "";
+      if(a_rfm !== b_rfm) return a_rfm < b_rfm;
+
+      // last resort: alpha sort by name, ascending
+      return(a.main_label.toLowerCase() > b.main_label.toLowerCase());
+    }
+    // sort first by
+    let sorted = results.sort(sort_func);
+    console.log('sorted')
+    console.log(results.sort(sort_func))
+    return(sorted);
+  }
+
+  getColor(assays) {
+    let min_alpha = 0.25;
+
+    if(assays.length === 0) {
+      return 0;
+    }
+    return (assays.length / this.max_num_assays) * (1 - min_alpha) + min_alpha;
+  }
+
+
   getColumns() {
     // pull out the variable names for each result, collapse to a list, and remove dupes
     let get_unique_values = function(arr: Array<any>, var_name: string): Array<any> {
@@ -141,13 +182,10 @@ export class SearchResultsTableComponent implements OnInit {
 
     // append assay name
     this.assays = get_unique_values(this.dataSource.data, 'assay_types').sort();
-    this.displayedColumns = this.displayedColumns.concat(this.assays);
+    this.displayedColumns = this.displayedColumns.concat('assays', 'assay_titles');
   }
 
-  // TODO:
-  // sort by TM Score
-  // pull out the Assays
-  // update displayed columns
+
   // prepareViewData(raw_json: Object): any {
   //   let compounds: Array<Compound> = [];
   //
