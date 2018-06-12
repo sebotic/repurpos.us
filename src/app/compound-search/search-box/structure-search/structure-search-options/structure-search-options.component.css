@@ -14,7 +14,6 @@
   text-transform: uppercase;
 }
 
-
 .search-label {
   text-transform: uppercase;
   padding-right: 45px;
@@ -25,18 +24,59 @@
   display: inline-block;
 }
 
+/* Tanimoto slider */
+
+/deep/ .slider-label {
+  font-family: "Lato", Arial, sans-serif;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  opacity: .4;
+  padding-top: 7px;
+  padding-left: 10px;
+  font-weight: 400;
+}
+
 #tanimoto-slider {
   width: 200px;
 }
 
+/* Reverse coloring of Tanimoto slider to highlight the results included */
+
+/* Highlight larger part of slider */
+
+/deep/ .mat-slider-track-background {
+  background-color: #fc5457;
+}
+
+/* de-highlight smaller part of slider */
+
+/deep/ .mat-accent .mat-slider-track-fill {
+  background-color: #21252945;
+}
+
+/* When change slider */
+
+/deep/ .mat-slider:hover .mat-slider-track-background, .cdk-focused .mat-slider-track-background {
+  background-color: #fc54576e;
+}
+
+/* When lose focus on slider, before clicking */
+
+/deep/ .mat-slider .mat-slider-track-background {
+  background-color: #fc5457ad;
+}
 
 /*.search-btn {*/
-  /*margin-left: 10px;*/
-  /*background: #fc54574f;*/
-  /*border-radius: 15%;*/
-  /*display: inline-block;*/
-/*}*/
 
+/*margin-left: 10px;*/
+
+/*background: #fc54574f;*/
+
+/*border-radius: 15%;*/
+
+/*display: inline-block;*/
+
+/*}*/
 
 .search-btn {
   margin-left: 10px;
