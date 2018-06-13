@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, Router, NavigationEnd } from '@angular/router';
 
-import { CompoundSearchComponent } from './compound-search/compound-search.component'
+import { IntroTextComponent } from './intro-text/intro-text.component';
+import { CompoundSearchComponent } from './compound-search/compound-search.component';
 import { CompoundDataComponent } from './compound-data/compound-data.component';
 import { AboutComponent } from './about/about.component';
 import { AssaysComponent } from './assays/assays.component';
@@ -12,7 +13,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { environment } from '../environments/environment';
 
 const appRoutes: Routes = [
-  { path: '', component: CompoundSearchComponent, pathMatch: 'full' },
+  { path: '', component: IntroTextComponent, pathMatch: 'full' },
   { path: 'search', component: CompoundSearchComponent, pathMatch: 'full' },
   { path: 'about', component: AboutComponent, pathMatch: 'full' },
   { path: 'assays', component: AssaysComponent, pathMatch: 'full' },
