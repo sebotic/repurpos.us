@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Injectable()
 
 export class StructureService {
 
-  // constructor() { }
+  constructor(private ngZone: NgZone) { }
 
   // Observable string sources
   private structureAnnouncedSource = new Subject<string>();
@@ -18,7 +18,7 @@ export class StructureService {
   // Service message commands
   // Announce that structure has been set
   announceStructure(structure: string) {
-    this.structureAnnouncedSource.next(structure);
+    this.ngZone.run(() => this.structureAnnouncedSource.next(structure));
   }
 
   // anncounce that submit button has been pressed
