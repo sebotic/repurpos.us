@@ -16,7 +16,7 @@ export class QuickSearchComponent implements OnInit {
 
   onEnter() {
     // console.log(this.router.url);
-    this.router.navigate([''], {
+    this.router.navigate(['search/'], {
       queryParams:
         {
           query: this.query,
