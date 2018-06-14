@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Location } from '@angular/common';
 // import { Router, ActivatedRoute } from '@angular/router';
 
 import { SimilarityData } from '../../_models';
@@ -17,6 +18,7 @@ export class CompoundHeaderComponent implements OnInit {
   @Input() integrityData: Object = [];
   @Input() results_per_page: number;
   @Input() similarityData: Array<SimilarityData>;
+  @Input() _location: Location;
 
 
   constructor() { }
@@ -32,7 +34,8 @@ export class CompoundHeaderComponent implements OnInit {
   }
 
   backClick() {
-
+    console.log('back')
+    this._location.back();
   }
 
   ngOnInit() {
