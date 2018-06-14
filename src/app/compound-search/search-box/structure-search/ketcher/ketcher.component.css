@@ -12,19 +12,3 @@
   min-height: 500px;
   /* style="min-width:910px;min-height:510px;width:100%;border-style:none"  from ketcher*/
 }
-
-h6 {
-  margin-bottom: 0;
-}
-
-.examples {
-  float: right;
-}
-
-.ex-type {
-  text-decoration: underline;
-}
-
-.ex-query {
-  font-size: 0.85em;
-}

@@ -1,3 +1,4 @@
+<h1>text: {{text_query}}</h1>
 <div class="search-opts">
   <!-- Label: search -->
   <span class="search-label">search options</span>
@@ -17,18 +18,17 @@
 
     <div class="slider">
       <span class="slider-limit">0</span>
-      <mat-slider id="tanimoto-slider" min="0" max="1" step="0.05" [(ngModel)]="tanimotoThresh" thumbLabel></mat-slider>
+      <mat-slider id="tanimoto-slider" min="0" max="1" step="0.05" (change)="submitQuery()" [(ngModel)]="tanimotoThresh" thumbLabel></mat-slider>
+      <!-- <mat-slider id="tanimoto-slider" min="0" max="1" step="0.05" [(ngModel)]="tanimotoThresh" (change)="onSubmit()" thumbLabel></mat-slider> -->
       <span class="slider-limit">1</span>
     </div>
 
   </div>
 
   <div class="search col-md-9">
-    <!-- <input type="text" placeholder="search"/>
-    <button>send</button>
-    < -->
+
     <!-- Search bar -->
-    <input type="text" class="search form-control" placeholder="<SMILES or InChI>" autofocus [(ngModel)]="searchQuery" (keyup.enter)="onSubmit()" >
+    <input type="text" class="search form-control" placeholder="search by SMILES or InChI" autofocus [(ngModel)]="text_query" (keyup.enter)="onSubmit()" >
 
     <button mat-icon-button class='search-btn' (click)="onSubmit()">
       <mat-icon aria-label="search" color="accent" >search</mat-icon>
