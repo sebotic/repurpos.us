@@ -22,16 +22,18 @@
       <ng-container matColumnDef="alias">
         <mat-header-cell *matHeaderCellDef>Aliases
         </mat-header-cell>
-        <mat-cell *matCellDef="let element">
+        <mat-cell *matCellDef="let element; let row=index">
           <div>
             <ul class="alias-list">
-              <li *ngFor="let alias of testSynonyms | slice:0:num_aliases; let i=index" class="alias">
+              <li *ngFor="let alias of element.aliases | slice:0:element.alias_ct; let i=index" class="alias">
                 <!-- <ng-container *ngIf="i < num_aliases"> -->
                 {{alias}}
-                <span *ngIf="i + 1 < num_aliases && i + 1 < testSynonyms.length" class='data-separator'></span>
+                <span *ngIf="i + 1 < element.alias_ct && i + 1 < element.aliases.length" class='data-separator'></span>
               </li>
               <li>
-                <a *ngIf="num_aliases < testSynonyms.length" id="more" (click)="showMore()" class="center-block">show more</a>
+                <a *ngIf="element.alias_ct < element.aliases.length" id="more" (click)="showMore(row)" class="center-block">
+                  show more
+                </a>
               </li>
             </ul>
           </div>
