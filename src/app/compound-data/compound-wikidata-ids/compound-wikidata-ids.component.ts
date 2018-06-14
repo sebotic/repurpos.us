@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-compound-wikidata-ids',
@@ -16,11 +16,5 @@ export class CompoundWikidataIdsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {}
-
-  ngOnChanges() {
-    console.log(this.gvkData[0])
-    console.log(this.integrityData[0])
-    console.log(this.informaData[0])
-  }
 
 }
