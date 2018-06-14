@@ -4,17 +4,48 @@
   <div class="search-result-container mat-elevation-z0" *ngIf="dataSource.data.length > 0; else no_data">
     <mat-table #table matSort [dataSource]="dataSource">
 
-      <ng-container matColumnDef="name">
+      <!-- Drug name -->
+      <ng-container matColumnDef="main_label">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Name
           <mat-icon class='sort-icon'>sort</mat-icon>
         </mat-header-cell>
-        <mat-cell *matCellDef="let element"><a [routerLink]="['compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]" target="_blank">{{element['main_label']}}</a></mat-cell>
+        <mat-cell *matCellDef="let element">
+          <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
+            {{element['main_label']}}
+          </a>
+        </mat-cell>
       </ng-container>
 
+
+
+      <!-- Aliases -->
+      <ng-container matColumnDef="alias">
+        <mat-header-cell *matHeaderCellDef>Aliases
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div>
+            <ul class="alias-list">
+              <li *ngFor="let alias of testSynonyms | slice:0:num_aliases; let i=index" class="alias">
+                <!-- <ng-container *ngIf="i < num_aliases"> -->
+                {{alias}}
+                <span *ngIf="i + 1 < num_aliases && i + 1 < testSynonyms.length" class='data-separator'></span>
+              </li>
+              <li>
+                <a *ngIf="num_aliases < testSynonyms.length" id="more" (click)="showMore()" class="center-block">show more</a>
+              </li>
+            </ul>
+          </div>
+          <!-- Button to load more results -->
+
+        </mat-cell>
+      </ng-container>
+
+      <!-- Main ID -->
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
         <mat-cell *matCellDef="let element">{{element['id']}}</mat-cell>
       </ng-container>
+
 
       <!-- <ng-container matColumnDef="qid">
       <mat-header-cell *matHeaderCellDef> Wikidata ID </mat-header-cell>
@@ -23,12 +54,15 @@
 
 
       <!-- In physical library -->
-      <ng-container matColumnDef="reframe">
+      <ng-container matColumnDef="reframeid">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Sample in Screening Library
           <mat-icon class='sort-icon'>sort</mat-icon>
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <span [ngClass]="element['reframeid'] ? 'circle cmpd-avail' : 'circle no-assay'"></span>
+          <div>
+            <span [ngClass]="element['reframeid'] ? 'circle cmpd-avail' : 'circle no-cmpd'"></span>
+          </div>
+          <div class="similar" *ngIf="!element['reframeid']">similar library compound: <a target="_blank">name1 • name 2</a></div>
         </mat-cell>
       </ng-container>
 
@@ -46,11 +80,13 @@
       <!-- File Statuses Column: splayed out-->
 
       <ng-container matColumnDef="assays">
-        <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header> assay hits
+        <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header>
+          assay hits
           <mat-icon class='sort-icon'>sort</mat-icon>
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <span class="circle" [ngStyle]="{'background-color': 'rgba(85, 98, 109,' + getColor(element.assay_types) + ')'}"></span>
+          <span class="circle" [ngStyle]="{'background-color': 'rgba(65, 74, 81,' + getColor(element.assay_types) + ')'}"></span>
+          <!-- <span class="circle" [ngStyle]="{'background-color': 'rgba(85, 98, 109,' + getColor(element.assay_types) + ')'}"></span> -->
         </mat-cell>
       </ng-container>
 
