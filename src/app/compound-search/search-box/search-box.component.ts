@@ -71,7 +71,7 @@ export class SearchBoxComponent implements OnInit {
         } else if (params['query'] && 'type' in params && params['type'] === 'structure' && params['mode'] === 'stereofree') {
           this.searchQuery = params['query'];
 
-          this.wd.searchStructExact(this.searchQuery, 'exact')
+          this.wd.searchStructExact(this.searchQuery, 'stereofree')
             .subscribe(
               (results: SearchResult[]) => {
                 this.results.next(results);
@@ -92,6 +92,7 @@ export class SearchBoxComponent implements OnInit {
   // when changing between tabs, reset (delete) the search parameters
   resetInput(event) {
   this.searchQuery = '';
+  this.results.next([]);
     // console.log(event)
     let search_type: string;
 
@@ -102,7 +103,7 @@ export class SearchBoxComponent implements OnInit {
       search_type = "structure"
     }
     // reset the route to the search or structure page, sans any input
-    this.router.navigate(['.'], { queryParams: { type: search_type } });
+    this.router.navigate(['search/'], { queryParams: { type: search_type } });
   }
 
   ngOnInit(): void {
