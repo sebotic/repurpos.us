@@ -115,36 +115,39 @@ export class StructureService {
   // Observable string sources
   private smilesAnnouncedSource = new Subject<string>();
   private molfileAnnouncedSource = new Subject<string>();
-  private submitPressedSource = new Subject<boolean>();
-  private structDrawnSource = new Subject<boolean>();
-  private smiles: string;
+  private modeAnnouncedSource = new Subject<string>();
+  private tanimotoAnnouncedSource = new Subject<number>();
 
   // Observable string streams
   smilesAnnounced$ = this.smilesAnnouncedSource.asObservable();
   molfileAnnounced$ = this.molfileAnnouncedSource.asObservable();
-  submitPressed$ = this.submitPressedSource.asObservable();
-  structDrawn$ = this.structDrawnSource.asObservable();
+  modeAnnounced$ = this.modeAnnouncedSource.asObservable();
+  tanimotoAnnounced$ = this.tanimotoAnnouncedSource.asObservable();
 
   // Service message commands
   // Announce that structure has been set
-  announceSmiles(smiles: string) {
-  console.log('announcing smiles')
-  console.log(smiles)
+  announceSmiles(smiles: string, submitted: boolean) {
+    console.log('announcing smiles')
+    console.log(smiles)
     this.ngZone.run(() => this.smilesAnnouncedSource.next(smiles));
-    this.smiles = smiles;
+
+    // If the query has been submitted, also return back the structure of the compound
+    if (submitted) {
+      // TODO: call to convert SMILES --> molfile
+      this.molfileAnnouncedSource.next(this.acetaminophen);
+    }
   }
 
-  // announce that submit button has been pressed
-  announceSubmit(pressed: boolean) {
-    this.submitPressedSource.next(pressed);
-    console.log('announcing submitted')
-    // console.log(this.smiles)
-    // this.molfileAnnouncedSource.next(this.acetaminophen);
+  announceMode(mode: string) {
+    console.log('mode')
+    console.log(mode)
+    this.modeAnnouncedSource.next(mode);
   }
 
-  // anncounce that the ketcher iframe has changed
-  announceDrawn(pressed: boolean) {
-    this.structDrawnSource.next(pressed);
+  announceTanimoto(tm_thresh: number) {
+    console.log('tm_thresh')
+    console.log(tm_thresh)
+    this.tanimotoAnnouncedSource.next(tm_thresh);
   }
 
 }

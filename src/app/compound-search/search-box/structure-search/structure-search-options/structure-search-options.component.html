@@ -1,4 +1,3 @@
-<h1>text: {{text_query}}</h1>
 <div class="search-opts">
   <!-- Label: search -->
   <span class="search-label">search options</span>
@@ -28,12 +27,12 @@
   <div class="search col-md-9">
 
     <!-- Search bar -->
-    <input type="text" class="search form-control" placeholder="search by SMILES or InChI" autofocus [(ngModel)]="text_query" (keyup.enter)="onSubmit()" >
+    <input type="text" class="search form-control" placeholder="search by SMILES or InChI" autofocus [(ngModel)]="text_query" (keyup.enter)="onSubmit()">
 
     <button mat-icon-button class='search-btn' (click)="onSubmit()">
       <mat-icon aria-label="search" color="accent" >search</mat-icon>
     </button>
 
-   <!-- <button mat-raised-button color="accent" class="pull-right">search</button> -->
+    <!-- <button mat-raised-button color="accent" class="pull-right">search</button> -->
   </div>
 </div>

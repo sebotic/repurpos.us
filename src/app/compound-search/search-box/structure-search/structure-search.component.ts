@@ -27,18 +27,18 @@ export class StructureSearchComponent implements OnInit {
   ]
 
   constructor(private structSvc: StructureService, private route: ActivatedRoute) {
-    // check if a query has been submitted
-    console.log(route.queryParams['_value'])
-    let params = route.queryParams['_value'];
-    if (params.hasOwnProperty('query')) structSvc.announceSmiles(params['query'])
-
-    // service to check if the submit button has been pressed.
-    this.submitSubscription = structSvc.submitPressed$.subscribe(pressedStatus => {
-      if (pressedStatus) {
-        this.pressed = true;
-        this.panelOpenState = false;
-      }
-    })
+    // // check if a query has been submitted
+    // console.log(route.queryParams['_value'])
+    // let params = route.queryParams['_value'];
+    // if (params.hasOwnProperty('query')) structSvc.announceSmiles(params['query'])
+    //
+    // // service to check if the submit button has been pressed.
+    // this.submitSubscription = structSvc.submitPressed$.subscribe(pressedStatus => {
+    //   if (pressedStatus) {
+    //     this.pressed = true;
+    //     this.panelOpenState = false;
+    //   }
+    // })
 
   }
 
@@ -46,7 +46,7 @@ export class StructureSearchComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.submitSubscription.unsubscribe();
+    // this.submitSubscription.unsubscribe();
   }
 
 

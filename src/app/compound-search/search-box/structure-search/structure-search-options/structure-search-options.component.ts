@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterViewInit, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -14,6 +14,8 @@ export class StructureSearchOptionsComponent implements OnInit {
   ketcher_query: string;
   text_query: string;
   structureSubscription: Subscription;
+  tmSubscription: Subscription;
+  modeSubscription: Subscription;
   submitted: boolean = false;
 
   // initial options + placeholders to save from user input
@@ -29,52 +31,80 @@ export class StructureSearchOptionsComponent implements OnInit {
 
 
   constructor(private router: Router, private route: ActivatedRoute, private structSvc: StructureService) {
-    console.log('route')
-    console.log(route.queryParams['_value'])
-
-    // Update the params, based on the route, if needed
-    let params = route.queryParams['_value'];
-    if (params.hasOwnProperty('mode')) this.searchMode = params['mode'];
-    if (params.hasOwnProperty('query')) this.ketcher_query = params['query'];
-    if (params.hasOwnProperty('tanimoto')) this.tanimotoThresh = params['tanimoto'];
-
     // look for pass back of the structure SMILES string
     this.structureSubscription = structSvc.smilesAnnounced$.subscribe(
       struct => {
-        this.ketcher_query = struct;
         this.text_query = struct;
-        console.log('this.text_query')
-        console.log(this.text_query)
-        // console.log(this.ketcher_query)
+      });
+
+    // look for pass back of input parameters
+    this.modeSubscription = structSvc.modeAnnounced$.subscribe(
+      mode => {
+        console.log('service activated')
+        console.log(mode)
+        this.searchMode = mode;
+      });
+
+    this.tmSubscription = structSvc.tanimotoAnnounced$.subscribe(
+      tm_thresh => {
+        this.tanimotoThresh = tm_thresh;
       });
 
   }
 
   ngOnInit() {
+    console.log('init')
+    this.updateParams()
+    console.log(this.searchMode)
+
+  }
+
+  ngOnChanges() {
+    console.log('changes')
+    console.log(this.searchMode)
+  }
+
+  ngAfterViewInit() {
+    console.log('after')
+    console.log(this.searchMode)
   }
 
   ngOnDestroy() {
     this.structureSubscription.unsubscribe();
+    this.tmSubscription.unsubscribe();
+    this.modeSubscription.unsubscribe();
+  }
+
+  // A bit klugey; for some reason, service doesn't work if the URL is pre-defined
+  // Suspect some sort of async loading problem
+  updateParams() {
+    // console.log('updating params')
+    // Update the params, based on the route, if needed
+    let params = this.route.queryParams['_value'];
+    if (params.hasOwnProperty('mode')) this.searchMode = params['mode'];
+    if (params.hasOwnProperty('tanimoto')) this.tanimotoThresh = params['tanimoto'];
+    if (params.hasOwnProperty('query')) {
+      this.structSvc.announceSmiles(params['query'], true);
+      // this.text_query = params['query'];
+      // this.submitted = true;
+      // this.submitQuery();
+    };
   }
 
   onSubmit() {
     // tell ketcher that submit button has been pressed, so it can send back the SMILES structure
     this.submitted = true;
-    this.structSvc.announceSubmit(true);
+    // Announce the SMILES has changed, to grab the molfile to draw in ketcher
+    this.structSvc.announceSmiles(this.text_query, true);
 
     this.submitQuery();
   }
 
   submitQuery() {
     if (this.submitted) {
-      if (!this.ketcher_query && this.text_query) {
-        this.ketcher_query = this.text_query;
-      } else {
-        this.text_query = this.ketcher_query;
-      }
 
       let query = {
-        query: this.ketcher_query,
+        query: this.text_query,
         type: 'structure',
         mode: this.searchMode,
       };

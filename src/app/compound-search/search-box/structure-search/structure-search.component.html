@@ -15,7 +15,7 @@
     <div class="search examples">
       <h6>example queries</h6>
       <div class="ex-query" *ngFor="let example of examples">
-        <a [routerLink]="['.']" (click)="setMol(example.molfile)" [queryParams]="{ query: example.query, type: example.type, mode: example.mode, tanimoto: example.tanimoto }">
+        <a [routerLink]="['.']" [queryParams]="{ query: example.query, type: example.type, mode: example.mode, tanimoto: example.tanimoto }">
           <!-- <a -->
           <span class="ex-type">{{example.label}}</span>: {{example.description}}</a>
       </div>

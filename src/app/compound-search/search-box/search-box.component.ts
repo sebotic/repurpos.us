@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import { switchMap } from 'rxjs/operators';
 
 import { SearchResult } from '../../_models/index';
-import { WDQService, BackendSearchService } from '../../_services/index';
+import { WDQService, BackendSearchService, StructureService } from '../../_services/index';
 
 @Component({
   outputs: ['results'],
@@ -24,7 +24,8 @@ export class SearchBoxComponent implements OnInit {
   constructor(public wd: BackendSearchService,
     // private el: ElementRef,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private structSvc: StructureService
   ) {
     this.route.queryParams
       .subscribe(params => {
@@ -42,8 +43,16 @@ export class SearchBoxComponent implements OnInit {
             );
         }
 
-        if (params['query'] && 'tanimoto' in params) {
+        // Set the structure and get the molfile returned
+        if (params['query'] && 'type' in params && params['type'] === 'structure') {
           this.searchQuery = params['query'];
+          this.structSvc.announceSmiles(this.searchQuery, true);
+          this.structSvc.announceMode(params['mode']);
+        }
+
+        // Tanimoto similarity search
+        if (params['query'] && 'tanimoto' in params) {
+          this.structSvc.announceTanimoto(params['tanimoto']);
 
           this.wd.searchSimilarity(this.searchQuery, params['tanimoto'])
             .subscribe(
@@ -56,9 +65,8 @@ export class SearchBoxComponent implements OnInit {
             );
         }
 
+        // Exact and stereo-free structure matches
         if (params['query'] && 'type' in params && params['type'] === 'structure' && params['mode'] === 'exact') {
-          this.searchQuery = params['query'];
-
           this.wd.searchStructExact(this.searchQuery, 'exact')
             .subscribe(
               (results: SearchResult[]) => {
@@ -69,8 +77,6 @@ export class SearchBoxComponent implements OnInit {
               }
             );
         } else if (params['query'] && 'type' in params && params['type'] === 'structure' && params['mode'] === 'stereofree') {
-          this.searchQuery = params['query'];
-
           this.wd.searchStructExact(this.searchQuery, 'stereofree')
             .subscribe(
               (results: SearchResult[]) => {
@@ -91,8 +97,8 @@ export class SearchBoxComponent implements OnInit {
 
   // when changing between tabs, reset (delete) the search parameters
   resetInput(event) {
-  this.searchQuery = '';
-  this.results.next([]);
+    this.searchQuery = '';
+    this.results.next([]);
     // console.log(event)
     let search_type: string;
 
