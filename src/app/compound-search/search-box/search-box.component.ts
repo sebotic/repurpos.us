@@ -77,6 +77,7 @@ export class SearchBoxComponent implements OnInit {
               }
             );
         } else if (params['query'] && 'type' in params && params['type'] === 'structure' && params['mode'] === 'stereofree') {
+
           this.wd.searchStructExact(this.searchQuery, 'stereofree')
             .subscribe(
               (results: SearchResult[]) => {
