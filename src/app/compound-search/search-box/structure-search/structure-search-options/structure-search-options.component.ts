@@ -16,6 +16,7 @@ export class StructureSearchOptionsComponent implements OnInit {
   structureSubscription: Subscription;
   tmSubscription: Subscription;
   modeSubscription: Subscription;
+  submitSubscription: Subscription;
   submitted: boolean = false;
 
   // initial options + placeholders to save from user input
@@ -48,6 +49,12 @@ export class StructureSearchOptionsComponent implements OnInit {
         this.tanimotoThresh = tm_thresh;
       });
 
+      // check if submitted previously
+    this.submitSubscription = structSvc.submitAnnounced$.subscribe(
+      submitted => {
+        this.submitted = submitted;
+      });
+
   }
 
   ngOnInit() {
@@ -58,6 +65,7 @@ export class StructureSearchOptionsComponent implements OnInit {
     this.structureSubscription.unsubscribe();
     this.tmSubscription.unsubscribe();
     this.modeSubscription.unsubscribe();
+    this.submitSubscription.unsubscribe();
   }
 
   // A bit klugey; for some reason, service doesn't work if the URL is pre-defined
@@ -68,13 +76,14 @@ export class StructureSearchOptionsComponent implements OnInit {
     if (params.hasOwnProperty('mode')) this.searchMode = params['mode'];
     if (params.hasOwnProperty('tanimoto')) this.tanimotoThresh = params['tanimoto'];
     if (params.hasOwnProperty('query')) {
+      this.submitted = true;
       this.structSvc.announceSmiles(params['query'], true);
     };
   }
 
   onSubmit() {
     // tell ketcher that submit button has been pressed, so it can send back the SMILES structure
-    this.submitted = true;
+    // this.submitted = true;
     // Announce the SMILES has changed, to grab the molfile to draw in ketcher
     this.structSvc.announceSmiles(this.text_query, true);
 

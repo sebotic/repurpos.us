@@ -135,10 +135,15 @@ export class StructureService {
 
     // If the query has been submitted, also return back the structure of the compound
     if (submitted) {
-      // TODO: call to convert SMILES --> molfile
-      this.molfileAnnouncedSource.next(this.acetaminophen);
+      if (smiles !== '') {
+        // TODO: call to convert SMILES --> molfile
+        this.molfileAnnouncedSource.next(this.acetaminophen);
 
-      this.submitAnnouncedSource.next(true);
+        this.submitAnnouncedSource.next(true);
+      } else {
+        this.molfileAnnouncedSource.next('');
+        this.submitAnnouncedSource.next(false);
+      }
     }
   }
 
