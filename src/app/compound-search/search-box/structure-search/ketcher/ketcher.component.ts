@@ -28,9 +28,13 @@ export class KetcherComponent implements OnInit {
 
     // service to check if molfile returned
     this.submitSubscription = structSvc.molfileAnnounced$.subscribe(molfile => {
-      console.log('molfile')
-      console.log(molfile)
       this.molfile = molfile;
+
+      // Try to draw molfile (for when the molfile has changed)
+      if (this.molfile) {
+        this.setMol(this.molfile);
+      }
+
     })
 
 
@@ -97,7 +101,7 @@ export class KetcherComponent implements OnInit {
   setMol(inputMol: string) {
     // console.log(inputMol)
     var ketcher = this.getKetcher();
-    console.log(ketcher)
+    
     if (ketcher) {
       ketcher.setMolecule(inputMol);
     }
