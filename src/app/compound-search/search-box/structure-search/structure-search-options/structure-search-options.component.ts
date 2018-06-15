@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, AfterViewInit, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -40,8 +40,6 @@ export class StructureSearchOptionsComponent implements OnInit {
     // look for pass back of input parameters
     this.modeSubscription = structSvc.modeAnnounced$.subscribe(
       mode => {
-        console.log('service activated')
-        console.log(mode)
         this.searchMode = mode;
       });
 
@@ -53,20 +51,7 @@ export class StructureSearchOptionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('init')
     this.updateParams()
-    console.log(this.searchMode)
-
-  }
-
-  ngOnChanges() {
-    console.log('changes')
-    console.log(this.searchMode)
-  }
-
-  ngAfterViewInit() {
-    console.log('after')
-    console.log(this.searchMode)
   }
 
   ngOnDestroy() {
@@ -78,16 +63,12 @@ export class StructureSearchOptionsComponent implements OnInit {
   // A bit klugey; for some reason, service doesn't work if the URL is pre-defined
   // Suspect some sort of async loading problem
   updateParams() {
-    // console.log('updating params')
     // Update the params, based on the route, if needed
     let params = this.route.queryParams['_value'];
     if (params.hasOwnProperty('mode')) this.searchMode = params['mode'];
     if (params.hasOwnProperty('tanimoto')) this.tanimotoThresh = params['tanimoto'];
     if (params.hasOwnProperty('query')) {
       this.structSvc.announceSmiles(params['query'], true);
-      // this.text_query = params['query'];
-      // this.submitted = true;
-      // this.submitQuery();
     };
   }
 

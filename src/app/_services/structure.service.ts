@@ -117,36 +117,36 @@ export class StructureService {
   private molfileAnnouncedSource = new Subject<string>();
   private modeAnnouncedSource = new Subject<string>();
   private tanimotoAnnouncedSource = new Subject<number>();
+  private submitAnnouncedSource = new Subject<boolean>();
 
   // Observable string streams
   smilesAnnounced$ = this.smilesAnnouncedSource.asObservable();
   molfileAnnounced$ = this.molfileAnnouncedSource.asObservable();
   modeAnnounced$ = this.modeAnnouncedSource.asObservable();
   tanimotoAnnounced$ = this.tanimotoAnnouncedSource.asObservable();
+  submitAnnounced$ = this.submitAnnouncedSource.asObservable();
 
   // Service message commands
   // Announce that structure has been set
   announceSmiles(smiles: string, submitted: boolean) {
-    console.log('announcing smiles')
-    console.log(smiles)
+    // console.log('announcing smiles')
+    // console.log(smiles)
     this.ngZone.run(() => this.smilesAnnouncedSource.next(smiles));
 
     // If the query has been submitted, also return back the structure of the compound
     if (submitted) {
       // TODO: call to convert SMILES --> molfile
       this.molfileAnnouncedSource.next(this.acetaminophen);
+
+      this.submitAnnouncedSource.next(true);
     }
   }
 
   announceMode(mode: string) {
-    console.log('mode')
-    console.log(mode)
     this.modeAnnouncedSource.next(mode);
   }
 
   announceTanimoto(tm_thresh: number) {
-    console.log('tm_thresh')
-    console.log(tm_thresh)
     this.tanimotoAnnouncedSource.next(tm_thresh);
   }
 
