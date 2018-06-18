@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Input, ElementRef } from '@angular/core';
 
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
+// import * as d3 from 'd3';
 
 import { Subscription } from 'rxjs';
 import { StructureService } from '../../../../_services/index';
@@ -14,123 +15,62 @@ import { StructureService } from '../../../../_services/index';
 export class KetcherComponent implements OnInit {
   structQuery: string;
   iframe: any; // holder for ketcher HTML
-
-  testMol: string =
-    [
-      "",
-      "  Ketcher 02151213522D 1   1.00000     0.00000     0",
-      "",
-      "  6  6  0     0  0            999 V2000",
-      "   -1.1750    1.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-      "   -0.3090    1.2500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-      "   -0.3090    0.2500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-      "   -1.1750   -0.2500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-      "   -2.0410    0.2500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-      "   -2.0410    1.2500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-      "  1  2  1  0     0  0",
-      "  2  3  2  0     0  0",
-      "  3  4  1  0     0  0",
-      "  4  5  2  0     0  0",
-      "  5  6  1  0     0  0",
-      "  6  1  2  0     0  0",
-      "M  END"
-    ].join("\n");
-
-
-
-  // WORKS: HCl
-  testMol2 = "\n" +
-    "Ketcher  5311813352D 1   1.00000     0.00000     0\n" +
-    "\n" +
-    " 1  0  0     0  0            999 V2000\n" +
-    "    9.9250   -4.3000    0.0000 P   0  0  0  0  0  0  0  0  0  0  0  0\n" +
-    "M  CHG  1   1  -1\n" +
-    "M  END";
-
-
-
-  acetaminophen: string =
-    // from ChEBI
-    [
-      "",
-      "Mrv0541 10231312482D  1   1.00000     0.00000     0 ",
-      "",
-      " 11 11  0  0  0  0            999 V2000",
-      "    0.7145    0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-      "    0.7145   -0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-      "    0.0000    0.8250    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-      "    0.0000   -0.8250    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-      "   -0.7145   -0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-      "   -0.7145    0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-      "    1.4288    1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-      "    0.7145    2.0624    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-      "    0.7145    2.8874    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0",
-      "    0.0000    1.6500    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0",
-      "    0.0000   -1.6499    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0",
-      "  2  1  1  0  0  0  0",
-      "  1  3  2  0  0  0  0",
-      " 10  3  1  0  0  0  0",
-      "  4  2  2  0  0  0  0",
-      "  4 11  1  0  0  0  0",
-      "  4  5  1  0  0  0  0",
-      "  6  5  2  0  0  0  0",
-      "  3  6  1  0  0  0  0",
-      "  7  8  1  0  0  0  0",
-      "  8  9  2  0  0  0  0",
-      "  8 10  1  0  0  0  0",
-      "M  END"
-    ].join("\n");
-
-    imatinib_core: string = [
-"      ",
-"  Ketcher  5311816552D 1   1.00000     0.00000     0",
-"",
-"  7  7  0     0  0            999 V2000",
-"    3.3251   -4.4001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-"    4.1911   -4.9001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-"    4.1911   -5.9001    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0",
-"    3.3251   -6.4001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-"    2.4590   -5.9001    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0",
-"    2.4590   -4.9001    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0",
-"    5.0571   -4.4001    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0",
-"  1  2  1  0     0  0",
-"  2  3  2  0     0  0",
-"  3  4  1  0     0  0",
-"  4  5  2  0     0  0",
-"  5  6  1  0     0  0",
-"  6  1  2  0     0  0",
-"  2  7  1  0     0  0",
-"M  END"
-    ].join("\n");
-    // from eyeballing some kinase inhibitors; molfile from ketcher
-
-  examples: Array<any> = [
-    { 'type': 'structure', 'smiles': this.acetaminophen, 'mode': 'exact', 'query': 'C1=C(C=CC(O)=C1)NC(=O)C', 'label': 'exact search', 'description': 'acetaminophen (Tylenol)' },
-    { 'type': 'structure', 'smiles': this.imatinib_core, 'mode': 'similarity', 'tanimoto': 0.85, 'query': 'C1=CN=CN=C1N', 'label': 'similarity search', 'description': 'kinase inhibitor backbone' }
-  ]
-
+  molfile: string; // if the structure is already specified...
 
   submitSubscription: Subscription;
 
 
-  constructor(private domSanitizer: DomSanitizer, private structSvc: StructureService) {
+  constructor(private domSanitizer: DomSanitizer, private structSvc: StructureService, private elRef: ElementRef) {
     // Service to insert the ketcher structure drawing module into an iframe
     // domSanitizer required to make sure the browser doesn't freak out about having html injected
     this.iframe = this.domSanitizer.bypassSecurityTrustResourceUrl('../../../assets/ketcherv2/ketcher.html');
     // this.iframe = this.domSanitizer.bypassSecurityTrustResourceUrl('../../../assets/ketcher/ketcher.html?ketcher_maximize');
 
+    // service to check if molfile returned
+    this.submitSubscription = structSvc.molfileAnnounced$.subscribe(molfile => {
+      this.molfile = molfile;
 
-    // service to check if the submit button has been pressed.
-    this.submitSubscription = structSvc.submitPressed$.subscribe(pressedStatus => {
-
-      if (pressedStatus) {
-        this.getSmiles();
+      // Try to draw molfile (for when the molfile has changed)
+      if (this.molfile) {
+        this.setMol(this.molfile);
       }
+
     })
+
+
 
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.elRef.nativeElement.querySelector("#ketcherFrame").addEventListener('load', this.onLoad.bind(this));
+  }
+
+
+  onLoad(e) {
+    // wait till iframe is loaded to attach click event listener
+    // NOTE: to get molfile loader to correctly ping, requires fanciness.  DOM element doesn't exist till open "open" button
+    var iframeDiv = this.elRef.nativeElement.querySelector("#ketcherFrame");
+    var iframeDocument = iframeDiv.contentDocument || iframeDiv.contentWindow.document;
+    var iframeContent = iframeDocument.querySelectorAll('svg');
+    // console.log(iframeContent)
+
+    iframeContent[0].addEventListener('click', this.onDraw.bind(this));
+
+    // If there's a molfile, draw it in the ketcher iframe. Gotta wait till ketcher is initialized
+    if (this.molfile) {
+      this.setMol(this.molfile);
+    }
+
+  }
+
+  // Event listener if the drawing has changed
+  onDraw() {
+    // this.structSvc.announceDrawn(true);
+    this.getSmiles();
+    this.structSvc.announceSmiles(this.structQuery, false);
   }
 
 
@@ -155,17 +95,17 @@ export class KetcherComponent implements OnInit {
 
     if (ketcher) {
       this.structQuery = ketcher.getSmiles();
-      // console.log(this.structQuery)
-      // this.structEmitter.emit(this.structQuery);
-
-      this.structSvc.announceStructure(this.structQuery);
     }
   }
 
   setMol(inputMol: string) {
     // console.log(inputMol)
     var ketcher = this.getKetcher();
-    ketcher.setMolecule(inputMol);
+    
+    if (ketcher) {
+      ketcher.setMolecule(inputMol);
+    }
   }
+
 
 }

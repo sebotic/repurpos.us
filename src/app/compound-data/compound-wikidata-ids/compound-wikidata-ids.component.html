@@ -51,27 +51,33 @@
 <!-- If no wikidata data are available, use the information from the vendors -->
 <ng-template #vendor_cheminfo>
 
-  <div class="chem-props alias" *ngIf="gvkData.length > 0">
-    <div class="title" scope="row">SMILES (<a href="/#/about/#gvk" target="_blank">GVK Excelra GoStar</a>)</div>
-    <div scope="row" class="smiles">
-      {{ gvkData[0]['smiles']}}
+  <ng-container *ngIf='gvkData[0]'>
+    <div class="chem-props alias" *ngIf="gvkData[0].hasOwnProperty('smiles')">
+      <div class="title" scope="row">SMILES (<a href="/#/about/#gvk" target="_blank">GVK Excelra GoStar</a>)</div>
+      <div scope="row" class="smiles">
+        {{ gvkData[0]['smiles']}}
+      </div>
     </div>
-  </div>
+  </ng-container>
 
-  <div class="chem-props alias" *ngIf="informaData.length > 0">
-    <div class="title" scope="row">
-      SMILES (<a href="/#/about/#informa" target="_blank">Citeline Pharmaprojects</a>)</div>
-    <div scope="row" class="smiles">
-      {{informaData[0]['smiles']}}
+  <ng-container *ngIf='informaData[0]'>
+    <div class="chem-props alias" *ngIf="informaData[0].hasOwnProperty('smiles')">
+      <div class="title" scope="row">
+        SMILES (<a href="/#/about/#informa" target="_blank">Citeline Pharmaprojects</a>)</div>
+      <div scope="row" class="smiles">
+        {{informaData[0]['smiles']}}
+      </div>
     </div>
-  </div>
+  </ng-container>
 
-  <div class="chem-props alias" *ngIf="integrityData.length > 0">
-    <div class="title" scope="row">SMILES (<a href="/#/about/#integrity" target="_blank">Clarivate Integrity</a>)</div>
-    <div scope="row" class="smiles">
-      {{integrityData[0]['smiles']}}
+  <ng-container *ngIf='integrityData[0]'>
+    <div class="chem-props alias" *ngIf="integrityData[0].hasOwnProperty('smiles')">
+      <div class="title" scope="row">SMILES (<a href="/#/about/#integrity" target="_blank">Clarivate Integrity</a>)</div>
+      <div scope="row" class="smiles">
+        {{integrityData[0]['smiles']}}
+      </div>
     </div>
-  </div>
+  </ng-container>
 
 
 </ng-template>

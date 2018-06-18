@@ -40,7 +40,7 @@ import {
   // MatChipsModule,
   // MatDatepickerModule,
   MatDialogModule,
-  // MatExpansionModule,
+  MatExpansionModule,
   // MatGridListModule,
   MatIconModule,
   MatInputModule,
@@ -124,6 +124,7 @@ import { StructureSearchOptionsComponent } from './compound-search/search-box/st
 import { StructureSearchComponent } from './compound-search/search-box/structure-search/structure-search.component';
 import { TextSearchComponent } from './compound-search/search-box/text-search/text-search.component';
 import { KetcherComponent } from './compound-search/search-box/structure-search/ketcher/ketcher.component';
+import { IntroTextComponent } from './intro-text/intro-text.component';
 
 @NgModule({
   exports: [
@@ -137,7 +138,7 @@ import { KetcherComponent } from './compound-search/search-box/structure-search/
     // MatStepperModule,
     // MatDatepickerModule,
     MatDialogModule,
-    // MatExpansionModule,
+    MatExpansionModule,
     // MatGridListModule,
     MatIconModule,
     MatInputModule,
@@ -222,7 +223,8 @@ export class MaterialModule {}
     StructureSearchOptionsComponent,
     StructureSearchComponent,
     TextSearchComponent,
-    KetcherComponent
+    KetcherComponent,
+    IntroTextComponent
   ],
   imports: [
     BrowserModule,

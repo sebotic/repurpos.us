@@ -15,7 +15,6 @@ export class CompoundWikidataIdsComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

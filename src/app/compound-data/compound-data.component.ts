@@ -200,9 +200,11 @@ export class CompoundDataComponent implements OnInit {
     // );
   }
 
-  backClick() {
-    this._location.back();
-  }
+  // backClick() {
+  //   console.log('back')
+  //   console.log(this._location)
+  //   this._location.back();
+  // }
 
   buildData(): void {
     let q: string = `
@@ -425,7 +427,7 @@ export class CompoundDataComponent implements OnInit {
 
   set_cid(): void {
     for (let i of [this.gvkData[0], this.informaData[0], this.integrityData[0]]) {
-      if ('PubChem CID' in i && ! this.cid) {
+      if ('PubChem CID' in i && !this.cid) {
         this.cid = i['PubChem CID'].substring(3);
         this.cidService.announceNewCID(this.cid);
 
@@ -438,7 +440,7 @@ export class CompoundDataComponent implements OnInit {
 
   // if no cid exists, try to find one, announce it and trigger rendering of compound
   set_label(label: string): void {
-    if (! this.label) {
+    if (!this.label) {
       this.label = label;
       console.log('label set', this.label, label);
     }
@@ -465,31 +467,34 @@ export class CompoundDataComponent implements OnInit {
       this.set_cid();
 
       // extract aliases an make sure label is set
-      let aliases = new Set();
+      let alias_arr: string[] = [];
 
-      for(let i in this.gvkData[0]['drug_name']) {
+      for (let i in this.gvkData[0]['drug_name']) {
         let name = this.gvkData[0]['drug_name'][i];
         this.set_label(name);
-        aliases.add(name);
+        alias_arr.push(name);
       }
 
-      for(let i in this.gvkData[0]['synonyms']) {
-        aliases.add(this.gvkData[0]['synonyms'][i]);
+      for (let i in this.gvkData[0]['synonyms']) {
+        alias_arr.push(this.gvkData[0]['synonyms'][i]);
       }
 
-      for(let i in this.integrityData[0]['drug_name']) {
+      for (let i in this.integrityData[0]['drug_name']) {
         let name = this.integrityData[0]['drug_name'][i];
         this.set_label(name);
-        aliases.add(name);
+        alias_arr.push(name);
       }
 
-      for(let i in this.informaData[0]['drug_name']) {
+      for (let i in this.informaData[0]['drug_name']) {
         let name = this.informaData[0]['drug_name'][i];
         this.set_label(name);
-        aliases.add(name);
+        alias_arr.push(name);
       }
+      // de-duplicate
+      let alias_set = new Set(alias_arr);
 
-      this.aliases = Array.from(aliases);
+      this.aliases = Array.from(alias_set);
+      // console.log(this.aliases)
 
 
       // Sort aliases by name (case-insensitive)

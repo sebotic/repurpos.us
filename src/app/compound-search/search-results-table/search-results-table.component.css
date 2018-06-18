@@ -3,8 +3,9 @@
 .search-result-container {
   display: flex;
   flex-direction: column;
-  max-height: 500px;
+  /* max-height: 500px; */
   min-width: 300px;
+  width: 1500px;
   position: relative;
   margin-left: 24px;
 }
@@ -60,6 +61,10 @@ mat-row:first-of-type {
   justify-content: center;
 }
 
+.sort-icon {
+  padding-left: 3px;
+}
+
 .search-result-rate-limit-reached {
   color: #980000;
   max-width: 360px;
@@ -72,12 +77,26 @@ mat-row:first-of-type {
   max-width: 64px;
 }
 
+.mat-column-assays {
+  flex: 0 0 50px;
+}
+
+.mat-column-assay_titles {
+  flex: 0 0 500px;
+}
+
+.mat-column-alias {
+  flex: 0 0 400px;
+}
+
 .mat-column-created {
   max-width: 124px;
 }
 
 mat-cell.mat-cell.cdk-column-tanimoto.mat-column-tanimoto.ng-star-inserted {
-  text-align: center;
+  display:flex !important;
+  justify-content:center !important;
+  border-radius: 3px;
 }
 
 /* Radio buttons if data exist */
@@ -96,11 +115,38 @@ mat-cell.mat-cell.cdk-column-tanimoto.mat-column-tanimoto.ng-star-inserted {
   /* fc5457; */
 }
 
+/* Assay & Alias lists */
+ul.assay-list, ul.alias-list {
+  list-style-type: none;
+}
+
+li.assay-title, li.alias {
+  display: inline-block;
+}
+
+a#more {
+  color: #2125298f;
+  cursor: pointer;
+}
+
+/* TODO: make not hacky */
+.no-cmpd, .cmpd-avail {
+  margin-left: 75px;
+}
+.similar {
+    font-style: italic;
+    font-size: 0.9em;
+    margin-top: 60px;
+    margin-left: -75px;
+}
+
+
+
 .assay-avail {
   background-color: #21252945;
 }
 
-.no-assay {
+.no-assay, .no-cmpd {
   background-color: none;
 }
 

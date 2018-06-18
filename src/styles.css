@@ -119,3 +119,16 @@ a:hover{
 .smiles {
   word-break: break-all !important;
 }
+
+/* Clearfix */
+@mixin clearfix() {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+.element {
+  @include clearfix;
+}
