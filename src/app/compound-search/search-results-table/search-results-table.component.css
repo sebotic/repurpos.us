@@ -3,7 +3,7 @@
 .search-result-container {
   display: flex;
   flex-direction: column;
-  max-height: 500px;
+  /* max-height: 500px; */
   min-width: 300px;
   width: 1500px;
   position: relative;
