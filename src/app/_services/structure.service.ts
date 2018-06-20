@@ -155,4 +155,8 @@ export class StructureService {
     this.tanimotoAnnouncedSource.next(tm_thresh);
   }
 
+  announceMolFile(molfile: string) {
+    this.molfileAnnouncedSource.next(molfile);
+  }
+
 }

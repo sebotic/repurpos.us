@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 import { StructureService } from '../../../../_services/index';
+import {environment} from "../../../../../environments/environment";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Component({
   selector: 'app-structure-search-options',
@@ -31,7 +33,7 @@ export class StructureSearchOptionsComponent implements OnInit {
 
 
 
-  constructor(private router: Router, private route: ActivatedRoute, private structSvc: StructureService) {
+  constructor(private router: Router, private route: ActivatedRoute, private structSvc: StructureService, private http: HttpClient) {
     // look for pass back of the structure SMILES string
     this.structureSubscription = structSvc.smilesAnnounced$.subscribe(
       struct => {
@@ -108,6 +110,26 @@ export class StructureSearchOptionsComponent implements OnInit {
 
       });
     }
+  }
+
+  onChange(): void {
+    this.http.get(environment.host_url + '/molfile', {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('Accept', 'application/json'),
+      // .set('Authorization', localStorage.getItem('auth_token')),
+      params: new HttpParams()
+        .set('compound_structure', this.text_query)
+    }).subscribe((r) => {
+        let v = r.body;
+        console.log(v);
+
+        this.structSvc.announceMolFile(v['molfile'])
+        // this.assayDetails = v[0];
+      },
+      err => { }
+    );
+
   }
 
 }

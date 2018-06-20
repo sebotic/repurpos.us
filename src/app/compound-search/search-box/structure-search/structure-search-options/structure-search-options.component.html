@@ -27,7 +27,8 @@
   <div class="search col-md-9">
 
     <!-- Search bar -->
-    <input type="text" class="search form-control" placeholder="search by SMILES or InChI" autofocus [(ngModel)]="text_query" (keyup.enter)="onSubmit()">
+    <input type="text" class="search form-control" placeholder="search by SMILES or InChI"
+           autofocus [(ngModel)]="text_query" (keyup.enter)="onSubmit()" (input)="onChange()">
 
     <button mat-icon-button class='search-btn' (click)="onSubmit()">
       <mat-icon aria-label="search" color="accent" >search</mat-icon>
