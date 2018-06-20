@@ -5,7 +5,7 @@ import { environment } from "../../environments/environment";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
 import { SearchResult } from '../_models/index';
-import { SearchResultService } from '../_services/index';
+import { SearchResultService } from '../_services/search-results.service';
 
 @Injectable()
 
