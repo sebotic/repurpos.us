@@ -54,10 +54,13 @@ export class KetcherComponent implements OnInit {
     // NOTE: to get molfile loader to correctly ping, requires fanciness.  DOM element doesn't exist till open "open" button
     var iframeDiv = this.elRef.nativeElement.querySelector("#ketcherFrame");
     var iframeDocument = iframeDiv.contentDocument || iframeDiv.contentWindow.document;
-    var iframeContent = iframeDocument.querySelectorAll('svg');
-    // console.log(iframeContent)
+    var iframeContent = iframeDocument.querySelectorAll('#canvas');
+
 
     iframeContent[0].addEventListener('click', this.onDraw.bind(this));
+    iframeContent[0].addEventListener('mousedown', this.onDraw.bind(this));
+    iframeContent[0].addEventListener('mouseup', this.onDraw.bind(this));
+    // console.log(iframeContent)
 
     // If there's a molfile, draw it in the ketcher iframe. Gotta wait till ketcher is initialized
     if (this.molfile) {
@@ -101,7 +104,7 @@ export class KetcherComponent implements OnInit {
   setMol(inputMol: string) {
     // console.log(inputMol)
     var ketcher = this.getKetcher();
-    
+
     if (ketcher) {
       ketcher.setMolecule(inputMol);
     }
