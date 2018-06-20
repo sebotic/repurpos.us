@@ -157,6 +157,12 @@ export class SearchResultsTableComponent implements OnInit {
   }
 
   sortResults(results) {
+    // simple sorting function just by tanimoto score
+    let simple_sort = function(a, b) {
+      // sort first tanimoto score, descending
+      if (a.tanimoto.toFixed(2) !== b.tanimoto.toFixed(2)) return b.tanimoto - a.tanimoto;
+    }
+
     // sequential sorting function
     let sort_func = function(a, b) {
       // sort first by tanimoto score, descending
@@ -172,8 +178,9 @@ export class SearchResultsTableComponent implements OnInit {
       // last resort: alpha sort by name, ascending
       return (a.main_label.toLowerCase() > b.main_label.toLowerCase() ? 1 : -1);
     }
+
     // apply the sorting function
-    let sorted = results.sort(sort_func);
+    let sorted = results.sort(simple_sort);
     return (sorted);
   }
 
