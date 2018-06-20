@@ -115,7 +115,7 @@ export class CompoundDataComponent implements OnInit {
     private http2: HttpClient,
     // private interactionTableDataService: InteractionTableDataService,
     private cidService: CIDService,
-    private _location: Location
+    public _location: Location
   ) {
     route.params.subscribe(params => {
       this.qid = params['qid'];
