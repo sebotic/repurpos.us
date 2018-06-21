@@ -140,22 +140,14 @@ export class StructureService {
 
     this.ngZone.run(() => this.smilesAnnouncedSource.next(smiles));
 
-
-    if (smiles !== '') {
-      this.getMolfile(smiles);
-    }
+    this.getMolfile(smiles);
 
     // If the query has been submitted, also return back the structure of the compound
     if (submitted) {
-      // if (smiles !== '') {
-      //   this.getMolfile(smiles);
-
-        this.submitAnnouncedSource.next(true);
-      } else {
-        // this.molfileAnnouncedSource.next('');
-        this.submitAnnouncedSource.next(false);
-      }
-    // }
+      this.submitAnnouncedSource.next(true);
+    } else {
+      this.submitAnnouncedSource.next(false);
+    }
   }
 
   announceMode(mode: string) {
