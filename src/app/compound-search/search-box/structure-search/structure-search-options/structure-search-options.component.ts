@@ -85,7 +85,7 @@ export class StructureSearchOptionsComponent implements OnInit {
 
   onChange() {
     // Announce the SMILES has changed, to grab the molfile to draw in ketcher
-    this.structSvc.announceSmiles(this.text_query, true);
+    this.structSvc.announceSmiles(this.text_query, false);
   }
 
   onSubmit() {
