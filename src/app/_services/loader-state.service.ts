@@ -1,7 +1,7 @@
 /*
  * Need to keep track of the state so the loader isn't opened twice
  */
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 import { LoaderState } from '../_models/index';
@@ -9,17 +9,17 @@ import { LoaderState } from '../_models/index';
 @Injectable()
 export class LoaderStateService {
 
-	private loaderSubect = new Subject<LoaderState>();
-	loaderState = this.loaderSubect.asObservable();
+  private loaderSubect = new Subject<LoaderState>();
+  loaderState = this.loaderSubect.asObservable();
 
-  constructor() { }
+  constructor(private ngZone: NgZone) { }
 
-  show() {
-  	this.loaderSubect.next(<LoaderState>{show: true});
+  show(counter: number) {
+    this.ngZone.run(() => this.loaderSubect.next(<LoaderState>{ show: counter }));
   }
 
-  hide() {
-  	this.loaderSubect.next(<LoaderState>{show: false});
+  hide(counter: number) {
+    this.ngZone.run(() => this.loaderSubect.next(<LoaderState>{ show: counter }));
   }
 
 }
