@@ -20,6 +20,9 @@ export class CompoundHeaderComponent implements OnInit {
   @Input() similarityData: Array<SimilarityData>;
   @Input() _location: Location;
 
+  num_aliases: number = 35;
+  alias_ct: number = this.num_aliases;
+
 
   constructor() { }
 
@@ -34,11 +37,14 @@ export class CompoundHeaderComponent implements OnInit {
   }
 
   backClick() {
-    console.log('back')
     this._location.back();
   }
 
   ngOnInit() {
+  }
+
+  showMore() {
+    this.alias_ct += this.num_aliases;
   }
 
 }
