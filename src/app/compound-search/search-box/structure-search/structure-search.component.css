@@ -2,6 +2,11 @@
   overflow-y: hidden;
 }
 
+.accordion-title {
+  color: #fc5457c7;
+  font-size: 1.2em;
+}
+
 
 h6 {
   margin-bottom: 0;
