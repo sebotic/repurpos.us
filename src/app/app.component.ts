@@ -1,4 +1,4 @@
-import {Component, Inject, Injectable, OnInit} from '@angular/core';
+import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 import { Subscription } from 'rxjs/subscription';
@@ -8,9 +8,9 @@ import { CompoundDataComponent } from "./compound-data/compound-data.component";
 import { AboutComponent } from "./about/about.component";
 import { AssaysComponent } from "./assays/assays.component";
 import { AssayDataComponent } from "./assay-data/assay-data.component";
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
-import {isDefined} from "@angular/compiler/src/util";
-import {environment} from "../environments/environment";
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
+import { isDefined } from "@angular/compiler/src/util";
+import { environment } from "../environments/environment";
 import { LoginStateService } from './_services/index';
 import { LoginState, RouteDef } from './_models/index';
 
@@ -20,31 +20,34 @@ import { LoginState, RouteDef } from './_models/index';
   styleUrls: ['./app.component.css'],
   templateUrl: './app.component.html'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   routeDef: RouteDef[];
   loginBox: boolean = false;
   loggedIn: boolean = false;
+  current_year: number;
   private loginSubscription: Subscription;
 
   constructor(@Inject(DOCUMENT) private document: any, private http: HttpClient, private loginStateService: LoginStateService) {
     this.appendGaTrackingCode();
+
+    this.current_year = (new Date()).getFullYear();
   }
 
-  login(){
-    this.http.post(environment.host_url + '/auth/login', {"email": "sebastian.burgstaller@gmail.com", "password": "test"}, {
-        observe: 'response',
-        headers: new HttpHeaders()
-          .set('content-type', 'application/json')
-      }
+  login() {
+    this.http.post(environment.host_url + '/auth/login', { "email": "sebastian.burgstaller@gmail.com", "password": "test" }, {
+      observe: 'response',
+      headers: new HttpHeaders()
+        .set('content-type', 'application/json')
+    }
 
     ).subscribe((re) => {
-        let credentials = re.body;
-        console.log(credentials['auth_token']);
-        localStorage.setItem('auth_token', credentials['auth_token']);
+      let credentials = re.body;
+      console.log(credentials['auth_token']);
+      localStorage.setItem('auth_token', credentials['auth_token']);
 
-        console.log(JSON.stringify(re));
-        // console.log(re.status);
-      },
+      console.log(JSON.stringify(re));
+      // console.log(re.status);
+    },
       (err: HttpErrorResponse) => {
         console.log(err.error.message);
         console.log(JSON.stringify(err));
@@ -60,9 +63,9 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     // subscribe to the login state
     this.loginSubscription = this.loginStateService.loginState
-                                .subscribe((state: LoginState) => {
-                                  this.loggedIn = state.loggedIn;
-                                });
+      .subscribe((state: LoginState) => {
+        this.loggedIn = state.loggedIn;
+      });
     // console.log(this.document.location.pathname);
     // console.log(this.document.location.href);
 
@@ -186,7 +189,7 @@ export class AppComponent implements OnInit{
   private appendGaTrackingCode() {
     try {
       const script = document.createElement('script');
-      script.innerHTML = 
+      script.innerHTML =
         `(function(i, s, o, g, r, a, m) {
                     i['GoogleAnalyticsObject'] = r;
                     i[r] = i[r] || function() {
@@ -202,8 +205,8 @@ export class AppComponent implements OnInit{
         ga('send', 'pageview');`;
       document.body.appendChild(script);
     } catch (ex) {
-     console.error('Error appending google analytics');
-     console.error(ex);
+      console.error('Error appending google analytics');
+      console.error(ex);
     }
   }
 }

@@ -87,13 +87,14 @@ footer li {
 }
 
 .calibr-logo {
-  margin-top: 0px;
+  margin-top: 4px;
   height: 30px;
   vertical-align: middle;
 }
 
 .gh {
   height: 20px;
+  margin-top: -5px;
   margin-right: 6px;
 }
 
