@@ -3,7 +3,7 @@
   <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
   hideToggle="panelOpenState" [disabled]="!pressed" [expanded]="panelOpenState">
     <mat-expansion-panel-header>
-      <mat-panel-title>
+      <mat-panel-title class="accordion-title">
         {{ !pressed ? '' : panelOpenState ? 'Hide search options' : 'Show search options' }}
       </mat-panel-title>
     </mat-expansion-panel-header>

@@ -75,8 +75,8 @@ export class AssayPlotsComponent implements OnInit {
 
   // Event listener to set the number per page
   setNumPage(num_per_page: number): void {
-    console.log("SETTING")
-    console.log(num_per_page)
+    // console.log("SETTING")
+    // console.log(num_per_page)
     this.numPerPage = num_per_page;
 
     this.filterData();

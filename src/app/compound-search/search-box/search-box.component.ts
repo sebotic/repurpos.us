@@ -100,6 +100,7 @@ export class SearchBoxComponent implements OnInit {
   resetInput(event) {
     this.structSvc.announceMode('exact');
     this.structSvc.announceTanimoto(0.85);
+    this.searchQuery = '';
     this.structSvc.announceSmiles('', true);
     this.results.next([]);
     // console.log(event)
