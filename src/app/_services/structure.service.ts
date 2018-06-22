@@ -1,12 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { environment } from "../../environments/environment";
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-
-import { SearchResult } from '../_models/index';
-import { SearchResultService } from '../_services/search-results.service';
-
 @Injectable()
 
 export class StructureService {
@@ -116,7 +110,7 @@ export class StructureService {
     "M  END"
   ].join("\n");
 
-  constructor(private ngZone: NgZone, private http: HttpClient, public searchResultService: SearchResultService) { }
+  constructor(private ngZone: NgZone) { }
 
   // Observable string sources
   private smilesAnnouncedSource = new Subject<string>();
@@ -135,18 +129,21 @@ export class StructureService {
   // Service message commands
   // Announce that structure has been set
   announceSmiles(smiles: string, submitted: boolean) {
-    // Clear search results
-    this.searchResultService.announceNewSearchResult(new SearchResult());
-
+    // console.log('announcing smiles')
+    // console.log(smiles)
     this.ngZone.run(() => this.smilesAnnouncedSource.next(smiles));
-
-    this.getMolfile(smiles);
 
     // If the query has been submitted, also return back the structure of the compound
     if (submitted) {
-      this.submitAnnouncedSource.next(true);
-    } else {
-      this.submitAnnouncedSource.next(false);
+      if (smiles !== '') {
+        // TODO: call to convert SMILES --> molfile
+        this.molfileAnnouncedSource.next(this.acetaminophen);
+
+        this.submitAnnouncedSource.next(true);
+      } else {
+        this.molfileAnnouncedSource.next('');
+        this.submitAnnouncedSource.next(false);
+      }
     }
   }
 
@@ -160,27 +157,6 @@ export class StructureService {
 
   announceMolFile(molfile: string) {
     this.molfileAnnouncedSource.next(molfile);
-  }
-
-  getMolfile(query_string: string): void {
-    this.http.get(environment.host_url + '/molfile', {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      // .set('Authorization', localStorage.getItem('auth_token')),
-      params: new HttpParams()
-        .set('compound_structure', query_string)
-    }).subscribe((r) => {
-      let v = r.body;
-      // console.log('structure returned from service');
-      // console.log(v);
-
-      this.announceMolFile(v['molfile'])
-      // this.assayDetails = v[0];
-    },
-      err => { }
-    );
-
   }
 
 }

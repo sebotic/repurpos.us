@@ -39,7 +39,6 @@ export class SearchResultsTableComponent implements OnInit {
   results: EventEmitter<SearchResult[]> = new EventEmitter<SearchResult[]>();
   sdata: SearchResult;
 
-  displayResults: boolean; // if results are being reset, don't show the results
   notMobile: boolean; // media query for if on small screen
 
   assays: string[];
@@ -105,33 +104,26 @@ export class SearchResultsTableComponent implements OnInit {
     // get search results
     this.searchResultService.newSearchResult$.subscribe(
       result => {
-        if (result.data) {
-          this.displayResults = true;
+        this.sdata = result;
+        // console.log(this.sdata.data);
+        // this.dataSource.data = this.prepareViewData(this.sdata.data);
+        let results = this.sdata.data['body']['results'];
 
-          this.sdata = result;
-          // console.log(this.sdata.data);
-          // this.dataSource.data = this.prepareViewData(this.sdata.data);
-          let results = this.sdata.data['body']['results'];
+        // Calculate the number of assays per hit
+        results.forEach((d: any) => {
+          d['assays'] = d.assay_types.length;
+          //TODO: replace with the correct variable name
+          // d['aliases'] = this.removeDupeAlias(this.testSynonyms);
+          d['aliases'] = this.removeDupeAlias(d.assay_types);
+          d['alias_ct'] = this.num_aliases;
+        });
 
-          // Calculate the number of assays per hit
-          results.forEach((d: any) => {
-            d['assays'] = d.assay_types.length;
-            //TODO: replace with the correct variable name
-            // d['aliases'] = this.removeDupeAlias(this.testSynonyms);
-            d['aliases'] = this.removeDupeAlias(d.assay_types);
-            d['alias_ct'] = this.num_aliases;
-          });
+        // Sort results by multiple columns
+        this.dataSource.data = this.sortResults(results);
 
-          // Sort results by multiple columns
-          this.dataSource.data = this.sortResults(results);
-
-          // Determine which columns to show in table (e.g. +/- Tanimoto score)
-          this.getColumns();
-        } else {
-          // hide the table if there's no data returned
-          this.displayResults = false;
-        }
-
+        // Determine which columns to show in table (e.g. +/- Tanimoto score)
+        this.getColumns();
+        // console.log(results)
 
       });
 
@@ -165,12 +157,6 @@ export class SearchResultsTableComponent implements OnInit {
   }
 
   sortResults(results) {
-    // simple sorting function just by tanimoto score
-    let simple_sort = function(a, b) {
-      // sort first tanimoto score, descending
-      if (a.tanimoto.toFixed(2) !== b.tanimoto.toFixed(2)) return b.tanimoto - a.tanimoto;
-    }
-
     // sequential sorting function
     let sort_func = function(a, b) {
       // sort first by tanimoto score, descending
@@ -186,9 +172,8 @@ export class SearchResultsTableComponent implements OnInit {
       // last resort: alpha sort by name, ascending
       return (a.main_label.toLowerCase() > b.main_label.toLowerCase() ? 1 : -1);
     }
-
     // apply the sorting function
-    let sorted = results.sort(simple_sort);
+    let sorted = results.sort(sort_func);
     return (sorted);
   }
 
@@ -253,7 +238,7 @@ export class SearchResultsTableComponent implements OnInit {
       }
     }
 
-    return (unique_alias);
+    return(unique_alias);
 
     // this.num_aliases = new Array(this.testSynonyms.length).fill(this.max_aliases);
 
