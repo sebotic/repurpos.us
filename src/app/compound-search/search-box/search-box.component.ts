@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, EventEmitter } from '@angular/core';
+import { Component, OnInit,  EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { switchMap } from 'rxjs/operators';
@@ -22,7 +22,6 @@ export class SearchBoxComponent implements OnInit {
   selectedTab: number = this.textSearch_tabIdx;
 
   constructor(public wd: BackendSearchService,
-    // private el: ElementRef,
     private route: ActivatedRoute,
     private router: Router,
     private structSvc: StructureService
@@ -38,7 +37,7 @@ export class SearchBoxComponent implements OnInit {
                 this.results.next(results);
               },
               (err: any) => {
-                console.log(err);
+                this.catchError(err);
               }
             );
         }
@@ -60,7 +59,7 @@ export class SearchBoxComponent implements OnInit {
                 this.results.next(results);
               },
               (err: any) => {
-                console.log(err);
+                this.catchError(err);
               }
             );
         }
@@ -73,7 +72,7 @@ export class SearchBoxComponent implements OnInit {
                 this.results.next(results);
               },
               (err: any) => {
-                console.log(err);
+                this.catchError(err);
               }
             );
         } else if (params['query'] && 'type' in params && params['type'] === 'structure' && params['mode'] === 'stereofree') {
@@ -84,7 +83,7 @@ export class SearchBoxComponent implements OnInit {
                 this.results.next(results);
               },
               (err: any) => {
-                console.log(err);
+                this.catchError(err);
               }
             );
         }
@@ -96,11 +95,15 @@ export class SearchBoxComponent implements OnInit {
 
   }
 
+  catchError(err: any){
+    console.log(err);
+    console.log(err.status)
+  }
+
   // when changing between tabs, reset (delete) the search parameters
   resetInput(event) {
     this.structSvc.announceMode('exact');
     this.structSvc.announceTanimoto(0.85);
-    this.searchQuery = '';
     this.structSvc.announceSmiles('', true);
     this.results.next([]);
     // console.log(event)
