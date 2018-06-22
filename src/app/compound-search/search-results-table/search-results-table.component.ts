@@ -196,9 +196,8 @@ export class SearchResultsTableComponent implements OnInit {
       // last resort: alpha sort by name, ascending
       return (a.main_label.toLowerCase() > b.main_label.toLowerCase() ? 1 : -1);
     }
-
     // apply the sorting function
-    let sorted = results.sort(simple_sort);
+    let sorted = results.sort(sort_func);
     return (sorted);
   }
 
@@ -263,7 +262,7 @@ export class SearchResultsTableComponent implements OnInit {
       }
     }
 
-    return (unique_alias);
+    return(unique_alias);
 
     // this.num_aliases = new Array(this.testSynonyms.length).fill(this.max_aliases);
 

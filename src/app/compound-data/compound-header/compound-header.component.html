@@ -22,8 +22,7 @@
 
       <div class="row-fluid cmpd-source" *ngIf="chemVendors.length > 0">
         available via <span *ngFor="let vendor of chemVendors; let i = index;">
-          {{ vendor['chem_vendor'] }}
-          <span *ngIf="vendor['chem_vendor_id']">({{ vendor['chem_vendor_id'] }})</span>
+          {{ vendor['chem_vendor'] }} ({{ vendor['chem_vendor_id'] }})
           <span class='data-separator' *ngIf="i + 1 < chemVendors.length"></span></span>
       </div>
     </div>

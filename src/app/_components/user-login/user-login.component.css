@@ -14,15 +14,6 @@ body {
 }
 
 .login-button {
-  color: #fff;
-  background-color: #3D6DE0;
-}
-
-/deep/ .mat-fab.mat-warn, .mat-flat-button.mat-warn, .mat-mini-fab.mat-warn, .mat-raised-button.mat-warn {
-  background-color: #c3142e;
-}
-
-/deep/ .btn-xs {
-  color: #3D6DE0;
-  background: none;
+  color: #d2d9ea;
+  background-color: #115329;
 }
