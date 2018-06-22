@@ -3,9 +3,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from "@angular/router";
 
 import { SearchResult } from '../../_models/index';
-import { SearchResultService } from '../../_services/index';
-import { TanimotoScaleService } from '../../_services/index';
-// import * as Chroma from 'chroma-js';
+import { SearchResultService, TanimotoScaleService } from '../../_services/index';
 
 export interface Compound {
 
@@ -48,9 +46,6 @@ export class SearchResultsTableComponent implements OnInit {
   dataSource = new MatTableDataSource<Compound>();
 
   num_aliases: number = 5; // maximum number of aliases to show at one time
-  // num_aliases: number = this.max_aliases;
-  // //
-  // testSynonyms: string[] = ["4-(Acetylamino)phenol", "4-Hydroxyacetanilide", "4-Hydroxyanilid kyseliny octove", "A-Per", "A.F. Anacin", "Abenol", "Abensanil", "Abrol", "Abrolet", "Acamol", "Accu-Tap", "Acenol", "Acephen", "Acertol", "Aceta Elixir", "Aceta Tablets", "Acetagesic", "Acetalgin", "Acetaminofen", "ACETAMINOPHEN", "acetaminophen, Flashtab", "acetaminophen, Kowa", "Acetamol", "Actamin", "Actamin Extra", "Actamin Super", "Actifed Plus", "Actimol Chewable Tablets", "Actimol Children'S Suspension", "Actimol Infants' Suspension", "Actimol Junior Strength Caplets", "Actron", "AF ANACIN", "Afebrin", "Afebryl", "Aferadol", "Algesidal", "Algotropyl", "Allay", "Alpiny", "Alpinyl", "Alvedon", "Aminofen", "Aminofen Max", "Anacin-3", "Anacin-3 Extra Strength", "Anadin dla dzieci", "Anaflon", "Analter", "Anapap", "Andox", "Anelix", "Anexsia", "Anexsia 10/660", "Anexsia 5/325", "Anexsia 7.5/325", "Anexsia 7.5/650", "Anhiba", "Anoquan", "Anti-Algos", "Antidol", "Apacet", "Apacet Capsules", "Apacet Elixir", "Apacet Extra Strength Tablets", "Apacet Regular Strength Tablets", "Apadon", "Apamid", "Apamide", "APAP", "Apitrelal", "Apo-Acetaminophen", "Arfen", "Asetam", "Asomal", "Aspac", "Aspirin Free Anacin Maximum Strength Caplets", "Aspirin Free Anacin Maximum Strength Gel Caplets", "Aspirin-Free Anacin", "Aspirin-Free Excedrin Caplets", "Asplin", "Atasol Caplets", "Atasol Drops", "Atasol Oral Solution", "Atasol Tablets", "Atralidon", "Babikan", "Bacetamol", "Bancap", "Bancap Hc", "Banesin", "Bayer Select Allergy-Sinus", "Bayer Select Head Cold", "Bayer Select Headache Pain", "Bayer Select Maximum Strength Headache Pain Relief Formula", "Bayer Select Sinus Pain Relief", "Ben-u-ron", "Benmyo", "Bickie-mol", "Biocetamol","Bucet", "Butapap", "Cadafen", "Calapol", "Calmanticold", "Calpol", "Capital with Codeine", "Captin", "Causalon", "Cefalex", "Children'S Acetaminophen Elixir Drops", "Children'S Tylenol Chewable", "Claradol Codeine", "Clixodyne", "Co-Gesic", "Codabrol", "Codalgin", "Codapane", "Codicet", "Codisal", "Codisal Forte", "Codoliprane", "Codral Pain Relief", "Cofamol", "Conacetol", "Contra-Schmerz P", "Coricidin", "Coricidin D", "Coricidin Sinus", "Cosutone", "Croix Blanche", "Cuponol", "Curadon", "Custodial", "Dapa X-S", "Darocet", "Darvocet", "Darvocet-N 50", "Datril", "Datril Extra-Strength", "Daygrip", "Demilets", "Democyl", "Demogripal", "Desfebre", "Dhamol", "Dhc Plus", "Dial-a-gesic", "Dial-alpha-gesic", "Dimindol", "Dirox", "Disprol", "Dol-Stop", "Dolcor", "Dolefin", "Dolegrippin", "Dolene Ap-65", "Dolgesic", "Doliprane", "Dolko", "Dolofugin", "Doloreduct", "Dolorfug", "Dolorol Forte", "Dolorstop", "Dolotec", "Dolprone", "Dresan", "Dristancito", "Duracetamol", "Duradyne Dhc", "Durapan", "Dymadon", "Dymadon Co", "Dymadon Forte", "Ecosetol", "Elixodyne", "Empracet", "Endecon", "Enelfa", "Eneril", "Esgic", "Esgic-Plus", "Eu-Med", "Excedrin", "Excedrin Caplets", "Excedrin Extra Strength Caplets", "Excipain", "Exdol", "Exdol Strong", "Farmadol", "Febranine", "Febrectal", "Febrectol", "Febricet", "Febridol", "Febrilix", "Febrin", "Febrinol", "Febro-Gesic"]
 
   testSynonyms: string[] = ["apitolisib", "Apitolisib", "apitolisib (capsule)", "apitolisib (tablet)", "GDC-0980", "GDC-0980", "GDC-0980 (capsule)", "GDC-0980 (tablet)", "GDC0980", "GDC0980", "GDC0980 (capsule)", "GDC0980 (tablet)", "RG-7422", "RG-7422", "RG-7422 (capsule)", "RG-7422 (tablet)", "RG7422", "RG7422", "RG7422 (capsule)", "RG7422 (tablet)"];
 
@@ -116,9 +111,7 @@ export class SearchResultsTableComponent implements OnInit {
           // Calculate the number of assays per hit
           results.forEach((d: any) => {
             d['assays'] = d.assay_types.length;
-            //TODO: replace with the correct variable name
-            // d['aliases'] = this.removeDupeAlias(this.testSynonyms);
-            d['aliases'] = this.removeDupeAlias(d.assay_types);
+            d['aliases'] = this.removeDupeAlias(d.aliases);
             d['alias_ct'] = this.num_aliases;
           });
 
@@ -171,7 +164,7 @@ export class SearchResultsTableComponent implements OnInit {
       if (a.tanimoto.toFixed(2) !== b.tanimoto.toFixed(2)) return b.tanimoto - a.tanimoto;
     }
 
-    // sequential sorting function
+    // sequential sorting function: outdated
     let sort_func = function(a, b) {
       // sort first by tanimoto score, descending
       if (a.tanimoto.toFixed(2) !== b.tanimoto.toFixed(2)) return b.tanimoto - a.tanimoto;
@@ -186,8 +179,9 @@ export class SearchResultsTableComponent implements OnInit {
       // last resort: alpha sort by name, ascending
       return (a.main_label.toLowerCase() > b.main_label.toLowerCase() ? 1 : -1);
     }
+
     // apply the sorting function
-    let sorted = results.sort(sort_func);
+    let sorted = results.sort(simple_sort);
     return (sorted);
   }
 
@@ -205,7 +199,6 @@ export class SearchResultsTableComponent implements OnInit {
     // pull out the variable names for each result, collapse to a list, and remove dupes
     let get_unique_values = function(arr: Array<any>, var_name: string): Array<any> {
       let values = arr.map(d => d[var_name]);
-      // console.
       let unique_vals = new Set(values.reduce((acc, val) => acc.concat(val), []));
 
       return (Array.from(unique_vals.values()))
@@ -252,15 +245,12 @@ export class SearchResultsTableComponent implements OnInit {
       }
     }
 
-    return(unique_alias);
-
-    // this.num_aliases = new Array(this.testSynonyms.length).fill(this.max_aliases);
+    return (unique_alias);
 
   }
 
   showMore(row_num) {
     this.dataSource.data[row_num]['alias_ct'] += this.num_aliases;
-    // += this.num_aliases;
   }
 
 
