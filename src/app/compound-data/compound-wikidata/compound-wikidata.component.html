@@ -1,10 +1,9 @@
 <div id="wikidata">
-  <H3><a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">Wikidata data</a></H3>
+  <H3>Wikidata data</H3>
   <table class="table cmpd-table">
 
     <tr *ngFor="let x of table_data">
-      <ng-container *ngIf="x['property'] != 'chemical formula' && x['property'] != 'InChI' &&
-      x['property'] != 'InChIKey' && x['property'] != 'canonical SMILES'&& x['property'] != 'isomeric SMILES'">
+      <ng-container *ngIf="x['property'] != 'InChI' && x['property'] != 'InChIKey' && x['property'] != 'canonical SMILES'">
         <td class="title" scope="row">{{ x['property'] }}</td>
         <td scope="row"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}}
       <!-- <span *ngIf="!x['showMore']"></span> -->
