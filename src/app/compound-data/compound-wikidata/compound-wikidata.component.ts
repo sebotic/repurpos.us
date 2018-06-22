@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 export class CompoundWikidataComponent implements OnInit {
   @Input() table_data: Array<Object> = [];
+  @Input() qid: string;
 
   constructor() { }
 

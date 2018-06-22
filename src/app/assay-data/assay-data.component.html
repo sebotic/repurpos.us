@@ -1,7 +1,13 @@
-<div class="container" id="content" *ngIf="assayDetails">
+<!-- Check if assay details are available from the backend -->
+<ng-template #no_assay>
+  <h3>Assay {{aid}}</h3>
+  <p>
+    Details unavailable. Please contact <a href="mailto:help@reframedb.org?subject=Missing details for assay {{aid}}">help@reframedb.org</a>
+  </p>
+</ng-template>
 
 
-
+<div class="container" id="content" *ngIf="assayDetails; else no_assay">
   <div class="row title">
     <div class="col-10">
       <h1 class="title assay-title">   {{ assayDetails.title }} </h1>
@@ -92,5 +98,4 @@
       </div>
     </div>
 
-
-</div>
+  </div>

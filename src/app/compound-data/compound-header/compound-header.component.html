@@ -22,7 +22,8 @@
 
       <div class="row-fluid cmpd-source" *ngIf="chemVendors.length > 0">
         available via <span *ngFor="let vendor of chemVendors; let i = index;">
-          {{ vendor['chem_vendor'] }} ({{ vendor['chem_vendor_id'] }})
+          {{ vendor['chem_vendor'] }}
+          <span *ngIf="vendor['chem_vendor_id']">({{ vendor['chem_vendor_id'] }})</span>
           <span class='data-separator' *ngIf="i + 1 < chemVendors.length"></span></span>
       </div>
     </div>
@@ -37,8 +38,17 @@
       <!-- Aliases -->
       <div class="row-fluid alias">
         <b>Aliases: </b>
-        <span *ngFor="let alias of aliases; let i=index;">{{alias}}<span *ngIf="i + 1 < aliases.length" class='data-separator'></span></span>
+        <span *ngFor="let alias of aliases | slice:0:alias_ct; let i=index;">
+          {{alias}}
+          <span *ngIf="i + 1 < alias_ct && i + 1 < aliases.length" class='data-separator'></span></span>
+
+          <a *ngIf="alias_ct < aliases.length" id="more" (click)="showMore()" class="center-block">
+            show more
+          </a>
       </div>
+
+
+
 
 
       <!-- Related compounds -->

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="displayResults">
   <h3>Search results</h3>
 
   <div class="search-result-container mat-elevation-z0" *ngIf="dataSource.data.length > 0; else no_data">
@@ -97,7 +97,7 @@
         <mat-cell *matCellDef="let element">
           <ul class="assay-list">
             <li class="assay-title" *ngFor="let assay of element.assay_types; let i=index">
-              <a [routerLink]="['assays', assay]" target="_blank">{{assay}}</a>
+              <a [routerLink]="['/assays', assay[1]]" target="_blank">{{assay[0]}}</a>
               <span *ngIf="i + 1 < element.assay_types.length" class='data-separator'></span>
             </li>
           </ul>
@@ -121,7 +121,7 @@
       <!-- <mat-row *matRowDef="let row; columns: displayedColumns; let element;" (click)="rowClicked($event, element['qid'], element['id'])"></mat-row> -->
     </mat-table>
 
-    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]">
     </mat-paginator>
   </div>
 

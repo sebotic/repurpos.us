@@ -12,20 +12,20 @@ import { LoaderState } from '../../_models/index';
 })
 export class LoaderComponent implements OnInit {
 
-	show: boolean = false;
-	private subscription: Subscription;
+  show: number = 0;
+  private subscription: Subscription;
 
   constructor(private loaderService: LoaderStateService) { }
 
   ngOnInit() {
-  	this.subscription = this.loaderService.loaderState
-  													.subscribe((state: LoaderState) => {
-  														this.show = state.show;
-  													});
+    this.subscription = this.loaderService.loaderState
+      .subscribe((state: LoaderState) => {
+        this.show = state.show;
+      });
   }
 
   ngOnDestroy() {
-  	this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
 }
