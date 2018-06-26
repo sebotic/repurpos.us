@@ -61,7 +61,7 @@
             <div>
               <span [ngClass]="element['reframeid'] ? 'circle cmpd-avail' : 'circle no-cmpd'"></span>
             </div>
-            <div class="similar" *ngIf="!element['reframeid']">similar library compound: <a target="_blank">name1 • name 2</a></div>
+            <div class="similar" *ngIf="!element['reframeid']" matTooltip="Tanimoto score > 0.85">similar library compound: <a target="_blank">name1 • name 2</a></div>
           </mat-cell>
         </ng-container>
 
