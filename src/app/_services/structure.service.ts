@@ -134,20 +134,11 @@ export class StructureService {
 
   // Service message commands
   // Announce that structure has been set
-  announceSmiles(smiles: string, submitted: boolean) {
+  announceSmiles(smiles: string) {
     // Clear search results
-    this.searchResultService.announceNewSearchResult(new SearchResult());
+    this.searchResultService.announceSubmit(false);
 
     this.ngZone.run(() => this.smilesAnnouncedSource.next(smiles));
-
-    this.getMolfile(smiles);
-
-    // If the query has been submitted, also return back the structure of the compound
-    if (submitted) {
-      this.submitAnnouncedSource.next(true);
-    } else {
-      this.submitAnnouncedSource.next(false);
-    }
   }
 
   announceMode(mode: string) {
@@ -176,7 +167,6 @@ export class StructureService {
       // console.log(v);
 
       this.announceMolFile(v['molfile'])
-      // this.assayDetails = v[0];
     },
       err => { }
     );

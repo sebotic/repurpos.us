@@ -11,9 +11,17 @@ export class SearchResultService {
   // Observable string streams
   newSearchResult$ = this.newSearchResultSource.asObservable();
 
+  // Announce if search button has been submitted, to determine whether to display table or not.
+  private submitAnnouncedSource = new Subject<boolean>();
+  submitAnnounced$ = this.submitAnnouncedSource.asObservable();
+
   // Service message commands
   announceNewSearchResult(result: SearchResult) {
     this.newSearchResultSource.next(result);
-    // console.log(result);
+    this.announceSubmit(true);
+  }
+
+  announceSubmit(submitStatus: boolean) {
+    this.submitAnnouncedSource.next(submitStatus);
   }
 }

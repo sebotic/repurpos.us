@@ -2,9 +2,7 @@ import { Component, OnInit, Input, OnDestroy, ChangeDetectionStrategy } from '@a
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
-import { StructureService } from '../../../../_services/index';
-// import { environment } from "../../../../../environments/environment";
-// import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { StructureService, SearchResultService } from '../../../../_services/index';
 
 @Component({
   selector: 'app-structure-search-options',
@@ -33,7 +31,11 @@ export class StructureSearchOptionsComponent implements OnInit {
 
 
 
-  constructor(private router: Router, private route: ActivatedRoute, private structSvc: StructureService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private structSvc: StructureService,
+    private searchResultService: SearchResultService) {
     // look for pass back of the structure SMILES string
     this.structureSubscription = structSvc.smilesAnnounced$.subscribe(
       struct => {
@@ -51,8 +53,8 @@ export class StructureSearchOptionsComponent implements OnInit {
         this.tanimotoThresh = tm_thresh;
       });
 
-      // check if submitted previously
-    this.submitSubscription = structSvc.submitAnnounced$.subscribe(
+    // check if submitted previously
+    this.submitSubscription = searchResultService.submitAnnounced$.subscribe(
       submitted => {
         this.submitted = submitted;
       });
@@ -75,66 +77,58 @@ export class StructureSearchOptionsComponent implements OnInit {
   updateParams() {
     // Update the params, based on the route, if needed
     let params = this.route.queryParams['_value'];
-    if (params.hasOwnProperty('mode')) this.searchMode = params['mode'];
-    if (params.hasOwnProperty('tanimoto')) this.tanimotoThresh = params['tanimoto'];
-    if (params.hasOwnProperty('query')) {
-      this.submitted = true;
-      this.structSvc.announceSmiles(params['query'], true);
-    };
+    if (params['type'] === 'structure') {
+      if (params.hasOwnProperty('mode')) this.searchMode = params['mode'];
+      if (params.hasOwnProperty('tanimoto')) this.tanimotoThresh = params['tanimoto'];
+      if (params.hasOwnProperty('query')) {
+        this.submitted = true;
+        this.structSvc.announceSmiles(params['query']);
+      };
+    }
   }
 
   onChange() {
     // Announce the SMILES has changed, to grab the molfile to draw in ketcher
-    this.structSvc.announceSmiles(this.text_query, false);
+    this.structSvc.announceSmiles(this.text_query.trim());
+    this.structSvc.getMolfile(this.text_query.trim());
   }
 
   onSubmit() {
-    // tell ketcher that submit button has been pressed, so it can send back the SMILES structure
-    // this.submitted = true;
-    // Announce the SMILES has changed, to grab the molfile to draw in ketcher
-    this.structSvc.announceSmiles(this.text_query, true);
+    // Announce the SMILES has changed
+    this.structSvc.announceSmiles(this.text_query.trim());
 
+    this.structSvc.getMolfile(this.text_query.trim());
+
+    // call backend to send back search results
     this.submitQuery();
   }
 
   submitQuery() {
-    if (this.submitted) {
+    // check if structure has been submitted; needed to only launch search when TM changed after already searched
+    // if (this.submitted) {
+    let query = {
+      query: this.text_query.trim(),
+      type: 'structure',
+      mode: this.searchMode,
+    };
 
-      let query = {
-        query: this.text_query,
-        type: 'structure',
-        mode: this.searchMode,
-      };
-
-      if (this.searchMode === 'similarity') {
-        query['tanimoto'] = this.tanimotoThresh;
-      }
-
-      this.router.navigate(['search/'], {
-        queryParams: query
-
-      });
+    if (this.searchMode === 'similarity') {
+      query['tanimoto'] = this.tanimotoThresh;
     }
+
+    this.router.navigate(['search/'], {
+      queryParams: query
+
+    });
+    // } else {
+    // turn off results
+    // this.hideResults();
+    // }
   }
 
-  // getMolfile(): void {
-  //   this.http.get(environment.host_url + '/molfile', {
-  //     observe: 'response',
-  //     headers: new HttpHeaders()
-  //       .set('Accept', 'application/json'),
-  //     // .set('Authorization', localStorage.getItem('auth_token')),
-  //     params: new HttpParams()
-  //       .set('compound_structure', this.text_query)
-  //   }).subscribe((r) => {
-  //       let v = r.body;
-  //       console.log(v);
-  //
-  //       this.structSvc.announceMolFile(v['molfile'])
-  //       // this.assayDetails = v[0];
-  //     },
-  //     err => { }
-  //   );
-  //
-  // }
+  hideResults() {
+    this.searchResultService.announceSubmit(false);
+  }
+
 
 }

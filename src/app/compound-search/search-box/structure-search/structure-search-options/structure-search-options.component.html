@@ -4,7 +4,7 @@
 
   <!-- Loop over search options to create radio buttons -->
   <mat-radio-group [(ngModel)]="searchMode">
-    <mat-radio-button class="search-opt" *ngFor="let opt of searchOptions" [value]="opt.id" matTooltip="{{opt.tooltip}}">
+    <mat-radio-button class="search-opt" *ngFor="let opt of searchOptions" (change)="hideResults()" [value]="opt.id" matTooltip="{{opt.tooltip}}">
       {{opt.label}}
     </mat-radio-button>
   </mat-radio-group>
@@ -27,13 +27,11 @@
   <div class="search col-md-9">
 
     <!-- Search bar -->
-    <input type="text" class="search form-control" placeholder="search by SMILES or InChI"
-           autofocus [(ngModel)]="text_query" (keyup.enter)="onSubmit()" (input)="onChange()">
+    <input type="text" class="search form-control" placeholder="search by SMILES" autofocus [(ngModel)]="text_query" (keyup.enter)="onSubmit()" (input)="onChange()">
 
     <button mat-icon-button class='search-btn' (click)="onSubmit()">
       <mat-icon aria-label="search" color="accent" >search</mat-icon>
     </button>
 
-    <!-- <button mat-raised-button color="accent" class="pull-right">search</button> -->
   </div>
 </div>
