@@ -1,10 +1,19 @@
 export class SearchResult {
-  data: Object;
+  data: Object[];
   tabulatedData: Object;
-  responseCode?: number;
+  status?: number;
+  url?: string;
 
   constructor(obj?: any) {
-    this.data              = obj && obj.data             || null;
+    if (obj.data) {
+      this.data = obj.data['body']['results'];
+      this.status = obj.data.status || null;
+      this.url = obj.data.url || null;
+    } else {
+      this.data = null;
+      this.status = obj.status || null;
+      this.url = obj.url || null;
+    }
   }
 
 }

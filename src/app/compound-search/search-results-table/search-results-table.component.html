@@ -1,112 +1,109 @@
 <div class="container" *ngIf="displayResults">
   <h3>Search results</h3>
 
-  <div class="search-result-container mat-elevation-z0" *ngIf="dataSource.data.length > 0; else no_data">
-    <mat-table #table matSort [dataSource]="dataSource">
+  <ng-container *ngIf="responseCode === 200; else bad_query">
 
-      <!-- Drug name -->
-      <ng-container matColumnDef="main_label">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Name
-          <mat-icon class='sort-icon'>sort</mat-icon>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
+    <div class="search-result-container mat-elevation-z0" *ngIf="dataSource.data.length > 0; else no_data">
+      <mat-table #table matSort (matSortChange)="onSortChange($event)" [dataSource]="dataSource">
+
+        <!-- Drug name -->
+        <ng-container matColumnDef="main_label">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Name
+            <mat-icon class='sort-icon'>sort</mat-icon>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
             {{element['main_label']}}
           </a>
-        </mat-cell>
-      </ng-container>
+          </mat-cell>
+        </ng-container>
 
 
 
-      <!-- Aliases -->
-      <ng-container matColumnDef="alias">
-        <mat-header-cell *matHeaderCellDef>Aliases
-        </mat-header-cell>
-        <mat-cell *matCellDef="let element; let row=index">
-          <div>
-            <ul class="alias-list">
-              <li *ngFor="let alias of element.aliases | slice:0:element.alias_ct; let i=index" class="alias">
-                <!-- <ng-container *ngIf="i < num_aliases"> -->
-                {{alias}}
-                <span *ngIf="i + 1 < element.alias_ct && i + 1 < element.aliases.length" class='data-separator'></span>
-              </li>
-              <li>
-                <a *ngIf="element.alias_ct < element.aliases.length" id="more" (click)="showMore(row)" class="center-block">
+        <!-- Aliases -->
+        <ng-container matColumnDef="alias">
+          <mat-header-cell *matHeaderCellDef>Aliases
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element; let row=index">
+            <div>
+              <ul class="alias-list">
+                <li *ngFor="let alias of element.aliases | slice:0:element.alias_ct; let i=index" class="alias">
+                  <!-- <ng-container *ngIf="i < num_aliases"> -->
+                  {{alias}}
+                  <span *ngIf="i + 1 < element.alias_ct && i + 1 < element.aliases.length" class='data-separator'></span>
+                </li>
+                <li>
+                  <a *ngIf="element.alias_ct < element.aliases.length" id="more" (click)="showMore(row)" class="center-block">
                   show more
                 </a>
+                </li>
+              </ul>
+            </div>
+            <!-- Button to load more results -->
+
+          </mat-cell>
+        </ng-container>
+
+        <!-- Main ID -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element['id']}}</mat-cell>
+        </ng-container>
+
+
+
+        <!-- In physical library -->
+        <ng-container matColumnDef="reframeid">
+          <mat-header-cell *matHeaderCellDef mat-sort-header start="desc">Sample in Screening Library
+            <mat-icon class='sort-icon'>sort</mat-icon>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div>
+              <span [ngClass]="element['reframeid'] ? 'circle cmpd-avail' : 'circle no-cmpd'"></span>
+            </div>
+            <div class="similar" *ngIf="!element['reframeid']">similar library compound: <a target="_blank">name1 • name 2</a></div>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Tanimoto score -->
+        <ng-container matColumnDef="tanimoto">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Tanimoto Similarity Score
+            <mat-icon class='sort-icon'>sort</mat-icon>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element" [ngStyle]="{'background-color': tanimotoScale(element['tanimoto']),
+    'color': getFontColor(element['tanimoto'])}">
+            {{element['tanimoto'] | number: '1.2-2'}}</mat-cell>
+        </ng-container>
+
+        <!-- File Statuses Column: splayed out-->
+
+        <ng-container matColumnDef="assays">
+          <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header start="desc">
+            assay hits
+            <mat-icon class='sort-icon'>sort</mat-icon>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span class="circle" [ngStyle]="{'background-color': 'rgba(65, 74, 81,' + getColor(element.assay_types) + ')'}"></span>
+            <!-- <span class="circle" [ngStyle]="{'background-color': 'rgba(85, 98, 109,' + getColor(element.assay_types) + ')'}"></span> -->
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="assay_titles">
+          <mat-header-cell *matHeaderCellDef class="assay-label"></mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <ul class="assay-list">
+              <li class="assay-title" *ngFor="let assay of element.assay_types; let i=index">
+                <a [routerLink]="['/assays', assay[1]]" target="_blank">{{assay[0]}}</a>
+                <span *ngIf="i + 1 < element.assay_types.length" class='data-separator'></span>
               </li>
             </ul>
-          </div>
-          <!-- Button to load more results -->
+            <!-- <span [ngClass]="element['assay_types'].indexOf(assay) > -1 ? 'circle assay-avail' : 'circle no-assay'"></span> -->
+          </mat-cell>
+        </ng-container>
 
-        </mat-cell>
-      </ng-container>
-
-      <!-- Main ID -->
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{element['id']}}</mat-cell>
-      </ng-container>
-
-
-      <!-- <ng-container matColumnDef="qid">
-      <mat-header-cell *matHeaderCellDef> Wikidata ID </mat-header-cell>
-      <mat-cell *matCellDef="let element"><a href="http://www.wikidata.org/entity/{{element['qid']}}" target="_blank">{{element['qid'].split('/').pop()}}</a></mat-cell>
-    </ng-container> -->
-
-
-      <!-- In physical library -->
-      <ng-container matColumnDef="reframeid">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Sample in Screening Library
-          <mat-icon class='sort-icon'>sort</mat-icon>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <div>
-            <span [ngClass]="element['reframeid'] ? 'circle cmpd-avail' : 'circle no-cmpd'"></span>
-          </div>
-          <div class="similar" *ngIf="!element['reframeid']">similar library compound: <a target="_blank">name1 • name 2</a></div>
-        </mat-cell>
-      </ng-container>
-
-      <!-- Tanimoto score -->
-      <ng-container matColumnDef="tanimoto">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Tanimoto Similarity Score
-          <mat-icon class='sort-icon'>sort</mat-icon>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let element" [ngStyle]="{'background-color': tanimotoScale(element['tanimoto']),
-    'color': getFontColor(element['tanimoto'])}">
-          {{element['tanimoto'] | number: '1.2-2'}}</mat-cell>
-      </ng-container>
-
-      <!-- File Statuses Column: splayed out-->
-
-      <ng-container matColumnDef="assays">
-        <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header>
-          assay hits
-          <mat-icon class='sort-icon'>sort</mat-icon>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <span class="circle" [ngStyle]="{'background-color': 'rgba(65, 74, 81,' + getColor(element.assay_types) + ')'}"></span>
-          <!-- <span class="circle" [ngStyle]="{'background-color': 'rgba(85, 98, 109,' + getColor(element.assay_types) + ')'}"></span> -->
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="assay_titles">
-        <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header></mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <ul class="assay-list">
-            <li class="assay-title" *ngFor="let assay of element.assay_types; let i=index">
-              <a [routerLink]="['/assays', assay[1]]" target="_blank">{{assay[0]}}</a>
-              <span *ngIf="i + 1 < element.assay_types.length" class='data-separator'></span>
-            </li>
-          </ul>
-          <!-- <span [ngClass]="element['assay_types'].indexOf(assay) > -1 ? 'circle assay-avail' : 'circle no-assay'"></span> -->
-        </mat-cell>
-      </ng-container>
-
-      <!-- File Statuses Column: splayed out-->
-      <!-- <span *ngFor="let assay of assays; let i=index">
+        <!-- File Statuses Column: splayed out-->
+        <!-- <span *ngFor="let assay of assays; let i=index">
 <ng-container matColumnDef="{{ assay }}">
   <mat-header-cell *matHeaderCellDef class="assay-label"> {{ assay }} </mat-header-cell>
   <mat-cell *matCellDef="let element">
@@ -115,16 +112,17 @@
       </ng-container>
       </span> -->
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns; let element;"></mat-row>
-      <!-- Original routing, where row click directs to compound page -->
-      <!-- <mat-row *matRowDef="let row; columns: displayedColumns; let element;" (click)="rowClicked($event, element['qid'], element['id'])"></mat-row> -->
-    </mat-table>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns; let element;"></mat-row>
+        <!-- Original routing, where row click directs to compound page -->
+        <!-- <mat-row *matRowDef="let row; columns: displayedColumns; let element;" (click)="rowClicked($event, element['qid'], element['id'])"></mat-row> -->
+      </mat-table>
 
-    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]">
-    </mat-paginator>
-  </div>
+      <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[10, 25, 50, 100]" (page)="onPageChange($event)">
+      </mat-paginator>
 
+    </div>
+  </ng-container>
 
   <!-- Display "nothing found" if no data -->
   <ng-template #no_data>
@@ -133,43 +131,15 @@
     </div>
   </ng-template>
 
+  <ng-template #bad_query>
+    <p>
+      Your query resulted in an error. Often, this happens if the inputted structure is an invalid SMILES string or InChI key. </p>
+    <p>
+      Check the SMILES structure for improper aromatization, use keuklized SMILES strings, and/or remove generic atoms.</p>
+    <p>
+
+      Please try again and if it persists, email <a href="mailto:help@reframedb.org?subject=ReFrameDB bad query: {{ APIquery }}">help@reframedb.org</a>
+    </p>
+  </ng-template>
+
 </div>
-
-<!-- Original table design, heavy on compound ids -->
-<!-- <div class="search-result-container mat-elevation-z0">
-  <mat-table #table [dataSource]="dataSource">
-
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element['name']}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="ikey">
-      <mat-header-cell *matHeaderCellDef> InChI Key </mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element['ikey']}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="chemspider">
-      <mat-header-cell *matHeaderCellDef> ChemSpider </mat-header-cell>
-      <mat-cell *matCellDef="let element"><a href="http://www.chemspider.com/Chemical-Structure.{{element['chemspider']}}.html" target="_blank">{{element['chemspider']}}</a></mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="pubchem">
-      <mat-header-cell *matHeaderCellDef> PubChem </mat-header-cell>
-      <mat-cell *matCellDef="let element"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{element['pubchem']}}" target="_blank">{{element['pubchem']}}</a></mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="qid">
-      <mat-header-cell *matHeaderCellDef> Wikidata ID </mat-header-cell>
-      <mat-cell *matCellDef="let element"><a href="{{element['qid']}}" target="_blank">{{element['qid'].split('/').pop()}}</a></mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns; let element;"  (click)="rowClicked($event, element['qid'])"></mat-row>
-  </mat-table>
-
-  <mat-paginator #paginator
-                 [pageSize]="10"
-                 [pageSizeOptions]="[5, 10, 20]">
-  </mat-paginator>
-</div> -->
