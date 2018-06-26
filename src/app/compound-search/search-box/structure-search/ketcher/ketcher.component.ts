@@ -167,7 +167,7 @@ export class KetcherComponent implements OnInit {
   onDraw() {
     // this.structSvc.announceDrawn(true);
     this.getSmiles();
-    this.structSvc.announceSmiles(this.structQuery, false);
+    this.structSvc.announceSmiles(this.structQuery);
   }
 
 
