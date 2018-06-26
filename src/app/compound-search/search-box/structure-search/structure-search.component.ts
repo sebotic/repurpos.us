@@ -33,6 +33,9 @@ export class StructureSearchComponent implements OnInit {
       if (pressedStatus && windowHeight < 1100) {
         this.pressed = true;
         this.panelOpenState = false;
+      } else {
+        this.pressed = false;
+        this.panelOpenState = true;
       }
     })
   }
