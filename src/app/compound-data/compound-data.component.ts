@@ -338,23 +338,29 @@ export class CompoundDataComponent implements OnInit {
     // extract aliases an make sure label is set
     let alias_arr: string[] = this.aliases;
 
-    for (let name of this.gvkData['drug_name']) {
-      this.set_label(name);
-      alias_arr.push(name);
+    if (Object.keys(this.gvkData).length > 0) {
+      for (let name of this.gvkData['drug_name']) {
+        this.set_label(name);
+        alias_arr.push(name);
+      }
+
+      for (let name of this.gvkData['synonyms']) {
+        alias_arr.push(name);
+      }
     }
 
-    for (let name of this.gvkData['synonyms']) {
-      alias_arr.push(name);
-    }
+    if (Object.keys(this.integrityData).length > 0) {
+      for (let name of this.integrityData['drug_name']) {
+        this.set_label(name);
+        alias_arr.push(name);
+      }
+}
 
-    for (let name of this.integrityData['drug_name']) {
-      this.set_label(name);
-      alias_arr.push(name);
-    }
-
-    for (let name of this.informaData['drug_name']) {
-      this.set_label(name);
-      alias_arr.push(name);
+    if (Object.keys(this.informaData).length > 0) {
+      for (let name of this.informaData['drug_name']) {
+        this.set_label(name);
+        alias_arr.push(name);
+      }
     }
 
     // de-duplicate
