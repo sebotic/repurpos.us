@@ -107,3 +107,28 @@ td {
 #hidden {
   opacity: 0;
 }
+
+/* Assay & Alias lists */
+h4 {
+  margin-bottom: 3px;
+}
+
+.alias {
+  font-size: 0.75em;
+  padding-bottom: 3px;
+}
+
+.alias ul {
+  list-style-type: none;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+.alias li {
+  display: inline-block;
+}
+
+a#more {
+  color: #2125298f;
+  cursor: pointer;
+}

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 
-import { SimilarityData } from '../../_models/index';
+import { SimilarityData, Compound } from '../../_models/index';
 
 import { TanimotoScaleService } from '../../_services/index';
 
@@ -12,10 +12,8 @@ import { TanimotoScaleService } from '../../_services/index';
 })
 
 export class SimilarCompoundsComponent implements OnInit {
-  @Input() similarityResults: Array<SimilarityData>;
+  @Input() similarityResults: Array<Compound>;
   @Input() results_per_page: number;
-
-  similarityData: Array<SimilarityData> = [];
 
   tanimotoScale: any; // color scale for tanimoto scores
 
@@ -28,19 +26,22 @@ export class SimilarCompoundsComponent implements OnInit {
 
   ngOnInit() {
     this.num_results = this.results_per_page;
+  }
+
+  ngOnChanges() {
     this.prepSimilarityData();
   }
 
-  prepSimilarityData(){
-    this.similarityData = this.similarityResults;
-    this.similarityData = this.similarityData.sort((a:any, b:any) => b.tanimoto - a.tanimoto);
-
+  prepSimilarityData() {
+    if (this.similarityResults) {
+      this.similarityResults = this.similarityResults.sort((a: any, b: any) => b.tanimoto - a.tanimoto);
+    }
   }
 
   showMore() {
     this.num_results += this.results_per_page;
     // check to make sure haven't hit the end of the results
-    this.num_results = Math.min(this.num_results, this.similarityData.length);
+    this.num_results = Math.min(this.num_results, this.similarityResults.length);
   }
 
 }
