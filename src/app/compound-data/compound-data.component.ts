@@ -45,34 +45,20 @@ export class CompoundDataComponent implements OnInit {
 
   idData: Array<Object> = [];
   assayData: any = [];
-  gvkData: Object = [];
-  informaData: Object = [];
-  integrityData: Object = [];
+  gvkData: GVKData;
+  informaData: InformaData;
+  integrityData: IntegrityData;
 
   // Parameters for similarity results
   num_similar_per_page: number = 4;
   tanimoto: number = 0.85; // threshold for TM score
-  // TODO: replace (temporary, for testing purposes)
   similarityResults: Object[];
-  // similarityResults: Array<SimilarityData> = [
-  //   { name: 'compound1', match_type: 'tanimoto', url: 'Q27286421', tanimoto: 0.77, pubchem_id: 'CID1691', properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: false }, { name: 'assay hits', value: true }, { name: 'Wikidata ', value: false }, { name: 'GVK', value: false }, { name: 'Integrity', value: true }, { name: 'Citeline', value: true }] },
-  //   { name: 'compound2', match_type: 'stereo-free', url: 'Q272864212', tanimoto: 0.22, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
-  //   { name: 'compound3', match_type: 'stereo-free', url: 'Q272864213', tanimoto: 0.42, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
-  //   { name: 'compound4', match_type: 'stereo-free', url: 'Q272864214', tanimoto: 0.62, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
-  //   { name: 'compound5', match_type: 'stereo-free', url: 'Q272864215', tanimoto: 0.87, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
-  //   { name: 'compound6', match_type: 'stereo-free', url: 'Q272864216', tanimoto: 0.83, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
-  //   { name: 'compound7', match_type: 'stereo-free', url: 'Q272864217', tanimoto: 0.52, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
-  //   { name: 'compound8', match_type: 'stereo-free', url: 'Q272864218', tanimoto: 0.72, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
-  //   { name: 'compound9', match_type: 'stereo-free', url: 'Q272864218', tanimoto: 0.36, properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: false }, { name: 'Wikidata', value: true }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] },
-  //   { name: 'compound10', match_type: 'tanimoto', url: 'Q2728642110', tanimoto: 0.95, pubchem_id: 'CID3401', properties: [{ name: 'screening collection', tooltip: "physical compound available in screening collection", value: true }, { name: 'assay hits', value: true }, { name: 'Wikidata', value: false }, { name: 'GVK', value: true }, { name: 'Integrity', value: false }, { name: 'Citeline', value: false }] }
-  // ];
 
   showMoreProperties = ['P3489', 'P2868', 'P129', 'P3776', 'P3777', 'P3771'];
 
   excludeFromTableDisplay: Array<string> = ['P2175'];
 
   displayShowMorePane: boolean = false;
-  testJson;
 
   vendors: Array<Object> = [
     { 'name': 'GVK Excelra GoStar', 'link': 'https://gostardb.com/gostar/loginEntry.do' },
@@ -267,7 +253,7 @@ export class CompoundDataComponent implements OnInit {
 
 
   set_cid(): void {
-    for (let i of [this.gvkData[0], this.informaData[0], this.integrityData[0]]) {
+    for (let i of [this.gvkData, this.informaData, this.integrityData]) {
       if ('PubChem CID' in i && !this.cid) {
         this.cid = i['PubChem CID'].substring(3);
         this.cidService.announceNewCID(this.cid);
@@ -303,12 +289,10 @@ export class CompoundDataComponent implements OnInit {
       }).subscribe((r) => {
         let b = r.body[this.id];
         this.reframeID = b.reframe_id;
-        this.gvkData = [b.gvk];
-        this.informaData = [b.informa];
-        this.integrityData = [b.integrity];
+        this.gvkData = b.gvk;
+        this.informaData = b.informa;
+        this.integrityData = b.integrity;
         this.assayData = b.assay;
-
-        console.log(this.gvkData)
 
         this.set_cid();
 
@@ -319,23 +303,20 @@ export class CompoundDataComponent implements OnInit {
   }
 
   retrieveSimilarData(): void {
-      console.log(this.gvkData)
     let smiles: string;
     if (this.table_data.map((d: any) => d.property).indexOf('isomeric SMILES') > -1) {
       smiles = this.table_data.find((d: any) => d.property === "isomeric SMILES")['values'][0];
     } else if (this.table_data.map((d: any) => d.property).indexOf('canonical SMILES') > -1) {
       smiles = this.table_data.find((d: any) => d.property === "canonical SMILES")['values'][0];
     } else {
-      smiles = this.informaData[0]['smiles'] || this.integrityData[0]['smiles'] || this.gvkData[0]['smiles'];
+      smiles = this.informaData['smiles'] || this.integrityData['smiles'] || this.gvkData['smiles'];
     }
-    console.log(smiles)
 
     if (smiles) {
       this.searchSvc.searchSimilarity(smiles, this.tanimoto)
         .subscribe(
           (results: SearchResult) => {
-            console.log('similiarity results')
-            console.log(results)
+            // console.log(results)
 
             // filter out the search query (e.g. the compound on the page that launched the search)
             this.similarityResults = results.data.filter((d: any) => d.id !== this.id);
@@ -357,27 +338,25 @@ export class CompoundDataComponent implements OnInit {
     // extract aliases an make sure label is set
     let alias_arr: string[] = this.aliases;
 
-    for (let i in this.gvkData[0]['drug_name']) {
-      let name = this.gvkData[0]['drug_name'][i];
+    for (let name of this.gvkData['drug_name']) {
       this.set_label(name);
       alias_arr.push(name);
     }
 
-    for (let i in this.gvkData[0]['synonyms']) {
-      alias_arr.push(this.gvkData[0]['synonyms'][i]);
+    for (let name of this.gvkData['synonyms']) {
+      alias_arr.push(name);
     }
 
-    for (let i in this.integrityData[0]['drug_name']) {
-      let name = this.integrityData[0]['drug_name'][i];
+    for (let name of this.integrityData['drug_name']) {
       this.set_label(name);
       alias_arr.push(name);
     }
 
-    for (let i in this.informaData[0]['drug_name']) {
-      let name = this.informaData[0]['drug_name'][i];
+    for (let name of this.informaData['drug_name']) {
       this.set_label(name);
       alias_arr.push(name);
     }
+
     // de-duplicate
     let alias_set = new Set(alias_arr);
 
@@ -395,7 +374,6 @@ export class CompoundDataComponent implements OnInit {
 
   // Alias function to do a hard scrub on closely related aliases, for the similar compounds
   removeDupeAlias(arr: string[]) {
-    console.log(arr)
     let unique_alias: string[] = [];
     let stripped_alias: string[] = [];
 
@@ -419,7 +397,7 @@ export class CompoundDataComponent implements OnInit {
       }
     }
 
-    return (unique_alias.sort((a:string, b:string) => a.toLowerCase() > b.toLowerCase() ? 1 : -1));
+    return (unique_alias.sort((a: string, b: string) => a.toLowerCase() > b.toLowerCase() ? 1 : -1));
 
   }
 
@@ -463,11 +441,11 @@ export class CompoundDataComponent implements OnInit {
     	SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
     }&format=json
     `;
-    console.log(query);
+    // console.log(query);
     this.http.request(query)
       .subscribe((res: Response) => {
         let tt = res.json();
-        console.log(tt);
+        // console.log(tt);
 
         if (disease_qids.length !== 0) {
 
