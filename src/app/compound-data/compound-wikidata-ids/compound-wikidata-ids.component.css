@@ -22,10 +22,11 @@
   font-size: 0.85em;
 }
 
-.wikidata:first-of-type{
-  font-size: 1.25em;
+.formula {
+  font-size: 1.5em;
 }
-.wikidata:first-of-type .title {
+
+.formula-title {
   display: none;
 }
 

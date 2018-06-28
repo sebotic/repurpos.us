@@ -36,7 +36,7 @@
       </div>
 
       <!-- Aliases -->
-      <div class="row-fluid alias">
+      <div class="row-fluid alias" *ngIf="aliases.length > 0">
         <b>Aliases: </b>
         <span *ngFor="let alias of aliases | slice:0:alias_ct; let i=index;">
           {{alias}}

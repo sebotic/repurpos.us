@@ -1,11 +1,13 @@
-<h4>Chemical data <span *ngIf="qid">(Wikidata)</span></h4>
 <ng-container *ngIf="table_data.length > 0; else vendor_cheminfo">
+  <div>
+    <h4>Chemical data (Wikidata)</h4>
+  </div>
   <!-- Chemical formula, InChIKey, SMILES -->
   <div class="chem-props alias wikidata" *ngFor="let x of table_data">
     <span *ngIf="x['property'] == 'chemical formula' || x['property'] == 'InChI' || x['property'] == 'InChIKey' || x['property'] == 'canonical SMILES' || x['property'] == 'isomeric SMILES'">
-  <div class="title" scope="row">{{ x['property'] }}</div>
+  <div [ngClass]="x['property'] === 'chemical formula' ? 'formula-title' : 'title'" scope="row">{{ x['property'] }}</div>
   <div scope="row" [ngClass]="{'smiles': x['property'] == 'canonical SMILES' || x['property'] == 'isomeric SMILES'}">
-    <span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">
+    <span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;" [ngClass]="x['property'] === 'chemical formula' ? 'formula' : ''">
       {{z}}
     </span>
   </div>
@@ -50,6 +52,10 @@
 
 <!-- If no wikidata data are available, use the information from the vendors -->
 <ng-template #vendor_cheminfo>
+
+  <div *ngIf="gvkData">
+    <h4>Chemical data</h4>
+  </div>
 
   <ng-container *ngIf='gvkData'>
     <div class="chem-props alias" *ngIf="gvkData.hasOwnProperty('smiles')">
