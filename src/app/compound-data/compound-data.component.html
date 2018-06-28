@@ -10,7 +10,7 @@
     <div class="col-md-4">
 
       <!-- PubChem 3D structure -->
-      <app-ngl></app-ngl>
+      <app-ngl [input]="cid" *ngIf="cid"></app-ngl>
 
       <!-- Chemical ids -->
       <app-compound-wikidata-ids [qid]="qid" [table_data]="table_data" [idData]="idData" [gvkData]="gvkData" [integrityData]="integrityData" [informaData]="informaData"></app-compound-wikidata-ids>

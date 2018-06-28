@@ -25,9 +25,10 @@ import { environment } from "../../environments/environment";
 export class CompoundDataComponent implements OnInit {
   qid: string;
   id: string;
+  cid: string;
   reframeID: string;
-  results: Object;
-  data: Object;
+  // results: Object;
+  // data: Object;
   loggedIn: boolean;
   showVendor: boolean = false;
   label: string;
@@ -91,7 +92,6 @@ export class CompoundDataComponent implements OnInit {
   //   'P2115': 'NDF-RT ID'
   // };
 
-  cid: string;
 
   constructor(
     @Inject(forwardRef(() => WDQService)) public wd: WDQService,
@@ -143,7 +143,7 @@ export class CompoundDataComponent implements OnInit {
       }
 
 
-
+      // Wait for all the data to come back before making the call to get similarity data and append all aliases
       Promise.all([this.buildWD(), this.retrieveData()]).then(allData => {
         // Run a query to get any compounds that are similar
         this.retrieveSimilarData();
@@ -244,6 +244,12 @@ export class CompoundDataComponent implements OnInit {
         }
         else {
           this.retrieveLabels(Array.from(tmp['P2175']['qids']).map((x: string) => x.split('/').pop()));
+        }
+
+        let pubchem_id = this.idData.find((d: any) => d.property === 'PubChem CID');
+
+        if (pubchem_id) {
+          this.cid = pubchem_id['values'][0]
         }
 
         resolve("Success with WD!");
@@ -354,7 +360,7 @@ export class CompoundDataComponent implements OnInit {
         this.set_label(name);
         alias_arr.push(name);
       }
-}
+    }
 
     if (Object.keys(this.informaData).length > 0) {
       for (let name of this.informaData['drug_name']) {

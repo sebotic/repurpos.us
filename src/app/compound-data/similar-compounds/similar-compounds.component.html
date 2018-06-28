@@ -36,7 +36,8 @@
             <div class="col-sm-6 col-xs-12 similar-struct" *ngIf="related.pubchem">
               <!-- PubChem API can search based on InChI keys- however only returns if there's a CID -->
                 <!-- <img src="https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchikey/{{related.id}}/PNG" class="img-responsive" alt="structure {{related.main_label}}"> -->
-                <img src="https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{{related.pubchem.replace('CID', '')}}/PNG" class="img-responsive" alt="structure {{related.main_label}}">
+                <!-- <img src="https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{{related.pubchem.replace('CID', '')}}/PNG" class="img-responsive" alt="structure {{related.main_label}}"> -->
+                <app-ngl [input]="related.pubchem.replace('CID', '')"></app-ngl>
             </div>
 
             <!-- List of available data -->
