@@ -4,7 +4,7 @@ import { Subject } from "rxjs/Subject";
 import { isNullOrUndefined } from "util";
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 
-import { CIDService } from '../../_services/index';
+// import { CIDService } from '../../_services/index';
 
 @Component({
   selector: 'app-ngl',
@@ -20,9 +20,9 @@ export class NglComponent implements OnInit {
   modelSele = "/0";
   stage;
   cid;
-  @Input() input: string;
+  // @Input() input: string;
 
-  constructor(private cidService: CIDService, private http: HttpClient) {
+  constructor(private http: HttpClient) {
     // this.cidService.newCID$.subscribe(
     //   cid => {
     //     if (isNullOrUndefined(this.cid)) {
@@ -53,10 +53,10 @@ export class NglComponent implements OnInit {
   }
 
   ngOnChanges() {
-    if (this.input) {
-      this.cid = this.input;
-      this.renderMolecule();
-    }
+    // if (this.input) {
+    //   this.cid = this.input;
+    //   this.renderMolecule();
+    // }
   }
 
   makeMolecule(blob: Blob, fileType: string) {
