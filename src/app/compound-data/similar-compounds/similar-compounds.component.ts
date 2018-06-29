@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 
-import { SimilarityData, Compound } from '../../_models/index';
+import { Compound } from '../../_models/index';
 
 import { TanimotoScaleService } from '../../_services/index';
 
@@ -33,6 +33,7 @@ export class SimilarCompoundsComponent implements OnInit {
   }
 
   prepSimilarityData() {
+    // console.log(this.similarityResults)
     if (this.similarityResults) {
       this.similarityResults = this.similarityResults.sort((a: any, b: any) => b.tanimoto - a.tanimoto);
     }
