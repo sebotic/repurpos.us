@@ -22,7 +22,7 @@ export class SearchBoxComponent implements OnInit {
   selectedTab: number = this.textSearch_tabIdx;
 
   constructor(
-    public wd: BackendSearchService,
+    public searchSvc: BackendSearchService,
     private searchResultService: SearchResultService,
     private route: ActivatedRoute,
     private router: Router,
@@ -36,7 +36,7 @@ export class SearchBoxComponent implements OnInit {
         if (params['query'] && 'type' in params && params['type'] === 'string') {
           this.searchQuery = params['query'];
 
-          this.wd.search(this.searchQuery)
+          this.searchSvc.search(this.searchQuery)
             .subscribe(
               (results: SearchResult) => {
                 // console.log(results)
@@ -60,7 +60,7 @@ export class SearchBoxComponent implements OnInit {
         if (params['query'] && 'tanimoto' in params) {
           this.structSvc.announceTanimoto(params['tanimoto']);
 
-          this.wd.searchSimilarity(this.searchQuery, params['tanimoto'])
+          this.searchSvc.searchSimilarity(this.searchQuery, params['tanimoto'])
             .subscribe(
               (results: SearchResult) => {
                 this.searchResultService.announceNewSearchResult(results);
@@ -73,7 +73,7 @@ export class SearchBoxComponent implements OnInit {
 
         // Launch Exact and stereo-free structure matches
         if (params['query'] && 'type' in params && params['type'] === 'structure' && params['mode'] === 'exact') {
-          this.wd.searchStructExact(this.searchQuery, 'exact')
+          this.searchSvc.searchStructExact(this.searchQuery, 'exact')
             .subscribe(
               (results: SearchResult) => {
                 this.searchResultService.announceNewSearchResult(results);
@@ -84,7 +84,7 @@ export class SearchBoxComponent implements OnInit {
             );
         } else if (params['query'] && 'type' in params && params['type'] === 'structure' && params['mode'] === 'stereofree') {
 
-          this.wd.searchStructExact(this.searchQuery, 'stereofree')
+          this.searchSvc.searchStructExact(this.searchQuery, 'stereofree')
             .subscribe(
               (results: SearchResult) => {
                 this.searchResultService.announceNewSearchResult(results);

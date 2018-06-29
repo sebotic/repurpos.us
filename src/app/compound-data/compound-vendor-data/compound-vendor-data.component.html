@@ -1,9 +1,9 @@
 <div id="vendor-data" *ngIf="loggedIn; else login_vendor">
-  <div *ngFor="let yy of [gvkData, integrityData, informaData]; let k = index;">
-    <div *ngIf="yy[0] && (yy[0].mechanism || yy[0].category)">
+  <div *ngFor="let x of [gvkData, integrityData, informaData]; let k = index;">
+    <div *ngIf="x && (x.mechanism || x.category)">
       <H3><a href="{{vendors[k].link}}" target="_blank">{{vendors[k].name}} data</a></H3>
 
-      <table class="table cmpd-table" *ngFor="let x of yy">
+      <table class="table cmpd-table">
 
         <!-- Category -->
         <tr *ngIf="x && x.hasOwnProperty('category') && x['category'].length > 0">

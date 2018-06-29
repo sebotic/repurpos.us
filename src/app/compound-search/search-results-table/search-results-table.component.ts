@@ -1,21 +1,9 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
-import { SearchResult } from '../../_models/index';
+import { SearchResult, Compound } from '../../_models/index';
 import { BackendSearchService, SearchResultService, TanimotoScaleService } from '../../_services/index';
 
-export interface Compound {
-
-  id: string;
-  test: string;
-  main_label: string;
-  assay_types: string[];
-  alias: string[];
-  assays: number;
-  tanimoto_score?: number;
-  reframeid?: string;
-  qid?: string;
-}
 
 @Component({
   selector: 'app-search-results-table',
@@ -223,7 +211,7 @@ export class SearchResultsTableComponent implements OnInit {
     let strip_alias = function(str: string) {
       // regex remove (), -'s, case specificity
       let re = /\((.*)\)/;
-      return (str.replace(re, '').replace('-', '').trim().toLowerCase())
+      return (str.replace('-', '').replace(re, '').trim().toLowerCase())
     }
 
     let current_alias: string;

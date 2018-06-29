@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 // import { Router, ActivatedRoute } from '@angular/router';
 
-import { SimilarityData } from '../../_models';
+import { Compound } from '../../_models';
 
 @Component({
   selector: 'app-compound-header',
@@ -17,7 +17,7 @@ export class CompoundHeaderComponent implements OnInit {
   @Input() chemVendors: Array<Object> = [];
   @Input() integrityData: Object = [];
   @Input() results_per_page: number;
-  @Input() similarityData: Array<SimilarityData>;
+  @Input() similarityResults: Array<Compound>;
   @Input() _location: Location;
 
   num_aliases: number = 35;
@@ -28,9 +28,7 @@ export class CompoundHeaderComponent implements OnInit {
 
 
   onAnchorClick(anchor_tag: string) {
-    // console.log(anchor_tag)
     let anchor_div = document.querySelector("#" + anchor_tag);
-    // console.log(x)
     if (anchor_div) {
       anchor_div.scrollIntoView();
     }

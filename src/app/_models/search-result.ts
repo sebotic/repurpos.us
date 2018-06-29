@@ -17,3 +17,15 @@ export class SearchResult {
   }
 
 }
+
+export interface Compound {
+  id: string;
+  test: string;
+  main_label: string;
+  assay_types: string[];
+  alias: string[];
+  assays: number;
+  tanimoto_score?: number;
+  reframeid?: string;
+  qid?: string;
+}

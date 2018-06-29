@@ -36,7 +36,7 @@
       </div>
 
       <!-- Aliases -->
-      <div class="row-fluid alias">
+      <div class="row-fluid alias" *ngIf="aliases.length > 0">
         <b>Aliases: </b>
         <span *ngFor="let alias of aliases | slice:0:alias_ct; let i=index;">
           {{alias}}
@@ -52,10 +52,10 @@
 
 
       <!-- Related compounds -->
-      <div class="row-fluid related" *ngIf="similarityData.length > 0">
+      <div class="row-fluid related" *ngIf="similarityResults && similarityResults.length > 0">
         <b>Similar compounds: </b>
-        <span *ngFor="let related of similarityData | slice: 0:results_per_page; let i=index;"><a (click)="onAnchorClick(related.url)">{{related.name}}</a><span *ngIf="i + 1 < similarityData.length" class='data-separator'></span></span>
-        <span *ngIf="similarityData.length > results_per_page"><a (click)="onAnchorClick('more')">more</a></span>
+        <span *ngFor="let related of similarityResults | slice: 0:results_per_page; let i=index;"><a (click)="onAnchorClick(related.id)">{{related.main_label}}</a><span *ngIf="i + 1 < similarityResults.length" class='data-separator'></span></span>
+        <span *ngIf="similarityResults.length > results_per_page"><a (click)="onAnchorClick('more')">more</a></span>
       </div>
 
 
