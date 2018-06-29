@@ -23,3 +23,8 @@
 	padding-bottom: 20px;
 	cursor: pointer;
 }
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 
-import { SimilarityData, Compound } from '../../_models/index';
+//import { SimilarityData, Compound } from '../../_models/index';
+import { Compound } from '../../_models/index';
 
 import { TanimotoScaleService } from '../../_services/index';
 

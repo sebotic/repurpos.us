@@ -3,29 +3,29 @@
 
 <form (ngSubmit)="onSubmit($event)" [formGroup]="form" [hidden]="regSuccess">
   <div class="user-form-container">
-    <div formGroupName="name">
-    <mat-form-field>
-      <input matInput placeholder="First Name" id="firstName"
-             required
-             name="firstName"
-             formControlName="firstName"
-             [(ngModel)]="user.firstName"
-             >
-      <!--<mat-error *ngIf="form['controls'].name['controls'].firstName.errors && !form['controls'].name['controls'].firstName.pristine" [hidden]="!form['controls'].name['controls'].firstName.errors.required">Name is required</mat-error>-->
-      <mat-error *ngIf="form['controls'].name['controls'].firstName.errors  && !form['controls'].name['controls'].firstName.pristine"
-                 [hidden]="!form['controls'].name['controls'].firstName.hasError('minLength')">Name too short</mat-error>
+    <div class="form-group" formGroupName="name">
+      <mat-form-field>
+        <input matInput placeholder="First Name" id="firstName"
+               required
+               name="firstName"
+               formControlName="firstName"
+               >
+        <!--<mat-error *ngIf="form['controls'].name['controls'].firstName.errors && !form['controls'].name['controls'].firstName.pristine" [hidden]="!form['controls'].name['controls'].firstName.errors.required">Name is required</mat-error>-->
+        <mat-error *ngIf="form['controls'].name['controls'].firstName.errors  && !form['controls'].name['controls'].firstName.pristine"
+                   [hidden]="!form['controls'].name['controls'].firstName.hasError('minLength')">Name too short</mat-error>
 
-    </mat-form-field>
-      <!--<span *ngIf="form['controls'].name['controls'].firstName.errors && !form['controls'].name['controls'].firstName.pristine" class="mat-error">-->
-      <!--</span>-->
-    <mat-form-field>
-      <input matInput placeholder="Last Name" id="lastName"
-             required
-              name="lastName"
-             formControlName="lastName"
-             [(ngModel)]="user.lastName"
-             >
-    </mat-form-field>
+      </mat-form-field>
+        <!--<span *ngIf="form['controls'].name['controls'].firstName.errors && !form['controls'].name['controls'].firstName.pristine" class="mat-error">-->
+        <!--</span>-->
+      <mat-form-field>
+        <input matInput placeholder="Last Name" id="lastName"
+               required
+                name="lastName"
+               formControlName="lastName"
+               >
+        <mat-error *ngIf="form['controls'].name['controls'].lastName.errors  && !form['controls'].name['controls'].lastName.pristine"
+                   [hidden]="!form['controls'].name['controls'].lastName.hasError('minLength')">Name too short</mat-error>
+      </mat-form-field>
     </div>
 
 
@@ -34,7 +34,6 @@
              formControlName="email"
              required
              id="email"
-             [(ngModel)]="user.email"
              name="email">
 
       <mat-error *ngIf="form['controls'].email.errors && !form['controls'].email.pristine">{{getErrorMessage()}}</mat-error>
@@ -75,13 +74,12 @@
              <!--#name="ngModel">-->
     <!--</mat-form-field>-->
 
-    <div formGroupName="password">
+    <div class="form-group" formGroupName="password">
     <mat-form-field>
       <input matInput placeholder="Password" id="password" [type]="'password'"
              required
              name="password"
              formControlName="password"
-             [(ngModel)]="user.password"
              >
       <mat-error *ngIf="form['controls'].password['controls'].password.errors
                         && !form['controls'].password['controls'].password.pristine"

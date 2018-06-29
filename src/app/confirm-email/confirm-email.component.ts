@@ -14,7 +14,6 @@ export class ConfirmEmailComponent implements OnInit {
 	cid: string;
 	confirmResponse: string;
 	confirmFail: boolean = false;
-	confirmEmail: string;
 	confirmForm: FormGroup;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, @Inject(FormBuilder) fb: FormBuilder) {
@@ -23,7 +22,7 @@ export class ConfirmEmailComponent implements OnInit {
   	});
 
   	this.confirmForm = fb.group({
-      email: new FormControl(this.confirmEmail, [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email]),
     });
   }
 
@@ -49,7 +48,7 @@ export class ConfirmEmailComponent implements OnInit {
 
   onSubmit(event) {
   	this.http.post(environment.host_url + '/auth/confirm/link',
-      {"email": this.confirmEmail }, {
+      {"email": this.confirmForm.controls.email.value }, {
         observe: 'response',
         // withCredentials: true,
         headers: new HttpHeaders()

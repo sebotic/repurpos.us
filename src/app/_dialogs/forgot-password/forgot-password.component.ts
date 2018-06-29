@@ -11,12 +11,11 @@ import { environment } from "../../../environments/environment";
 export class ForgotPasswordComponent implements OnInit {
 	forgotResponse: string;
 	forgotSuccess: boolean = false;
-	forgotPasswordEmail: string;
 	forgotPassForm: FormGroup;
 
   constructor(private http: HttpClient, @Inject(FormBuilder) fb: FormBuilder) {
   	this.forgotPassForm = fb.group({
-      email: new FormControl(this.forgotPasswordEmail, [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email]),
     });
   }
 
@@ -28,7 +27,7 @@ export class ForgotPasswordComponent implements OnInit {
    */
   onSubmit(event) {
   	this.http.post(environment.host_url + '/auth/reset_pass/link',
-      {"email": this.forgotPasswordEmail }, {
+      {"email": this.forgotPassForm.controls.email.value }, {
         observe: 'response',
         // withCredentials: true,
         headers: new HttpHeaders()

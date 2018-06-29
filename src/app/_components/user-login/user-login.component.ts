@@ -15,10 +15,10 @@ import { LoginStateService } from '../../_services/index';
 })
 export class UserLoginComponent implements OnInit {
 
-  user = new User(0, '', '', '', '', '', '', '', '','', '');
   loggedIn: boolean = false;
 
   email = new FormControl('', [Validators.required, Validators.email]);
+  password = new FormControl('', [Validators.required]);
 
   constructor(private http: HttpClient, private loginStateService: LoginStateService, public dialog: MatDialog) { }
 
@@ -60,7 +60,7 @@ export class UserLoginComponent implements OnInit {
   onSubmit(event){
     // console.log(this.user.email, this.user.password);
 
-    this.http.post(environment.host_url + '/auth/login', {"email": this.user.email, "password": this.user.password}, {
+    this.http.post(environment.host_url + '/auth/login', {"email": this.email.value, "password": this.password.value}, {
         observe: 'response',
         // withCredentials: true,
         headers: new HttpHeaders()

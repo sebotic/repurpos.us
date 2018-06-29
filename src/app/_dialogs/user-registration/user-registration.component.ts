@@ -36,13 +36,13 @@ export class UserRegistrationComponent implements OnInit {
   constructor(private http: HttpClient, @Inject(FormBuilder) fb: FormBuilder, public dialog: MatDialog) {
     this.form = fb.group({
       name: fb.group({
-        firstName: [this.user.firstName, Validators.minLength(2)],
-        lastName: this.user.lastName,
+        firstName: new FormControl('', Validators.minLength(2)),
+        lastName: new FormControl('', Validators.minLength(2)),
       }),
       email: new FormControl(this.user.email, [Validators.required, Validators.email]),
       password: fb.group({
-        password: [this.user.password, Validators.minLength(8)],
-        confirmPassword: [this.user.confirmPassword, Validators.minLength(8)],
+        password: new FormControl('', Validators.minLength(8)),
+        confirmPassword: new FormControl('', Validators.minLength(8))
       }, {validator: PasswordValidation.MatchPassword}),
     });
 
@@ -51,10 +51,9 @@ export class UserRegistrationComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit(event){
-    console.log(this.user.email, this.user.lastName);
 
     this.http.post(environment.host_url + '/auth/register',
-      {"email": this.user.email, "password": this.user.password, "recaptcha_token": this.recaptchaToken}, {
+      {"email": this.form.controls.email.value, "password": this.form.controls.password.value, "recaptcha_token": this.recaptchaToken}, {
         observe: 'response',
         // withCredentials: true,
         headers: new HttpHeaders()
