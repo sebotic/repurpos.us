@@ -1,7 +1,7 @@
 <div class="container" *ngIf="displayResults">
   <h3>Search results</h3>
 
-  <ng-container *ngIf="responseCode === 200; else bad_query">
+  <ng-container *ngIf="responseCode === 200; else bad_response">
 
     <div class="search-result-container mat-elevation-z0" *ngIf="dataSource.data.length > 0; else no_data">
       <mat-table #table matSort (matSortChange)="onSortChange($event)" [dataSource]="dataSource">
@@ -130,6 +130,13 @@
       No results found
     </div>
   </ng-template>
+
+  <ng-container #bad_response  *ngIf="responseCode === 500; else bad_query">
+    <p>
+    ReframeDB is currently down.  Please email <a href="mailto:help@reframedb.org?subject=ReFrameDB 500 status: {{ APIquery }}">help@reframedb.org</a> to let us know.
+    <p>
+
+  </ng-container>
 
   <ng-template #bad_query>
     <p>
