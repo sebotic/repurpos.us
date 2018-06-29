@@ -17,7 +17,7 @@ import { LoginState, RouteDef } from './_models/index';
 @Injectable()
 @Component({
   selector: 'app-root',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {

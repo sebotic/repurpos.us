@@ -23,7 +23,7 @@ export interface User {
 @Component({
   selector: 'app-compound-search-options',
   templateUrl: './compound-search-options.component.html',
-  styleUrls: ['./compound-search-options.component.css']
+  styleUrls: ['./compound-search-options.component.scss']
 })
 export class CompoundSearchOptionsComponent implements OnInit {
 

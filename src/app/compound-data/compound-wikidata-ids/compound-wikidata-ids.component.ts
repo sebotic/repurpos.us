@@ -6,7 +6,7 @@ import { GVKData, IntegrityData, InformaData } from '../../_models/index';
 @Component({
   selector: 'app-compound-wikidata-ids',
   templateUrl: './compound-wikidata-ids.component.html',
-  styleUrls: ['./compound-wikidata-ids.component.css']
+  styleUrls: ['./compound-wikidata-ids.component.scss']
 })
 
 export class CompoundWikidataIdsComponent implements OnInit {

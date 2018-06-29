@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  host_url: 'http://localhost:8000',
+  host_url: 'https://reframedb.org/api',//'http://localhost:8000',
   googleAnalyticsKey: ''
 };

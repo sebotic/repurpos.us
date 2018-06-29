@@ -9,7 +9,7 @@ import { TanimotoScaleService } from '../../_services/index';
 @Component({
   selector: 'app-similar-compounds',
   templateUrl: './similar-compounds.component.html',
-  styleUrls: ['./similar-compounds.component.css']
+  styleUrls: ['./similar-compounds.component.scss']
 })
 
 export class SimilarCompoundsComponent implements OnInit {

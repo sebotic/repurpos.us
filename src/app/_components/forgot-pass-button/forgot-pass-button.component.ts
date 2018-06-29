@@ -6,7 +6,7 @@ import { ForgotPasswordComponent } from '../../_dialogs/index';
 @Component({
   selector: 'app-forgot-pass-button',
   templateUrl: './forgot-pass-button.component.html',
-  styleUrls: ['./forgot-pass-button.component.css']
+  styleUrls: ['./forgot-pass-button.component.scss']
 })
 export class ForgotPassButtonComponent implements OnInit {
 

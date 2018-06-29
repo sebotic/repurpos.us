@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-quick-search',
   templateUrl: './quick-search.component.html',
-  styleUrls: ['./quick-search.component.css']
+  styleUrls: ['./quick-search.component.scss']
 })
 export class QuickSearchComponent implements OnInit {
   query: string;

@@ -3,7 +3,7 @@ import { Component, OnInit, OnChanges, Input, Output, EventEmitter, ViewChild, E
 @Component({
   selector: 'app-assay-pagination',
   templateUrl: './assay-pagination.component.html',
-  styleUrls: ['./assay-pagination.component.css'],
+  styleUrls: ['./assay-pagination.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class AssayPaginationComponent implements OnInit {

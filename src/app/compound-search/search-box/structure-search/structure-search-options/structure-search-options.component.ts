@@ -7,7 +7,7 @@ import { StructureService, SearchResultService } from '../../../../_services/ind
 @Component({
   selector: 'app-structure-search-options',
   templateUrl: './structure-search-options.component.html',
-  styleUrls: ['./structure-search-options.component.css']
+  styleUrls: ['./structure-search-options.component.scss']
 })
 
 export class StructureSearchOptionsComponent implements OnInit {

@@ -6,7 +6,7 @@ import { TermsComponent, UserRegistrationComponent } from '../../_dialogs/index'
 @Component({
   selector: 'app-reg-user-dialog',
   templateUrl: './user-reg-button.component.html',
-  styleUrls: ['./user-reg-button.component.css']
+  styleUrls: ['./user-reg-button.component.scss']
 })
 export class UserRegButtonComponent implements OnInit {
   showDialog:boolean = false;

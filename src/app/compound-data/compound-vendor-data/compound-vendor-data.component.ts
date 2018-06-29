@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-compound-vendor-data',
   templateUrl: './compound-vendor-data.component.html',
-  styleUrls: ['./compound-vendor-data.component.css']
+  styleUrls: ['./compound-vendor-data.component.scss']
 })
 
 export class CompoundVendorDataComponent implements OnInit {

@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 @Component({
   selector: 'app-assay-type-btn',
   templateUrl: './assay-type-btn.component.html',
-  styleUrls: ['./assay-type-btn.component.css'],
+  styleUrls: ['./assay-type-btn.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class AssayTypeBtnComponent implements OnInit {

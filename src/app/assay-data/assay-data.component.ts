@@ -14,7 +14,7 @@ import { environment } from "../../environments/environment";
 @Component({
   selector: 'app-assay-data',
   templateUrl: './assay-data.component.html',
-  styleUrls: ['./assay-data.component.css']
+  styleUrls: ['./assay-data.component.scss']
 })
 
 export class AssayDataComponent implements OnInit {

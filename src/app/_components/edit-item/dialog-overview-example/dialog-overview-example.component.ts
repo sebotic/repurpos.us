@@ -8,7 +8,7 @@ import { DialogOverviewExampleDialog } from '../dialog-overview-example-dialog/d
 @Component({
   selector: 'dialog-overview-example',
   templateUrl: './dialog-overview-example.component.html',
-  styleUrls: ['./dialog-overview-example.component.css']
+  styleUrls: ['./dialog-overview-example.component.scss']
 })
 export class DialogOverviewExample {
 

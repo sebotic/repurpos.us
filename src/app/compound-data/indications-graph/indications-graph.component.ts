@@ -6,7 +6,7 @@ import { GraphDataService, SearchResultService } from "../../_services/index";
 @Component({
   selector: 'app-indications-graph',
   templateUrl: './indications-graph.component.html',
-  styleUrls: ['./indications-graph.component.css']
+  styleUrls: ['./indications-graph.component.scss']
 })
 
 export class IndicationsGraphComponent {
