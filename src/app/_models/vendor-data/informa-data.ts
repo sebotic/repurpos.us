@@ -6,9 +6,9 @@ export interface InformaData {
   smiles: string;
   ikey: string;
   wikidata: string;
-  pubchem_cid: string;
   target_name: Array<string>;
   target_family: Array<string>;
   origin: string;
   cas_name: string;
+  pubchem_cid?: string;
 }

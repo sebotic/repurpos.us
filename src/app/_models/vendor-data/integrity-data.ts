@@ -7,5 +7,5 @@ export interface IntegrityData {
   mechanism: Array<string>;
   ikey: string;
   wikidata: string;
-  pubchem_cid: string;
+  pubchem_cid?: string;
 }
