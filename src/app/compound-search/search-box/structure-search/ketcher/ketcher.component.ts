@@ -9,7 +9,7 @@ import { StructureService } from '../../../../_services/index';
 @Component({
   selector: 'app-ketcher',
   templateUrl: './ketcher.component.html',
-  styleUrls: ['./ketcher.component.css']
+  styleUrls: ['./ketcher.component.scss']
 })
 
 export class KetcherComponent implements OnInit {

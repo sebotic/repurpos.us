@@ -22,7 +22,7 @@ export class PasswordValidation {
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+  styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
 	rid: string;
@@ -30,8 +30,6 @@ export class ResetPasswordComponent implements OnInit {
 	resetResponse: string;
 	resetReady: boolean = false;
 	resetSuccess: boolean = false;
-	resetPassword: string;
-	confirmPassword: string
 	resetPasswordForm: FormGroup;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, @Inject(FormBuilder) fb: FormBuilder) {
@@ -40,8 +38,8 @@ export class ResetPasswordComponent implements OnInit {
   	});
 
   	this.resetPasswordForm = fb.group({
-      password: [this.resetPassword, Validators.minLength(8)],
-      confirmPassword: [this.confirmPassword, Validators.minLength(8)],
+      password: new FormControl('', Validators.minLength(8)),
+      confirmPassword: new FormControl('', Validators.minLength(8)),
       }, {validator: PasswordValidation.MatchPassword});
   }
 
@@ -74,7 +72,7 @@ export class ResetPasswordComponent implements OnInit {
   	this.http.post(environment.host_url + '/auth/reset_pass',
       {
       	'user_id': this.uid,
-      	'password': this.resetPassword
+      	'password': this.resetPasswordForm.controls.password.value
       },
       {
         observe: 'response',

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-text-search',
   templateUrl: './text-search.component.html',
-  styleUrls: ['./text-search.component.css']
+  styleUrls: ['./text-search.component.scss']
 })
 export class TextSearchComponent implements OnInit {
   @Input() searchQuery: string;

@@ -4,7 +4,7 @@ import { Component, OnInit, OnChanges, ElementRef, Input, ViewEncapsulation } fr
 @Component({
   selector: 'app-cmpd-tooltip',
   templateUrl: './cmpd-tooltip.component.html',
-  styleUrls: ['./cmpd-tooltip.component.css'],
+  styleUrls: ['./cmpd-tooltip.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class CmpdTooltipComponent implements OnInit {

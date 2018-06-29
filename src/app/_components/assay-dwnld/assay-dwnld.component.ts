@@ -4,7 +4,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-assay-dwnld',
   templateUrl: './assay-dwnld.component.html',
-  styleUrls: ['./assay-dwnld.component.css'],
+  styleUrls: ['./assay-dwnld.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class AssayDwnldComponent {

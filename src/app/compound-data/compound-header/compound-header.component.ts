@@ -7,7 +7,7 @@ import { Compound } from '../../_models';
 @Component({
   selector: 'app-compound-header',
   templateUrl: './compound-header.component.html',
-  styleUrls: ['./compound-header.component.css']
+  styleUrls: ['./compound-header.component.scss']
 })
 
 export class CompoundHeaderComponent implements OnInit {

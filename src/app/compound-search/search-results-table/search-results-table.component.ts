@@ -8,7 +8,7 @@ import { BackendSearchService, SearchResultService, TanimotoScaleService } from 
 @Component({
   selector: 'app-search-results-table',
   templateUrl: './search-results-table.component.html',
-  styleUrls: ['./search-results-table.component.css']
+  styleUrls: ['./search-results-table.component.scss']
 })
 export class SearchResultsTableComponent implements OnInit {
   private paginator: MatPaginator;

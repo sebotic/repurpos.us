@@ -10,7 +10,7 @@ import { WDQService, BackendSearchService, SearchResultService, StructureService
   outputs: ['results'],
   selector: 'search-box',
   templateUrl: './search-box.component.html',
-  styleUrls: ['./search-box.component.css']
+  styleUrls: ['./search-box.component.scss']
 })
 export class SearchBoxComponent implements OnInit {
   // results: SearchResult[];

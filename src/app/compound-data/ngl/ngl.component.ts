@@ -9,7 +9,7 @@ import { CIDService } from '../../_services/index';
 @Component({
   selector: 'app-ngl',
   templateUrl: './ngl.component.html',
-  styleUrls: ['./ngl.component.css']
+  styleUrls: ['./ngl.component.scss']
 })
 export class NglComponent implements OnInit {
   labelRepr;

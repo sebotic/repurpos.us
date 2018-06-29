@@ -10,7 +10,6 @@
 		           formControlName="email"
 		           required
 		           id="confirm-email"
-		           [(ngModel)]="confirmEmail"
 		           name="confirm-email">
 
 		    <mat-error *ngIf="confirmForm.controls['email'].errors && !confirmForm.controls['email'].pristine">{{getErrorMessage()}}</mat-error>

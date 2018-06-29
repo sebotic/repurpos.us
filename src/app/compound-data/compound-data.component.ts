@@ -20,7 +20,7 @@ import { environment } from "../../environments/environment";
   outputs: ['cid'],
   selector: 'app-compound-data',
   templateUrl: './compound-data.component.html',
-  styleUrls: ['./compound-data.component.css'],
+  styleUrls: ['./compound-data.component.scss'],
 })
 export class CompoundDataComponent implements OnInit {
   qid: string;

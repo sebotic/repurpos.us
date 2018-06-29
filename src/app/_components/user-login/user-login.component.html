@@ -7,7 +7,7 @@
       <span>
       <mat-form-field>
         <input matInput placeholder="Enter your email" [formControl]="email" required  id="email"
-               [(ngModel)]="user.email" name="email">
+               name="email">
         <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       </span>
@@ -17,8 +17,7 @@
           <input matInput placeholder="Password"  id="password"
                  [type]="'password'"
                  required
-                 [(ngModel)]="user.password" name="name"
-                 #name="ngModel">
+                 [formControl]="password" name="password">
         </mat-form-field>
 
       </span>

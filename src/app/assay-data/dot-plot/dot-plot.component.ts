@@ -6,7 +6,7 @@ import { CmpdTooltipComponent } from './cmpd-tooltip/cmpd-tooltip.component';
 @Component({
   selector: 'app-dot-plot',
   templateUrl: './dot-plot.component.html',
-  styleUrls: ['./dot-plot.component.css'],
+  styleUrls: ['./dot-plot.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 
