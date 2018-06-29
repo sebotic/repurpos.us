@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 
-import { SimilarityData, Compound } from '../../_models/index';
+//import { SimilarityData, Compound } from '../../_models/index';
+import { Compound } from '../../_models/index';
 
 import { TanimotoScaleService } from '../../_services/index';
 
@@ -8,7 +9,7 @@ import { TanimotoScaleService } from '../../_services/index';
 @Component({
   selector: 'app-similar-compounds',
   templateUrl: './similar-compounds.component.html',
-  styleUrls: ['./similar-compounds.component.css']
+  styleUrls: ['./similar-compounds.component.scss']
 })
 
 export class SimilarCompoundsComponent implements OnInit {

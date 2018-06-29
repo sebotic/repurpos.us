@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'mail-signup-dialog',
   templateUrl: './mail-signup-dialog.component.html',
-  styleUrls: ['./mail-signup-dialog.component.css']
+  styleUrls: ['./mail-signup-dialog.component.scss']
 })
 export class MailSignupDialogComponent {
   constructor(

@@ -13,7 +13,7 @@ import { AssayPaginationComponent } from '../assay-pagination/assay-pagination.c
 @Component({
   selector: 'app-assay-plots',
   templateUrl: './assay-plots.component.html',
-  styleUrls: ['./assay-plots.component.css']
+  styleUrls: ['./assay-plots.component.scss']
 })
 
 export class AssayPlotsComponent implements OnInit {

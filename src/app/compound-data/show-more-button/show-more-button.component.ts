@@ -5,7 +5,7 @@ import {WDQSData} from "../../_models/index";
 
 @Injectable()
 @Component({
-  styleUrls: ['./show-more-button.component.css'],
+  styleUrls: ['./show-more-button.component.scss'],
   selector: 'app-show-more-pane',
   template: `
     <div class="mat-app-background">
@@ -77,7 +77,7 @@ export class ShowMorePane implements OnInit {
 @Component({
   selector: 'app-show-more-button',
   templateUrl: './show-more-button.component.html',
-  styleUrls: ['./show-more-button.component.css']
+  styleUrls: ['./show-more-button.component.scss']
 })
 export class ShowMoreButtonComponent implements OnInit {
 

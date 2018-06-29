@@ -12,7 +12,7 @@ import {environment} from "../../environments/environment";
 @Component({
   selector: 'app-assays',
   templateUrl: './assays.component.html',
-  styleUrls: ['./assays.component.css']
+  styleUrls: ['./assays.component.scss']
 })
 
 export class AssaysComponent implements OnInit {

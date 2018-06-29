@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-compound-wikidata',
   templateUrl: './compound-wikidata.component.html',
-  styleUrls: ['./compound-wikidata.component.css']
+  styleUrls: ['./compound-wikidata.component.scss']
 })
 
 export class CompoundWikidataComponent implements OnInit {

@@ -7,7 +7,7 @@ import { MailSignupDialogComponent } from './mail-signup-dialog/mail-signup-dial
 @Component({
   selector: 'app-mail-signup',
   templateUrl: './mail-signup.component.html',
-  styleUrls: ['./mail-signup.component.css']
+  styleUrls: ['./mail-signup.component.scss']
 })
 export class MailSignupComponent {
   showDialog = false;
