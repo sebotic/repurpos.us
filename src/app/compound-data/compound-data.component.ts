@@ -51,7 +51,7 @@ export class CompoundDataComponent implements OnInit {
   integrityData: IntegrityData;
 
   // Parameters for similarity results
-  num_similar_per_page: number = 4;
+  num_similar_per_page: number = 3;
   tanimoto: number = 0.85; // threshold for TM score
   similarityResults: Object[];
 
