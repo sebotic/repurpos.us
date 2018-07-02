@@ -36,7 +36,6 @@ export class StructureSvgService {
         .set('format', format)
     }).pipe(
       map(item => {
-        console.log(item)
         return item['body']['compound_svg'];
       }));
   }
