@@ -77,6 +77,16 @@
               {{element['tanimoto'] | number: '1.2-2'}}</mat-cell>
           </ng-container>
 
+          <!-- Structure -->
+          <ng-container matColumnDef="struct">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Structure
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <app-struct2d [structure]="element['id']" struct_type="inchikey" *ngIf="element['id'].length === 27"></app-struct2d>
+            </mat-cell>
+          </ng-container>
+
           <!-- File Statuses Column: splayed out-->
 
           <ng-container matColumnDef="assays">
