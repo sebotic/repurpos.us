@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, forwardRef, Inject, ViewChild, Injectable, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Http, Response } from "@angular/http";
+import { Subscription } from 'rxjs/Subscription';
 
 import {
   HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest,
@@ -8,6 +8,8 @@ import {
 } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 
+import { LoginState } from '../../_models/index';
+import { LoginStateService } from '../../_services/index';
 import { AssayPaginationComponent } from '../assay-pagination/assay-pagination.component'
 
 @Component({
@@ -17,7 +19,7 @@ import { AssayPaginationComponent } from '../assay-pagination/assay-pagination.c
 })
 
 export class AssayPlotsComponent implements OnInit {
-  loggedIn: boolean;
+  public loggedIn: boolean;
   aid: string;
   assayData: any = [];
   filteredData: any = [];
@@ -28,16 +30,20 @@ export class AssayPlotsComponent implements OnInit {
   currentAssay: string;
   currentPage: number = 0;
   numPerPage: number;
-
+  private loginSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
-    private http: Http,
-    private http2: HttpClient
+    private http2: HttpClient,
+    private loginStateService: LoginStateService
   ) {
     route.params.subscribe(params => {
       this.aid = params['aid'];
     });
+
+    
+    console.log('construct');
+    
   }
 
   @ViewChild(AssayPaginationComponent)
@@ -45,11 +51,18 @@ export class AssayPlotsComponent implements OnInit {
 
 
   ngOnInit() {
-    if (localStorage.getItem('auth_token')) {
+    // if (localStorage.getItem('auth_token')) {
+    //   this.loggedIn = true;
+    // } else {
+    //   this.loggedIn = false;
+    // }
+    this.loginSubscription = this.loginStateService.isUserLoggedIn.subscribe(val => {
+      if (val) location.reload();
+    })
+    if (localStorage.getItem('auth_token'))
       this.loggedIn = true;
-    } else {
+    else
       this.loggedIn = false;
-    }
 
     this.retrieveAssayList();
   }
