@@ -57,7 +57,10 @@ export class AssayPlotsComponent implements OnInit {
     //   this.loggedIn = false;
     // }
     this.loginSubscription = this.loginStateService.isUserLoggedIn.subscribe(val => {
-      if (val) location.reload();
+      if (val) {
+        this.loggedIn = true;
+        this.retrieveAssayList();
+      } 
     })
     if (localStorage.getItem('auth_token'))
       this.loggedIn = true;
