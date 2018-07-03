@@ -60,15 +60,17 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
               <div>
-                <span [ngClass]="element['reframeid'] ? 'circle cmpd-avail' : 'circle no-cmpd'"></span>
+                <span [ngClass]="element['reframeid'].length > 0 ? 'circle cmpd-avail' : 'circle no-cmpd'"></span>
               </div>
-                <div class="similar" *ngIf="!element['reframeid'] && element['similar_compounds']" matTooltip="Tanimoto score > 0.85">
-                similar library compound:
-                <ng-container *ngFor="let related of element['similar_compounds']">
-                  <a [routerLink]="['/compound_data', related.id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
+                <div class="similar" *ngIf="element['reframeid'].length === 0 && element['similar_compounds'].length > 0" matTooltip="Tanimoto score > 0.85">
+                <div>
+                  {{element['similar_compounds'].length === 1 ? "similar library compound:" : "similar library compounds:"}}
+                </div>
+                <ng-container *ngFor="let related of element['similar_compounds']; let i=index">
+                  <a [routerLink]="['/compound_data', related.compound_id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
                     {{related['main_label']}}
                   </a>
-                  <span *ngIf="i + 1 < element.similar_compounds.length" class='data-separator'></span>
+                  <span *ngIf="i + 1 < element['similar_compounds'].length" class='data-separator'></span>
                 </ng-container>
               </div>
             </mat-cell>

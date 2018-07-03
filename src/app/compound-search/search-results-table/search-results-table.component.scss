@@ -81,8 +81,12 @@ mat-row:first-of-type {
   flex: 0 0 50px;
 }
 
+.mat-column-reframeid {
+  flex: 0 0 250px;
+}
+
 .mat-column-assay_titles {
-  flex: 0 0 500px;
+  flex: 0 0 400px;
 }
 
 .mat-column-alias {
@@ -148,6 +152,11 @@ a#more {
 
 .no-assay, .no-cmpd {
   background-color: none;
+}
+
+.no-cmpd {
+  margin-bottom: 25px;
+  
 }
 
 /* Message if no data sound */
