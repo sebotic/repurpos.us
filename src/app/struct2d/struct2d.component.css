@@ -1,0 +1,20 @@
+.svg-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/deep/ .svg-wrapper svg {
+  margin: 10px auto 20px auto;
+  width: 90%;
+  height: auto;
+  max-height: 400px;
+  display: inline-block;
+}
+
+/deep/ line {
+  stroke-width: 0.35;
+}
+
+/deep/ rect {
+  fill: none;
+}

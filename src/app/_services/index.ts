@@ -1,5 +1,5 @@
 export * from './auth.service';
-export * from './CID.service';
+// export * from './CID.service';
 export * from './google-analytics.service';
 export * from './graph-data.service';
 export * from './loader-state.service';
@@ -8,4 +8,5 @@ export * from './search-results.service';
 export * from './WDQ.service';
 export * from './tanimoto-scale.service';
 export * from './structure.service';
-export * from './backendsearch.service'
+export * from './backendsearch.service';
+export * from './structure-svg.service';

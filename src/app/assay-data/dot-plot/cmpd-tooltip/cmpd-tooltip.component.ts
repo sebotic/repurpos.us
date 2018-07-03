@@ -12,7 +12,7 @@ export class CmpdTooltipComponent implements OnInit {
   private data: any;
   private left_coord: string;
   private top_coord: string;
-  imgURL: string;
+  // imgURL: string;
 
   constructor() { }
 
@@ -20,9 +20,9 @@ export class CmpdTooltipComponent implements OnInit {
     if (this.dataObj.on) {
       this.data = this.dataObj.data;
 
-      if (this.data.pubchem_id) {
-        this.imgURL = "../assets/struct_img/" + this.data.pubchem_id.replace("CID", "") + ".png";
-      }
+      // if (this.data.pubchem_id) {
+      //   this.imgURL = "../assets/struct_img/" + this.data.pubchem_id.replace("CID", "") + ".png";
+      // }
 
       // find position of the tooltip
       this.left_coord = String(this.dataObj.x) + 'px'
@@ -34,9 +34,9 @@ export class CmpdTooltipComponent implements OnInit {
     if (this.dataObj.on) {
       this.data = this.dataObj.data;
 
-      if (this.data.pubchem_id) {
-        this.imgURL = "../assets/struct_img/" + this.data.pubchem_id.replace("CID", "") + ".png";
-      }
+      // if (this.data.pubchem_id) {
+      //   this.imgURL = "../assets/struct_img/" + this.data.pubchem_id.replace("CID", "") + ".png";
+      // }
 
       // find position of the tooltip
       this.left_coord = String(this.dataObj.x) + 'px'

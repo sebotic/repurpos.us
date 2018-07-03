@@ -1,5 +1,6 @@
 <div class = "cmpd-details" id = "structs" *ngIf="dataObj.on" [style.left]="left_coord" [style.top]="top_coord">
-  <img *ngIf="imgURL" id="structure" [src]="imgURL"/>
+  <!-- <img *ngIf="imgURL" id="structure" [src]="imgURL"/> -->
+      <app-struct2d [structure]="data.id" struct_type="inchikey" *ngIf="data.id === 27"></app-struct2d>
 
   <div id="struct-name">{{ data.name }}</div>
   <table>

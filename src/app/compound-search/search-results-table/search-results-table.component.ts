@@ -44,8 +44,6 @@ export class SearchResultsTableComponent implements OnInit {
 
   num_aliases: number = 5; // maximum number of aliases to show at one time
 
-  testSynonyms: string[] = ["apitolisib", "Apitolisib", "apitolisib (capsule)", "apitolisib (tablet)", "GDC-0980", "GDC-0980", "GDC-0980 (capsule)", "GDC-0980 (tablet)", "GDC0980", "GDC0980", "GDC0980 (capsule)", "GDC0980 (tablet)", "RG-7422", "RG-7422", "RG-7422 (capsule)", "RG-7422 (tablet)", "RG7422", "RG7422", "RG7422 (capsule)", "RG7422 (tablet)"];
-
   tanimotoScale: any; // color scale for tanimoto scores
   getFontColor: any; // function to get the font color for a tanimoto score
 
@@ -56,7 +54,8 @@ export class SearchResultsTableComponent implements OnInit {
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
          case 'main_label': return item.main_label.toLowerCase();
-         case 'reframeid': return (item.assays + item.reframeid);
+         // case 'reframeid': return (item.assays + item.reframeid);
+         case 'reframeid': return (item.assays + item.reframeid + item.similar_compounds.length);
          case 'assays': return (item.assays + item.reframeid);
          default: return item[property];
       }
@@ -195,6 +194,7 @@ export class SearchResultsTableComponent implements OnInit {
 
 
     if (this.notMobile) {
+      this.displayedColumns.splice(2, 0, 'struct') // insert structure into the cols
       this.displayedColumns = this.displayedColumns.concat('assays', 'assay_titles');
     } else {
       this.displayedColumns = this.displayedColumns.concat('assays');
