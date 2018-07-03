@@ -24,6 +24,7 @@
     "*/compound-search/search-result-table/search-result-table.component.ts",
     "*/assets/du_data.ts",
     "*/assets/gottlieb_data.ts",
-    "*/table/*"
+    "*/table/*",
+    "*/compound-data/ngl/ngl.component.ts"
   ]
 }
