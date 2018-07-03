@@ -64,7 +64,7 @@
               </div>
                 <div class="similar" *ngIf="element['reframeid'].length === 0 && element['similar_compounds'].length > 0" matTooltip="Tanimoto score > 0.85">
                 <div>
-                  similar library compound:
+                  {{element['similar_compounds'].length === 1 ? "similar library compound:" : "similar library compounds:"}}
                 </div>
                 <ng-container *ngFor="let related of element['similar_compounds']; let i=index">
                   <a [routerLink]="['/compound_data', related.compound_id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
