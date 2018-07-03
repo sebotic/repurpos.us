@@ -20,11 +20,12 @@ export class SearchResult {
 
 export interface Compound {
   id: string;
-  test: string;
+  // test: string;
   main_label: string;
   assay_types: string[];
   alias: string[];
   assays: number;
+  similar_compounds?: Object[];
   tanimoto_score?: number;
   reframeid?: string;
   qid?: string;

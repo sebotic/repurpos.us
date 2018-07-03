@@ -62,7 +62,15 @@
               <div>
                 <span [ngClass]="element['reframeid'] ? 'circle cmpd-avail' : 'circle no-cmpd'"></span>
               </div>
-              <div class="similar" *ngIf="!element['reframeid']" matTooltip="Tanimoto score > 0.85">similar library compound: <a target="_blank">name1 • name 2</a></div>
+                <div class="similar" *ngIf="!element['reframeid'] && element['similar_compounds']" matTooltip="Tanimoto score > 0.85">
+                similar library compound:
+                <ng-container *ngFor="let related of element['similar_compounds']">
+                  <a [routerLink]="['/compound_data', related.id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
+                    {{related['main_label']}}
+                  </a>
+                  <span *ngIf="i + 1 < element.similar_compounds.length" class='data-separator'></span>
+                </ng-container>
+              </div>
             </mat-cell>
           </ng-container>
 
@@ -87,8 +95,7 @@
             </mat-cell>
           </ng-container>
 
-          <!-- File Statuses Column: splayed out-->
-
+          <!-- Assay titles -->
           <ng-container matColumnDef="assays">
             <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header start="desc">
               assay hits
