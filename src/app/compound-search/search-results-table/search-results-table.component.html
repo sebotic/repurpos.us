@@ -59,19 +59,58 @@
               <mat-icon class='sort-icon'>sort</mat-icon>
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
-              <div>
-                <span [ngClass]="element['reframeid'].length > 0 ? 'circle cmpd-avail' : 'circle no-cmpd'"></span>
+              <!-- binary circle if compound in reframe library -->
+              <div id="reframe_cmpd" [ngClass]="element['reframeid'].length > 0 ? 'cmpd-avail' : 'no-cmpd'">
+                <span class="circle"></span>
               </div>
-                <div class="similar" *ngIf="element['reframeid'].length === 0 && element['similar_compounds'].length > 0" matTooltip="Tanimoto score > 0.85">
+
+              <!-- <div class="parent">
+   <div class="child">***</div>
+</div> -->
+
+
+              <!-- Check if there are similar compounds, if not a Reframe compound -->
+              <div class="similar" *ngIf="element['reframeid'].length === 0 && element['similar_compounds'].length > 0" matTooltip="Tanimoto score > 0.85">
                 <div>
                   {{element['similar_compounds'].length === 1 ? "similar library compound:" : "similar library compounds:"}}
                 </div>
-                <ng-container *ngFor="let related of element['similar_compounds']; let i=index">
-                  <a [routerLink]="['/compound_data', related.compound_id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
+
+
+                <ng-container *ngIf="element['similar_compounds'].length <= num_similar; else lotsa_similar">
+                  <ng-container *ngFor="let related of element['similar_compounds'] | slice:0:num_similar; let i=index">
+                    <a [routerLink]="['/compound_data', related.compound_id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
                     {{related['main_label']}}
                   </a>
-                  <span *ngIf="i + 1 < element['similar_compounds'].length" class='data-separator'></span>
+                    <span *ngIf="i + 1 < element['similar_compounds'].length" class='data-separator'></span>
+                  </ng-container>
                 </ng-container>
+
+                <!-- If there are > 2 similar compounds -->
+                <ng-template #lotsa_similar>
+                  <mat-expansion-panel (opened)="element.similar_showall = true" (closed)="element.similar_showall = false">
+                    <mat-expansion-panel-header collapsedHeight="auto">
+                      <mat-panel-title>
+                        <ng-container *ngFor="let related of element['similar_compounds'] | slice:0:num_similar; let i=index">
+                          <a [routerLink]="['/compound_data', related.compound_id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
+        {{related['main_label']}}
+      </a>
+                          <span *ngIf="i + 1 < element['similar_compounds'].length" class='data-separator'></span>
+
+                        </ng-container>
+                        <a>show {{element['similar_showall'] ? "less" : "more"}}</a>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <ng-container *ngFor="let related of element['similar_compounds'] | slice:num_similar:element['similar_compounds'].length; let i=index">
+                      <a [routerLink]="['/compound_data', related.compound_id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
+    {{related['main_label']}}
+  </a>
+                      <span *ngIf="i + 1 < element['similar_compounds'].length - num_similar" class='data-separator'></span>
+
+                    </ng-container>
+
+                  </mat-expansion-panel>
+                </ng-template>
               </div>
             </mat-cell>
           </ng-container>
@@ -93,7 +132,9 @@
               Structure
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
-              <app-struct2d [structure]="element['id']" struct_type="inchikey" *ngIf="element['id'].length === 27"></app-struct2d>
+              <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
+                <app-struct2d [structure]="element['id']" struct_type="inchikey" *ngIf="element['id'].length === 27"></app-struct2d>
+              </a>
             </mat-cell>
           </ng-container>
 

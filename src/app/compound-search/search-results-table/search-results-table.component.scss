@@ -1,5 +1,4 @@
 /* Structure */
-
 .search-result-container {
   display: flex;
   flex-direction: column;
@@ -16,6 +15,7 @@
 
 mat-row {
   border-bottom: 1px solid #21252945;
+  align-items: stretch;
 }
 
 mat-row:first-of-type {
@@ -26,7 +26,8 @@ mat-row:first-of-type {
   border: none;
 }
 
-.search-result-container mat-header-cell, .search-result-container mat-sort-header-button {
+.search-result-container mat-header-cell,
+.search-result-container mat-sort-header-button {
   opacity: 0.9;
   /* text-transform: uppercase; */
   text-align: center;
@@ -70,10 +71,9 @@ mat-row:first-of-type {
   max-width: 360px;
   text-align: center;
 }
-
 /* Column Widths */
-
-.mat-column-number, .mat-column-state {
+.mat-column-number,
+.mat-column-state {
   max-width: 64px;
 }
 
@@ -83,6 +83,7 @@ mat-row:first-of-type {
 
 .mat-column-reframeid {
   flex: 0 0 250px;
+  position: relative;
 }
 
 .mat-column-assay_titles {
@@ -98,15 +99,27 @@ mat-row:first-of-type {
 }
 
 mat-cell.mat-cell.cdk-column-tanimoto.mat-column-tanimoto.ng-star-inserted {
-  display:flex !important;
-  justify-content:center !important;
+  display: flex !important;
+  justify-content: center !important;
   border-radius: 3px;
 }
 
 /* Radio buttons if data exist */
+$circle_diam: 15px;
+
+#reframe_cmpd.no-cmpd {
+  top: $circle_diam/2;
+  position: absolute;
+}
+
+.similar {
+  // top: $circle_diam * 2;
+  // position: absolute;
+}
+
 .circle {
-  height: 15px;
-  width: 15px;
+  height: $circle_diam;
+  width: $circle_diam;
   border: #212529 solid 1px;
   border-radius: 50%;
   display: block;
@@ -114,17 +127,19 @@ mat-cell.mat-cell.cdk-column-tanimoto.mat-column-tanimoto.ng-star-inserted {
   font-size: 0;
 }
 
-.cmpd-avail {
+.cmpd-avail .circle {
+  // background-color: #FF5B67;
   background-color: #ff8884;
   /* fc5457; */
 }
-
 /* Assay & Alias lists */
-ul.assay-list, ul.alias-list {
+ul.alias-list,
+ul.assay-list {
   list-style-type: none;
 }
 
-li.assay-title, li.alias {
+li.alias,
+li.assay-title {
   display: inline-block;
 }
 
@@ -132,35 +147,50 @@ a#more {
   color: #2125298f;
   cursor: pointer;
 }
-
 /* TODO: make not hacky */
-.no-cmpd, .cmpd-avail {
+.cmpd-avail,
+.no-cmpd {
   margin-left: 75px;
 }
-.similar {
-    font-style: italic;
-    font-size: 0.9em;
-    margin-top: 60px;
-    margin-left: -75px;
-}
 
-
+// .similar {
+//   font-style: italic;
+//   font-size: 0.9em;
+//   margin-top: 60px;
+//   margin-left: -75px;
+// }
 
 .assay-avail {
   background-color: #21252945;
 }
 
-.no-assay, .no-cmpd {
+.no-assay,
+.no-cmpd {
   background-color: none;
 }
 
 .no-cmpd {
   margin-bottom: 25px;
-  
 }
-
 /* Message if no data sound */
 .no-results {
   margin-left: 25px;
   font-size: 1.25em;
+}
+// Accordion
+/deep/ .mat-expansion-panel:not([class*=mat-elevation-z]) {
+  box-shadow: none;
+}
+
+/deep/ .mat-expansion-panel-body,
+/deep/ .mat-expansion-panel-header {
+  padding: 1px;
+}
+
+/deep/ .mat-expansion-panel-content a,
+/deep/ .mat-expansion-panel-header a {
+  font-size: 0.9em;
+  font-family: "Lato", sans-serif;
+  font-style: italic;
+  font-weight: 300;
 }

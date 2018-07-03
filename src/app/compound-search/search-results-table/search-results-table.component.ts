@@ -43,6 +43,7 @@ export class SearchResultsTableComponent implements OnInit {
   dataSource = new MatTableDataSource<Compound>();
 
   num_aliases: number = 5; // maximum number of aliases to show at one time
+  num_similar: number = 2; // maximum number of similar compounds to show at one time
 
   tanimotoScale: any; // color scale for tanimoto scores
   getFontColor: any; // function to get the font color for a tanimoto score
@@ -87,7 +88,6 @@ export class SearchResultsTableComponent implements OnInit {
         this.pageIdx = 0;
         this.pageSize = 10;
 
-        console.log(result)
         this.responseCode = result.status;
         this.APIquery = result.url;
 
@@ -99,6 +99,7 @@ export class SearchResultsTableComponent implements OnInit {
             d['assays'] = d.assay_types.length;
             d['aliases'] = this.removeDupeAlias(d.aliases);
             d['alias_ct'] = this.num_aliases;
+            d['similar_showall'] = false;
           });
 
           // Sort results by multiple columns
