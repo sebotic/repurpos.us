@@ -12,7 +12,7 @@ import {
 } from "@angular/common/http";
 
 import { AssayData, GVKData, IntegrityData, InformaData, VendorData, WDQSData, Compound, SearchResult } from '../_models/index';
-import { CIDService, WDQService, BackendSearchService } from '../_services/index';
+import { WDQService, BackendSearchService } from '../_services/index';
 import { environment } from "../../environments/environment";
 
 
@@ -25,9 +25,10 @@ import { environment } from "../../environments/environment";
 export class CompoundDataComponent implements OnInit {
   qid: string;
   id: string;
+  smiles: string;
   reframeID: string;
-  results: Object;
-  data: Object;
+  // results: Object;
+  // data: Object;
   loggedIn: boolean;
   showVendor: boolean = false;
   label: string;
@@ -50,7 +51,7 @@ export class CompoundDataComponent implements OnInit {
   integrityData: IntegrityData;
 
   // Parameters for similarity results
-  num_similar_per_page: number = 4;
+  num_similar_per_page: number = 3;
   tanimoto: number = 0.85; // threshold for TM score
   similarityResults: Object[];
 
@@ -91,14 +92,13 @@ export class CompoundDataComponent implements OnInit {
   //   'P2115': 'NDF-RT ID'
   // };
 
-  cid: string;
 
   constructor(
     @Inject(forwardRef(() => WDQService)) public wd: WDQService,
     private route: ActivatedRoute,
     private http: Http,
     private http2: HttpClient,
-    private cidService: CIDService,
+    // private cidService: CIDService,
     public searchSvc: BackendSearchService,
     public _location: Location
   ) {
@@ -143,7 +143,7 @@ export class CompoundDataComponent implements OnInit {
       }
 
 
-
+      // Wait for all the data to come back before making the call to get similarity data and append all aliases
       Promise.all([this.buildWD(), this.retrieveData()]).then(allData => {
         // Run a query to get any compounds that are similar
         this.retrieveSimilarData();
@@ -232,9 +232,9 @@ export class CompoundDataComponent implements OnInit {
               this.table_data.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'qids': tmp[y]['qids'], 'showMore': sm, 'pid': y });
             }
 
-            if (y == 'P662') {
-              this.cidService.announceNewCID(tmp[y]['values'][0].toString());
-            }
+            // if (y == 'P662') {
+            //   this.cidService.announceNewCID(tmp[y]['values'][0].toString());
+            // }
           }
 
         }
@@ -246,24 +246,28 @@ export class CompoundDataComponent implements OnInit {
           this.retrieveLabels(Array.from(tmp['P2175']['qids']).map((x: string) => x.split('/').pop()));
         }
 
+        // let pubchem_id = this.idData.find((d: any) => d.property === 'PubChem CID');
+
+        // if (pubchem_id) {
+        //   this.cid = pubchem_id['values'][0]
+        // }
+
         resolve("Success with WD!");
       });
     })
   }
 
 
-  set_cid(): void {
-    for (let i of [this.gvkData, this.informaData, this.integrityData]) {
-      if ('PubChem CID' in i && !this.cid) {
-        this.cid = i['PubChem CID'].substring(3);
-        this.cidService.announceNewCID(this.cid);
-
-        break;
-      }
-    }
-
-
-  }
+  // set_cid(): void {
+  //   for (let i of [this.gvkData, this.informaData, this.integrityData]) {
+  //     if ('PubChem CID' in i && !this.cid) {
+  //       this.cid = i['PubChem CID'].substring(3);
+  //       this.cidService.announceNewCID(this.cid);
+  //
+  //       break;
+  //     }
+  //   }
+  // }
 
   // if no cid exists, try to find one, announce it and trigger rendering of compound
   set_label(label: string): void {
@@ -294,7 +298,7 @@ export class CompoundDataComponent implements OnInit {
         this.integrityData = b.integrity;
         this.assayData = b.assay;
 
-        this.set_cid();
+        // this.set_cid();
 
         this.chemVendors = this.getChemVendors();
         resolve("Success with vendor data!");
@@ -303,17 +307,16 @@ export class CompoundDataComponent implements OnInit {
   }
 
   retrieveSimilarData(): void {
-    let smiles: string;
     if (this.table_data.map((d: any) => d.property).indexOf('isomeric SMILES') > -1) {
-      smiles = this.table_data.find((d: any) => d.property === "isomeric SMILES")['values'][0];
+      this.smiles = this.table_data.find((d: any) => d.property === "isomeric SMILES")['values'][0];
     } else if (this.table_data.map((d: any) => d.property).indexOf('canonical SMILES') > -1) {
-      smiles = this.table_data.find((d: any) => d.property === "canonical SMILES")['values'][0];
+      this.smiles = this.table_data.find((d: any) => d.property === "canonical SMILES")['values'][0];
     } else {
-      smiles = this.informaData['smiles'] || this.integrityData['smiles'] || this.gvkData['smiles'];
+      this.smiles = this.informaData['smiles'] || this.integrityData['smiles'] || this.gvkData['smiles'];
     }
 
-    if (smiles) {
-      this.searchSvc.searchSimilarity(smiles, this.tanimoto)
+    if (this.smiles) {
+      this.searchSvc.searchSimilarity(this.smiles, this.tanimoto)
         .subscribe(
           (results: SearchResult) => {
             // console.log(results)
@@ -354,7 +357,7 @@ export class CompoundDataComponent implements OnInit {
         this.set_label(name);
         alias_arr.push(name);
       }
-}
+    }
 
     if (Object.keys(this.informaData).length > 0) {
       for (let name of this.informaData['drug_name']) {

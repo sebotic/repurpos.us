@@ -34,6 +34,7 @@ export class SimilarCompoundsComponent implements OnInit {
   }
 
   prepSimilarityData() {
+    // console.log(this.similarityResults)
     if (this.similarityResults) {
       this.similarityResults = this.similarityResults.sort((a: any, b: any) => b.tanimoto - a.tanimoto);
     }

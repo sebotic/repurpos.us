@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import 'hammerjs';
@@ -23,7 +23,7 @@ import { CompoundSearchComponent, CompoundSearchOptionsComponent, SearchBoxCompo
 // import {cytoscape} from 'cytoscape';
 // import {NgCytoscape} from "./compound-search/ng2-cytoscape";
 import { CompoundDataComponent } from './compound-data/compound-data.component';
-import { NglComponent } from './compound-data/ngl/ngl.component';
+// import { NglComponent } from './compound-data/ngl/ngl.component';
 // import {InteractionTableComponent, InteractionTableDataService} from './compound-data/interaction-table/interaction-table.component';
 // import { DiseaseDataComponent } from './disease-data/disease-data.component';
 import { IndicationsGraphComponent } from './compound-data/indications-graph/indications-graph.component';
@@ -101,7 +101,7 @@ import { AuthGuard } from './_guards/auth.guard';
 import { LoaderInterceptorService } from './_interceptors/loader-interceptor.service';
 import {
   AuthService,
-  CIDService,
+  // CIDService,
   GoogleAnalyticsService,
   GraphDataService,
   LoaderStateService,
@@ -110,6 +110,7 @@ import {
   WDQService,
   StructureService,
   TanimotoScaleService,
+  StructureSvgService,
   BackendSearchService
 } from './_services/index';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
@@ -125,6 +126,7 @@ import { StructureSearchComponent } from './compound-search/search-box/structure
 import { TextSearchComponent } from './compound-search/search-box/text-search/text-search.component';
 import { KetcherComponent } from './compound-search/search-box/structure-search/ketcher/ketcher.component';
 import { IntroTextComponent } from './intro-text/intro-text.component';
+import { Struct2dComponent } from './struct2d/struct2d.component';
 
 @NgModule({
   exports: [
@@ -191,7 +193,7 @@ export class MaterialModule {}
     CmpdTooltipComponent,
     // InteractionTableComponent,
     // DiseaseDataComponent,
-    NglComponent,
+    // NglComponent,
     CompoundSearchOptionsComponent,
     IndicationsGraphComponent,
     // SearchResultTableComponent,
@@ -224,7 +226,8 @@ export class MaterialModule {}
     StructureSearchComponent,
     TextSearchComponent,
     KetcherComponent,
-    IntroTextComponent
+    IntroTextComponent,
+    Struct2dComponent
   ],
   imports: [
     BrowserModule,
@@ -258,8 +261,9 @@ export class MaterialModule {}
     { provide: TanimotoScaleService, useClass: TanimotoScaleService },
     { provide: StructureService, useClass: StructureService },
     { provide: BackendSearchService, useClass: BackendSearchService},
+    { provide: StructureSvgService, useClass: StructureSvgService},
     // { provide: InteractionTableDataService, useClass: InteractionTableDataService },
-    { provide: CIDService, useClass: CIDService},
+    // { provide: CIDService, useClass: CIDService},
     { provide: AuthService, useClass: AuthService},
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true },
     LoaderStateService,

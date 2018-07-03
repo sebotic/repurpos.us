@@ -53,7 +53,7 @@
 <!-- If no wikidata data are available, use the information from the vendors -->
 <ng-template #vendor_cheminfo>
 
-  <div *ngIf="gvkData">
+  <div *ngIf="gvkData || informaData || integrityData">
     <h4>Chemical data</h4>
   </div>
 
