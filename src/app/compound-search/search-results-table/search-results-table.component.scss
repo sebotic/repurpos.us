@@ -14,12 +14,12 @@
 }
 
 mat-row {
-  border-bottom: 1px solid #21252945;
+  border-bottom: 1px solid #c3c4c5;
   align-items: stretch;
 }
 
 mat-row:first-of-type {
-  border-top: 1px solid #21252945;
+  border-top: 1px solid #c3c4c5;
 }
 
 .mat-header-row {
@@ -102,8 +102,8 @@ mat-cell.mat-cell.cdk-column-tanimoto.mat-column-tanimoto.ng-star-inserted {
   display: flex !important;
   justify-content: center !important;
   border-radius: 3px;
+  margin: 1%;
 }
-
 /* Radio buttons if data exist */
 $circle_diam: 15px;
 
@@ -128,9 +128,14 @@ $circle_diam: 15px;
 }
 
 .cmpd-avail .circle {
-  // background-color: #FF5B67;
-  background-color: #ff8884;
+  background-color: #FF5B67;
+  // background-color: #ff8884;
   /* fc5457; */
+}
+
+.salt-match .circle {
+  background-color: #ffb5bd;
+  // background-color: #FDCACC;
 }
 /* Assay & Alias lists */
 ul.alias-list,
@@ -144,7 +149,7 @@ li.assay-title {
 }
 
 a#more {
-  color: #2125298f;
+  color: #797c7e;
   cursor: pointer;
 }
 /* TODO: make not hacky */
@@ -153,15 +158,8 @@ a#more {
   margin-left: 75px;
 }
 
-// .similar {
-//   font-style: italic;
-//   font-size: 0.9em;
-//   margin-top: 60px;
-//   margin-left: -75px;
-// }
-
 .assay-avail {
-  background-color: #21252945;
+  background-color: #c3c4c5;
 }
 
 .no-assay,
@@ -178,6 +176,7 @@ a#more {
   font-size: 1.25em;
 }
 // Accordion
+
 /deep/ .mat-expansion-panel:not([class*=mat-elevation-z]) {
   box-shadow: none;
 }
@@ -187,8 +186,9 @@ a#more {
   padding: 1px;
 }
 
-/deep/ .mat-expansion-panel-content a,
-/deep/ .mat-expansion-panel-header a {
+.similar,
+/deep/ .mat-table .mat-expansion-panel-content a,
+/deep/ .mat-table .mat-expansion-panel-header a {
   font-size: 0.9em;
   font-family: "Lato", sans-serif;
   font-style: italic;

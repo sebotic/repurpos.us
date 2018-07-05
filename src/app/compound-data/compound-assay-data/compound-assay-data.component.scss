@@ -6,7 +6,6 @@
   margin-top: 15px;
 }
 
-
 .title {
   text-transform: uppercase;
   font-weight: 300;
@@ -14,24 +13,34 @@
   font-size: 0.85em;
 }
 
-.assay-name{
+.assay-name {
   width: 50%;
 }
 
-table#cmpd-names, table.cmpd-table, .cmpd-table {
+.cmpd-table,
+table#cmpd-names,
+table.cmpd-table {
   width: 100%;
   table-layout: fixed;
-  border:none;
+  border: none;
   margin-bottom: 50px;
 }
 
-.cmpd-table>tbody, th {
+.cmpd-table > tbody,
+th {
   /* border-top: #21252990 1px solid; */
   border-bottom: #21252990 1px solid;
 }
 
-
 td {
   padding-top: 3px;
   padding-bottom: 3px;
+}
+
+.warning {
+  color: #fd5457;
+}
+
+.underline {
+  text-decoration: underline;
 }
