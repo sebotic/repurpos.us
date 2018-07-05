@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 // import { Observable } from 'rxjs/Rx';
 import { switchMap } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 
 import { SearchResult } from '../../_models/index';
 import { WDQService, BackendSearchService, SearchResultService, StructureService } from '../../_services/index';
@@ -26,6 +27,7 @@ export class SearchBoxComponent implements OnInit {
     private searchResultService: SearchResultService,
     private route: ActivatedRoute,
     private router: Router,
+    private titleService: Title,
     private structSvc: StructureService
   ) {
     // Pull out any route parameters that already exist
@@ -123,6 +125,10 @@ export class SearchBoxComponent implements OnInit {
     } else if (event.index === this.structSearch_tabIdx) {
       search_type = "structure"
     }
+
+    // reset page title
+    this.titleService.setTitle("reframeDB");
+
     // reset the route to the search or structure page, sans any input
     this.router.navigate(['search/'], { queryParams: { type: search_type } });
   }

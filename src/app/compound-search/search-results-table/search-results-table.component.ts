@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { Title } from '@angular/platform-browser';
 
 import { SearchResult, Compound } from '../../_models/index';
 import { BackendSearchService, SearchResultService, TanimotoScaleService } from '../../_services/index';
@@ -54,11 +55,11 @@ export class SearchResultsTableComponent implements OnInit {
     // Custom sorting algo to make sure the sorting happens as I expect
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
-         case 'main_label': return item.main_label.toLowerCase();
-         // case 'reframeid': return (item.assays + item.reframeid);
-         case 'reframeid': return (item.assays + item.reframeid + item.similar_compounds.length);
-         case 'assays': return (item.assays + item.reframeid);
-         default: return item[property];
+        case 'main_label': return item.main_label.toLowerCase();
+        // case 'reframeid': return (item.assays + item.reframeid);
+        case 'reframeid': return (item.assays + item.reframeid + item.similar_compounds.length);
+        case 'assays': return (item.assays + item.reframeid);
+        default: return item[property];
       }
     };
   }
@@ -67,6 +68,7 @@ export class SearchResultsTableComponent implements OnInit {
   constructor(
     private backendSvc: BackendSearchService,
     private searchResultService: SearchResultService,
+    private titleService: Title,
     private tanimotoSvc: TanimotoScaleService
   ) {
     // media query
@@ -79,6 +81,7 @@ export class SearchResultsTableComponent implements OnInit {
       submitted => {
         this.displayResults = submitted;
       }
+
     )
 
     // get search results
@@ -107,6 +110,9 @@ export class SearchResultsTableComponent implements OnInit {
           this.resetSort();
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+
+          // set title of page
+          this.titleService.setTitle("search results | ReframeDB");
         }
 
 

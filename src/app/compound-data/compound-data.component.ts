@@ -2,6 +2,7 @@ import { Component, OnInit, forwardRef, Inject, Injectable, Input } from '@angul
 import { ActivatedRoute } from '@angular/router';
 import { Http, Response } from "@angular/http";
 import { Location } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 // import { InteractionTableDataService } from "../interaction-table/interaction-table.component"
 
@@ -98,6 +99,7 @@ export class CompoundDataComponent implements OnInit {
     private route: ActivatedRoute,
     private http: Http,
     private http2: HttpClient,
+    private titleService: Title,
     // private cidService: CIDService,
     public searchSvc: BackendSearchService,
     public _location: Location
@@ -139,12 +141,14 @@ export class CompoundDataComponent implements OnInit {
         this.loggedIn = true;
       } else {
         this.loggedIn = false;
-        this.loggedIn = true; // BUG BUG BUG BUG TODO: revert
       }
 
 
       // Wait for all the data to come back before making the call to get similarity data and append all aliases
       Promise.all([this.buildWD(), this.retrieveData()]).then(allData => {
+        // Retitle the page
+        this.titleService.setTitle(this.label + " | ReframeDB");
+
         // Run a query to get any compounds that are similar
         this.retrieveSimilarData();
         // Merge together Wikidata + vendor aliases
