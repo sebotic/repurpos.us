@@ -29,7 +29,7 @@ export class AssaysComponent implements OnInit {
 
   ngOnInit() {
       this.retrieveAssayList();
-      this.titleService.setTitle("assays | ReframeDB");
+      this.titleService.setTitle("assays | reframeDB");
   }
 
 

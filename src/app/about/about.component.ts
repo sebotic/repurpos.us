@@ -11,7 +11,7 @@ export class AboutComponent implements OnInit {
   constructor(private titleService: Title) { }
 
   ngOnInit() {
-        this.titleService.setTitle("about | ReframeDB");
+        this.titleService.setTitle("about | reframeDB");
   }
 
 }

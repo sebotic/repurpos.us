@@ -146,13 +146,15 @@ export class CompoundDataComponent implements OnInit {
 
       // Wait for all the data to come back before making the call to get similarity data and append all aliases
       Promise.all([this.buildWD(), this.retrieveData()]).then(allData => {
-        // Retitle the page
-        this.titleService.setTitle(this.label + " | ReframeDB");
-
         // Run a query to get any compounds that are similar
         this.retrieveSimilarData();
         // Merge together Wikidata + vendor aliases
         this.getAliases();
+
+        // Retitle the page
+        if (this.label) {
+          this.titleService.setTitle(this.label + " | reframeDB");
+        }
       })
     });
   }

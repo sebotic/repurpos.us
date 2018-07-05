@@ -56,7 +56,7 @@ export class AssayDataComponent implements OnInit {
       let v = r.body;
 
       this.assayDetails = v[0];
-      this.titleService.setTitle( this.assayDetails.title + " | ReframeDB");
+      this.titleService.setTitle( this.assayDetails.title + " | reframeDB");
     },
       err => { }
     );

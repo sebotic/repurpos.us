@@ -112,7 +112,7 @@ export class SearchResultsTableComponent implements OnInit {
           this.dataSource.sort = this.sort;
 
           // set title of page
-          this.titleService.setTitle("search results | ReframeDB");
+          this.titleService.setTitle("search results | reframeDB");
         }
 
 
