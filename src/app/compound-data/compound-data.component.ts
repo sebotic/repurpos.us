@@ -1,5 +1,5 @@
 import { Component, OnInit, forwardRef, Inject, Injectable, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Http, Response } from "@angular/http";
 import { Location } from '@angular/common';
 
@@ -96,20 +96,75 @@ export class CompoundDataComponent implements OnInit {
   constructor(
     @Inject(forwardRef(() => WDQService)) public wd: WDQService,
     private route: ActivatedRoute,
+    private router: Router,
     private http: Http,
     private http2: HttpClient,
     // private cidService: CIDService,
     public searchSvc: BackendSearchService,
     public _location: Location
   ) {
-    route.params.subscribe(params => {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    }
+
+    this.router.events.subscribe((evt) => {
+      if (evt instanceof NavigationEnd)
+        this.router.navigated = false;
+    })
+
+    this.route.params.subscribe(params => {
       this.qid = params['qid'];
       this.id = params['id'];
-      console.log('the params:', params)
+      this.buildData();
     });
   }
 
   ngOnInit() {
+    // let query: string = `
+    // SELECT ?prop ?propLabel ?furl WHERE {
+    //   VALUES ?prop { wd:${this.propsToDisplay.join(' wd:')} }
+    //   OPTIONAL {?prop wdt:P1630 ?furl .}
+
+    //   SERVICE wikibase:label {bd:serviceParam wikibase:language "en" . }
+    //   }`;
+
+    // this.http2.get<WDQSData>('https://query.wikidata.org/sparql', {
+    //   observe: 'response',
+    //   headers: new HttpHeaders()
+    //     .set('Accept', 'application/json'),
+    //   params: new HttpParams()
+    //     .set('query', query)
+    //     .set('format', 'json')
+    // }).subscribe((r) => {
+    //   let b = r.body;
+
+    //   for (let i of b.results.bindings) {
+    //     let p: string = i['prop']['value'].split('/').pop();
+
+    //     this.prop_name_map[p] = i['propLabel']['value'];
+    //   }
+
+
+    //   if (localStorage.getItem('auth_token')) {
+    //     this.loggedIn = true;
+    //   } else {
+    //     this.loggedIn = false;
+    //     this.loggedIn = true; // BUG BUG BUG BUG TODO: revert
+    //   }
+
+
+    //   // Wait for all the data to come back before making the call to get similarity data and append all aliases
+    //   Promise.all([this.buildWD(), this.retrieveData()]).then(allData => {
+    //     // Run a query to get any compounds that are similar
+    //     this.retrieveSimilarData();
+    //     // Merge together Wikidata + vendor aliases
+    //     this.getAliases();
+    //   })
+    // });
+    this.buildData();
+  }
+
+  buildData() {
     let query: string = `
     SELECT ?prop ?propLabel ?furl WHERE {
       VALUES ?prop { wd:${this.propsToDisplay.join(' wd:')} }

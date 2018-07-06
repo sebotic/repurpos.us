@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
@@ -7,7 +7,7 @@ import { StructureSvgService } from '../_services/index';
 @Component({
   selector: 'app-struct2d',
   templateUrl: './struct2d.component.html',
-  styleUrls: ['./struct2d.component.css']
+  styleUrls: ['./struct2d.component.scss']
 })
 export class Struct2dComponent implements OnInit {
   @Input() structure: string;
@@ -17,6 +17,11 @@ export class Struct2dComponent implements OnInit {
   constructor(private domSanitizer: DomSanitizer, private svgSvc: StructureSvgService) { }
 
   ngOnInit() {
+    
+
+  }
+
+  ngOnChanges() {
     this.svgSvc.getSVG(this.structure, this.struct_type)
       .subscribe(
         (results: string) => {
@@ -29,7 +34,6 @@ export class Struct2dComponent implements OnInit {
           // console.log(err)
         }
       );
-
 
   }
 
