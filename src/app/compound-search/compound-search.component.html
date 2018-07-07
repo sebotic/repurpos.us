@@ -9,7 +9,9 @@
 
     <div class="input-group input-group-lg col-md-9">
 
+      <div *ngIf="isIE" class="alert alert-danger">Compound search may not be accurate with Internet Explorer, please try using Chrome</div>
       <search-box class="search"></search-box>
+
 
       <div class='container'></div>
       <div class="row">
