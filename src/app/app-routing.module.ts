@@ -18,14 +18,14 @@ const appRoutes: Routes = [
   { path: 'about', component: AboutComponent, pathMatch: 'full' },
   { path: 'assays', component: AssaysComponent, pathMatch: 'full' },
   { path: 'assays/:aid', component: AssayDataComponent, pathMatch: 'full' },
-  { path: 'compound_data/:id', component: CompoundDataComponent, pathMatch: 'full' },
+  { path: 'compound_data/:id', component: CompoundDataComponent, runGuardsAndResolvers: 'always' },
   { path: 'confirm/:cid', component: ConfirmEmailComponent, pathMatch: 'full' },
   { path: 'reset_pass/:rid', component: ResetPasswordComponent, pathMatch: 'full' }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes, {onSameUrlNavigation: 'reload'})
   ],
   exports: [RouterModule]
 })

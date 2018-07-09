@@ -12,9 +12,12 @@ import { SearchBoxComponent, SearchResultComponent } from './index';
 })
 export class CompoundSearchComponent {
   results: SearchResult[];
+  isIE: boolean;
 
   constructor() {
-
+  	let ua = window.navigator.userAgent;
+  	let msie = ua.indexOf('MSIE ');
+  	this.isIE = msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./);
   }
 
   updateResults(results: SearchResult[]): void {

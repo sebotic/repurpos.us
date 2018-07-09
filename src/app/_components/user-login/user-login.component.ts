@@ -76,6 +76,7 @@ export class UserLoginComponent implements OnInit {
         // console.log(re.status);
         this.loggedIn = true;
         this.loginStateService.loggedIn();
+        this.loginStateService.isUserLoggedIn.next(true);
         //location.reload();
       },
       (err: HttpErrorResponse) => {
@@ -103,6 +104,7 @@ export class UserLoginComponent implements OnInit {
           localStorage.removeItem('auth_token');
           this.loggedIn = false;
           this.loginStateService.loggedOut();
+          this.loginStateService.isUserLoggedIn.next(false);
           location.reload();
         }
 
