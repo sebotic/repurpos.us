@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, forwardRef, Inject, ViewChild, Injectable, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/subscription';
 
 import {
   HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest,
@@ -41,9 +41,9 @@ export class AssayPlotsComponent implements OnInit {
       this.aid = params['aid'];
     });
 
-    
+
     console.log('construct');
-    
+
   }
 
   @ViewChild(AssayPaginationComponent)
@@ -60,7 +60,7 @@ export class AssayPlotsComponent implements OnInit {
       if (val) {
         this.loggedIn = true;
         this.retrieveAssayList();
-      } 
+      }
     })
     if (localStorage.getItem('auth_token'))
       this.loggedIn = true;

@@ -341,8 +341,8 @@ export class CompoundDataComponent implements OnInit {
         observe: 'response',
         // withCredentials: true,
         headers: new HttpHeaders()
-          .set('Accept', 'application/json'), // TODO: revert
-        // .set('Authorization', localStorage.getItem('auth_token')),
+          .set('Accept', 'application/json') // TODO: revert
+          .set('Authorization', localStorage.getItem('auth_token')),
         params: new HttpParams()
           .set('qid', this.id)
       }).subscribe((r) => {
