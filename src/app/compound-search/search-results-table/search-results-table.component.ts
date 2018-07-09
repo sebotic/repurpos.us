@@ -5,6 +5,8 @@ import { Title } from '@angular/platform-browser';
 import { SearchResult, Compound } from '../../_models/index';
 import { BackendSearchService, SearchResultService, TanimotoScaleService } from '../../_services/index';
 
+import * as _ from 'lodash';
+
 
 @Component({
   selector: 'app-search-results-table',
@@ -106,8 +108,9 @@ export class SearchResultsTableComponent implements OnInit {
           });
 
           // Sort results by multiple columns
+          // this.dataSource.data = results;
           this.dataSource.data = this.sortResults(results);
-          this.resetSort();
+          // this.resetSort();
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
 
@@ -149,35 +152,17 @@ export class SearchResultsTableComponent implements OnInit {
   }
 
   sortResults(results) {
-    // simple sorting function just by tanimoto score
-    let simple_sort = function(a, b) {
-      // sort first tanimoto score, descending
-      if (a.tanimoto.toFixed(2) !== b.tanimoto.toFixed(2)) return b.tanimoto - a.tanimoto;
-    }
-
-    // sequential sorting function: outdated
-    let sort_func = function(a, b) {
-      // sort first by tanimoto score, descending
-      if (a.tanimoto.toFixed(2) !== b.tanimoto.toFixed(2)) return b.tanimoto - a.tanimoto;
-      // sort next by # assay hits, descending
-      if (a.assay_types.length !== b.assay_types.length) return b.assay_types.length - a.assay_types.length;
-
-      // then by if in screening library:
-      let a_rfm = a.reframeid !== ""; // true if compound exists
-      let b_rfm = b.reframeid !== "";
-      if (a_rfm !== b_rfm) return a_rfm < b_rfm;
-
-      // last resort: alpha sort by name, ascending
-      return (a.main_label.toLowerCase() > b.main_label.toLowerCase() ? 1 : -1);
-    }
-
     // apply the sorting function
-    let sorted = results.sort(simple_sort);
+    // NOTE: Chrome and Firefox --> different sorting results since Chrome sorts by arbitrary values in ties.
+    // Solution: sort by TM score, then ES score (rank from search result)
+    // https://medium.com/@fsufitch/is-javascript-array-sort-stable-46b90822543f
+    let sorted = _.orderBy(results, [function(o) { return o.tanimoto.toFixed(2); }], ['desc'])
+    // let sorted = _.orderBy(results, [function(o) { return o.tanimoto.toFixed(2); }, function(o) { return o.search_result_index; }], ['desc', 'desc'])
+    // let sorted = _.orderBy(results, [function(o) { return o.tanimoto.toFixed(2); }, function(o) { return o.main_label.toLowerCase(); }], ['desc', 'asc'])
 
     // Determine which columns to show in table (e.g. +/- Tanimoto score)
     this.getColumns(sorted);
 
-    // return new MatTableDataSource<Compound>(sorted);
     return (sorted);
   }
 
