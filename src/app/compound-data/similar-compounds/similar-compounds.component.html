@@ -3,7 +3,7 @@
   <h3 class="similar-title" id="similar">Similar molecules</h3>
 
 
-  <div class="similar-grp">
+  <div class="similar-grp clearfix">
     <div class="col-md-4 col-sm-6 col-xs-12" *ngFor="let related of similarityResults; let i=index">
       <div class="similar-cmpds" *ngIf="i < num_results" id="{{related.id}}">
         <a [routerLink]="['/compound_data', related.id.split('/').pop(), {qid: related.qid.split('/').pop()}]" target="_blank">
@@ -59,13 +59,13 @@
         </a>
       </div>
       <!-- end of ngIf -->
-      <div class="clearfix" id="hidden" *ngIf="!((i+1) % 4)">.</div>
+      <div class="clearfix" id="hidden" *ngIf="!((i+1) % 3)">.</div>
     </div>
     <!-- end of for loop over similar compounds -->
-    <div class="clearfix"></div>
+    <!-- <div class="clearfix"></div> -->
 
     <!-- Button to load more results -->
-    <button *ngIf="num_results < similarityResults.length" id="more" (click)="showMore()" class="center-block">show more</button>
+    
   </div>
-
+  <button *ngIf="num_results < similarityResults.length" id="more" (click)="showMore()" class="center-block">show more</button>
 </div>
