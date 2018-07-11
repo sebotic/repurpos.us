@@ -47,51 +47,12 @@ h5 {
   margin-bottom: 10px;
 }
 
-.stereo-free {
-  color: #21252999;
-  text-align: right;
-}
 
 .material-icons {
   font-size: 0.75em;
 }
 
-/* Binary buttons if available */
 
-.avail-table {
-  width: 100%;
-}
-
-td {
-  padding-bottom: 10px;
-  text-align: right;
-  vertical-align: baseline;
-  padding-right: 5px;
-}
-
-.circle {
-  height: 15px;
-  width: 15px;
-  border: #212529 solid 1px;
-  border-radius: 50%;
-  display: block;
-  margin: auto;
-  font-size: 0;
-}
-
-.available {
-  background-color: #FF5B67;
-  // background-color: #ff8884;
-  /* fc5457; */
-}
-
-.assay-avail {
-  background-color: #c3c4c5;
-}
-
-.not-available {
-  background-color: none;
-}
 
 /* Clearfix */
 @mixin clearfix() {

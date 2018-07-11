@@ -127,6 +127,7 @@ import { TextSearchComponent } from './compound-search/search-box/text-search/te
 import { KetcherComponent } from './compound-search/search-box/structure-search/ketcher/ketcher.component';
 import { IntroTextComponent } from './intro-text/intro-text.component';
 import { Struct2dComponent } from './struct2d/struct2d.component';
+import { AvailableDataComponent } from './compound-data/available-data/available-data.component';
 
 @NgModule({
   exports: [
@@ -218,6 +219,7 @@ export class MaterialModule {}
     QuickSearchComponent,
     CompoundHeaderComponent,
     SimilarCompoundsComponent,
+    AvailableDataComponent,
     CompoundAssayDataComponent,
     CompoundVendorDataComponent,
     CompoundWikidataComponent,
@@ -227,7 +229,7 @@ export class MaterialModule {}
     TextSearchComponent,
     KetcherComponent,
     IntroTextComponent,
-    Struct2dComponent
+    Struct2dComponent  
   ],
   imports: [
     BrowserModule,
