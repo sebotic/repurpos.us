@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   routeDef: RouteDef[];
   loginBox: boolean = false;
   loggedIn: boolean = false;
+  expanded: boolean = false;
   current_year: number;
   private loginSubscription: Subscription;
 
@@ -58,6 +59,13 @@ export class AppComponent implements OnInit {
 
   showLogin() {
     this.loginBox = !this.loginBox;
+  }
+
+  toggleNav() {
+    this.expanded = !this.expanded;
+    if (!this.expanded) {
+      this.loginBox = false;
+    }
   }
 
   ngOnInit(): void {
