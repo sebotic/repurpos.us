@@ -28,6 +28,6 @@ export interface Compound {
   properties: Object[];
   similar_compounds?: Object[];
   tanimoto: number;
-  reframeid?: string[];
+  reframeid?: boolean;
   qid?: string;
 }
