@@ -106,10 +106,6 @@
           </td>
         </tr>
 
-
-
-
-
       </table>
     </div>
   </div>
@@ -117,29 +113,9 @@
 </div>
 
 <!-- Log-in default -->
-  <ng-template #login_vendor>
-    <h3>Pharmacological and Biological data</h3>
-    <span class="accent-color login-req">sign in to view compound annotation data from our commercial partners</span>
-  </ng-template>
+<ng-template #login_vendor>
+  <h3>Log in required to view additional data</h3>
+  <div class="accent-color login-req">Please sign in to view activity data and compound annotation data from our commercial partners</div>
 
-  <!--<div *ngIf="gvkData.length > 0">-->
-  <!--<H3>Compound class</H3>-->
-  <!--<table class="table table-bordered" *ngFor="let x of gvkData">-->
-  <!--<tr>-->
-  <!--<td>Category</td>-->
-  <!--<td><span (click)="showMore($event)" id={{y}} *ngFor="let y of x['category']; let i = index ;">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : y['ref'] === 'Informa' ? '[3]' : ''}}</span>{{i + 1 < x['category'].length ? '; ' : ''}}</span></td>-->
-  <!--</tr>-->
-  <!--<tr>-->
-  <!--<td>Mechanism of Action</td>-->
-  <!--<td><span *ngFor="let y of x['mechanism']; let i = index">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : y['ref'] === 'Informa' ? '[3]' : ''}}</span>{{i + 1 < x['mechanism'].length ? '; ' : ' '}}</span></td>-->
-  <!--</tr>-->
-  <!--<tr>-->
-  <!--<td>Phase</td>-->
-  <!--<td><span *ngFor="let y of x['phase']; let i = index">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : y['ref'] === 'Informa' ? '[3]' : ''}}</span>{{i + 1 < x['phase'].length ? '; ' : ' '}}</span></td>-->
-  <!--</tr>-->
-  <!--<tr>-->
-  <!--<td>Route of Administration</td>-->
-  <!--<td><span *ngFor="let y of x['drug_roa']; let i = index">{{y['label']}}<span class="reference">{{y['ref'] === 'GVK' ? '[1]' : y['ref'] === 'Integrity' ? '[2]' : y['ref'] === 'Informa' ? '[3]' : ''}}</span>{{i + 1 < x['drug_roa'].length ? '; ' : ' '}}</span></td>-->
-  <!--</tr>-->
-  <!--</table>-->
-  <!--</div>-->
+  <app-available-data [availData]="availData" *ngIf="availData.length > 0" class="nodata"></app-available-data>
+</ng-template>

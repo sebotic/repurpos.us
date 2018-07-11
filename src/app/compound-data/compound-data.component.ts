@@ -35,6 +35,7 @@ export class CompoundDataComponent implements OnInit {
   label: string;
   tableData: Array<Object> = [];
   aliases: Array<string> = [];
+  availData: Array<Object> = [];
   chemVendors: Array<Object> = [];
   table_data: Array<Object> = [];
   prop_name_map: Object = {};
@@ -122,48 +123,6 @@ export class CompoundDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    // let query: string = `
-    // SELECT ?prop ?propLabel ?furl WHERE {
-    //   VALUES ?prop { wd:${this.propsToDisplay.join(' wd:')} }
-    //   OPTIONAL {?prop wdt:P1630 ?furl .}
-
-    //   SERVICE wikibase:label {bd:serviceParam wikibase:language "en" . }
-    //   }`;
-
-    // this.http2.get<WDQSData>('https://query.wikidata.org/sparql', {
-    //   observe: 'response',
-    //   headers: new HttpHeaders()
-    //     .set('Accept', 'application/json'),
-    //   params: new HttpParams()
-    //     .set('query', query)
-    //     .set('format', 'json')
-    // }).subscribe((r) => {
-    //   let b = r.body;
-
-    //   for (let i of b.results.bindings) {
-    //     let p: string = i['prop']['value'].split('/').pop();
-
-    //     this.prop_name_map[p] = i['propLabel']['value'];
-    //   }
-
-
-    //   if (localStorage.getItem('auth_token')) {
-    //     this.loggedIn = true;
-    //   } else {
-    //     this.loggedIn = false;
-    //     this.loggedIn = true; // BUG BUG BUG BUG TODO: revert
-    //   }
-
-
-    //   // Wait for all the data to come back before making the call to get similarity data and append all aliases
-    //   Promise.all([this.buildWD(), this.retrieveData()]).then(allData => {
-    //     // Run a query to get any compounds that are similar
-    //     this.retrieveSimilarData();
-    //     // Merge together Wikidata + vendor aliases
-    //     this.getAliases();
-    //   })
-    // });
-    this.buildData();
   }
 
   buildData() {
@@ -286,6 +245,7 @@ export class CompoundDataComponent implements OnInit {
           if (tmp.hasOwnProperty(y)) {
             let sm: boolean = this.showMoreProperties.includes(y);
 
+
             if (this.idPropsToDisplay.includes(y) && !this.excludeFromTableDisplay.includes(y)) {
               this.idData.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'showMore': sm, 'pid': y });
             }
@@ -293,9 +253,6 @@ export class CompoundDataComponent implements OnInit {
               this.table_data.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'qids': tmp[y]['qids'], 'showMore': sm, 'pid': y });
             }
 
-            // if (y == 'P662') {
-            //   this.cidService.announceNewCID(tmp[y]['values'][0].toString());
-            // }
           }
 
         }
@@ -343,37 +300,51 @@ export class CompoundDataComponent implements OnInit {
   // Main function to grab the data from the backend from the vendors and the assay results
   retrieveData(): Promise<void> {
     return new Promise<any>((resolve, reject) => {
-      this.http2.get<VendorData>(environment.host_url + '/data', {
-        observe: 'response',
-        // withCredentials: true,
-        headers: new HttpHeaders()
-          .set('Accept', 'application/json') // TODO: revert
-          .set('Authorization', localStorage.getItem('auth_token')),
-        params: new HttpParams()
-          .set('qid', this.id)
-      }).subscribe((r) => {
-        let b = r.body[this.id];
-        this.reframeID = b.reframe_id;
-        this.gvkData = b.gvk;
-        this.informaData = b.informa;
-        this.integrityData = b.integrity;
-        this.assayData = b.assay;
+      if (this.loggedIn) {
 
-        // this.set_cid();
+        this.http2.get<VendorData>(environment.host_url + '/data', {
+          observe: 'response',
+          // withCredentials: true,
+          headers: new HttpHeaders()
+            .set('Accept', 'application/json') // TODO: revert
+            .set('Authorization', localStorage.getItem('auth_token')),
+          params: new HttpParams()
+            .set('qid', this.id)
+        }).subscribe((r) => {
+          let b = r.body[this.id];
+          this.reframeID = b.reframe_id;
+          this.gvkData = b.gvk;
+          this.informaData = b.informa;
+          this.integrityData = b.integrity;
+          this.assayData = b.assay;
+          // console.log(b)
+          // console.log(this.assayData)
 
-        this.chemVendors = this.getChemVendors();
-        resolve("Success with vendor data!");
-      });
+          // this.set_cid();
+
+          this.chemVendors = this.getChemVendors();
+          resolve("Success with vendor data!");
+        });
+
+      } else {
+        // not logged in: grab the basics
+        this.retrieveBasicInfo();
+        // console.log(this.smiles)
+
+      }
+
     })
   }
 
   retrieveSimilarData(): void {
-    if (this.table_data.map((d: any) => d.property).indexOf('isomeric SMILES') > -1) {
-      this.smiles = this.table_data.find((d: any) => d.property === "isomeric SMILES")['values'][0];
-    } else if (this.table_data.map((d: any) => d.property).indexOf('canonical SMILES') > -1) {
-      this.smiles = this.table_data.find((d: any) => d.property === "canonical SMILES")['values'][0];
-    } else {
-      this.smiles = this.informaData['smiles'] || this.integrityData['smiles'] || this.gvkData['smiles'];
+    if (!this.smiles) {
+      if (this.table_data.map((d: any) => d.property).indexOf('isomeric SMILES') > -1) {
+        this.smiles = this.table_data.find((d: any) => d.property === "isomeric SMILES")['values'][0];
+      } else if (this.table_data.map((d: any) => d.property).indexOf('canonical SMILES') > -1) {
+        this.smiles = this.table_data.find((d: any) => d.property === "canonical SMILES")['values'][0];
+      } else {
+        this.smiles = this.informaData['smiles'] || this.integrityData['smiles'] || this.gvkData['smiles'];
+      }
     }
 
     if (this.smiles) {
@@ -398,36 +369,73 @@ export class CompoundDataComponent implements OnInit {
     }
   }
 
-  getAliases() {
+  retrieveBasicInfo(): void {
+    this.searchSvc.search(this.id)
+      .subscribe(
+        (results: SearchResult) => {
+
+          if (results.data.length > 1) {
+            console.log('too many results returned')
+            console.log(results.data)
+          }
+
+          let search_results = results.data[0];
+          // make sure the first result's id matches what it should be
+          if (this.id === search_results.id) {
+            this.label = search_results.main_label;
+            this.smiles = search_results.smiles;
+            this.getAliases(search_results.aliases);
+            this.retrieveSimilarData();
+            this.availData = search_results.properties;
+            // Retitle the page
+            if (this.label) {
+              this.titleService.setTitle(this.label + " | reframeDB");
+            }
+          }
+          // resolve("Success with basic data!");
+        },
+        (err: any) => {
+          console.log('error in search')
+        }
+      );
+  }
+
+  getAliases(searchAliases: string[] = []) {
     // extract aliases an make sure label is set
     let alias_arr: string[] = this.aliases;
 
-    if (Object.keys(this.gvkData).length > 0) {
-      for (let name of this.gvkData['drug_name']) {
-        this.set_label(name);
-        alias_arr.push(name);
+    if (this.gvkData || this.informaData || this.integrityData) {
+      if (Object.keys(this.gvkData).length > 0) {
+        for (let name of this.gvkData['drug_name']) {
+          this.set_label(name);
+          alias_arr.push(name);
+        }
+
+        for (let name of this.gvkData['synonyms']) {
+          alias_arr.push(name);
+        }
       }
 
-      for (let name of this.gvkData['synonyms']) {
-        alias_arr.push(name);
+      if (Object.keys(this.integrityData).length > 0) {
+        for (let name of this.integrityData['drug_name']) {
+          this.set_label(name);
+          alias_arr.push(name);
+        }
       }
-    }
 
-    if (Object.keys(this.integrityData).length > 0) {
-      for (let name of this.integrityData['drug_name']) {
-        this.set_label(name);
-        alias_arr.push(name);
+      if (Object.keys(this.informaData).length > 0) {
+        for (let name of this.informaData['drug_name']) {
+          this.set_label(name);
+          alias_arr.push(name);
+        }
       }
-    }
 
-    if (Object.keys(this.informaData).length > 0) {
-      for (let name of this.informaData['drug_name']) {
-        this.set_label(name);
-        alias_arr.push(name);
-      }
+    } else {
+      alias_arr = alias_arr.concat(searchAliases);
     }
 
     // de-duplicate
+    //
     let alias_set = new Set(alias_arr);
 
     this.aliases = Array.from(alias_set);
