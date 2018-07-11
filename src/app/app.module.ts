@@ -91,12 +91,13 @@ import {
   UserRegButtonComponent,
   DialogOverviewExample,
   DialogOverviewExampleDialog,
+  SaltWarningDialogComponent,
   EditItemComponent,
   MenuBarComponent,
   MenubarItemComponent
 } from './_components/index';
 
-import { ForgotPasswordComponent, LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
+import { ForgotPasswordComponent, LoginFailComponent, TermsComponent, UserRegistrationComponent, SaltWarningComponent } from './_dialogs/index';
 import { AuthGuard } from './_guards/auth.guard';
 import { LoaderInterceptorService } from './_interceptors/loader-interceptor.service';
 import {
@@ -229,7 +230,9 @@ export class MaterialModule {}
     TextSearchComponent,
     KetcherComponent,
     IntroTextComponent,
-    Struct2dComponent  
+    Struct2dComponent,
+    SaltWarningComponent,
+    SaltWarningDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -280,6 +283,7 @@ export class MaterialModule {}
     // UserLoginComponent,
     // UserRegComponent,
     UserRegistrationComponent,
+    SaltWarningComponent,
     TermsComponent,
     LoginFailComponent,
     ForgotPasswordComponent
