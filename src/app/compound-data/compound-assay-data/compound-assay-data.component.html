@@ -10,7 +10,6 @@
           <th class="title">Assay Source</th>
           <th class="title">Activity<br/>type</th>
           <th class="title">Measurement</th>
-          <th class="title" *ngIf="showVendor">ReFRAME<br/>ID</th>
           <th class="title" *ngIf="showVendor">Compound Vendor</th>
           <th class="title" *ngIf="showVendor">Compound Vendor ID</th>
         </tr>
@@ -32,8 +31,6 @@
           <!-- Assay Measurement -->
           <td>{{x['ac50'].toExponential(2)}}</td>
 
-          <!-- RFM ID -->
-          <td *ngIf="showVendor">{{x['reframe_id']}}</td>
 
           <!-- Compound Source -->
           <td *ngIf="showVendor">{{x['chem_vendor']}}</td>
@@ -45,10 +42,6 @@
     </div>
   </div>
 
-  <!-- Log-in default -->
-  <ng-template #login_assay>
-    <h3>Activity data</h3>
-    <span class="accent-color login-req">sign in to view activity data</span>
-  </ng-template>
+
 
 </div>

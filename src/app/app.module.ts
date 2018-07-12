@@ -91,12 +91,13 @@ import {
   UserRegButtonComponent,
   DialogOverviewExample,
   DialogOverviewExampleDialog,
+  SaltWarningDialogComponent,
   EditItemComponent,
   MenuBarComponent,
   MenubarItemComponent
 } from './_components/index';
 
-import { ForgotPasswordComponent, LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
+import { ForgotPasswordComponent, LoginFailComponent, TermsComponent, UserRegistrationComponent, SaltWarningComponent } from './_dialogs/index';
 import { AuthGuard } from './_guards/auth.guard';
 import { LoaderInterceptorService } from './_interceptors/loader-interceptor.service';
 import {
@@ -127,6 +128,7 @@ import { TextSearchComponent } from './compound-search/search-box/text-search/te
 import { KetcherComponent } from './compound-search/search-box/structure-search/ketcher/ketcher.component';
 import { IntroTextComponent } from './intro-text/intro-text.component';
 import { Struct2dComponent } from './struct2d/struct2d.component';
+import { AvailableDataComponent } from './compound-data/available-data/available-data.component';
 
 @NgModule({
   exports: [
@@ -218,6 +220,7 @@ export class MaterialModule {}
     QuickSearchComponent,
     CompoundHeaderComponent,
     SimilarCompoundsComponent,
+    AvailableDataComponent,
     CompoundAssayDataComponent,
     CompoundVendorDataComponent,
     CompoundWikidataComponent,
@@ -227,7 +230,9 @@ export class MaterialModule {}
     TextSearchComponent,
     KetcherComponent,
     IntroTextComponent,
-    Struct2dComponent
+    Struct2dComponent,
+    SaltWarningComponent,
+    SaltWarningDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -278,6 +283,7 @@ export class MaterialModule {}
     // UserLoginComponent,
     // UserRegComponent,
     UserRegistrationComponent,
+    SaltWarningComponent,
     TermsComponent,
     LoginFailComponent,
     ForgotPasswordComponent

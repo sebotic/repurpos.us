@@ -103,8 +103,8 @@ h1 {
 
 
 /* .cmpd-table td {
-  border-top: 1px solid #21252945;
-  border-bottom: 1px solid #21252945;
+  border-top: 1px solid #c3c4c5;
+  border-bottom: 1px solid #c3c4c5;
   word-break: normal;
 } */
 
@@ -124,14 +124,16 @@ a {
 }
 
 
-/* .smiles {
-  word-break: break-all !important;
+.warning {
+  padding-left: 15px;
+  font-size: 0.8em;
 }
-
-.title-plus-btn {
-  display: inline-block;
-} */
 
 .pull-right {
   margin-top: 15px;
+}
+
+
+.underline {
+  text-decoration: underline;
 }

@@ -1,8 +1,11 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { Title } from '@angular/platform-browser';
 
 import { SearchResult, Compound } from '../../_models/index';
 import { BackendSearchService, SearchResultService, TanimotoScaleService } from '../../_services/index';
+
+import * as _ from 'lodash';
 
 
 @Component({
@@ -43,6 +46,7 @@ export class SearchResultsTableComponent implements OnInit {
   dataSource = new MatTableDataSource<Compound>();
 
   num_aliases: number = 5; // maximum number of aliases to show at one time
+  num_similar: number = 2; // maximum number of similar compounds to show at one time
 
   tanimotoScale: any; // color scale for tanimoto scores
   getFontColor: any; // function to get the font color for a tanimoto score
@@ -53,11 +57,11 @@ export class SearchResultsTableComponent implements OnInit {
     // Custom sorting algo to make sure the sorting happens as I expect
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
-         case 'main_label': return item.main_label.toLowerCase();
-         // case 'reframeid': return (item.assays + item.reframeid);
-         case 'reframeid': return (item.assays + item.reframeid + item.similar_compounds.length);
-         case 'assays': return (item.assays + item.reframeid);
-         default: return item[property];
+        case 'main_label': return item.main_label.toLowerCase();
+        // case 'reframeid': return (item.assays + item.reframeid);
+        case 'reframeid': return (item.assays + Number(item.reframeid === true) + Number(item.similar_compounds.length > 0)/2);
+        case 'assays': return (item.assays + Number(item.reframeid === true));
+        default: return item[property];
       }
     };
   }
@@ -66,6 +70,7 @@ export class SearchResultsTableComponent implements OnInit {
   constructor(
     private backendSvc: BackendSearchService,
     private searchResultService: SearchResultService,
+    private titleService: Title,
     private tanimotoSvc: TanimotoScaleService
   ) {
     // media query
@@ -78,6 +83,7 @@ export class SearchResultsTableComponent implements OnInit {
       submitted => {
         this.displayResults = submitted;
       }
+
     )
 
     // get search results
@@ -87,7 +93,6 @@ export class SearchResultsTableComponent implements OnInit {
         this.pageIdx = 0;
         this.pageSize = 10;
 
-        console.log(result)
         this.responseCode = result.status;
         this.APIquery = result.url;
 
@@ -99,13 +104,19 @@ export class SearchResultsTableComponent implements OnInit {
             d['assays'] = d.assay_types.length;
             d['aliases'] = this.removeDupeAlias(d.aliases);
             d['alias_ct'] = this.num_aliases;
+            d['similar_showall'] = false;
           });
 
+console.log(results)
           // Sort results by multiple columns
+          // this.dataSource.data = results;
           this.dataSource.data = this.sortResults(results);
-          this.resetSort();
+          // this.resetSort();
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+
+          // set title of page
+          this.titleService.setTitle("search results | reframeDB");
         }
 
 
@@ -142,35 +153,17 @@ export class SearchResultsTableComponent implements OnInit {
   }
 
   sortResults(results) {
-    // simple sorting function just by tanimoto score
-    let simple_sort = function(a, b) {
-      // sort first tanimoto score, descending
-      if (a.tanimoto.toFixed(2) !== b.tanimoto.toFixed(2)) return b.tanimoto - a.tanimoto;
-    }
-
-    // sequential sorting function: outdated
-    let sort_func = function(a, b) {
-      // sort first by tanimoto score, descending
-      if (a.tanimoto.toFixed(2) !== b.tanimoto.toFixed(2)) return b.tanimoto - a.tanimoto;
-      // sort next by # assay hits, descending
-      if (a.assay_types.length !== b.assay_types.length) return b.assay_types.length - a.assay_types.length;
-
-      // then by if in screening library:
-      let a_rfm = a.reframeid !== ""; // true if compound exists
-      let b_rfm = b.reframeid !== "";
-      if (a_rfm !== b_rfm) return a_rfm < b_rfm;
-
-      // last resort: alpha sort by name, ascending
-      return (a.main_label.toLowerCase() > b.main_label.toLowerCase() ? 1 : -1);
-    }
-
     // apply the sorting function
-    let sorted = results.sort(simple_sort);
+    // NOTE: Chrome and Firefox --> different sorting results since Chrome sorts by arbitrary values in ties.
+    // Solution: sort by TM score, then ES score (rank from search result)
+    // https://medium.com/@fsufitch/is-javascript-array-sort-stable-46b90822543f
+    let sorted = _.orderBy(results, [function(o) { return o.tanimoto.toFixed(2); }], ['desc'])
+    // let sorted = _.orderBy(results, [function(o) { return o.tanimoto.toFixed(2); }, function(o) { return o.search_result_index; }], ['desc', 'desc'])
+    // let sorted = _.orderBy(results, [function(o) { return o.tanimoto.toFixed(2); }, function(o) { return o.main_label.toLowerCase(); }], ['desc', 'asc'])
 
     // Determine which columns to show in table (e.g. +/- Tanimoto score)
     this.getColumns(sorted);
 
-    // return new MatTableDataSource<Compound>(sorted);
     return (sorted);
   }
 

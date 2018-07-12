@@ -12,6 +12,7 @@ export class CompoundVendorDataComponent implements OnInit {
   @Input() informaData: Object = [];
   @Input() integrityData: Object = [];
   @Input() loggedIn: boolean;
+  @Input() availData: Object[];
 
   constructor() { }
 
