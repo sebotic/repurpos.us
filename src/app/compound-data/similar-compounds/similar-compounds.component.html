@@ -41,16 +41,7 @@
 
             <!-- List of available data -->
             <div [ngClass]="related.id.length === 27 ? 'col-sm-6 col-xs-12 similar-avail' : 'col-xs-12 similar-avail'">
-              <h5 class="pull-right">Available data</h5>
-              <table class="avail-table">
-                <tr *ngFor="let property of related.properties">
-                  <td matTooltip="{{property.tooltip}}" matTooltipPosition="left">
-                    {{property.name}}
-                  </td>
-                  <td [ngClass]="property.value ? 'circle available' : 'circle not-available'">
-                  </td>
-                </tr>
-              </table>
+              <app-available-data [availData] = related.properties></app-available-data>
             </div>
             <!-- end of available data -->
 
@@ -65,7 +56,7 @@
     <!-- <div class="clearfix"></div> -->
 
     <!-- Button to load more results -->
-    
+
   </div>
   <button *ngIf="num_results < similarityResults.length" id="more" (click)="showMore()" class="center-block">show more</button>
 </div>

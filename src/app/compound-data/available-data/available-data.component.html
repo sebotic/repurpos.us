@@ -1,0 +1,12 @@
+<div class="avail-table">
+  <h5 class="pull-right">Available data</h5>
+  <table class="avail-table">
+    <tr *ngFor="let property of availData">
+      <td matTooltip="{{property.tooltip}}" matTooltipPosition="left">
+        {{property.name}}
+      </td>
+      <td [ngClass]="property.value ? 'circle available' : 'circle not-available'">
+      </td>
+    </tr>
+  </table>
+</div>

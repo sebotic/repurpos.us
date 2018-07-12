@@ -1,6 +1,7 @@
 import { Component, OnInit, forwardRef, Inject, Injectable, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Http, Response } from "@angular/http";
+import { Title } from '@angular/platform-browser';
 import {
   HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest,
   HttpResponse
@@ -29,6 +30,7 @@ export class AssayDataComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private titleService: Title,
     private http: Http,
     private http2: HttpClient
   ) {
@@ -38,6 +40,7 @@ export class AssayDataComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.retrieveAssayList();
   }
 
@@ -53,6 +56,7 @@ export class AssayDataComponent implements OnInit {
       let v = r.body;
 
       this.assayDetails = v[0];
+      this.titleService.setTitle( this.assayDetails.title + " | reframeDB");
     },
       err => { }
     );
