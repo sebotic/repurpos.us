@@ -14,8 +14,9 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
               <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
-            {{element['main_label']}}
-          </a>
+                {{element['main_label']}}
+              </a>
+              <mat-icon *ngIf="!notMobile" class="more-info" (click)="expandCell($event)">expand_more</mat-icon>
             </mat-cell>
           </ng-container>
 
@@ -184,7 +185,7 @@
       </span> -->
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns; let element;"></mat-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns; let element; let i = index" id="{{i}}"></mat-row>
           <!-- Original routing, where row click directs to compound page -->
           <!-- <mat-row *matRowDef="let row; columns: displayedColumns; let element;" (click)="rowClicked($event, element['qid'], element['id'])"></mat-row> -->
         </mat-table>

@@ -187,10 +187,12 @@ console.log(results)
 
 
     if (this.notMobile) {
+      console.log(this.displayedColumns);
       this.displayedColumns.splice(2, 0, 'struct') // insert structure into the cols
       this.displayedColumns = this.displayedColumns.concat('assays', 'assay_titles');
     } else {
       this.displayedColumns = this.displayedColumns.concat('assays');
+      this.displayedColumns.splice(this.displayedColumns.indexOf('id'), 1);
     }
 
   }
@@ -240,5 +242,13 @@ console.log(results)
     sortedData[row_num + this.pageIdx * this.pageSize]['alias_ct'] += this.num_aliases;
     this.dataSource.data = sortedData;
     // this.dataSource.data[row_num + this.pageIdx * this.pageSize]['alias_ct'] += this.num_aliases;
+  }
+
+  expandCell(e) {
+    e.target.parentNode.parentNode.children[0].classList.toggle('expanded');
+    e.target.parentNode.parentNode.children[1].classList.toggle('expanded');
+    e.target.parentNode.parentNode.children[2].classList.toggle('expanded');
+    e.target.parentNode.parentNode.children[3].classList.toggle('expanded');
+    //e.target.parentNode.parentNode.childNodes.addClass('expanded');
   }
 }

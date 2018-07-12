@@ -2,16 +2,16 @@
 input, .input-group .form-control {
   /* margin-top: 36px; */
   font-size: 1.5em;
-  min-width: 375px !important;
+  //min-width: 375px !important;
   max-width: 500px !important;
-  width: 33% !important;
+  //width: 33% !important;
   height: 1.5em;
 }
 
 .search {
-  display: inline-block;
-  /* width: 100%; */
-  margin-top: 36px;
+  // display: inline-block;
+  // width: 100%;
+  margin: 36px 0 0;
 }
 
 .examples {
@@ -25,10 +25,9 @@ h6 {
 
 .search-btn {
   margin-left: 10px;
-  background: #fecccd;
   border-radius: 15%;
   margin-top: 33px;
-  position: absolute;
+  //position: absolute;
     /* display: inline-block; */
 }
 
