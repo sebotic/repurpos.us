@@ -12,8 +12,8 @@ import {
   HttpResponse
 } from "@angular/common/http";
 
-import { AssayData, GVKData, IntegrityData, InformaData, VendorData, WDQSData, Compound, SearchResult } from '../_models/index';
-import { WDQService, BackendSearchService } from '../_services/index';
+import { AssayData, GVKData, IntegrityData, InformaData, VendorData, WDQSData, Compound, SearchResult, LoginState } from '../_models/index';
+import { WDQService, BackendSearchService, LoginStateService } from '../_services/index';
 import { environment } from "../../environments/environment";
 
 
@@ -103,6 +103,7 @@ export class CompoundDataComponent implements OnInit {
     private http2: HttpClient,
     private titleService: Title,
     // private cidService: CIDService,
+    private loginStateService: LoginStateService,
     public searchSvc: BackendSearchService,
     public _location: Location
   ) {
@@ -120,6 +121,12 @@ export class CompoundDataComponent implements OnInit {
       this.id = params['id'];
       this.buildData();
     });
+
+// check if logged in
+    this.loginStateService.loginState
+      .subscribe((state: LoginState) => {
+        this.loggedIn = state.loggedIn;
+      });
   }
 
   ngOnInit() {
@@ -148,13 +155,6 @@ export class CompoundDataComponent implements OnInit {
         let p: string = i['prop']['value'].split('/').pop();
 
         this.prop_name_map[p] = i['propLabel']['value'];
-      }
-
-
-      if (localStorage.getItem('auth_token')) {
-        this.loggedIn = true;
-      } else {
-        this.loggedIn = false;
       }
 
 
