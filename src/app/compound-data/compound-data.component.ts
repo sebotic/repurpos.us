@@ -125,6 +125,10 @@ export class CompoundDataComponent implements OnInit {
 // check if logged in
     this.loginStateService.loginState
       .subscribe((state: LoginState) => {
+        if(state.loggedIn === true && this.loggedIn !== true) {
+          this.buildData();
+        }
+
         this.loggedIn = state.loggedIn;
       });
   }
