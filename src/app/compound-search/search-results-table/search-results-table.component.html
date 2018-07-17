@@ -60,8 +60,7 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
               <!-- binary circle if compound in reframe library -->
-              <div id="reframe_cmpd" [ngClass]="element['reframeid'].length > 0 ? 'cmpd-avail' : 'no-cmpd'">
-                <!-- <span class="circle"></span> -->
+              <div id="reframe_cmpd" [ngClass]="element['reframeid'] === true ? 'cmpd-avail' : 'no-cmpd'">
                 <div>
                   <span class="circle"></span>
                 </div>
@@ -70,7 +69,7 @@
 
                 <div>
                   <!-- Check if there are similar compounds, if not a Reframe compound -->
-                  <div class="similar" *ngIf="element['reframeid'].length === 0 && element['similar_compounds'].length > 0" matTooltip="Tanimoto score > 0.85">
+                  <div class="similar" *ngIf="element['reframeid'] === false && element['similar_compounds'].length > 0" matTooltip="Tanimoto score > 0.85">
                     <div>
                       {{element['similar_compounds'].length === 1 ? "similar library compound:" : "similar library compounds:"}}
                     </div>
