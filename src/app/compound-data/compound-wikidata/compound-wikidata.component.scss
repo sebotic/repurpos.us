@@ -4,8 +4,8 @@
 }
 
 .cmpd-table>tbody{
-  border-top: #21252990 1px solid;
-  border-bottom: #21252990 1px solid;
+  border-top: #717e8c 1px solid;
+  border-bottom: #717e8c 1px solid;
 }
 
 
@@ -18,4 +18,11 @@ table#cmpd-names, table.cmpd-table, .cmpd-table {
   table-layout: fixed;
   border:none;
   margin-bottom: 50px;
+}
+
+.title {
+  text-transform: uppercase;
+  font-weight: 300;
+  opacity: 0.6;
+  font-size: 0.85em;
 }
