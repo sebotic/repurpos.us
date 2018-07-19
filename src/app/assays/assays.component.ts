@@ -18,6 +18,7 @@ import {environment} from "../../environments/environment";
 
 export class AssaysComponent implements OnInit {
   assayList: Object = [];
+  notMobile: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,6 +26,9 @@ export class AssaysComponent implements OnInit {
     private http: Http,
     private http2: HttpClient
   ) {
+    if (window.screen.width > 760) {
+      this.notMobile = true;
+    }
   }
 
   ngOnInit() {
@@ -42,6 +46,14 @@ export class AssaysComponent implements OnInit {
       let b = r.body;
       this.assayList = b;
     });
+  }
+
+  expandCell(e) {
+    e.target.parentNode.parentNode.children[1].classList.toggle('expanded');
+    e.target.parentNode.parentNode.children[2].classList.toggle('expanded');
+    e.target.parentNode.parentNode.children[3].classList.toggle('expanded');
+    e.target.parentNode.parentNode.children[4].classList.toggle('expanded');
+    //e.target.parentNode.parentNode.childNodes.addClass('expanded');
   }
 
 }

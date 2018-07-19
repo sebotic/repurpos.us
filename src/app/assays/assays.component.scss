@@ -42,11 +42,19 @@ a, a.dwnld-link:hover {
 }
 
 #table_assay {
-  width: 40%;
+  width: 20%;
+}
+
+#table_type {
+  width: 15%;
+}
+
+#table_ind {
+  width: 15%;
 }
 
 #table_descrip {
-  width: 50%;
+  width: 40%;
 }
 
 #assays td {
@@ -72,4 +80,97 @@ a, a.dwnld-link:hover {
 #assays tr:nth-child(even) {
   background: #f7f7f7;
   border-right: #dadada 3px solid;
+}
+
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
+  #label {
+    th:not(#table_assay) {
+      display: none;
+    }
+  }
+
+  #table_id {
+    display: none !important;
+  }
+
+  tr:not(#label) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mat-icon {
+    transition: transform 0.5s ease-in-out;
+  }
+
+  #assays td {
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    width: auto;
+
+    &:not(#table_assay) {
+      padding-top: 0;
+      padding-bottom: 0;
+      flex: 0;
+      position: relative;
+      justify-content: flex-end;
+      align-items: center;
+      flex-direction: column;
+      max-height: 0px;
+      min-height: unset;
+      overflow: hidden;
+      border-top: 1px dashed transparent;
+      transition: max-height 0.5s ease-in-out, border-top-color 0.5s ease-in-out, padding 0.5s ease-in-out;
+
+      * {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out;
+      }
+      //display: none;
+
+      &:before {
+        font-weight: 600;
+        max-height: 0px;
+        transition: max-height 0.5s ease-in-out;
+        overflow: hidden;
+      }
+
+      &:nth-of-type(3):before { content: 'Indication'; }
+      &:nth-of-type(4):before { content: 'Type'; }
+      &:nth-of-type(5):before { content: 'Description'; }
+
+      &.expanded {
+        max-height: 350px;
+        padding: 12px 20px;
+        border-top-color: #c3c4c5;
+
+        * {
+          max-height: 350px;
+        }
+         &:before {
+          max-height: 100px;
+        }
+      }
+    }
+
+    &.expanded {
+      .mat-icon {
+        transform: rotate(180deg);
+      }
+    }
+
+    &#table_assay, &#table_type, &#table_ind, &#table_descrip {
+      width: auto;
+    }
+
+    &#table_assay {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  } // td
 }

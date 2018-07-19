@@ -74,7 +74,9 @@ a, a.dwnld-link:hover {
 }
 
 #content{
-  margin: 15px;
+  width: 60vw;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
@@ -88,4 +90,12 @@ a, a.dwnld-link:hover {
   border-top: 1px solid #212529;
   margin-top: 15px;
   padding-top: 12px;
+}
+
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
+  #content {
+    width: auto;
+  }
 }
