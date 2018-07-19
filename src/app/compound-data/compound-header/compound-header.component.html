@@ -23,7 +23,8 @@
       </ng-template>
 
       <!-- Reframe compound / vendor info -->
-      <table class="reframe_cmpd" *ngIf="chemVendors.length > 0">
+      <!-- TODO: switch RFM ID to boolean -->
+      <table class="reframe_cmpd" *ngIf="reframeID && reframeID.length > 0">
         <td class='rfm-circle circle available'>
         </td>
         <td class="rfm-circle">

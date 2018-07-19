@@ -13,6 +13,7 @@ import { Compound } from '../../_models';
 export class CompoundHeaderComponent implements OnInit {
   @Input() label: string;
   @Input() aliases: Array<string> = [];
+  @Input() reframeID: Array<string> = [];
   @Input() idData: Array<Object> = [];
   @Input() chemVendors: Array<Object> = [];
   @Input() integrityData: Object = [];
