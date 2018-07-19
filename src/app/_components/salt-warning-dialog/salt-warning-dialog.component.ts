@@ -21,7 +21,6 @@ export class SaltWarningDialogComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 
