@@ -106,6 +106,20 @@ a:hover{
   color: #fd5457;
 }
 
+.mat-form-field {
+  &.mat-form-field-invalid {
+    .mat-input-element, .mat-form-field-label {
+      color: #fd5457 !important;
+      &.mat-accent {
+        color: #fd5457 !important;
+      }
+      .mat-form-field-required-marker {
+        color: #fd5457 !important;
+      }
+    }
+  }
+}
+
 
 
 /* • separator */
