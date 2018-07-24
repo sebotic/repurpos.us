@@ -4,9 +4,8 @@
   flex-direction: column;
   /* max-height: 500px; */
   min-width: 300px;
-  width: 1500px;
+  width: 100%;
   position: relative;
-  margin-left: 24px;
 }
 
 .mat-table {
@@ -212,4 +211,91 @@ a#more {
     font-weight: bold;
     font-size: 2em;
     text-align: center;
+}
+
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
+  .search-result-container {
+    margin-left: 0;
+    min-width: unset;
+    width: auto;
+  }
+
+  mat-header-cell:not(.mat-column-main_label) {
+    display: none;
+  }
+
+  mat-row {
+    flex-direction: column;
+  }
+
+  .mat-icon {
+    transition: transform 0.5s ease-in-out;
+  }
+
+  mat-cell {
+    padding: 0 24px;
+    justify-content: space-between;
+
+    &:not(.mat-column-main_label) {
+      flex: 0;
+      position: relative;
+      justify-content: flex-end;
+      flex-direction: column;
+      max-height: 0px;
+      min-height: unset;
+      overflow: hidden;
+      border-top: 1px dashed transparent;
+      transition: max-height 0.5s ease-in-out, border-top-color 0.5s ease-in-out;
+
+      * {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out;
+      }
+      //display: none;
+
+      &:before {
+        font-weight: 600;
+        max-height: 0px;
+        transition: max-height 0.5s ease-in-out;
+        overflow: hidden;
+      }
+
+      &:nth-of-type(2):before { content: 'Aliases'; }
+      &:nth-of-type(3):before { content: 'Sample in Screening Library'; }
+      &:nth-of-type(4):before { content: 'Assay Hits'; }
+
+      &.expanded {
+        max-height: 350px;
+        border-top-color: #c3c4c5;
+
+        * {
+          max-height: 350px;
+        }
+         &:before {
+          max-height: 100px;
+        }
+      }
+    }
+
+    ul {
+      text-align: right;
+    }
+
+    &.mat-column-reframeid {
+      padding: 0 15px;
+    }
+
+    &.expanded {
+      .mat-icon {
+        transform: rotate(180deg);
+      }
+    }
+  } // mat-cell
+
+  mat-footer-row::after, mat-header-row::after, mat-row::after {
+    min-height: unset;
+  }
 }

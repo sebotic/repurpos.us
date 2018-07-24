@@ -1,18 +1,18 @@
-<div class="container" id="content">
-  <div class="row summary-box">
+<div class="container-fluid" id="content">
+  <div class="summary-box">
     <h1 class="title">Assay descriptions</h1>
     <div class="summary" id="main_summary">
       Experimental methodology and data for each high throughput screen
     </div>
   </div>
 
-  <div class="row">
+  <div class="">
     <table style="width:100%" id="assays">
       <tr id="label">
         <th id="table_id">id</th>
         <th id="table_assay">assay</th>
-        <th id="table_descrip">indication</th>
-        <th id="table_descrip">type</th>
+        <th id="table_ind">indication</th>
+        <th id="table_type">type</th>
         <th id="table_descrip">description</th>
       </tr>
 
@@ -26,6 +26,7 @@
           <a href="/#/assays/{{ assay.assay_id }}">
             {{ assay.title }}
           </a>
+          <mat-icon *ngIf="!notMobile" class="more-info" (click)="expandCell($event)">expand_more</mat-icon>
         </td>
 
         <td >
