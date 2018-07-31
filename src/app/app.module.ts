@@ -37,7 +37,7 @@ import {
   // MatButtonToggleModule,
   // MatCardModule,
   // MatCheckboxModule,
-  // MatChipsModule,
+  MatChipsModule,
   // MatDatepickerModule,
   MatDialogModule,
   MatExpansionModule,
@@ -129,6 +129,8 @@ import { KetcherComponent } from './compound-search/search-box/structure-search/
 import { IntroTextComponent } from './intro-text/intro-text.component';
 import { Struct2dComponent } from './struct2d/struct2d.component';
 import { AvailableDataComponent } from './compound-data/available-data/available-data.component';
+import { ClinicalPhaseComponent } from './compound-data/clinical-phase/clinical-phase.component';
+import { SaltFormComponent } from './compound-data/salt-form/salt-form.component';
 
 @NgModule({
   exports: [
@@ -138,7 +140,7 @@ import { AvailableDataComponent } from './compound-data/available-data/available
     // MatButtonToggleModule,
     // MatCardModule,
     // MatCheckboxModule,
-    // MatChipsModule,
+    MatChipsModule,
     // MatStepperModule,
     // MatDatepickerModule,
     MatDialogModule,
@@ -232,7 +234,9 @@ export class MaterialModule {}
     IntroTextComponent,
     Struct2dComponent,
     SaltWarningComponent,
-    SaltWarningDialogComponent
+    SaltWarningDialogComponent,
+    ClinicalPhaseComponent,
+    SaltFormComponent
   ],
   imports: [
     BrowserModule,
