@@ -16,7 +16,6 @@ export class CompoundAssayDataComponent implements OnInit {
 
       this.cmpdSvc.assaysState.subscribe((assays: AssayData[]) => {
         this.assayData = assays;
-
       })
 
   }

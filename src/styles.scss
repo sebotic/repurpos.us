@@ -122,18 +122,47 @@ $circle_diam: 15px;
   word-break: break-all !important;
 }
 
+app-clinical-phase {
+  display: block;
+}
+
 // .assay-table > tbody,
 // th {
 //   /* border-top: #717e8c 1px solid; */
 //   border-bottom: #717e8c 1px solid;
 // }
 
-.cmpd-table > tbody, .assay-table > tbody {
-  border-bottom: #717e8c 3px solid;
+table#cmpd-names, table.cmpd-table, .cmpd-table {
+  width: 100%;
+  table-layout: fixed;
 }
 
 .cmpd-table > tbody {
+  border-top: #717e8c 1px dashed;
+  border-bottom: #717e8c 1px dashed;
+}
+
+.vendor-header {
+  margin-left: 2px;
+  margin-right: 2px;
+  padding-top: 5px;
+}
+
+.first-entry {
   border-top: #717e8c 2px solid;
+}
+
+.notfirst-entry {
+  border-top: #717e8c 1px dashed;
+}
+
+.last-entry {
+  border-bottom: #717e8c 3px solid;
+  margin-bottom: 60px !important;
+}
+
+.assay-table > tbody {
+  border-bottom: #717e8c 3px solid;
 }
 
 .assay-table th {
@@ -143,6 +172,22 @@ $circle_diam: 15px;
 
 .cmpd-table td, .assay-table td{
   background: #f5f6f7;
+}
+
+.title {
+  text-transform: uppercase;
+  font-weight: 300;
+  // opacity: 0.6;
+  color: #9ba4ae;
+  font-size: 0.85em;
+  width: 25%;
+  min-width: 175px;
+}
+
+.cmpd-table td {
+  /* border-top: 1px solid #c3c4c5;
+  border-bottom: 1px solid #c3c4c5; */
+  word-break: normal;
 }
 
 /* Clearfix */

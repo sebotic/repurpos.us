@@ -7,7 +7,7 @@
   </div>
 
   <!-- HEADER: name, aliases -->
-<div >
+<div>
   <div class="row-fluid">
 
     <!-- Drug Name -->
@@ -15,12 +15,6 @@
       <div class="row-fluid cmpd-name">
         <h1>{{ label }}</h1>
       </div>
-
-      <ng-template #vendor_names>
-        <div class="row-fluid cmpd-name" *ngIf="integrityData.length > 0">
-          <h1>{{ integrityData[0]['drug_name'] }}</h1>
-        </div>
-      </ng-template>
 
       <!-- Reframe compound / vendor info -->
       <!-- TODO: switch RFM ID to boolean -->
@@ -50,9 +44,9 @@
 
     <!-- WHO Name -->
     <div id="cmpd-names" class="col-md-8 col-sm-6 col-xs-12">
-      <div class="row-fluid who-name" *ngFor="let x of idData">
-        <span *ngIf="x['property'] === 'World Health Organisation International Nonproprietary Name'">
-          <b>{{x['property'] + ': ' }}</b><span *ngFor="let ii of x['values']">{{ ii }}</span></span>
+      <div class="row-fluid who-name" *ngIf="whoName">
+          <b>World Health Organisation International Nonproprietary Name:</b>
+          {{ whoName }}
       </div>
 
       <!-- Aliases -->

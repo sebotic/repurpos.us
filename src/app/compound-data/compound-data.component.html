@@ -1,9 +1,6 @@
 <div class="container-fluid clearfix">
 
-  <app-compound-header *ngIf="label" [label]='label' [reframeID]='reframeID' [integrityData]='integrityData' [chemVendors]='chemVendors' [idData]='idData' [_location]="_location"
-  [aliases]='aliases' [results_per_page] ='num_similar_per_page' [similarityResults]='similarityResults'></app-compound-header>
-
-
+  <app-compound-header [results_per_page] ='num_similar_per_page' [_location]="_location"></app-compound-header>
 
   <div class="row-fluid">
     <!-- LEFT COLUMN -->
@@ -13,7 +10,7 @@
       <app-struct2d [structure]="smiles" struct_type="smiles" *ngIf="smiles"></app-struct2d>
 
       <!-- Chemical ids -->
-      <app-compound-wikidata-ids [qid]="qid" [table_data]="table_data" [idData]="idData" [gvkData]="gvkData" [integrityData]="integrityData" [informaData]="informaData"></app-compound-wikidata-ids>
+      <!-- <app-compound-wikidata-ids [qid]="qid" [table_data]="table_data" [idData]="idData" [gvkData]="gvkData" [integrityData]="integrityData" [informaData]="informaData"></app-compound-wikidata-ids> -->
 
 
     </div>
@@ -21,16 +18,19 @@
     <!-- RIGHT COLUMN -->
     <div class="col-md-8">
       <!-- Assays -->
-      <app-compound-assay-data [loggedIn]="loggedIn" [assayData]="assayData"></app-compound-assay-data>
-
+      <app-compound-assay-data></app-compound-assay-data>
 
 
       <!-- Wikidata -->
-      <app-compound-wikidata [qid]="qid" [table_data]="table_data"  *ngIf="qid"></app-compound-wikidata>
+      <app-compound-wikidata></app-compound-wikidata>
 
 
       <!-- VENDOR DATA -->
-      <app-compound-vendor-data [loggedIn]="loggedIn" [availData]="availData" [gvkData]="gvkData" [integrityData]="integrityData" [informaData]="informaData" [vendors]="vendors"></app-compound-vendor-data>
+      <app-compound-vendor-data></app-compound-vendor-data>
+
+      <!-- Log-in default -->
+      <app-available-data [availData]="cmpdAvailData" class="nodata"></app-available-data>
+
 
     </div>
     <!-- end of right column -->
@@ -41,6 +41,6 @@
   <div class="clearfix">
   </div>
 
-  <app-similar-compounds [similarityResults]='similarityResults' [results_per_page] ='num_similar_per_page'></app-similar-compounds>
+  <app-similar-compounds [results_per_page] ='num_similar_per_page'></app-similar-compounds>
 
 </div>
