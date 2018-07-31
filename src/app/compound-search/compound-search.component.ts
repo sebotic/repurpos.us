@@ -9,6 +9,7 @@ import { SearchBoxComponent, SearchResultComponent } from './index';
 @Component({
   selector: 'app-compound-search',
   templateUrl: './compound-search.component.html',
+  styleUrls: ['./compound-search.component.scss']
 })
 export class CompoundSearchComponent {
   results: SearchResult[];
