@@ -14,13 +14,13 @@ export class CompoundWikidataComponent implements OnInit {
 
   constructor(private cmpdSvc: CompoundService) {
 
-    this.cmpdSvc.qidState.subscribe((qid: string) => {
-      this.qid = qid;
+    this.cmpdSvc.idStates.subscribe((ids: Object) => {
+      this.qid = ids['qid'];
     })
 
     this.cmpdSvc.wikiTableState.subscribe((wdata: WikiData[]) => {
       this.table_data = wdata;
-      console.log(wdata)
+      // console.log(wdata)
     })
   }
 
