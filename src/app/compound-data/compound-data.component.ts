@@ -97,12 +97,8 @@ export class CompoundDataComponent implements OnInit {
     })
 
     this.route.params.subscribe(params => {
-      console.log('routing... ')
-      // this.qid = params['qid'];
-      // this.id = params['id'];
+      // console.log('routing... ')
       this.compoundService.idSubject.next({id: params['id'], qid: params['qid']});
-      // this.compoundService.qidSubject.next(params['qid']);
-      // this.buildData();
     });
 
     // Pass along available data binaries to app-available-data
@@ -126,22 +122,6 @@ export class CompoundDataComponent implements OnInit {
     loginStateService.isUserLoggedIn.subscribe(logState => {
       this.loggedIn = logState.loggedIn
     })
-
-
-
-    //
-    // // // check if logged in
-    // this.loginStateService.loginState
-    //   .subscribe((state: LoginState) => {
-    //     console.log('subscribing...')
-    //     console.log(state)
-    //     // let init_state = this.loggedIn;
-    //     this.loggedIn = state.loggedIn;
-    //     // if(init_state && init_state !== this.loggedIn) {
-    //     // // change detected
-    //     this.buildData();
-    //   })
-
   }
 
 
@@ -149,60 +129,6 @@ export class CompoundDataComponent implements OnInit {
 
   ngOnInit() {
   }
-
-
-
-
-
-  // if no cid exists, try to find one, announce it and trigger rendering of compound
-  set_label(label: string): void {
-    if (!this.label) {
-      this.label = label;
-      // console.log('label set', this.label, label);
-    }
-  }
-
-
-
-  // // Main function to grab the data from the backend from the vendors and the assay results
-  // retrieveData(): Promise<void> {
-  //   return new Promise<any>((resolve, reject) => {
-  //     if (this.loggedIn) {
-  //
-  //       this.http2.get<VendorData>(environment.host_url + '/data', {
-  //         observe: 'response',
-  //         // withCredentials: true,
-  //         headers: new HttpHeaders()
-  //           .set('Accept', 'application/json') // TODO: revert
-  //           .set('Authorization', localStorage.getItem('auth_token')),
-  //         params: new HttpParams()
-  //           .set('qid', this.id)
-  //       }).subscribe((r) => {
-  //         let b = r.body[this.id];
-  //         this.reframeID = b.reframe_id;
-  //         this.gvkData = b.gvk;
-  //         this.informaData = b.informa;
-  //         this.integrityData = b.integrity;
-  //         this.assayData = b.assay;
-  //         console.log(b)
-  //         // console.log(this.assayData)
-  //
-  //         // this.set_cid();
-  //
-  //         this.chemVendors = this.getChemVendors();
-  //         resolve("Success with vendor data!");
-  //       });
-  //
-  //     } else {
-  //       // not logged in: grab the basics
-  //       this.retrieveBasicInfo();
-  //       // console.log(this.smiles)
-  //
-  //     }
-  //
-  //   })
-  // }
-
 
 
   // showMore(clickEvent, qid: string): void {

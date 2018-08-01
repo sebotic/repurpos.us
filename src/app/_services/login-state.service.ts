@@ -14,13 +14,13 @@ export class LoginStateService {
   constructor() { }
 
   loggedIn() {
-		console.log('logging in')
+		// console.log('logging in')
   	this.loginSubject.next(<LoginState>{loggedIn: true});
   	this.isUserLoggedIn.next(<LoginState>{loggedIn: true});
   }
 
   loggedOut() {
-		console.log('logging out')
+		// console.log('logging out')
   	this.loginSubject.next(<LoginState>{loggedIn: false});
   }
 
