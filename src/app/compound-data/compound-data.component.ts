@@ -100,20 +100,20 @@ export class CompoundDataComponent implements OnInit {
       console.log('routing... ')
       // this.qid = params['qid'];
       // this.id = params['id'];
-      this.compoundService.idSubject.next(params['id']);
-      this.compoundService.qidSubject.next(params['qid']);
+      this.compoundService.idSubject.next({id: params['id'], qid: params['qid']});
+      // this.compoundService.qidSubject.next(params['qid']);
       // this.buildData();
     });
 
     // Pass along available data binaries to app-available-data
     this.compoundService.availState.subscribe(availData => {
-      console.log(availData)
+      // console.log(availData)
       this.cmpdAvailData = availData;
     })
 
     // Generate SMILES for structure viewer
     this.compoundService.smilesState.subscribe(smiles => {
-    console.log(smiles)
+    // console.log(smiles)
       this.smiles = smiles;
     })
 
@@ -121,6 +121,10 @@ export class CompoundDataComponent implements OnInit {
       if (cmpdName) {
         this.titleService.setTitle(cmpdName + " | reframeDB");
       }
+    })
+
+    loginStateService.isUserLoggedIn.subscribe(logState => {
+      this.loggedIn = logState.loggedIn
     })
 
 

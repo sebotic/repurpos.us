@@ -23,10 +23,10 @@ export class CompoundService {
   // ID holder (InChIkey or internal ID) -- used to access the compound data
   // idState is the event listener of idSubject which calls the backend API to get the data
   // idSubject is updated within compound-data.component, based on the URL route
-  public idSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  idState = this.idSubject.asObservable();
-  public qidSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  qidState = this.qidSubject.asObservable();
+  public idSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({});
+  idStates = this.idSubject.asObservable();
+  // public qidSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  // qidState = this.qidSubject.asObservable();
 
   // --- Assays ---
   // Assay data holder
@@ -53,8 +53,8 @@ export class CompoundService {
   chemSourceState = this.chemSourceSubject.asObservable();
 
   // --- SMILES ---
-  wiki_smiles: string;
-  vendor_smiles: string;
+  private wiki_smiles: string;
+  private vendor_smiles: string;
   public smilesSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   smilesState = this.smilesSubject.asObservable();
 
@@ -80,7 +80,7 @@ export class CompoundService {
   // public wikiTableSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   wikiTableState = this.wikiTableSubject.asObservable();
 
-  table_data: WikiData[] = [];
+  private table_data: WikiData[] = [];
   prop_name_map: Object = {};
   // from https://www.wikidata.org/wiki/Wikidata:List_of_properties/natural_science
   idPropsToDisplay: Array<string> = ['P231', 'P662', 'P661', 'P592', 'P715', 'P683', 'P665',
@@ -111,19 +111,20 @@ export class CompoundService {
     // private router: Router,
   ) {
 
-    // Tell Wikidata what want to grab
-    this.getWDVars();
+
 
     // Listen for changes either to the login state or the route (e.g. ID)
     combineLatest(
       loginStateService.isUserLoggedIn,
-      this.idState,
-      this.qidState,
+      this.idStates,
 
-      (log, id, qid) => ({ log, id, qid })
+      (log, ids) => ({ log, ids })
     ).subscribe(
       data => {
-        this.buildData(data.log.loggedIn, data.id, data.qid);
+        console.log(data.log)
+        console.log(data.ids)
+        // console.log(data.qid)
+        this.buildData(data.log.loggedIn, data.ids['id'], data.ids['qid']);
       },
       err => console.error(err)
     );
@@ -132,28 +133,107 @@ export class CompoundService {
 
   // --- MAIN FUNCTION ---
   buildData(loginState: boolean, id: string, qid: string) {
-    // Wait for all the data to come back before making the call to get similarity data and append all aliases
-    Promise.all([this.buildWD(qid), this.retrieveData(loginState, id)]).then(allData => {
-      console.log("PROMISE")
-      // Interdependent Wikidata / backend API calls
 
-      // Merge together Wikidata + vendor aliases & set the label name
+    // Wait for all the data to come back before making the call to get similarity data and append all aliases
+    return [
+    // clear results
+    this.resetVars(),
+    // Tell Wikidata what want to grab
+    this.getWDVars(),
+    // Get Wikidata
+    this.buildWD(qid),
+    // Get vendor and assay data
+    this.retrieveData(loginState, id)].reduce((promiseChain, currentTask) => {
+      // console.log(promiseChain)
+      // console.log(currentTask)
+      return promiseChain.then(chainResults =>
+        currentTask.then((currentResult) => {
+          // console.log('currentResult')
+          // console.log(chainResults)
+          // console.log(currentResult)
+          return [...chainResults, currentResult]
+        }
+        )
+      );
+    }, Promise.resolve([])).then(allData => {
+      console.log('4 promises all resolved: id=' + id + '; qid=' + qid + '; login=' + loginState)
+      // console.log(allData)
       this.getAliases();
 
       // Set SMILES
       let smiles = this.wiki_smiles || this.vendor_smiles;
-      console.log(smiles)
       this.smilesSubject.next(smiles);
 
       // Run a query to get any compounds that are similar
       this.retrieveSimilarData(id, smiles);
 
     })
+    // Parallel version: problem == aliases not returned correctly.
+    // Wait for all the data to come back before making the call to get similarity data and append all aliases
+    // Promise.all([this.resetVars(), this.buildWD(qid), this.retrieveData(loginState, id)]).then(allData => {
+    //   // Interdependent Wikidata / backend API calls
+    //
+    //   // Merge together Wikidata + vendor aliases & set the label name
+    //   this.getAliases();
+    //
+    //   // Set SMILES
+    //   let smiles = this.wiki_smiles || this.vendor_smiles;
+    //   console.log(smiles)
+    //   this.smilesSubject.next(smiles);
+    //
+    //   // Run a query to get any compounds that are similar
+    //   this.retrieveSimilarData(id, smiles);
+    //
+    // })
   }
+
+  resetVars(): Promise<void> {
+    return new Promise<any>((resolve, reject) => {
+      console.log('0 resetting')
+      // Clear previous data, if it exists.  Prevents past states or duplicate data if both the login subscription service and the route params service are both called.
+      this.main_label = '';
+      this.vendorName = '';
+      this.aliases = [];
+      // this.tableData = [];
+      this.wiki_smiles = '';
+      this.vendor_smiles = '';
+      this.table_data = [];
+
+      this.similarityResults = [];
+      // this.idData = [];
+
+      // announce changes
+      // idSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+      // public qidSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
+      this.assaysSubject.next([]);
+      this.nameSubject.next('');
+      this.whoSubject.next('');
+      this.smilesSubject.next('');
+      this.rfmSubject.next([]);
+      this.aliasSubject.next([]);
+      this.chemSourceSubject.next([]);
+      this.similarSubject.next([]);
+      this.availSubject.next([]);
+      this.wikiTableSubject.next([]);
+      this.vendorSubject.next([]);
+
+      console.log('0 resetting ended')
+      // setTimeout(resolve, 100, 'foo');
+      resolve("Clear vars");
+    })
+  }
+
+  // resetVars(): Promise<void> {
+  //   return new Promise<any>((resolve, reject) => {
+  //   setTimeout(resolve, 100, 'foo');
+  // });
 
 
   // --- WIKIDATA ---
-  getWDVars() {
+  getWDVars(): Promise<void> {
+    return new Promise<any>((resolve, reject) => {
+  console.log('1 getting wd mapping')
     // Run query to determine which Wikidata variables to grab
     let query: string = `
   SELECT ?prop ?propLabel ?furl WHERE {
@@ -178,22 +258,22 @@ export class CompoundService {
 
         this.prop_name_map[p] = i['propLabel']['value'];
       }
+      console.log('1 wd mapping ended')
+      resolve("WD property variables found!")
     })
-  }
+  })
+}
 
 
   // Main function to gather Wikidata data
   buildWD(qid: string): Promise<void> {
     return new Promise<any>((resolve, reject) => {
+      console.log('2 retrieving wikidata')
+      // console.log(qid)
+      // console.log(this.prop_name_map)
 
-      // Clear previous data, if it exists.  Prevents duplicate data if both the login subscription service and the route params service are both called.
-      // this.aliases = [];
-      // this.tableData = [];
-      this.table_data = [];
-      // this.idData = [];
-      //
-
-      let q: string = `
+      if (qid) {
+        let q: string = `
       SELECT ?compound ?compoundLabel ?prop ?id ?idLabel WHERE {
         VALUES ?compound {wd:${qid}}
         VALUES ?prop { wdt:${this.propsToDisplay.join(' wdt:')} skos:altLabel}
@@ -203,179 +283,183 @@ export class CompoundService {
 
 
 
-      this.http2.get<WDQSData>('https://query.wikidata.org/sparql', {
-        observe: 'response',
-        headers: new HttpHeaders()
-          .set('Accept', 'application/json'),
-        params: new HttpParams()
-          .set('query', q)
-          .set('format', 'json')
-      }).subscribe((r) => {
-        let b = r.body;
-        let tmp: Object = {};
+        this.http2.get<WDQSData>('https://query.wikidata.org/sparql', {
+          observe: 'response',
+          headers: new HttpHeaders()
+            .set('Accept', 'application/json'),
+          params: new HttpParams()
+            .set('query', q)
+            .set('format', 'json')
+        }).subscribe((r) => {
+          let b = r.body;
+          let tmp: Object = {};
 
-        for (let i of b.results.bindings) {
-          // this.label = i['compoundLabel']['value'];
+          for (let i of b.results.bindings) {
+            // this.label = i['compoundLabel']['value'];
 
-          let p: string = i['prop']['value'].split('/').pop();
+            let p: string = i['prop']['value'].split('/').pop();
 
-          // for some reason, the sparql endpoint returns a result for properties which actually not on that item
-          if (!i.hasOwnProperty('id')) {
-            continue;
-          }
+            // for some reason, the sparql endpoint returns a result for properties which actually not on that item
+            if (!i.hasOwnProperty('id')) {
+              continue;
+            }
 
-          // separate out aliases
-          if (p === 'core#altLabel') {
-            this.aliases.push(i['idLabel']['value']);
-            continue;
-          }
+            // separate out aliases
+            if (p === 'core#altLabel') {
+              this.aliases.push(i['idLabel']['value']);
+              continue;
+            }
 
-          let qid: string = i['id']['value'];
-          let v: string = i['idLabel']['value'];
+            let qid: string = i['id']['value'];
+            let v: string = i['idLabel']['value'];
 
-          if (p.startsWith('P')) {
-            if (tmp.hasOwnProperty(p)) {
+            if (p.startsWith('P')) {
+              if (tmp.hasOwnProperty(p)) {
 
-              tmp[p]['values'].push(v);
-              if (qid.startsWith('http://www.wikidata.org/entity/Q')) {
-                tmp[p]['qids'].push(qid.split('/').pop());
+                tmp[p]['values'].push(v);
+                if (qid.startsWith('http://www.wikidata.org/entity/Q')) {
+                  tmp[p]['qids'].push(qid.split('/').pop());
+                }
               }
-            }
-            else {
-              tmp[p] = {
-                values: [v],
-                qids: [],
-                showMore: false,
-                pid: ''
-              };
+              else {
+                tmp[p] = {
+                  values: [v],
+                  qids: [],
+                  showMore: false,
+                  pid: ''
+                };
 
-              if (qid.startsWith('http://www.wikidata.org/entity/Q')) {
-                tmp[p]['qids'].push(qid.split('/').pop());
+                if (qid.startsWith('http://www.wikidata.org/entity/Q')) {
+                  tmp[p]['qids'].push(qid.split('/').pop());
+                }
               }
-            }
 
+            }
           }
-        }
 
-        for (let y of this.propsToDisplay) {
+          for (let y of this.propsToDisplay) {
 
-          if (tmp.hasOwnProperty(y)) {
-            let sm: boolean = this.showMoreProperties.includes(y);
+            if (tmp.hasOwnProperty(y)) {
+              let sm: boolean = this.showMoreProperties.includes(y);
 
-            // Pull out WHO name
-            if (this.prop_name_map[y] === 'World Health Organisation International Nonproprietary Name') {
-              this.main_label = tmp[y]['values'];
-              this.whoSubject.next(this.main_label)
+              // Pull out WHO name
+              if (this.prop_name_map[y] === 'World Health Organisation International Nonproprietary Name') {
+                this.main_label = tmp[y]['values'];
+                this.whoSubject.next(this.main_label)
+              }
+
+
+              if (this.idPropsToDisplay.includes(y) && !this.excludeFromTableDisplay.includes(y)) {
+                // this.idData.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'showMore': sm, 'pid': y });
+              }
+              else if (!this.excludeFromTableDisplay.includes(y)) {
+
+                this.table_data.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'qids': tmp[y]['qids'], 'showMore': sm, 'pid': y });
+              }
+
             }
-
-
-            if (this.idPropsToDisplay.includes(y) && !this.excludeFromTableDisplay.includes(y)) {
-              // this.idData.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'showMore': sm, 'pid': y });
-            }
-            else if (!this.excludeFromTableDisplay.includes(y)) {
-
-              this.table_data.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'qids': tmp[y]['qids'], 'showMore': sm, 'pid': y });
-            }
-
           }
-        }
 
-        // Pull out SMILES string
-        if (this.table_data.map((d: any) => d.property).indexOf('isomeric SMILES') > -1) {
-          this.wiki_smiles = this.table_data.find((d: any) => d.property === "isomeric SMILES")['values'][0];
-        } else if (this.table_data.map((d: any) => d.property).indexOf('canonical SMILES') > -1) {
-          this.wiki_smiles = this.table_data.find((d: any) => d.property === "canonical SMILES")['values'][0];
-        }
+          // Pull out SMILES string
+          if (this.table_data.map((d: any) => d.property).indexOf('isomeric SMILES') > -1) {
+            this.wiki_smiles = this.table_data.find((d: any) => d.property === "isomeric SMILES")['values'][0];
+          } else if (this.table_data.map((d: any) => d.property).indexOf('canonical SMILES') > -1) {
+            this.wiki_smiles = this.table_data.find((d: any) => d.property === "canonical SMILES")['values'][0];
+          }
 
-        this.wikiTableSubject.next(<WikiData[]>this.table_data)
+          this.wikiTableSubject.next(<WikiData[]>this.table_data)
 
-        // if (!tmp.hasOwnProperty('P2175')) {
-        //   this.retrieveLabels([]);
-        // }
-        // else {
-        //   this.retrieveLabels(Array.from(tmp['P2175']['qids']).map((x: string) => x.split('/').pop()));
-        // }
+          // if (!tmp.hasOwnProperty('P2175')) {
+          //   this.retrieveLabels([]);
+          // }
+          // else {
+          //   this.retrieveLabels(Array.from(tmp['P2175']['qids']).map((x: string) => x.split('/').pop()));
+          // }
+          //
+          console.log('2 retrieving wikidata ended')
 
-        resolve("Success with WD!");
-      });
+          resolve("Success with WD!");
+        });
+      } else {
+        console.log('2 retrieving wikidata ended')
+        resolve("No QID found; WD exiting");
+      }
     })
+
   }
 
   // --- BACKEND API CALL ---
   // Main function to grab the data from the backend from the vendors and the assay results
   retrieveData(loggedIn: boolean, id: string): Promise<void> {
     return new Promise<any>((resolve, reject) => {
+      if (id) {
+        if (loggedIn) {
+            console.log('3 retrieving data')
+          this.http2.get<any>(environment.host_url + '/data', {
+            // this.http2.get<VendorData>(environment.host_url + '/data', {
+            observe: 'response',
+            // withCredentials: true,
+            headers: new HttpHeaders()
+              .set('Accept', 'application/json')
+              .set('Authorization', localStorage.getItem('auth_token')),
+            params: new HttpParams()
+              .set('qid', id)
+          }).subscribe((r) => {
+            // search results
+            let b = r.body[id];
 
-      if (loggedIn) {
-        let concatif = function(arr: any[]) {
+            // Is it a Reframe compound? --> compound-header
+            this.rfmSubject.next(b.reframe_id);
+
+            // Pull out assay data --> compound-assay-data
+            this.assaysSubject.next(<AssayData[]>b.assay);
+            console.log(b)
+
+            // Pull out chemical vendor source data --> compound-header
+            this.chemSourceSubject.next(<Object[]>b.chem_vendors);
+
+            // Pull out vendor data --> compound-vendor-data
+            this.vendorSubject.next(<any>[b.gvk, b.integrity, b.informa])
+            // this.vendorSubject.next(<VendorData>{gvk: b.gvk, informa: b.informa, integrity: b.integrity})
+
+            // pull out aliases & names
+            // Main label is preferentially: WHO Name, then Integrity, then informa, then GVK
+            if (Object.keys(b.gvk).length > 0) {
+              this.aliases.concat(b.gvk.synonyms).concat(b.gvk.drug_name);
+              this.vendorName = b.gvk.drug_name;
+              this.vendor_smiles = b.gvk.smiles;
+            }
+            if (Object.keys(b.informa).length > 0) {
+              this.aliases.concat(b.informa.drug_name);
+              this.vendorName = b.informa.drug_name;
+              this.vendor_smiles = b.informa.smiles;
+            }
+            if (Object.keys(b.integrity).length > 0) {
+              this.aliases.concat(b.integrity.drug_name);
+              this.vendorName = b.integrity.drug_name;
+              this.vendor_smiles = b.integrity.smiles;
+            }
+
+            console.log('3 retrieving data ended')
+            resolve("Success with vendor data!");
+          });
+
+        } else {
+          // not logged in: grab the basics
+          console.log('3 getting basic info')
+          let prmse = this.retrieveBasicInfo(id);
+          console.log('3 retrieving data ended w/ basic info')
+          // Wait for promise from getting basic info before returning from getting vendor data
+          resolve(prmse);
 
         }
-
-        this.http2.get<any>(environment.host_url + '/data', {
-          // this.http2.get<VendorData>(environment.host_url + '/data', {
-          observe: 'response',
-          // withCredentials: true,
-          headers: new HttpHeaders()
-            .set('Accept', 'application/json')
-            .set('Authorization', localStorage.getItem('auth_token')),
-          params: new HttpParams()
-            .set('qid', id)
-        }).subscribe((r) => {
-          // reset the list of available data
-          this.availSubject.next([]);
-
-          // search results
-          let b = r.body[id];
-
-          // Is it a Reframe compound? --> compound-header
-          this.rfmSubject.next(b.reframe_id);
-
-          // Pull out assay data --> compound-assay-data
-          this.assaysSubject.next(<AssayData[]>b.assay);
-          console.log(b)
-
-          // Pull out chemical vendor source data --> compound-header
-          this.chemSourceSubject.next(<Object[]>b.chem_vendors);
-
-          // Pull out vendor data --> compound-vendor-data
-          this.vendorSubject.next(<any>[b.gvk, b.integrity, b.informa])
-          // this.vendorSubject.next(<VendorData>{gvk: b.gvk, informa: b.informa, integrity: b.integrity})
-
-          // pull out aliases & names
-          // Main label is preferentially: WHO Name, then Integrity, then informa, then GVK
-          if (Object.keys(b.gvk).length > 0) {
-            this.aliases.concat(b.gvk.synonyms).concat(b.gvk.drug_name);
-            this.vendorName = b.gvk.drug_name;
-            this.vendor_smiles = b.gvk.smiles;
-          }
-          if (Object.keys(b.informa).length > 0) {
-            this.aliases.concat(b.informa.drug_name);
-            this.vendorName = b.informa.drug_name;
-            this.vendor_smiles = b.informa.smiles;
-          }
-          if (Object.keys(b.integrity).length > 0) {
-            this.aliases.concat(b.integrity.drug_name);
-            this.vendorName = b.integrity.drug_name;
-            this.vendor_smiles = b.integrity.smiles;
-          }
-
-          // this.chemVendors = this.getChemVendors();
-          resolve("Success with vendor data!");
-        });
-
-      } else {
-        // not logged in: grab the basics
-        console.log('getting basic info')
-        this.retrieveBasicInfo(id);
-        resolve("Success with vendor data!");
-
       }
-
     })
   }
 
+  retrieveBasicInfo(id: string): Promise<void> {
+    return new Promise<any>((resolve, reject) => {
 
-  retrieveBasicInfo(id: string): void {
     if (id) {
       this.searchSvc.search(id)
         .subscribe(
@@ -387,14 +471,14 @@ export class CompoundService {
             }
 
             let search_results = results.data[0];
-            console.log(search_results)
+            // console.log(search_results)
             // make sure the first result's id matches what it should be
             if (id === search_results.id) {
 
               this.main_label = search_results.main_label;
               this.wiki_smiles = search_results.smiles;
+              console.log('wiki SMILES: ' + this.wiki_smiles)
               this.getAliases(search_results.aliases);
-              // this.retrieveSimilarData();
 
               // Is it a Reframe compound? --> compound-header
               // TODO: make sure this works when flip RFM id
@@ -404,14 +488,18 @@ export class CompoundService {
               // Send off what data are available
               this.availSubject.next(search_results.properties);
             }
+            resolve("Basic data retrieved!");
 
-            // resolve("Success with vendor data!");
           },
           (err: any) => {
             console.log('error in search')
+            resolve("Error in basic data retrieval");
           }
         );
+    } else {
+      resolve("No id; exiting basic data retrieval");
     }
+  })
   }
 
   getAliases(searchAliases: string[] = []) {
@@ -477,6 +565,9 @@ export class CompoundService {
   }
 
   retrieveSimilarData(id: string, smiles: string): void {
+    // console.log('SMILES: (sim) ' + smiles)
+    // // reset
+    // this.similarityResults = [];
     // if (!this.smiles) {
     //   if (this.table_data.map((d: any) => d.property).indexOf('isomeric SMILES') > -1) {
     //     this.smiles = this.table_data.find((d: any) => d.property === "isomeric SMILES")['values'][0];
@@ -491,7 +582,7 @@ export class CompoundService {
       this.searchSvc.searchSimilarity(smiles, this.tanimoto)
         .subscribe(
           (results: SearchResult) => {
-            console.log(results)
+            // console.log(results)
 
             // filter out the search query (e.g. the compound on the page that launched the search)
             this.similarityResults = results.data.filter((d: any) => d.id !== id);
