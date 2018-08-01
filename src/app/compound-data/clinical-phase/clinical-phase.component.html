@@ -1,0 +1,25 @@
+<div *ngIf="sel_phases.length > 0" class="phase-diagram">
+
+  <svg width="555" height="25">
+  <defs>
+    <marker id="arrow-head" markerWidth="10" markerHeight="7"
+    refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" />
+    </marker>
+</defs>
+
+<g *ngFor="let phase of sel_phases; let i = index">
+  <!-- <rect class="rect" [ngClass]="i > 3 ? 'high' : i === 3 ? 'current' : 'low'" /> -->
+    <rect class="rect approved" [attr.x]="i*(circle_radius*2 + 26) + circle_radius + 5" [attr.y]="2"
+    [attr.width]="circle_radius * 2" [attr.height]="circle_radius * 2"
+    *ngIf="phase.approved" [ngClass]="i > current_phase ? 'high' : i === current_phase ? 'current' : 'low'"></rect>
+
+  <circle *ngIf="!phase.approved" class="circle" [ngClass]="i > current_phase ? 'high' : i === current_phase ? 'current' : 'low'"
+    [attr.r] = "circle_radius" [attr.cx] ="i*(circle_radius*2 + 26) + circle_radius + 5" [attr.cy]="circle_radius + 2" />
+    <text class="phase" [attr.x] ="i*(circle_radius*2 + 26) + circle_radius + 5" y="12" [ngClass]="i > current_phase ? 'high' : i === current_phase ? 'current' : 'low'">{{ phase.label }}</text>
+  <line class="right-arrow" marker-end="url(#arrow-head)" [attr.x1]="i*(circle_radius*2 + 26) + circle_radius*2 + 10"
+  [attr.x2]="i*(circle_radius*2 + 26) + circle_radius*2 + 18" y1="12" y2="12" *ngIf="i + 1 < sel_phases.length"/>
+  </g>
+
+</svg>
+</div>

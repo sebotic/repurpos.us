@@ -1,38 +1,52 @@
-<!-- Back button -->
-<div class="row-fluid pull-right">
-  <a (click)="backClick()">
-    << return to search</a>
-</div>
-
-<!-- HEADER: name, aliases -->
 <div class="cmpd-header">
+
+  <!-- Back button -->
+  <div class="row-fluid pull-right">
+    <a (click)="backClick()">
+      << return to search</a>
+  </div>
+
+  <!-- HEADER: name, aliases -->
+<div>
   <div class="row-fluid">
 
     <!-- Drug Name -->
     <div id="cmpd-names" class="col-md-4 col-sm-6 col-xs-12">
-      <div class="row-fluid cmpd-name" >
+      <div class="row-fluid cmpd-name">
         <h1>{{ label }}</h1>
       </div>
 
-      <ng-template #vendor_names>
-        <div class="row-fluid cmpd-name" *ngIf="integrityData.length > 0">
-          <h1>{{ integrityData[0]['drug_name'] }}</h1>
-        </div>
-      </ng-template>
+      <!-- Reframe compound / vendor info -->
+      <!-- TODO: switch RFM ID to boolean -->
+      <table class="reframe_cmpd" *ngIf="reframeID && reframeID.length > 0">
+        <td class='rfm-circle circle available'>
+        </td>
+        <td class="rfm-circle">
+          <span class="bold">reframe</span><span class="thin">db</span> screening collection compound
+        </td>
+      </table>
 
       <div class="row-fluid cmpd-source" *ngIf="chemVendors.length > 0">
         available via <span *ngFor="let vendor of chemVendors; let i = index;">
           {{ vendor['chem_vendor'] }}
           <span *ngIf="vendor['chem_vendor_id']">({{ vendor['chem_vendor_id'] }})</span>
-          <span class='data-separator' *ngIf="i + 1 < chemVendors.length"></span></span>
+        <span class='data-separator' *ngIf="i + 1 < chemVendors.length"></span></span>
       </div>
+
+      <!-- Matching warning -->
+      <!-- <div class="row-fluid"> -->
+      <div class="warning accent-color">
+        <span class="underline">Note</span>: counterions may differ between data sources.
+        <app-salt-warning-dialog></app-salt-warning-dialog>
+      </div>
+      <!-- </div> -->
     </div>
 
     <!-- WHO Name -->
     <div id="cmpd-names" class="col-md-8 col-sm-6 col-xs-12">
-      <div class="row-fluid who-name" *ngFor="let x of idData">
-        <span *ngIf="x['property'] == 'World Health Organisation International Nonproprietary Name'">
-          <b>{{x['property'] + ': ' }}</b><span *ngFor="let ii of x['values']">{{ ii }}</span></span>
+      <div class="row-fluid who-name" *ngIf="whoName">
+          <b>World Health Organisation International Nonproprietary Name:</b>
+          {{ whoName }}
       </div>
 
       <!-- Aliases -->
@@ -42,7 +56,7 @@
           {{alias}}
           <span *ngIf="i + 1 < alias_ct && i + 1 < aliases.length" class='data-separator'></span></span>
 
-          <a *ngIf="alias_ct < aliases.length" id="more" (click)="showMore()" class="center-block">
+        <a *ngIf="alias_ct < aliases.length" id="more" (click)="showMore()" class="center-block">
             show more
           </a>
       </div>
@@ -61,12 +75,8 @@
 
 
     </div>
-    <div class="row-fluid">
-      <div class="warning accent-color">
-      <span class="underline">Note</span>: salt forms may differ between data sources.
-      <app-salt-warning-dialog></app-salt-warning-dialog>
-    </div>
-    </div>
+
   </div>
 
+</div>
 </div>

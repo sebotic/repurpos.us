@@ -1,0 +1,6 @@
+<div class="col-sm-3 pull-right">
+  <mat-chip-list class="pull-right">
+    <mat-chip *ngFor="let salt of salts" [ngClass]="salt_colors.hasOwnProperty(salt) ? 'known-salt' : 'unknown-salt'"
+    [ngStyle]="{'background-color': salt_colors[salt]}">{{salt}}</mat-chip>
+  </mat-chip-list>
+</div>

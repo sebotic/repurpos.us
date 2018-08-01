@@ -1,121 +1,131 @@
-<div id="vendor-data" *ngIf="loggedIn; else login_vendor">
-  <div *ngFor="let x of [gvkData, integrityData, informaData]; let k = index;">
+<div id="vendor-data" *ngIf="vendor_data.length > 0">
+  <div *ngFor="let x of vendor_data; let k = index;">
     <div *ngIf="x && (x.ikey || x.drug_name || x.phase || x.gvk_id || x.id)">
-      <H3><a href="{{vendors[k].link}}" target="_blank">{{vendors[k].name}} data</a></H3>
+      <H3><a href="{{vendors[k].link}}" target="_blank">{{vendors[k].name}} data</a>
+      </H3>
 
-      <table class="table cmpd-table">
+      <!-- <div class="cmpd-table"> -->
+      <div class="cmpd-table" *ngFor="let temp of [1]; let i=index">
 
-        <!-- Category -->
-        <tr *ngIf="x && x.hasOwnProperty('category') && x['category'].length > 0">
-          <td class="title">Category</td>
-          <td><span (click)="showMore($event)" id={{y}} *ngFor="let y of x['category']; let i = index ;">{{y}}<span *ngIf="i + 1 < x['category'].length" class='data-separator'></span></span>
-          </td>
-        </tr>
+        <div class="vendor-header" [ngClass]="i === 0 ? 'first-entry' : 'notfirst-entry'">
+          <!-- Vendor ID: GVK -->
+          <div *ngIf="x && x.hasOwnProperty('gvk_id')" class="col-sm-3">
+            <span class="title">{{vendors[k].name}} ID: </span>
+            <span>{{ x['gvk_id'] }}</span>
+          </div>
+          <!-- Vendor ID: Integrity -->
+          <div *ngIf="x && x.hasOwnProperty('id')" class="col-sm-3">
+            <span class="title">{{vendors[k].name}} ID: </span>
+            <span>{{ x['id'] }}</span>
+          </div>
 
-        <!-- Mechanism -->
-        <tr *ngIf="x && x.hasOwnProperty('mechanism') && x['mechanism'].length > 0">
-          <td class="title">Mechanism of Action</td>
-          <td><span *ngFor="let y of x['mechanism']; let i = index">{{y}}<span *ngIf="i + 1 < x['mechanism'].length" class='data-separator'></span></span>
-          </td>
-        </tr>
+          <!-- Highest phase -->
+          <div *ngIf="x && x.hasOwnProperty('highest_phase') && x['highest_phase'].length > 0" class="col-sm-6">
+            <span class="title">Highest Phase: </span>
+            <span>{{x['highest_phase']}}<span *ngIf="i + 1 < x['highest_phase'].length" class='data-separator'></span>
+            </span>
+          </div>
 
-        <!-- Phase -->
-        <tr *ngIf="x && x.hasOwnProperty('phase') && x['phase'].length > 0">
-          <td class="title">Phase</td>
-          <td><span *ngFor="let y of x['phase']; let i = index">{{y}}<span *ngIf="i + 1 < x['phase'].length" class='data-separator'></span></span>
-          </td>
-        </tr>
+          <!-- Phase -->
+          <div *ngIf="x && x.hasOwnProperty('phase') && x['phase'].length > 0" class="col-sm-6">
+            <span class="title">Phase: </span>
+            <span><span *ngFor="let y of x['phase']; let i = index">{{y}}<span *ngIf="i + 1 < x['phase'].length" class='data-separator'></span></span>
+            </span>
+            <!-- <app-clinical-phase></app-clinical-phase> -->
+          </div>
 
-        <!-- Highest phase -->
-        <tr *ngIf="x && x.hasOwnProperty('highest_phase') && x['highest_phase'].length > 0">
-          <td class="title">Highest Phase</td>
-          <td>{{x['highest_phase']}}<span *ngIf="i + 1 < x['highest_phase'].length" class='data-separator'></span>
-          </td>
-        </tr>
+          <!-- Salt form -->
+          <!-- <app-salt-form></app-salt-form> -->
 
-        <!-- Route of Administration -->
-        <tr *ngIf="x && x.hasOwnProperty('roa') && x.hasOwnProperty('roa') && x['roa'].length > 0">
-          <td class="title">Route of Administration</td>
-          <td><span *ngFor="let y of x['roa']; let i = index">{{y}}<span *ngIf="i + 1 < x['roa'].length" class='data-separator'></span></span>
-          </td>
-        </tr>
-
-        <!-- Target Name -->
-        <tr *ngIf="x && x.hasOwnProperty('target_name') && x['target_name'].length > 0">
-          <td class="title">Target Name</td>
-          <td><span *ngFor="let y of x['target_name']; let i = index">{{y}}<span *ngIf="i + 1 < x['target_name'].length" class='data-separator'></span></span>
-          </td>
-        </tr>
-
-
-        <!-- Target Family -->
-        <tr *ngIf="x && x.hasOwnProperty('target_family') && x['target_family'].length > 0">
-          <td class="title">Target Family</td>
-          <td><span *ngFor="let y of x['target_family']; let i = index">{{y}}<span *ngIf="i + 1 < x['target_family'].length" class='data-separator'></span></span>
-          </td>
-        </tr>
-
-
-        <!-- Vendor name -->
-        <tr *ngIf="x && x.hasOwnProperty('drug_name') && x['drug_name'].length > 0">
-          <td class="title">name</td>
-          <td><span *ngFor="let y of x['drug_name']; let i = index">{{y}}<span *ngIf="i + 1 < x['drug_name'].length" class='data-separator'></span></span>
-          </td>
-        </tr>
-
-
-        <!-- Aliases -->
-        <tr *ngIf="x && x.hasOwnProperty('synonyms') && x['synonyms'].length > 0">
-          <td class="title">aliases</td>
-          <td><span *ngFor="let y of x['synonyms']; let i = index">{{y}}<span *ngIf="i + 1 < x['synonyms'].length" class='data-separator'></span></span>
-          </td>
-        </tr>
-
-        <!-- Chemical name -->
-        <tr *ngIf="x && x.hasOwnProperty('cas_name') && x['cas_name'].length > 0">
-          <td class="title">Chemical name</td>
-          <td>{{ x['cas_name'] }}
-          </td>
-        </tr>
-
-
-        <!-- Vendor ID: GVK -->
-        <tr *ngIf="x && x.hasOwnProperty('gvk_id')">
-          <td class="title">{{vendors[k].name}} ID</td>
-          <td>{{ x['gvk_id'] }}
-          </td>
-        </tr>
-        <!-- Vendor ID: Integrity -->
-        <tr *ngIf="x && x.hasOwnProperty('id')">
-          <td class="title">{{vendors[k].name}} ID</td>
-          <td>{{ x['id'] }}
-          </td>
-        </tr>
-
-        <!-- Vendor Origin -->
-        <tr *ngIf="x && x.hasOwnProperty('origin') && x['origin'].length > 0">
-          <td class="title">Compound Origin</td>
-          <td>{{ x['origin'] }}
-          </td>
-        </tr>
+          <!-- END OF VENDOR HEADER -->
+        </div>
 
         <!-- Vendor SMILES -->
-        <tr *ngIf="x && x.hasOwnProperty('smiles') && x['smiles'].length > 0">
-          <td class="title">SMILES</td>
-          <td class="smiles">{{ x['smiles'] }}
-          </td>
-        </tr>
+        <div class="col-xs-12 vendor-smiles smiles" *ngIf="x && x.hasOwnProperty('smiles') && x['smiles'].length > 0">
+          <span class="title">SMILES: </span>
+          <span class="smiles">{{ x['smiles'] }}
+    </span>
+        </div>
 
-      </table>
+
+        <table class="table cmpd-table" [ngClass]="i === [1].length - 1 ? 'last-entry' : ''">
+
+          <!-- Category -->
+          <tr *ngIf="x && x.hasOwnProperty('category') && x['category'].length > 0">
+            <td class="title">Category</td>
+            <td><span (click)="showMore($event)" id={{y}} *ngFor="let y of x['category']; let i = index ;">{{y}}<span *ngIf="i + 1 < x['category'].length" class='data-separator'></span></span>
+            </td>
+          </tr>
+
+          <!-- Mechanism -->
+          <tr *ngIf="x && x.hasOwnProperty('mechanism') && x['mechanism'].length > 0">
+            <td class="title">Mechanism of Action</td>
+            <td><span *ngFor="let y of x['mechanism']; let i = index">{{y}}<span *ngIf="i + 1 < x['mechanism'].length" class='data-separator'></span></span>
+            </td>
+          </tr>
+
+
+
+          <!-- Route of Administration -->
+          <tr *ngIf="x && x.hasOwnProperty('roa') && x.hasOwnProperty('roa') && x['roa'].length > 0">
+            <td class="title">Route of Administration</td>
+            <td><span *ngFor="let y of x['roa']; let i = index">{{y}}<span *ngIf="i + 1 < x['roa'].length" class='data-separator'></span></span>
+            </td>
+          </tr>
+
+          <!-- Target Name -->
+          <tr *ngIf="x && x.hasOwnProperty('target_name') && x['target_name'].length > 0">
+            <td class="title">Target Name</td>
+            <td><span *ngFor="let y of x['target_name']; let i = index">{{y}}<span *ngIf="i + 1 < x['target_name'].length" class='data-separator'></span></span>
+            </td>
+          </tr>
+
+
+          <!-- Target Family -->
+          <tr *ngIf="x && x.hasOwnProperty('target_family') && x['target_family'].length > 0">
+            <td class="title">Target Family</td>
+            <td><span *ngFor="let y of x['target_family']; let i = index">{{y}}<span *ngIf="i + 1 < x['target_family'].length" class='data-separator'></span></span>
+            </td>
+          </tr>
+
+
+          <!-- Vendor name -->
+          <tr *ngIf="x && x.hasOwnProperty('drug_name') && x['drug_name'].length > 0">
+            <td class="title">name</td>
+            <td><span *ngFor="let y of x['drug_name']; let i = index">{{y}}<span *ngIf="i + 1 < x['drug_name'].length" class='data-separator'></span></span>
+            </td>
+          </tr>
+
+
+          <!-- Aliases -->
+          <tr *ngIf="x && x.hasOwnProperty('synonyms') && x['synonyms'].length > 0">
+            <td class="title">aliases</td>
+            <td><span *ngFor="let y of x['synonyms']; let i = index">{{y}}<span *ngIf="i + 1 < x['synonyms'].length" class='data-separator'></span></span>
+            </td>
+          </tr>
+
+          <!-- Chemical name -->
+          <tr *ngIf="x && x.hasOwnProperty('cas_name') && x['cas_name'].length > 0">
+            <td class="title">Chemical name</td>
+            <td>{{ x['cas_name'] }}
+            </td>
+          </tr>
+
+
+
+          <!-- Vendor Origin -->
+          <tr *ngIf="x && x.hasOwnProperty('origin') && x['origin'].length > 0">
+            <td class="title">Compound Origin</td>
+            <td>{{ x['origin'] }}
+            </td>
+          </tr>
+
+
+
+        </table>
+        <!-- END OF NGFOR OVER VENDOR LOOP -->
+      </div>
     </div>
   </div>
 
 </div>
-
-<!-- Log-in default -->
-<ng-template #login_vendor>
-  <h3>Log in required to view additional data</h3>
-  <div class="accent-color login-req">Please sign in to view activity data and compound annotation data from our commercial partners</div>
-
-  <app-available-data [availData]="availData" *ngIf="availData.length > 0" class="nodata"></app-available-data>
-</ng-template>

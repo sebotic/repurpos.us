@@ -17,19 +17,13 @@
   width: 50%;
 }
 
-.cmpd-table,
+.assay-table,
 table#cmpd-names,
-table.cmpd-table {
+table.assay-table {
   width: 100%;
   table-layout: fixed;
   border: none;
   margin-bottom: 50px;
-}
-
-.cmpd-table > tbody,
-th {
-  /* border-top: #21252990 1px solid; */
-  border-bottom: #21252990 1px solid;
 }
 
 td {

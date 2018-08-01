@@ -166,22 +166,13 @@
               <ul class="assay-list">
                 <li class="assay-title" *ngFor="let assay of element.assay_types; let i=index">
                   <a [routerLink]="['/assays', assay[1]]" target="_blank">{{assay[0]}}</a>
-                  <span *ngIf="i + 1 < element.assay_types.length" class='data-separator'></span>
+                  <!-- <span *ngIf="i + 1 < element.assay_types.length" class='data-separator'></span> -->
                 </li>
               </ul>
               <!-- <span [ngClass]="element['assay_types'].indexOf(assay) > -1 ? 'circle assay-avail' : 'circle no-assay'"></span> -->
             </mat-cell>
           </ng-container>
 
-          <!-- File Statuses Column: splayed out-->
-          <!-- <span *ngFor="let assay of assays; let i=index">
-<ng-container matColumnDef="{{ assay }}">
-  <mat-header-cell *matHeaderCellDef class="assay-label"> {{ assay }} </mat-header-cell>
-  <mat-cell *matCellDef="let element">
-    <span [ngClass]="element['assay_types'].indexOf(assay) > -1 ? 'circle assay-avail' : 'circle no-assay'"></span>
-      </mat-cell>
-      </ng-container>
-      </span> -->
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns; let element; let i = index" id="{{i}}"></mat-row>

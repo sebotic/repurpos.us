@@ -5,7 +5,7 @@ h4 {
 h5 {
   font-size: 1.25em;
   /* font-weight: 300; */
-  color: #21252955;
+  color: #b7bec5;
   text-transform: uppercase;
   margin-bottom: 7px;
 }
@@ -16,7 +16,7 @@ h5 {
 }
 
 /deep/ .nodata table.avail-table {
-  border: 1px #21252955 solid;
+  border: 1px #b7bec5 solid;
   border-spacing: 25px;
 }
 
@@ -25,22 +25,6 @@ td {
   vertical-align: baseline;
   padding-right: 5px;
   text-align: right;
-}
-
-.circle {
-  height: 15px;
-  width: 15px;
-  border: #212529 solid 1px;
-  border-radius: 50%;
-  display: block;
-  margin: auto;
-  font-size: 0;
-}
-
-.available {
-  background-color: #FF5B67;
-  // background-color: #ff8884;
-  /* fc5457; */
 }
 
 .assay-avail {

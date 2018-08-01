@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { AssayData } from '../../_models/index';
+import { CompoundService } from '../../_services/index';
+
 @Component({
   selector: 'app-compound-assay-data',
   templateUrl: './compound-assay-data.component.html',
@@ -7,10 +10,15 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 
 export class CompoundAssayDataComponent implements OnInit {
-  @Input() assayData: Array<Object> = [];
-  @Input() loggedIn: boolean;
+  assayData: Array<AssayData> = [];
 
-  constructor() { }
+  constructor(private cmpdSvc: CompoundService) {
+
+      this.cmpdSvc.assaysState.subscribe((assays: AssayData[]) => {
+        this.assayData = assays;
+      })
+
+  }
 
   ngOnInit() {
   }
