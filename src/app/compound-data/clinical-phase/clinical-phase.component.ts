@@ -80,7 +80,7 @@ export class ClinicalPhaseComponent implements OnInit {
   ngOnInit() {
     // filter out any half-steps in process
     this.sel_phases = this.phases['integrity'].filter(d => !((d.order*2) % 2))
-    let tmp = this.sel_phases.filter((d:any) => d.name == "preregistered")
+    let tmp = this.sel_phases.filter((d:any) => d.name == "phase II")
     // console.log(tmp)
     this.current_phase = tmp[0]['order'];
 

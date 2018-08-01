@@ -61,6 +61,7 @@ td.circle {
 }
 
 a {
+  color: #3D6DE0 !important;
   cursor: pointer;
 }
 
@@ -70,11 +71,11 @@ div#cmpd-names {
 
 .warning {
   position: absolute;
-  bottom: 25px;
+  bottom: 20px;
   font-size: 0.8em;
 }
 
-.pull-right {
+.float-right {
   margin-top: 15px;
 }
 

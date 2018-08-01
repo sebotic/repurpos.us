@@ -76,6 +76,7 @@ header {
   margin: 18px;
 }
 
+// hyperlinks
 a {
   color: #3D6DE0;
 }
@@ -84,6 +85,12 @@ a:hover {
   text-decoration: underline;
 }
 
+
+a.launch-search {
+  color: #212529;
+}
+
+// colors
 .main-color {
   color: #3D6DE0;
 }

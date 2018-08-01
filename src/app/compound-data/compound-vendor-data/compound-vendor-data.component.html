@@ -7,27 +7,31 @@
       <!-- <div class="cmpd-table"> -->
       <div class="cmpd-table" *ngFor="let temp of [1]; let i=index">
 
-        <div class="vendor-header" [ngClass]="i === 0 ? 'first-entry' : 'notfirst-entry'">
+        <div class="vendor-header row" [ngClass]="i === 0 ? 'first-entry' : 'notfirst-entry'">
           <!-- Vendor ID: GVK -->
-          <div *ngIf="x && x.hasOwnProperty('gvk_id')" class="col-sm-3">
+          <div *ngIf="x && x.hasOwnProperty('gvk_id')" class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
             <span class="title">{{vendors[k].name}} ID: </span>
             <span>{{ x['gvk_id'] }}</span>
           </div>
           <!-- Vendor ID: Integrity -->
-          <div *ngIf="x && x.hasOwnProperty('id')" class="col-sm-3">
+          <div *ngIf="x && x.hasOwnProperty('id')" class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
             <span class="title">{{vendors[k].name}} ID: </span>
             <span>{{ x['id'] }}</span>
           </div>
+          <!-- Vendor ID: Informa -->
+          <div *ngIf="x && x.hasOwnProperty('informa_id')" class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+            <span class="title">{{vendors[k].name}} ID: </span>
+            <span>{{ x['informa_id'] }}</span>
+          </div>
 
           <!-- Highest phase -->
-          <div *ngIf="x && x.hasOwnProperty('highest_phase') && x['highest_phase'].length > 0" class="col-sm-6">
+          <div *ngIf="x && x.hasOwnProperty('highest_phase')" class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
             <span class="title">Highest Phase: </span>
-            <span>{{x['highest_phase']}}<span *ngIf="i + 1 < x['highest_phase'].length" class='data-separator'></span>
-            </span>
+            <span>{{x['highest_phase']}}</span>
           </div>
 
           <!-- Phase -->
-          <div *ngIf="x && x.hasOwnProperty('phase') && x['phase'].length > 0" class="col-sm-6">
+          <div *ngIf="x && x.hasOwnProperty('phase') && x['phase'].length > 0" class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
             <span class="title">Phase: </span>
             <span><span *ngFor="let y of x['phase']; let i = index">{{y}}<span *ngIf="i + 1 < x['phase'].length" class='data-separator'></span></span>
             </span>
@@ -35,17 +39,18 @@
           </div>
 
           <!-- Salt form -->
-          <!-- <app-salt-form></app-salt-form> -->
+          <!-- <app-salt-form class="col-xl-3 col-lg-3 col-md-3 col-sm-3 float-right"></app-salt-form> -->
 
           <!-- END OF VENDOR HEADER -->
         </div>
 
         <!-- Vendor SMILES -->
-        <div class="col-xs-12 vendor-smiles smiles" *ngIf="x && x.hasOwnProperty('smiles') && x['smiles'].length > 0">
+        <!-- <div class="row"> -->
+        <div class="col-12 vendor-smiles smiles" *ngIf="x && x.hasOwnProperty('smiles') && x['smiles'].length > 0">
           <span class="title">SMILES: </span>
-          <span class="smiles">{{ x['smiles'] }}
-    </span>
+          <span class="smiles">{{ x['smiles'] }}</span>
         </div>
+        <!-- </div> -->
 
 
         <table class="table cmpd-table" [ngClass]="i === [1].length - 1 ? 'last-entry' : ''">
@@ -53,14 +58,18 @@
           <!-- Category -->
           <tr *ngIf="x && x.hasOwnProperty('category') && x['category'].length > 0">
             <td class="title">Category</td>
-            <td><span (click)="showMore($event)" id={{y}} *ngFor="let y of x['category']; let i = index ;">{{y}}<span *ngIf="i + 1 < x['category'].length" class='data-separator'></span></span>
+            <td class="content"><span id={{y}} *ngFor="let y of x['category']; let i = index ;">
+              <a class="launch-search" [routerLink]="['/search/']" [queryParams]="{ query: y, type: 'string' }" target="_blank">{{y}}</a>
+              <span *ngIf="i + 1 < x['category'].length" class='data-separator'></span></span>
             </td>
           </tr>
 
           <!-- Mechanism -->
           <tr *ngIf="x && x.hasOwnProperty('mechanism') && x['mechanism'].length > 0">
             <td class="title">Mechanism of Action</td>
-            <td><span *ngFor="let y of x['mechanism']; let i = index">{{y}}<span *ngIf="i + 1 < x['mechanism'].length" class='data-separator'></span></span>
+            <td class="content"><span *ngFor="let y of x['mechanism']; let i = index">
+              <a class="launch-search" [routerLink]="['/search/']" [queryParams]="{ query: y, type: 'string' }" target="_blank">{{y}}</a>
+              <span *ngIf="i + 1 < x['mechanism'].length" class='data-separator'></span></span>
             </td>
           </tr>
 
@@ -69,22 +78,28 @@
           <!-- Route of Administration -->
           <tr *ngIf="x && x.hasOwnProperty('roa') && x.hasOwnProperty('roa') && x['roa'].length > 0">
             <td class="title">Route of Administration</td>
-            <td><span *ngFor="let y of x['roa']; let i = index">{{y}}<span *ngIf="i + 1 < x['roa'].length" class='data-separator'></span></span>
+            <td class="content"><span *ngFor="let y of x['roa']; let i = index">
+              {{y}}
+              <span *ngIf="i + 1 < x['roa'].length" class='data-separator'></span></span>
             </td>
           </tr>
 
           <!-- Target Name -->
           <tr *ngIf="x && x.hasOwnProperty('target_name') && x['target_name'].length > 0">
             <td class="title">Target Name</td>
-            <td><span *ngFor="let y of x['target_name']; let i = index">{{y}}<span *ngIf="i + 1 < x['target_name'].length" class='data-separator'></span></span>
+            <td class="content"><span *ngFor="let y of x['target_name']; let i = index">
+              <a class="launch-search" [routerLink]="['/search/']" [queryParams]="{ query: y, type: 'string' }" target="_blank">{{y}}</a>
+              <span *ngIf="i + 1 < x['target_name'].length" class='data-separator'></span></span>
             </td>
           </tr>
 
 
           <!-- Target Family -->
-          <tr *ngIf="x && x.hasOwnProperty('target_family') && x['target_family'].length > 0">
+          <tr *ngIf="x && x.hasOwnProperty('target_families') && x['target_families'].length > 0">
             <td class="title">Target Family</td>
-            <td><span *ngFor="let y of x['target_family']; let i = index">{{y}}<span *ngIf="i + 1 < x['target_family'].length" class='data-separator'></span></span>
+            <td class="content"><span *ngFor="let y of x['target_families']; let i = index">
+              <a class="launch-search" [routerLink]="['/search/']" [queryParams]="{ query: y, type: 'string' }" target="_blank">{{y}}</a>
+              <span *ngIf="i + 1 < x['target_families'].length" class='data-separator'></span></span>
             </td>
           </tr>
 
@@ -92,7 +107,7 @@
           <!-- Vendor name -->
           <tr *ngIf="x && x.hasOwnProperty('drug_name') && x['drug_name'].length > 0">
             <td class="title">name</td>
-            <td><span *ngFor="let y of x['drug_name']; let i = index">{{y}}<span *ngIf="i + 1 < x['drug_name'].length" class='data-separator'></span></span>
+            <td class="content"><span *ngFor="let y of x['drug_name']; let i = index">{{y}}<span *ngIf="i + 1 < x['drug_name'].length" class='data-separator'></span></span>
             </td>
           </tr>
 
@@ -100,14 +115,20 @@
           <!-- Aliases -->
           <tr *ngIf="x && x.hasOwnProperty('synonyms') && x['synonyms'].length > 0">
             <td class="title">aliases</td>
-            <td><span *ngFor="let y of x['synonyms']; let i = index">{{y}}<span *ngIf="i + 1 < x['synonyms'].length" class='data-separator'></span></span>
+            <td class="content"><span *ngFor="let y of x['synonyms']; let i = index">{{y}}<span *ngIf="i + 1 < x['synonyms'].length" class='data-separator'></span></span>
             </td>
           </tr>
 
           <!-- Chemical name -->
           <tr *ngIf="x && x.hasOwnProperty('cas_name') && x['cas_name'].length > 0">
             <td class="title">Chemical name</td>
-            <td>{{ x['cas_name'] }}
+            <td class="content">{{ x['cas_name'] }}
+            </td>
+          </tr>
+
+          <tr *ngIf="x && x.hasOwnProperty('chemical_name') && x['chemical_name'].length > 0">
+            <td class="title">Chemical name</td>
+            <td class="content">{{ x['chemical_name'] }}
             </td>
           </tr>
 
@@ -116,7 +137,7 @@
           <!-- Vendor Origin -->
           <tr *ngIf="x && x.hasOwnProperty('origin') && x['origin'].length > 0">
             <td class="title">Compound Origin</td>
-            <td>{{ x['origin'] }}
+            <td class="content">{{ x['origin'] }}
             </td>
           </tr>
 

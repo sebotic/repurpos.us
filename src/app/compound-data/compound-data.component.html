@@ -2,7 +2,7 @@
 
   <app-compound-header [results_per_page] ='num_similar_per_page' [_location]="_location"></app-compound-header>
 
-  <div class="row-fluid">
+  <div class="row">
     <!-- LEFT COLUMN -->
     <div class="col-md-4">
 
@@ -29,7 +29,14 @@
       <app-compound-vendor-data></app-compound-vendor-data>
 
       <!-- Log-in default -->
-      <app-available-data [availData]="cmpdAvailData" class="nodata"></app-available-data>
+      <div *ngIf="!loggedIn">
+        <h3>Log in required to view additional data</h3>
+        <div class="accent-color login-req">
+          Please sign in to view activity data and compound annotation data from our commercial partners
+        </div>
+      </div>
+
+      <app-available-data [availData]="cmpdAvailData" class="nodata" *ngIf="!loggedIn"></app-available-data>
 
 
     </div>

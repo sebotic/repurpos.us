@@ -1,12 +1,13 @@
-.circle, .rect {
+.circle, .rect, .chevron {
   stroke-width: 1;
   fill: #eff1f2;
-  stroke: #c5cbd1;
+  stroke: #c5cbd0;
+  stroke-miterlimit:10;
   // width: 20px;
   // height: 20px;
 }
 
-.circle.low, .circle.current, .rect.low, .rect.current {
+.chevron.low, .chevron.current, .circle.low, .circle.current, .rect.low, .rect.current {
   stroke: #15584c;
 }
 
@@ -46,7 +47,8 @@
 }
 
 .approved {
-  stroke-width: 2;
+  stroke: #a9b1ba;
+  fill: #e7e9ec;
 }
 
 .phase-diagram {
