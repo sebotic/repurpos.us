@@ -22,12 +22,6 @@ export class AssayDataComponent implements OnInit {
   assayDetails: AssayDetails;
   aid: string;
 
-  // testAssay: AssayDetails = {
-  //   title: 'assay title', assay_id: 'A00212', summary: 'summary', indication: 'indication', assay_type: 'assay type',
-  //   components: 'components', detection_method: 'detection method', description: 'longer description', protocol: 'protocol', drug_conc: 'drug concentration',
-  //   protocol_detection: 'detection protocol', detection_dye: 'dye'
-  // };
-
   constructor(
     private route: ActivatedRoute,
     private titleService: Title,
@@ -60,9 +54,6 @@ export class AssayDataComponent implements OnInit {
     },
       err => { }
     );
-
-    // temporary for testing
-    // this.assayDetails = this.testAssay;
 
   }
 

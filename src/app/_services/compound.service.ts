@@ -121,8 +121,8 @@ export class CompoundService {
       (log, ids) => ({ log, ids })
     ).subscribe(
       data => {
-        console.log(data.log)
-        console.log(data.ids)
+        // console.log(data.log)
+        // console.log(data.ids)
         // console.log(data.qid)
         this.buildData(data.log.loggedIn, data.ids['id'], data.ids['qid']);
       },
@@ -156,7 +156,7 @@ export class CompoundService {
         )
       );
     }, Promise.resolve([])).then(allData => {
-      console.log('4 promises all resolved: id=' + id + '; qid=' + qid + '; login=' + loginState)
+      // console.log('4 promises all resolved: id=' + id + '; qid=' + qid + '; login=' + loginState)
       // console.log(allData)
       this.getAliases();
 
@@ -189,7 +189,7 @@ export class CompoundService {
 
   resetVars(): Promise<void> {
     return new Promise<any>((resolve, reject) => {
-      console.log('0 resetting')
+      // console.log('0 resetting')
       // Clear previous data, if it exists.  Prevents past states or duplicate data if both the login subscription service and the route params service are both called.
       this.main_label = '';
       this.vendorName = '';
@@ -218,7 +218,7 @@ export class CompoundService {
       this.wikiTableSubject.next([]);
       this.vendorSubject.next([]);
 
-      console.log('0 resetting ended')
+      // console.log('0 resetting ended')
       // setTimeout(resolve, 100, 'foo');
       resolve("Clear vars");
     })
@@ -233,7 +233,7 @@ export class CompoundService {
   // --- WIKIDATA ---
   getWDVars(): Promise<void> {
     return new Promise<any>((resolve, reject) => {
-  console.log('1 getting wd mapping')
+  // console.log('1 getting wd mapping')
     // Run query to determine which Wikidata variables to grab
     let query: string = `
   SELECT ?prop ?propLabel ?furl WHERE {
@@ -258,7 +258,7 @@ export class CompoundService {
 
         this.prop_name_map[p] = i['propLabel']['value'];
       }
-      console.log('1 wd mapping ended')
+      // console.log('1 wd mapping ended')
       resolve("WD property variables found!")
     })
   })
@@ -268,7 +268,7 @@ export class CompoundService {
   // Main function to gather Wikidata data
   buildWD(qid: string): Promise<void> {
     return new Promise<any>((resolve, reject) => {
-      console.log('2 retrieving wikidata')
+      // console.log('2 retrieving wikidata')
       // console.log(qid)
       // console.log(this.prop_name_map)
 
@@ -376,12 +376,12 @@ export class CompoundService {
           //   this.retrieveLabels(Array.from(tmp['P2175']['qids']).map((x: string) => x.split('/').pop()));
           // }
           //
-          console.log('2 retrieving wikidata ended')
+          // console.log('2 retrieving wikidata ended')
 
           resolve("Success with WD!");
         });
       } else {
-        console.log('2 retrieving wikidata ended')
+        // console.log('2 retrieving wikidata ended')
         resolve("No QID found; WD exiting");
       }
     })
@@ -394,7 +394,7 @@ export class CompoundService {
     return new Promise<any>((resolve, reject) => {
       if (id) {
         if (loggedIn) {
-            console.log('3 retrieving data')
+            // console.log('3 retrieving data')
           this.http2.get<any>(environment.host_url + '/data', {
             // this.http2.get<VendorData>(environment.host_url + '/data', {
             observe: 'response',
@@ -440,15 +440,15 @@ export class CompoundService {
               this.vendor_smiles = b.integrity.smiles;
             }
 
-            console.log('3 retrieving data ended')
+            // console.log('3 retrieving data ended')
             resolve("Success with vendor data!");
           });
 
         } else {
           // not logged in: grab the basics
-          console.log('3 getting basic info')
+          // console.log('3 getting basic info')
           let prmse = this.retrieveBasicInfo(id);
-          console.log('3 retrieving data ended w/ basic info')
+          // console.log('3 retrieving data ended w/ basic info')
           // Wait for promise from getting basic info before returning from getting vendor data
           resolve(prmse);
 
@@ -477,7 +477,6 @@ export class CompoundService {
 
               this.main_label = search_results.main_label;
               this.wiki_smiles = search_results.smiles;
-              console.log('wiki SMILES: ' + this.wiki_smiles)
               this.getAliases(search_results.aliases);
 
               // Is it a Reframe compound? --> compound-header

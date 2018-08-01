@@ -1,7 +1,7 @@
 <div id='assays'>
     <div *ngIf="assayData.length > 0">
       <h3 class="title-plus-btn">Activity data</h3>
-      <button class="pull-right" (click)="showVendor = !showVendor">show vendor source</button>
+      <button class="float-right" (click)="showVendor = !showVendor">show vendor source</button>
 
       <table class="assay-table">
         <tr>
@@ -16,7 +16,7 @@
 
         <tr *ngFor="let x of assayData">
           <!-- Assay Name -->
-          <td><a href="#/assays/{{x['assay_id']}}">{{x['assay_title']}}</a></td>
+          <td class="content"><a href="#/assays/{{x['assay_id']}}">{{x['assay_title']}}</a></td>
 
           <!-- Assay Source -->
           <td>

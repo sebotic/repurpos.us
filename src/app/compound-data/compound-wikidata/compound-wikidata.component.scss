@@ -5,7 +5,15 @@
 
 
 td {
-  padding: 1px;
+  padding: 2px;
+}
+
+td.title {
+  padding-left: 15px;
+}
+
+td.content {
+  padding-right: 15px;
 }
 
 table#cmpd-names, table.cmpd-table, .cmpd-table {

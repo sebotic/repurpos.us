@@ -2,7 +2,7 @@
   display: inline-block;
 }
 
-.pull-right {
+.float-right {
   margin-top: 15px;
 }
 
@@ -29,6 +29,10 @@ table.assay-table {
 td {
   padding-top: 3px;
   padding-bottom: 3px;
+}
+
+.content a, .assay-name {
+  padding-left: 15px;
 }
 
 .warning {

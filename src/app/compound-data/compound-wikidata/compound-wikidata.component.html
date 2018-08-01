@@ -21,7 +21,7 @@
       <ng-container>
         <!-- <ng-container *ngIf="x['property'] != 'chemical formula' && x['property'] != 'InChI' && x['property'] != 'InChIKey' && x['property'] != 'canonical SMILES'&& x['property'] != 'isomeric SMILES'"> -->
         <td class="title" scope="row">{{ x['property'] }}</td>
-        <td scope="row" [ngClass]="x['property'] === 'InChI' || x['property'] === 'canonical SMILES' || x['property'] === 'isomeric SMILES' ? 'smiles' : ''"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}}
+        <td class="content" scope="row" [ngClass]="x['property'] === 'InChI' || x['property'] === 'canonical SMILES' || x['property'] === 'isomeric SMILES' ? 'smiles' : ''"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}}
       <!-- <span *ngIf="!x['showMore']"></span> -->
           <span *ngIf="i + 1 < x['values'].length" class='data-separator'></span>
           <!-- <span *ngIf="x['showMore']">

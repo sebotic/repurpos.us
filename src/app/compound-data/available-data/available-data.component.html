@@ -1,12 +1,5 @@
-<div *ngIf="!loggedIn">
-  <h3>Log in required to view additional data</h3>
-  <div class="accent-color login-req">
-    Please sign in to view activity data and compound annotation data from our commercial partners
-  </div>
-</div>
-
 <div *ngIf="availData.length > 0" class="avail-table">
-  <h5 class="pull-right">Available data</h5>
+  <h5 class="float-right">Available data</h5>
   <table class="avail-table">
     <tr *ngFor="let property of availData">
       <td matTooltip="{{property.tooltip}}" matTooltipPosition="left">
