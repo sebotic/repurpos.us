@@ -102,8 +102,8 @@ a:hover{
   color: #3D6DE0;
 }
 
-.accent-color {
-  color: #fd5457;
+.accent-color, .mat-error {
+  color: #fd5457 !important;
 }
 
 .mat-form-field {
