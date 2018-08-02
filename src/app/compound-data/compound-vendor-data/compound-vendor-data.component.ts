@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { AssayData, GVKData, IntegrityData, InformaData, VendorData, WDQSData, Compound, SearchResult, LoginState } from '../../_models/index';
-import { WDQService, BackendSearchService, LoginStateService } from '../../_services/index';
+import { VendorData} from '../../_models/index';
 import { CompoundService } from '../../_services/index';
 
 @Component({
@@ -17,12 +16,10 @@ export class CompoundVendorDataComponent implements OnInit {
     { 'name': 'Citeline Pharmaprojects', 'link': 'https://pharmaintelligence.informa.com/contact/contact-us' }
   ];
 
-  private vendor_data: any;
-  // private vendor_data: VendorData;
+  private vendor_data: VendorData;
 
   constructor(private cmpdSvc: CompoundService) {
-    this.cmpdSvc.vendorState.subscribe((vdata: any) => {
-    // this.cmpdSvc.vendorState.subscribe((vdata: VendorData) => {
+    this.cmpdSvc.vendorState.subscribe((vdata: VendorData) => {
       this.vendor_data = vdata;
     })
   }

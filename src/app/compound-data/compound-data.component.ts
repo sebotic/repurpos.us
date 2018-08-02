@@ -11,8 +11,8 @@ import {
   HttpResponse
 } from "@angular/common/http";
 
-import { AssayData, GVKData, IntegrityData, InformaData, VendorData, WDQSData, Compound, SearchResult, LoginState } from '../_models/index';
-import { WDQService, BackendSearchService, LoginStateService, CompoundService } from '../_services/index';
+import { LoginState, AvailableData } from '../_models/index';
+import { WDQService, LoginStateService, CompoundService } from '../_services/index';
 import { environment } from "../../environments/environment";
 
 
@@ -26,53 +26,20 @@ export class CompoundDataComponent implements OnInit {
   qid: string;
   id: string;
   smiles: string;
-  reframeID: string;
-  // results: Object;
-  // data: Object;
   loggedIn: boolean;
   showVendor: boolean = false;
   label: string;
   tableData: Array<Object> = [];
   aliases: Array<string> = [];
-  availData: Array<Object> = [];
   chemVendors: Array<Object> = [];
   table_data: Array<Object> = [];
 
   idData: Array<Object> = [];
 
-  cmpdAvailData = [];
+  cmpdAvailData: Array<AvailableData> = [];
 
   // Parameters for similarity results
   num_similar_per_page: number = 3;
-  // tanimoto: number = 0.85; // threshold for TM score
-  // similarityResults: Object[];
-
-
-
-  // propsLabelMap: Object = {
-  //   'P274': 'Chemical Formula',
-  //   'P231': 'CAS Registry Number',
-  //   'P662': 'PubChem CID',
-  //   'P661': 'ChemSpider ID',
-  //   'P592': 'CHEMBL ID',
-  //   'P715': 'DrugBank ID',
-  //   'P683': 'ChEBI ID',
-  //   'P665': 'KEGG ID',
-  //   'P233': 'canonical SMILES',
-  //   'P2017': 'isomeric SMILES',
-  //   'P234': 'InChI',
-  //   'P235': 'InChI Key',
-  //   'P652': 'FDA UNII',
-  //   'P595': 'Guide to Pharmacology Ligand ID',
-  //   'P3636': 'PDB Ligand ID',
-  //   'P232': 'EINECS Number',
-  //   'P2275': 'WHO International Nonproprietary Name',
-  //   'P267': 'ATC code',
-  //   'P2892': 'UMLS CUI',
-  //   'P3345': 'RxNorm CUI',
-  //   'P486': 'MeSH ID',
-  //   'P2115': 'NDF-RT ID'
-  // };
 
 
   constructor(
@@ -102,24 +69,24 @@ export class CompoundDataComponent implements OnInit {
     });
 
     // Pass along available data binaries to app-available-data
-    this.compoundService.availState.subscribe(availData => {
+    this.compoundService.availState.subscribe((availData: AvailableData[]) => {
       // console.log(availData)
       this.cmpdAvailData = availData;
     })
 
     // Generate SMILES for structure viewer
-    this.compoundService.smilesState.subscribe(smiles => {
+    this.compoundService.smilesState.subscribe((smiles: string) => {
     // console.log(smiles)
       this.smiles = smiles;
     })
 
-    this.compoundService.nameState.subscribe(cmpdName => {
+    this.compoundService.nameState.subscribe((cmpdName: string) => {
       if (cmpdName) {
         this.titleService.setTitle(cmpdName + " | reframeDB");
       }
     })
 
-    loginStateService.isUserLoggedIn.subscribe(logState => {
+    loginStateService.isUserLoggedIn.subscribe((logState: LoginState) => {
       this.loggedIn = logState.loggedIn
     })
   }
