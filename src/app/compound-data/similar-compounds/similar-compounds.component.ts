@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 
 //import { SimilarityData, Compound } from '../../_models/index';
+import { CompoundService } from '../../_services/index';
 import { Compound } from '../../_models/index';
 
 import { TanimotoScaleService } from '../../_services/index';
@@ -13,7 +14,7 @@ import { TanimotoScaleService } from '../../_services/index';
 })
 
 export class SimilarCompoundsComponent implements OnInit {
-  @Input() similarityResults: Array<Compound>;
+  private similarityResults: Array<Compound>;
   @Input() results_per_page: number;
 
   tanimotoScale: any; // color scale for tanimoto scores
@@ -21,8 +22,12 @@ export class SimilarCompoundsComponent implements OnInit {
   num_results: number; // current number of results displayed
 
 
-  constructor(private tanimotoSvc: TanimotoScaleService) {
+  constructor(private tanimotoSvc: TanimotoScaleService, private cmpdSvc: CompoundService) {
     this.tanimotoScale = tanimotoSvc.getScale();
+
+    this.cmpdSvc.similarState.subscribe((sdata: Compound[]) => {
+      this.similarityResults = sdata;
+    })
   }
 
   ngOnInit() {

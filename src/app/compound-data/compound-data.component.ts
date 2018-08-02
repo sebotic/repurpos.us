@@ -6,14 +6,13 @@ import { Title } from '@angular/platform-browser';
 
 // import { InteractionTableDataService } from "../interaction-table/interaction-table.component"
 
-// import { gottlieb, gottlieb_pub } from '../../assets/gottlieb_data';
 import {
   HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest,
   HttpResponse
 } from "@angular/common/http";
 
 import { AssayData, GVKData, IntegrityData, InformaData, VendorData, WDQSData, Compound, SearchResult, LoginState } from '../_models/index';
-import { WDQService, BackendSearchService, LoginStateService } from '../_services/index';
+import { WDQService, BackendSearchService, LoginStateService, CompoundService } from '../_services/index';
 import { environment } from "../../environments/environment";
 
 
@@ -38,36 +37,17 @@ export class CompoundDataComponent implements OnInit {
   availData: Array<Object> = [];
   chemVendors: Array<Object> = [];
   table_data: Array<Object> = [];
-  prop_name_map: Object = {};
-  propsToDisplay: Array<string> = ['P274', 'P231', 'P662', 'P661', 'P592', 'P715', 'P683', 'P665', 'P233', 'P2017',
-    'P234', 'P235', 'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115', 'P3780',
-    'P3776', 'P3777', 'P3771', 'P129', 'P3489', 'P2868', 'P2175'];
-
-  idPropsToDisplay: Array<string> = ['P231', 'P662', 'P661', 'P592', 'P715', 'P683', 'P665',
-    'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115'];
 
   idData: Array<Object> = [];
-  assayData: any = [];
-  gvkData: GVKData;
-  informaData: InformaData;
-  integrityData: IntegrityData;
+
+  cmpdAvailData = [];
 
   // Parameters for similarity results
   num_similar_per_page: number = 3;
-  tanimoto: number = 0.85; // threshold for TM score
-  similarityResults: Object[];
+  // tanimoto: number = 0.85; // threshold for TM score
+  // similarityResults: Object[];
 
-  showMoreProperties = ['P3489', 'P2868', 'P129', 'P3776', 'P3777', 'P3771'];
 
-  excludeFromTableDisplay: Array<string> = ['P2175'];
-
-  displayShowMorePane: boolean = false;
-
-  vendors: Array<Object> = [
-    { 'name': 'GVK Excelra GoStar', 'link': 'https://gostardb.com/gostar/loginEntry.do' },
-    { 'name': 'Clarivate Integrity', 'link': 'https://integrity.thomson-pharma.com/integrity/xmlxsl/pk_home.util_home' },
-    { 'name': 'Citeline Pharmaprojects', 'link': 'https://pharmaintelligence.informa.com/contact/contact-us' }
-  ];
 
   // propsLabelMap: Object = {
   //   'P274': 'Chemical Formula',
@@ -99,12 +79,12 @@ export class CompoundDataComponent implements OnInit {
     @Inject(forwardRef(() => WDQService)) public wd: WDQService,
     private route: ActivatedRoute,
     private router: Router,
-    private http: Http,
+    // private http: Http,
     private http2: HttpClient,
     private titleService: Title,
-    // private cidService: CIDService,
     private loginStateService: LoginStateService,
-    public searchSvc: BackendSearchService,
+    private compoundService: CompoundService,
+    // public searchSvc: BackendSearchService,
     public _location: Location
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function() {
@@ -117,435 +97,45 @@ export class CompoundDataComponent implements OnInit {
     })
 
     this.route.params.subscribe(params => {
-      this.qid = params['qid'];
-      this.id = params['id'];
-      this.buildData();
+      // console.log('routing... ')
+      this.compoundService.idSubject.next({id: params['id'], qid: params['qid']});
     });
 
-// check if logged in
-    this.loginStateService.loginState
-      .subscribe((state: LoginState) => {
-        let init_state = this.loggedIn;
-          this.loggedIn = state.loggedIn;
-        // if(init_state && init_state !== this.loggedIn) {
-        // // change detected
-          this.buildData();
-        // }
+    // Pass along available data binaries to app-available-data
+    this.compoundService.availState.subscribe(availData => {
+      // console.log(availData)
+      this.cmpdAvailData = availData;
+    })
 
+    // Generate SMILES for structure viewer
+    this.compoundService.smilesState.subscribe(smiles => {
+    // console.log(smiles)
+      this.smiles = smiles;
+    })
 
-      });
+    this.compoundService.nameState.subscribe(cmpdName => {
+      if (cmpdName) {
+        this.titleService.setTitle(cmpdName + " | reframeDB");
+      }
+    })
+
+    loginStateService.isUserLoggedIn.subscribe(logState => {
+      this.loggedIn = logState.loggedIn
+    })
   }
+
+
+
 
   ngOnInit() {
   }
 
-  buildData() {
-    let query: string = `
-    SELECT ?prop ?propLabel ?furl WHERE {
-      VALUES ?prop { wd:${this.propsToDisplay.join(' wd:')} }
-      OPTIONAL {?prop wdt:P1630 ?furl .}
 
-      SERVICE wikibase:label {bd:serviceParam wikibase:language "en" . }
-      }`;
-
-    this.http2.get<WDQSData>('https://query.wikidata.org/sparql', {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: new HttpParams()
-        .set('query', query)
-        .set('format', 'json')
-    }).subscribe((r) => {
-      let b = r.body;
-
-      for (let i of b.results.bindings) {
-        let p: string = i['prop']['value'].split('/').pop();
-
-        this.prop_name_map[p] = i['propLabel']['value'];
-      }
-
-
-      // Wait for all the data to come back before making the call to get similarity data and append all aliases
-      Promise.all([this.buildWD(), this.retrieveData()]).then(allData => {
-        // Run a query to get any compounds that are similar
-        this.retrieveSimilarData();
-        // Merge together Wikidata + vendor aliases
-        this.getAliases();
-
-        // Retitle the page
-        if (this.label) {
-          this.titleService.setTitle(this.label + " | reframeDB");
-        }
-      })
-    });
-  }
-
-
-  // Main function to gather Wikidata data
-  buildWD(): Promise<void> {
-    return new Promise<any>((resolve, reject) => {
-      let q: string = `
-      SELECT ?compound ?compoundLabel ?prop ?id ?idLabel WHERE {
-        VALUES ?compound {wd:${this.qid}}
-        VALUES ?prop { wdt:${this.propsToDisplay.join(' wdt:')} skos:altLabel}
-        OPTIONAL {?compound ?prop ?id filter (isIRI(?id) || (lang(?id) = "en" || lang(?id) = "")) .}
-        SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-      }`;
-
-
-      this.http2.get<WDQSData>('https://query.wikidata.org/sparql', {
-        observe: 'response',
-        headers: new HttpHeaders()
-          .set('Accept', 'application/json'),
-        params: new HttpParams()
-          .set('query', q)
-          .set('format', 'json')
-      }).subscribe((r) => {
-        let b = r.body;
-        let tmp: Object = {};
-
-        for (let i of b.results.bindings) {
-          this.label = i['compoundLabel']['value'];
-
-          let p: string = i['prop']['value'].split('/').pop();
-
-          // for some reason, the sparql endpoint returns a result for properties which actually not on that item
-          if (!i.hasOwnProperty('id')) {
-            continue;
-          }
-
-          // separate out aliases
-          if (p === 'core#altLabel') {
-            this.aliases.push(i['idLabel']['value']);
-            continue;
-          }
-
-          let qid: string = i['id']['value'];
-          let v: string = i['idLabel']['value'];
-
-          if (p.startsWith('P')) {
-            if (tmp.hasOwnProperty(p)) {
-
-              tmp[p]['values'].push(v);
-              if (qid.startsWith('http://www.wikidata.org/entity/Q')) {
-                tmp[p]['qids'].push(qid.split('/').pop());
-              }
-            }
-            else {
-              tmp[p] = {
-                values: [v],
-                qids: [],
-                showMore: false,
-                pid: ''
-              };
-
-              if (qid.startsWith('http://www.wikidata.org/entity/Q')) {
-                tmp[p]['qids'].push(qid.split('/').pop());
-              }
-            }
-
-          }
-        }
-
-        for (let y of this.propsToDisplay) {
-
-          if (tmp.hasOwnProperty(y)) {
-            let sm: boolean = this.showMoreProperties.includes(y);
-
-
-            if (this.idPropsToDisplay.includes(y) && !this.excludeFromTableDisplay.includes(y)) {
-              this.idData.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'showMore': sm, 'pid': y });
-            }
-            else if (!this.excludeFromTableDisplay.includes(y)) {
-              this.table_data.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'qids': tmp[y]['qids'], 'showMore': sm, 'pid': y });
-            }
-
-          }
-
-        }
-
-        if (!tmp.hasOwnProperty('P2175')) {
-          this.retrieveLabels([]);
-        }
-        else {
-          this.retrieveLabels(Array.from(tmp['P2175']['qids']).map((x: string) => x.split('/').pop()));
-        }
-
-        // let pubchem_id = this.idData.find((d: any) => d.property === 'PubChem CID');
-
-        // if (pubchem_id) {
-        //   this.cid = pubchem_id['values'][0]
-        // }
-
-        resolve("Success with WD!");
-      });
-    })
-  }
-
-
-  // set_cid(): void {
-  //   for (let i of [this.gvkData, this.informaData, this.integrityData]) {
-  //     if ('PubChem CID' in i && !this.cid) {
-  //       this.cid = i['PubChem CID'].substring(3);
-  //       this.cidService.announceNewCID(this.cid);
+  // showMore(clickEvent, qid: string): void {
+  //   let elementID: string = clickEvent.srcElement.id;
   //
-  //       break;
-  //     }
-  //   }
+  //   this.displayShowMorePane = !this.displayShowMorePane;
   // }
 
-  // if no cid exists, try to find one, announce it and trigger rendering of compound
-  set_label(label: string): void {
-    if (!this.label) {
-      this.label = label;
-      // console.log('label set', this.label, label);
-    }
-  }
-
-
-
-  // Main function to grab the data from the backend from the vendors and the assay results
-  retrieveData(): Promise<void> {
-    return new Promise<any>((resolve, reject) => {
-      if (this.loggedIn) {
-
-        this.http2.get<VendorData>(environment.host_url + '/data', {
-          observe: 'response',
-          // withCredentials: true,
-          headers: new HttpHeaders()
-            .set('Accept', 'application/json') // TODO: revert
-            .set('Authorization', localStorage.getItem('auth_token')),
-          params: new HttpParams()
-            .set('qid', this.id)
-        }).subscribe((r) => {
-          let b = r.body[this.id];
-          this.reframeID = b.reframe_id;
-          this.gvkData = b.gvk;
-          this.informaData = b.informa;
-          this.integrityData = b.integrity;
-          this.assayData = b.assay;
-          // console.log(b)
-          // console.log(this.assayData)
-
-          // this.set_cid();
-
-          this.chemVendors = this.getChemVendors();
-          resolve("Success with vendor data!");
-        });
-
-      } else {
-        // not logged in: grab the basics
-        this.retrieveBasicInfo();
-        // console.log(this.smiles)
-
-      }
-
-    })
-  }
-
-  retrieveSimilarData(): void {
-    if (!this.smiles) {
-      if (this.table_data.map((d: any) => d.property).indexOf('isomeric SMILES') > -1) {
-        this.smiles = this.table_data.find((d: any) => d.property === "isomeric SMILES")['values'][0];
-      } else if (this.table_data.map((d: any) => d.property).indexOf('canonical SMILES') > -1) {
-        this.smiles = this.table_data.find((d: any) => d.property === "canonical SMILES")['values'][0];
-      } else {
-        this.smiles = this.informaData['smiles'] || this.integrityData['smiles'] || this.gvkData['smiles'];
-      }
-    }
-
-    if (this.smiles) {
-      this.searchSvc.searchSimilarity(this.smiles, this.tanimoto)
-        .subscribe(
-          (results: SearchResult) => {
-            // console.log(results)
-
-            // filter out the search query (e.g. the compound on the page that launched the search)
-            this.similarityResults = results.data.filter((d: any) => d.id !== this.id);
-
-            // remove closely related aliases / synonyms
-            this.similarityResults.forEach((d: any) => {
-              d['aliases'] = this.removeDupeAlias(d.aliases);
-            });
-
-          },
-          (err: any) => {
-            console.log(err)
-          }
-        );
-    }
-  }
-
-  retrieveBasicInfo(): void {
-    this.searchSvc.search(this.id)
-      .subscribe(
-        (results: SearchResult) => {
-
-          if (results.data.length > 1) {
-            console.log('too many results returned')
-            console.log(results.data)
-          }
-
-          let search_results = results.data[0];
-          // make sure the first result's id matches what it should be
-          if (this.id === search_results.id) {
-            this.label = search_results.main_label;
-            this.smiles = search_results.smiles;
-            this.getAliases(search_results.aliases);
-            this.retrieveSimilarData();
-            this.availData = search_results.properties;
-            // Retitle the page
-            if (this.label) {
-              this.titleService.setTitle(this.label + " | reframeDB");
-            }
-          }
-          // resolve("Success with basic data!");
-        },
-        (err: any) => {
-          console.log('error in search')
-        }
-      );
-  }
-
-  getAliases(searchAliases: string[] = []) {
-    // extract aliases an make sure label is set
-    let alias_arr: string[] = this.aliases;
-
-    if (this.gvkData || this.informaData || this.integrityData) {
-      if (Object.keys(this.gvkData).length > 0) {
-        for (let name of this.gvkData['drug_name']) {
-          this.set_label(name);
-          alias_arr.push(name);
-        }
-
-        for (let name of this.gvkData['synonyms']) {
-          alias_arr.push(name);
-        }
-      }
-
-      if (Object.keys(this.integrityData).length > 0) {
-        for (let name of this.integrityData['drug_name']) {
-          this.set_label(name);
-          alias_arr.push(name);
-        }
-      }
-
-      if (Object.keys(this.informaData).length > 0) {
-        for (let name of this.informaData['drug_name']) {
-          this.set_label(name);
-          alias_arr.push(name);
-        }
-      }
-
-    } else {
-      alias_arr = alias_arr.concat(searchAliases);
-    }
-
-    // de-duplicate
-    //
-    let alias_set = new Set(alias_arr);
-
-    this.aliases = Array.from(alias_set);
-
-    // Sort aliases by name (case-insensitive)
-    this.aliases = this.aliases.sort(function(a: string, b: string) {
-      if (a.toLowerCase() > b.toLowerCase()) {
-        return 1;
-      } else {
-        return -1;
-      };
-    })
-  }
-
-  // Alias function to do a hard scrub on closely related aliases, for the similar compounds
-  removeDupeAlias(arr: string[]) {
-    let unique_alias: string[] = [];
-    let stripped_alias: string[] = [];
-
-    // function to standardize aliases
-    let strip_alias = function(str: string) {
-      // regex remove (), -'s, case specificity
-      let re = /\((.*)\)/;
-      return (str.replace('-', '').replace(re, '').trim().toLowerCase())
-    }
-
-    let current_alias: string;
-    let current_stripped: string;
-
-    for (let i = 0; i < arr.length; i++) {
-      current_alias = arr[i];
-      current_stripped = strip_alias(current_alias);
-
-      if (!stripped_alias.includes(current_stripped)) {
-        unique_alias.push(current_alias);
-        stripped_alias.push(current_stripped);
-      }
-    }
-
-    return (unique_alias.sort((a: string, b: string) => a.toLowerCase() > b.toLowerCase() ? 1 : -1));
-
-  }
-
-  getChemVendors(): Array<Object> {
-    let uniqueVendors = [];
-
-    this.assayData.forEach(function(d: any) {
-      let sel_vendor = uniqueVendors.find(x => x.chem_vendor === d.chem_vendor);
-
-      if (sel_vendor == null) {
-        uniqueVendors.push({
-          'chem_vendor': d.chem_vendor,
-          'chem_vendor_id': d.chem_vendor_id
-        })
-      } else {
-        if (sel_vendor['chem_vendor_id'] !== d.chem_vendor_id) {
-          uniqueVendors.push({
-            'chem_vendor': d.chem_vendor,
-            'chem_vendor_id': d.chem_vendor_id
-          })
-        }
-      }
-    })
-
-    return (uniqueVendors);
-  }
-
-
-  showMore(clickEvent, qid: string): void {
-    let elementID: string = clickEvent.srcElement.id;
-
-    this.displayShowMorePane = !this.displayShowMorePane;
-  }
-
-
-  retrieveLabels(disease_qids: Array<string>): void {
-    let tmp_str: string = disease_qids.join(' wd:');
-    let query: string = `
-    https://query.wikidata.org/sparql?query=SELECT ?qid ?qidLabel WHERE {
-    	VALUES ?qid {wd:${tmp_str}}
-    	SERVICE wikibase:label { bd:serviceParam wikibase:language "en" .}
-    }&format=json
-    `;
-    // console.log(query);
-    this.http.request(query)
-      .subscribe((res: Response) => {
-        let tt = res.json();
-        // console.log(tt);
-
-        if (disease_qids.length !== 0) {
-
-          for (let x of tt['results']['bindings']) {
-            this.tableData.push({
-              'compound_name': this.label,
-              'compound_qid': this.qid,
-              'disease_name': x['qidLabel']['value'],
-              'disease_qid': x['qid']['value'],
-              'reference': 'FDA',
-              'reference_qid': ''
-            })
-          }
-        }
-      });
-  }
 
 }

@@ -5,10 +5,13 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './available-data.component.html',
   styleUrls: ['./available-data.component.scss']
 })
+
 export class AvailableDataComponent implements OnInit {
   @Input() availData: Object[];
+  private loggedIn: boolean;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

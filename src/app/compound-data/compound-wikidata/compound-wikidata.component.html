@@ -1,12 +1,27 @@
-<div id="wikidata">
+<div id="wikidata" *ngIf="qid">
   <H3><a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">Wikidata data</a></H3>
-  <table class="table cmpd-table">
+  <div class="cmpd-table" *ngFor="let temp of [1]; let i=index">
 
+
+
+      <div class="vendor-header" [ngClass]="i === 0 ? 'first-entry' : 'notfirst-entry'">
+      <div class="col-sm-3">
+        <span class="title">Wikidata ID: </span>
+        <span><a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">{{ qid }}</a></span>
+      </div>
+
+      <!-- Salt form -->
+      <!-- <app-salt-form></app-salt-form> -->
+
+    </div>
+
+<table class="cmpd-table" [ngClass]="i === [1].length - 1 ? 'last-entry' : ''">
     <tr *ngFor="let x of table_data">
-      <ng-container *ngIf="x['property'] != 'chemical formula' && x['property'] != 'InChI' &&
-      x['property'] != 'InChIKey' && x['property'] != 'canonical SMILES'&& x['property'] != 'isomeric SMILES'">
+      <!-- <ng-container> -->
+      <ng-container>
+        <!-- <ng-container *ngIf="x['property'] != 'chemical formula' && x['property'] != 'InChI' && x['property'] != 'InChIKey' && x['property'] != 'canonical SMILES'&& x['property'] != 'isomeric SMILES'"> -->
         <td class="title" scope="row">{{ x['property'] }}</td>
-        <td scope="row"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}}
+        <td class="content" scope="row" [ngClass]="x['property'] === 'InChI' || x['property'] === 'canonical SMILES' || x['property'] === 'isomeric SMILES' ? 'smiles' : ''"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}}
       <!-- <span *ngIf="!x['showMore']"></span> -->
           <span *ngIf="i + 1 < x['values'].length" class='data-separator'></span>
           <!-- <span *ngIf="x['showMore']">
@@ -20,4 +35,5 @@
     </tr>
 
   </table>
+  </div>
 </div>

@@ -1,72 +1,97 @@
-<!-- Back button -->
-<div class="row-fluid pull-right">
-  <a (click)="backClick()">
-    << return to search</a>
-</div>
-
-<!-- HEADER: name, aliases -->
 <div class="cmpd-header">
-  <div class="row-fluid">
 
-    <!-- Drug Name -->
-    <div id="cmpd-names" class="col-md-4 col-sm-6 col-xs-12">
-      <div class="row-fluid cmpd-name" >
-        <h1>{{ label }}</h1>
-      </div>
-
-      <ng-template #vendor_names>
-        <div class="row-fluid cmpd-name" *ngIf="integrityData.length > 0">
-          <h1>{{ integrityData[0]['drug_name'] }}</h1>
-        </div>
-      </ng-template>
-
-      <div class="row-fluid cmpd-source" *ngIf="chemVendors.length > 0">
-        available via <span *ngFor="let vendor of chemVendors; let i = index;">
-          {{ vendor['chem_vendor'] }}
-          <span *ngIf="vendor['chem_vendor_id']">({{ vendor['chem_vendor_id'] }})</span>
-          <span class='data-separator' *ngIf="i + 1 < chemVendors.length"></span></span>
-      </div>
-    </div>
-
-    <!-- WHO Name -->
-    <div id="cmpd-names" class="col-md-8 col-sm-6 col-xs-12">
-      <div class="row-fluid who-name" *ngFor="let x of idData">
-        <span *ngIf="x['property'] == 'World Health Organisation International Nonproprietary Name'">
-          <b>{{x['property'] + ': ' }}</b><span *ngFor="let ii of x['values']">{{ ii }}</span></span>
-      </div>
-
-      <!-- Aliases -->
-      <div class="row-fluid alias" *ngIf="aliases.length > 0">
-        <b>Aliases: </b>
-        <span *ngFor="let alias of aliases | slice:0:alias_ct; let i=index;">
-          {{alias}}
-          <span *ngIf="i + 1 < alias_ct && i + 1 < aliases.length" class='data-separator'></span></span>
-
-          <a *ngIf="alias_ct < aliases.length" id="more" (click)="showMore()" class="center-block">
-            show more
-          </a>
-      </div>
-
-
-
-
-
-      <!-- Related compounds -->
-      <div class="row-fluid related" *ngIf="similarityResults && similarityResults.length > 0">
-        <b>Similar compounds: </b>
-        <span *ngFor="let related of similarityResults | slice: 0:results_per_page; let i=index;"><a (click)="onAnchorClick(related.id)">{{related.main_label}}</a><span *ngIf="i + 1 < similarityResults.length" class='data-separator'></span></span>
-        <span *ngIf="similarityResults.length > results_per_page"><a (click)="onAnchorClick('more')">more</a></span>
-      </div>
-
-
-
-    </div>
-    <div class="row-fluid">
-      <div class="warning accent-color">
-      <span class="underline">Note</span>: salt forms may differ between data sources.
-      <app-salt-warning-dialog></app-salt-warning-dialog>
-    </div>
+  <!-- Back button -->
+  <div class="row float-right">
+    <div class="col-12">
+      <a (click)="backClick()">
+        << return to search</a>
     </div>
   </div>
 
-</div>
+  <!-- HEADER: name, aliases -->
+  <div id="header">
+    <div class="row">
+
+      <!-- LEFT SIDE -->
+      <div id="cmpd-names" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <!-- Drug Name -->
+        <div class="row">
+          <div class="cmpd-name col-12">
+            <h1>{{ label }}</h1>
+          </div>
+        </div>
+
+        <!-- Reframe compound / vendor info -->
+        <!-- TODO: switch RFM ID to boolean -->
+
+        <div class="row">
+          <div class="col-12">
+            <table class="reframe_cmpd" *ngIf="reframeID && reframeID.length > 0">
+              <td class='rfm-circle circle available'>
+              </td>
+              <td class="rfm-circle">
+                <span class="bold">reframe</span><span class="thin">db</span> screening collection compound
+              </td>
+            </table>
+          </div>
+        </div>
+
+        <div class="row cmpd-source" *ngIf="chemVendors.length > 0">
+          <div class="col-12">
+            available via <span *ngFor="let vendor of chemVendors; let i = index;">
+          {{ vendor['chem_vendor'] }}
+          <span *ngIf="vendor['chem_vendor_id']">({{ vendor['chem_vendor_id'] }})</span>
+            <span class='data-separator' *ngIf="i + 1 < chemVendors.length"></span></span>
+          </div>
+        </div>
+
+        <!-- Matching warning -->
+        <div class="row">
+          <div class="warning accent-color col-12">
+            <span class="underline">Note</span>: counterions may differ between data sources.
+            <app-salt-warning-dialog></app-salt-warning-dialog>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT SIDE -->
+      <!-- WHO Name -->
+      <div id="cmpd-names" class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+        <div class="row who-name" *ngIf="whoName">
+          <div class="col-12">
+            <b>World Health Organisation International Nonproprietary Name:</b> {{ whoName }}
+          </div>
+        </div>
+
+        <!-- Aliases -->
+        <div class="row alias" *ngIf="aliases.length > 0">
+          <div class="col-12">
+            <b>Aliases: </b>
+            <span *ngFor="let alias of aliases | slice:0:alias_ct; let i=index;">
+          {{alias}}
+          <span *ngIf="i + 1 < alias_ct && i + 1 < aliases.length" class='data-separator'></span></span>
+
+            <a *ngIf="alias_ct < aliases.length" id="more" (click)="showMore()" class="center-block">
+            show more
+          </a>
+          </div>
+        </div>
+
+
+
+        <!-- Related compounds -->
+        <div class="row related" *ngIf="similarityResults && similarityResults.length > 0">
+          <div class="col-12">
+            <b>Similar compounds: </b>
+            <span *ngFor="let related of similarityResults | slice: 0:results_per_page; let i=index;"><a (click)="onAnchorClick(related.id)">{{related.main_label}}</a><span *ngIf="i + 1 < similarityResults.length" class='data-separator'></span></span>
+            <span *ngIf="similarityResults.length > results_per_page"><a (click)="onAnchorClick('more')">more</a></span>
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+  </div>

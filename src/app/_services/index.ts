@@ -10,3 +10,4 @@ export * from './tanimoto-scale.service';
 export * from './structure.service';
 export * from './backendsearch.service';
 export * from './structure-svg.service';
+export * from './compound.service';

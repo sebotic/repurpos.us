@@ -9,15 +9,18 @@ export class LoginStateService {
 
 	private loginSubject = new Subject<LoginState>();
 	loginState = this.loginSubject.asObservable();
-	public isUserLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	public isUserLoggedIn: BehaviorSubject<LoginState> = new BehaviorSubject<LoginState>({loggedIn: false});
 
   constructor() { }
 
   loggedIn() {
+		// console.log('logging in')
   	this.loginSubject.next(<LoginState>{loggedIn: true});
+  	this.isUserLoggedIn.next(<LoginState>{loggedIn: true});
   }
 
   loggedOut() {
+		// console.log('logging out')
   	this.loginSubject.next(<LoginState>{loggedIn: false});
   }
 

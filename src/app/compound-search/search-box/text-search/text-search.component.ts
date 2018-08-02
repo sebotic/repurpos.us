@@ -12,8 +12,9 @@ export class TextSearchComponent implements OnInit {
   examples: Array<any> = [
     { 'type': 'string', 'query': 'imatinib mesylate', 'label': 'drug search', 'description': 'imatinib mesylate' },
     { 'type': 'string', 'query': 'WXJFKKQWPMNTIM-VWLOTQADSA-N', 'label': 'InChI key search', 'description': 'brincidofovir' },
-    { 'type': 'string', 'query': 'kinase', 'label': 'class search', 'description': 'kinases' },
-    { 'type': 'string', 'query': 'malaria', 'label': 'class search', 'description': 'malaria' }
+    { 'type': 'string', 'query': 'tyrosine kinase inhibitor', 'label': 'class search', 'description': 'tyrosine kinase inhibitor' },
+    // { 'type': 'string', 'query': 'melanoma kinase', 'label': 'class search', 'description': 'melanoma kinases' },
+    { 'type': 'string', 'query': 'glioblastoma', 'label': 'disease search', 'description': 'glioblastoma' }
   ]
 
   constructor(private router: Router) { }

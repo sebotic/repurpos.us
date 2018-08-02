@@ -106,23 +106,10 @@ mat-cell.mat-cell.cdk-column-tanimoto.mat-column-tanimoto.ng-star-inserted {
   margin: 1%;
 }
 /* Radio buttons if data exist */
-$circle_diam: 15px;
-
 .circle {
-  height: $circle_diam;
-  width: $circle_diam;
-  border: #212529 solid 1px;
-  border-radius: 50%;
-  display: block;
   margin: 15px auto;
-  font-size: 0;
 }
 
-.cmpd-avail .circle {
-  background-color: #FF5B67;
-  // background-color: #ff8884;
-  /* fc5457; */
-}
 
 .salt-match .circle {
   background-color: #ffb5bd;
