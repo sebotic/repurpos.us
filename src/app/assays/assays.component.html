@@ -1,8 +1,11 @@
 <div class="container-fluid" id="content">
   <div class="summary-box">
-    <h1 class="title">Assay descriptions</h1>
+    <h1>Assay descriptions</h1>
     <div class="summary" id="main_summary">
       Experimental methodology and data for each high throughput screen
+    </div>
+    <div class="filter float-center" *ngIf="isFiltered">
+      <mat-button-toggle value="bold" (click)="removeFilter()">remove filter</mat-button-toggle>
     </div>
   </div>
 
@@ -17,7 +20,7 @@
       </tr>
 
 
-      <tr *ngFor="let assay of assayList">
+      <tr *ngFor="let assay of selAssays">
         <td class="id" id="table_id">
           {{ assay.assay_id }}
         </td>
@@ -29,12 +32,24 @@
           <mat-icon *ngIf="!notMobile" class="more-info" (click)="expandCell($event)">expand_more</mat-icon>
         </td>
 
-        <td >
-          {{ assay.indication }}
+        <td>
+          <mat-chip-list>
+            <mat-chip class="indication" (click)="filterIndic(assay.indication)"
+            [ngStyle]="{'background-color': getIndicColor(assay.indication)['background'], 'color': getIndicColor(assay.indication)['font']}">
+              {{ assay.indication }}
+            </mat-chip>
+          </mat-chip-list>
         </td>
 
+<!-- Type -->
         <td>
-          {{ assay.assay_type }}
+          <mat-chip-list>
+          <mat-chip class="type" *ngFor="let type of assay.assay_type.split(',')"
+            (click)="filterType(type)" [ngStyle]="{'background-color': getTypeColor(type)[0], 'border': '1px solid ' + getTypeColor(type)[1], 'color': getTypeColor(type)[1]}">
+            <!-- (click)="filterType(type)" [ngStyle]="{'background-color': 'white', 'border': '1px solid ' + getTypeColor(type)[1], 'color': getTypeColor(type)[1]}"> -->
+              {{ type }}
+            </mat-chip>
+          </mat-chip-list>
         </td>
 
 
