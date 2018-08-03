@@ -9,6 +9,8 @@ import * as chroma from 'chroma-js';
 import { AssayDetails } from '../_models/index';
 import { ColorPaletteService } from '../_services/index';
 
+import { SciItalicizePipe } from '../_pipes/sci-italicize.pipe';
+
 import {
   HttpClient, HttpHeaders
   // , HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest,HttpResponse
@@ -18,6 +20,7 @@ import { environment } from "../../environments/environment";
 
 @Component({
   selector: 'app-assays',
+  // pipes: [SciItalicizePipe],
   templateUrl: './assays.component.html',
   styleUrls: ['./assays.component.scss']
 })

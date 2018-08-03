@@ -133,6 +133,7 @@ import { AvailableDataComponent } from './compound-data/available-data/available
 import { ClinicalPhaseComponent } from './compound-data/clinical-phase/clinical-phase.component';
 import { SaltFormComponent } from './compound-data/salt-form/salt-form.component';
 import { SearchResultSimilarComponent } from './compound-search/search-results-table/search-result-similar/search-result-similar.component';
+import { SciItalicizePipe } from './_pipes/sci-italicize.pipe';
 
 @NgModule({
   exports: [
@@ -239,7 +240,8 @@ export class MaterialModule {}
     SaltWarningComponent,
     SaltWarningDialogComponent,
     ClinicalPhaseComponent,
-    SaltFormComponent
+    SaltFormComponent,
+    SciItalicizePipe
   ],
   imports: [
     BrowserModule,

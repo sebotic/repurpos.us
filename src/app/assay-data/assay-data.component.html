@@ -10,7 +10,10 @@
 <div class="container" *ngIf="assayDetails; else no_assay">
   <div class="row title">
     <div class="col-10">
-      <h1 class="title assay-title">   {{ assayDetails.title }} </h1>
+      <h1 class="assay-title">
+        <span [outerHTML]="assayDetails.title | sciItalicize">
+          </span>
+      </h1>
       <!-- <h1 class="title assay-title">{{ df.title }}</h1> -->
     </div>
     <div class="col-2">
@@ -25,7 +28,7 @@
 
     <div class="col-sm-9">
       <div class="summary">
-        {{ assayDetails.summary}}
+        <span [outerHTML]="assayDetails.summary | sciItalicize"></span>
       </div>
 
       <div id="viewmore">
@@ -36,9 +39,11 @@
 
     <div class="col-sm-3 overview">
       <ul>
-        <li><span id="label">indication: </span> {{ assayDetails.indication }}</li>
+        <li><span id="label">indication: </span>
+          <span [outerHTML]="assayDetails.indication | sciItalicize"></span></li>
         <li><span id="label">assay type: </span> {{ assayDetails.assay_type }}</li>
-        <li><span id="label">components: </span> {{ assayDetails.components }}</li>
+        <li><span id="label">components: </span>
+        <span [outerHTML]="assayDetails.components | sciItalicize"></span></li>
         <li><span id="label">detection method: </span> {{ assayDetails.detection_method }}</li>
       </ul>
     </div>
@@ -52,10 +57,10 @@
 
   <!-- DETAILS -->
   <div class='row' id="protocol">
-    <h3>{{ assayDetails.title }} protocol</h3>
+    <h3><span [outerHTML]="assayDetails.title | sciItalicize"></span> protocol</h3>
 
     <div class="description">
-      {{ assayDetails.description }}
+      <span [outerHTML]="assayDetails.description | sciItalicize"></span>
     </div>
 
     <div class="row">
@@ -63,13 +68,14 @@
         <div class="row subtitle">Drug incubation conditions</div>
         <div class="row">
           <div class="col-sm-7 condits">
-            {{ assayDetails.protocol }}
+            <span [outerHTML]="assayDetails.protocol | sciItalicize"></span>
           </div>
 
           <div class="col-sm-5 overview">
             <ul>
               <li><span id="label">assay type: </span> {{ assayDetails.assay_type }}</li>
-              <li><span id="label">components: </span> {{ assayDetails.components }} </li>
+              <li><span id="label">components: </span>
+                <span [outerHTML]="assayDetails.components | sciItalicize"></span> </li>
               <li><span id="label">drug concentration: </span> {{ assayDetails.drug_conc }} </li>
             </ul>
           </div>
