@@ -23,7 +23,9 @@ a.dwnld-link:hover {
 }
 
 .summary {
-  font-size: 20px;
+  font-size: 1.1em;
+  margin-bottom: 25px;
+  line-height: 1.15em;
 }
 
 #label {
@@ -182,10 +184,25 @@ a.dwnld-link:hover {
   // td
 }
 
-.indication {
-
+.indication, .type {
+  cursor: pointer;
 }
 
 .type {
   font-weight: 400;
+}
+
+.assay-type .card{
+  // border: 1px solid #9ba4ae;
+  padding: 15px;
+  // border-collapse: collapse !important;
+  margin-bottom: 25px;
+}
+
+.card-text a {
+  color: #212529;
+}
+
+.card-text a:hover {
+  text-decoration: none;
 }

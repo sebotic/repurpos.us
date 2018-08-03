@@ -96,8 +96,9 @@ export class AssaysComponent implements OnInit {
     //
     let colors = this.colorSvc.uniqueColors;
     this.typeColors = [
-      'grey', // cell
-      colors['brown'], // HCI
+      // 'grey', // cell
+      colors['brown'], // cell
+      colors['magenta'], // HCI
       colors['brand-red'], // cytotox
       colors['aquamarine'], // biochem
       colors['purple-blue'], // enzy
