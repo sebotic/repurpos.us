@@ -28,6 +28,7 @@
           <div *ngIf="x && x.hasOwnProperty('highest_phase')" class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
             <span class="title">Highest Phase: </span>
             <span>{{x['highest_phase']}}</span>
+            <app-clinical-phase [phase]="[x['highest_phase']]" [vendorName]="vendors[k].id"></app-clinical-phase>
           </div>
 
           <!-- Phase -->
@@ -35,11 +36,11 @@
             <span class="title">Phase: </span>
             <span><span *ngFor="let y of x['phase']; let i = index">{{y}}<span *ngIf="i + 1 < x['phase'].length" class='data-separator'></span></span>
             </span>
-            <!-- <app-clinical-phase></app-clinical-phase> -->
+            <app-clinical-phase [phase]="x['phase']" [vendorName]="vendors[k].id"></app-clinical-phase>
           </div>
 
           <!-- Salt form -->
-          <!-- <app-salt-form class="col-xl-3 col-lg-3 col-md-3 col-sm-3 float-right"></app-salt-form> -->
+          <app-salt-form class="col-xl-3 col-lg-3 col-md-3 col-sm-3 float-right"></app-salt-form>
 
           <!-- END OF VENDOR HEADER -->
         </div>
@@ -59,7 +60,7 @@
           <tr *ngIf="x && x.hasOwnProperty('category') && x['category'].length > 0">
             <td class="title">Category</td>
             <td class="content"><span id={{y}} *ngFor="let y of x['category']; let i = index ;">
-              <a class="launch-search" [routerLink]="['/search/']" [queryParams]="{ query: y, type: 'string' }" target="_blank">{{y}}</a>
+              <a class="launch-search" [routerLink]="['/search/']" [queryParams]='{ query: "\"" + y + "\"", type: "string" }' target="_blank">{{y}}</a>
               <span *ngIf="i + 1 < x['category'].length" class='data-separator'></span></span>
             </td>
           </tr>
@@ -68,7 +69,7 @@
           <tr *ngIf="x && x.hasOwnProperty('mechanism') && x['mechanism'].length > 0">
             <td class="title">Mechanism of Action</td>
             <td class="content"><span *ngFor="let y of x['mechanism']; let i = index">
-              <a class="launch-search" [routerLink]="['/search/']" [queryParams]="{ query: y, type: 'string' }" target="_blank">{{y}}</a>
+              <a class="launch-search" [routerLink]="['/search/']" [queryParams]='{ query: "\"" + y + "\"", type: "string" }' target="_blank">{{y}}</a>
               <span *ngIf="i + 1 < x['mechanism'].length" class='data-separator'></span></span>
             </td>
           </tr>
@@ -88,7 +89,7 @@
           <tr *ngIf="x && x.hasOwnProperty('target_name') && x['target_name'].length > 0">
             <td class="title">Target Name</td>
             <td class="content"><span *ngFor="let y of x['target_name']; let i = index">
-              <a class="launch-search" [routerLink]="['/search/']" [queryParams]="{ query: y, type: 'string' }" target="_blank">{{y}}</a>
+              <a class="launch-search" [routerLink]="['/search/']" [queryParams]='{ query: "\"" + y + "\"", type: "string" }' target="_blank">{{y}}</a>
               <span *ngIf="i + 1 < x['target_name'].length" class='data-separator'></span></span>
             </td>
           </tr>
@@ -98,7 +99,7 @@
           <tr *ngIf="x && x.hasOwnProperty('target_families') && x['target_families'].length > 0">
             <td class="title">Target Family</td>
             <td class="content"><span *ngFor="let y of x['target_families']; let i = index">
-              <a class="launch-search" [routerLink]="['/search/']" [queryParams]="{ query: y, type: 'string' }" target="_blank">{{y}}</a>
+              <a class="launch-search" [routerLink]="['/search/']" [queryParams]='{ query: "\"" + y + "\"", type: "string" }' target="_blank">{{y}}</a>
               <span *ngIf="i + 1 < x['target_families'].length" class='data-separator'></span></span>
             </td>
           </tr>
