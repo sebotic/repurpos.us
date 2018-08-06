@@ -1,14 +1,26 @@
-.circle, .rect, .chevron {
+.chevron,
+.circle,
+.rect {
   stroke-width: 1;
   fill: #eff1f2;
   stroke: #c5cbd0;
-  stroke-miterlimit:10;
+  stroke-miterlimit: 10;
   // width: 20px;
   // height: 20px;
 }
 
-.chevron.low, .chevron.current, .circle.low, .circle.current, .rect.low, .rect.current {
+.chevron.current,
+.chevron.low,
+.circle.current,
+.circle.low,
+.rect.current,
+.rect.low {
   stroke: #15584c;
+}
+
+.failed {
+  fill: #ff7345;
+  stroke: #ab2a00;
 }
 
 .low {
@@ -17,6 +29,10 @@
 
 .current {
   fill: #29aa94;
+}
+
+.in-between.current {
+  fill: #80bc5e;
 }
 
 .right-arrow {
@@ -30,8 +46,9 @@
 
 .phase {
   alignment-baseline: middle;
-    text-anchor: middle;
-    font-size: 0.8em;
+  text-anchor: middle;
+  font-size: 0.8em;
+  font-weight: 400;
 }
 
 .low.phase {
@@ -51,6 +68,20 @@
   fill: #e7e9ec;
 }
 
+.approved.current {
+  stroke: #a9b1ba;
+  fill: #249582;
+}
+
+.approved.failed {
+  stroke: #ff602c;
+  fill: #c53100;
+}
+
 .phase-diagram {
-  margin-left: 45px;
+  margin-left: 48px;
+}
+
+.phase-diagram.informa {
+  margin-left: 108px;
 }

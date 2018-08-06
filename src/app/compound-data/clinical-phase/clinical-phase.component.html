@@ -1,4 +1,4 @@
-<div *ngIf="sel_phases.length > 0" class="phase-diagram">
+<div *ngIf="vendorName && sel_phases && sel_phases.length > 0 && current_phase" class="phase-diagram" [ngClass]="vendorName">
 
   <svg width="555" height="25">
   <defs>
@@ -33,13 +33,13 @@
 
 <!-- 2px curvature -->
 <!-- style="fill: url(#circles-1) #fff;" -->
-<path *ngIf="!phase.approved" class="chevron" [ngClass]="i > current_phase ? 'high' : i === current_phase ? 'current' : 'low'"
+<path *ngIf="!phase.approved" class="chevron" [ngClass]="findClass(i)"
 
   d="M1.2,0c-1.1,0-1.5,0.8-1,1.7l4.4,7.5c0.6,1,0.6,2.5,0,3.5l-4.4,7.5c-0.6,1-0.1,1.7,1,1.7h24
 		c1.1,0,2.5-0.8,3-1.7l4.4-7.5c0.6-1,0.6-2.5,0-3.5l-4.4-7.5c-0.6-1-1.9-1.7-3-1.7H1.2z"/>
 
 <!-- 2px curvature -->
-      <path *ngIf="phase.approved" class="chevron approved" d="M1.6,0.4c-1.1,0-1.5,0.8-1,1.7L5,9.6c0.6,1,0.6,2.5,0,3.5l-4.4,7.5c-0.6,1-0.1,1.7,1,1.7H32c1.1,0,2-0.9,2-2
+      <path *ngIf="phase.approved" class="chevron approved" [ngClass]="findClass(i)" d="M1.6,0.4c-1.1,0-1.5,0.8-1,1.7L5,9.6c0.6,1,0.6,2.5,0,3.5l-4.4,7.5c-0.6,1-0.1,1.7,1,1.7H32c1.1,0,2-0.9,2-2
     		l0-7c0-1.1,0-2.9,0-4l0-7c0-1.1-0.9-2-2-2H1.6z"/>
 
         <!-- 1px curvature -->
@@ -47,7 +47,9 @@
       d="M1,0.4c-0.6,0-0.8,0.4-0.5,0.9l5.4,9.3c0.3,0.5,0.3,1.3,0,1.7l-5.4,9.3C0.2,22,0.4,22.4,1,22.4h32.4
         c0.5,0,1-0.5,1-1l0-9c0-0.6,0-1.4,0-2l0-9c0-0.6-0.4-1-1-1H1z"/> -->
 
-    <text class="phase" [attr.x] ="17" y="12" [ngClass]="i > current_phase ? 'high' : i === current_phase ? 'current' : 'low'">{{ phase.label }}</text>
+    <text class="phase" [attr.x] ="17" y="12" [ngClass]="findClass(i)">
+      {{ phase.label }}
+    </text>
     <!-- <text class="phase" [attr.x] ="i*(circle_radius*2 + 26) + circle_radius + 5" y="12" [ngClass]="i > current_phase ? 'high' : i === current_phase ? 'current' : 'low'">{{ phase.label }}</text> -->
   <!-- <line class="right-arrow" marker-end="url(#arrow-head)" [attr.x1]="i*(circle_radius*2 + 26) + circle_radius*2 + 10"
   [attr.x2]="i*(circle_radius*2 + 26) + circle_radius*2 + 18" y1="12" y2="12" *ngIf="i + 1 < sel_phases.length"/> -->
