@@ -197,6 +197,11 @@ a.dwnld-link:hover {
   padding: 15px;
   // border-collapse: collapse !important;
   margin-bottom: 25px;
+
+  background: #f5f6f7;
+  // box-shadow: 3px 3px #d3d7dc;
+  box-shadow: 5px 5px #e4e7e9;
+
 }
 
 .card-text a {
@@ -205,4 +210,9 @@ a.dwnld-link:hover {
 
 .card-text a:hover {
   text-decoration: none;
+}
+
+.mat-button-toggle {
+    background: #7b9bea;
+    color: white;
 }
