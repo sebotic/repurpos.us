@@ -27,6 +27,7 @@ export class SimilarCompoundsComponent implements OnInit {
 
     this.cmpdSvc.similarState.subscribe((sdata: Compound[]) => {
       this.similarityResults = sdata;
+      // console.log(sdata)
     })
   }
 
@@ -39,10 +40,10 @@ export class SimilarCompoundsComponent implements OnInit {
   }
 
   prepSimilarityData() {
-    // console.log(this.similarityResults)
     if (this.similarityResults) {
       this.similarityResults = this.similarityResults.sort((a: any, b: any) => b.tanimoto - a.tanimoto);
     }
+    // console.log(this.similarityResults)
   }
 
   showMore() {
