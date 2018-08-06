@@ -57,7 +57,7 @@ export class SearchResultsTableComponent implements OnInit {
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
         case 'main_label': return item.main_label.toLowerCase();
-        case 'reframeid': return (item.assays + Number(item.reframeid === true) + Number(item.similar_compounds.length > 0)/2);
+        case 'reframeid': return (item.assays + Number(item.reframeid === true) + Number(item.similar_compounds.length > 0) / 2);
         case 'assays': return (item.assays + Number(item.reframeid === true));
         default: return item[property];
       }
@@ -103,10 +103,10 @@ export class SearchResultsTableComponent implements OnInit {
             d['assays'] = d.assay_types.length;
             d['aliases'] = this.removeDupeAlias(d.aliases);
             d['alias_ct'] = this.num_aliases;
-            d['similar_showall'] = false;
+            d['max_aliases'] = false;
           });
 
-console.log(results)
+          console.log(results)
           // Sort results by multiple columns
           // this.dataSource.data = results;
           this.dataSource.data = this.sortResults(results);
@@ -238,7 +238,16 @@ console.log(results)
 
   showMore(row_num) {
     let sortedData = this.dataSource.sortData(this.dataSource.data, this.dataSource.sort);
-    sortedData[row_num + this.pageIdx * this.pageSize]['alias_ct'] += this.num_aliases;
+    let idx = row_num + this.pageIdx * this.pageSize;
+    if (sortedData[idx]['max_aliases']) {
+      sortedData[idx]['alias_ct'] = this.num_aliases;
+    } else {
+      sortedData[idx]['alias_ct'] = sortedData[idx].aliases.length;
+    }
+
+    sortedData[idx]['max_aliases'] = !sortedData[idx]['max_aliases'];
+
+    // sortedData[row_num + this.pageIdx * this.pageSize]['alias_ct'] += this.num_aliases; // incremement
     this.dataSource.data = sortedData;
     // this.dataSource.data[row_num + this.pageIdx * this.pageSize]['alias_ct'] += this.num_aliases;
   }

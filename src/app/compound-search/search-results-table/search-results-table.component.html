@@ -10,7 +10,7 @@
           <!-- Drug name -->
           <ng-container matColumnDef="main_label">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Name
-              <mat-icon class='sort-icon'>sort</mat-icon>
+              <mat-icon class='sort-icon' matTooltip="sort by name">sort</mat-icon>
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
               <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
@@ -35,8 +35,8 @@
                     <span *ngIf="i + 1 < element.alias_ct && i + 1 < element.aliases.length" class='data-separator'></span>
                   </li>
                   <li>
-                    <a *ngIf="element.alias_ct < element.aliases.length" id="more" (click)="showMore(row)" class="center-block">
-                  show more
+                    <a *ngIf="element.alias_ct < element.aliases.length || element.max_aliases" id="more" (click)="showMore(row)" class="center-block">
+                  {{ element.max_aliases ? 'show less' : 'show more' }}
                 </a>
                   </li>
                 </ul>
@@ -57,7 +57,7 @@
           <!-- In physical library -->
           <ng-container matColumnDef="reframeid">
             <mat-header-cell *matHeaderCellDef mat-sort-header start="desc">Sample in Screening Library
-              <mat-icon class='sort-icon'>sort</mat-icon>
+              <mat-icon class='sort-icon' matTooltip="sort by library compound">sort</mat-icon>
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
               <!-- binary circle if compound in reframe library -->
@@ -83,10 +83,10 @@
           <ng-container matColumnDef="tanimoto">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Tanimoto Similarity Score
-              <mat-icon class='sort-icon'>sort</mat-icon>
+              <mat-icon class='sort-icon' matTooltip="sort by Tanimoto score">sort</mat-icon>
             </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngStyle]="{'background-color': tanimotoScale(element['tanimoto']),
-    'color': getFontColor(element['tanimoto'])}">
+            <mat-cell *matCellDef="let element"
+            [ngStyle]="{'background-color': tanimotoScale(element['tanimoto']), 'color': getFontColor(element['tanimoto'])}">
               {{element['tanimoto'] | number: '1.2-2'}}</mat-cell>
           </ng-container>
 
@@ -106,7 +106,7 @@
           <ng-container matColumnDef="assays">
             <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header start="desc">
               assay hits
-              <mat-icon class='sort-icon'>sort</mat-icon>
+              <mat-icon class='sort-icon' matTooltip="sort by number of assay hits">sort</mat-icon>
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
               <span class="circle" [ngStyle]="{'background-color': 'rgba(65, 74, 81,' + getColor(element.assay_types) + ')'}"></span>
