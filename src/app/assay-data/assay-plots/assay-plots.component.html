@@ -1,15 +1,15 @@
 <!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
 <!-- VIS -->
 <div id="vis" *ngIf="loggedIn; else log_in">
-  <div class="row data-header">
-    <div class="col-xs-9">
-      <h3 id="data-title">Assay data
-        <app-assay-dwnld *ngIf="assayData" [data]="assayData"></app-assay-dwnld>
-    </h3>
+  <div class="row data-header d-flex">
+    <div class="col">
+      <h3 id="data-title" class="d-inline-block">Assay data
+</h3>
+      <app-assay-dwnld *ngIf="assayData" [data]="assayData"></app-assay-dwnld>
     </div>
 
 
-    <div class="col-xs-3">
+    <div class="col-xs-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto float-right">
       <!-- Assay tab panes -->
       <app-assay-type-btn *ngIf="assayTypes.length > 0" [assay_types]="assayTypes" (assayChanged)="onAssayChanged2($event)" (assayChanged)="onAssayChanged($event)"></app-assay-type-btn>
     </div>
@@ -17,8 +17,7 @@
 
   <!-- Call D3 component -->
 
-  <app-dot-plot *ngIf="filteredData.length > 0" [data]="filteredData" [assay_domain]="assayDomain" [tooltipData]="tooltipData"
-  (tooltipEmitter)="showTooltip($event)"></app-dot-plot>
+  <app-dot-plot *ngIf="filteredData.length > 0" [data]="filteredData" [assay_domain]="assayDomain" [tooltipData]="tooltipData" (tooltipEmitter)="showTooltip($event)"></app-dot-plot>
   <!-- <div <h1>height: {{ chart }}</h1></div> -->
   <!-- pagination -->
   <app-assay-pagination *ngIf="assayData" [data]="assayData" [current_assay]="currentAssay" [svg_height]="500" (numPerPage)="setNumPage($event)" (currentPage)="onPageChanged($event)"></app-assay-pagination>

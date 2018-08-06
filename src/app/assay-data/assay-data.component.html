@@ -8,17 +8,16 @@
 
 
 <div class="container" *ngIf="assayDetails; else no_assay">
-  <div class="row title">
-    <div class="col-10">
+  <div class="row d-flex">
+    <div class="col">
       <h1 class="assay-title">
         <span [outerHTML]="assayDetails.title | sciItalicize">
           </span>
       </h1>
-      <!-- <h1 class="title assay-title">{{ df.title }}</h1> -->
     </div>
-    <div class="col-2">
+    <div class="col-xs-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto align-self-end">
       <p class="text-right assay-id"> {{ assayDetails.assay_id }} </p>
-      <p class="text-right home-link"><a href="/#/assays">return to all assays</a></p>
+      <p class="text-right home-link"><a routerLink="/assays">return to all assays</a></p>
     </div>
   </div>
 
@@ -31,7 +30,7 @@
         <span [outerHTML]="assayDetails.summary | sciItalicize"></span>
       </div>
 
-      <div id="viewmore">
+      <div id="viewmore" class="view-more">
         <a (click)="onAnchorClick('protocol')">view detailed protocol</a>
       </div>
 
