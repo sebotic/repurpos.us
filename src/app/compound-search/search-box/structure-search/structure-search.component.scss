@@ -1,5 +1,6 @@
 /deep/ .mat-tab-body.mat-tab-body-active {
-  overflow-y: hidden;
+  // overflow-y: hidden;
+  overflow: hidden;
 }
 
 .accordion-title {
@@ -12,15 +13,6 @@ h6 {
   margin-bottom: 0;
 }
 
-.examples {
-  float: right;
-  margin-left: 10px;
-}
-
-.ex-type {
-  text-decoration: underline;
-}
-
-.ex-query {
-  font-size: 0.85em;
+.expansion-content {
+  margin-bottom: 25px;
 }

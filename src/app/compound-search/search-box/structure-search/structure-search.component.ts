@@ -19,13 +19,6 @@ export class StructureSearchComponent implements OnInit {
 
   submitSubscription: Subscription;
 
-
-  examples: Array<any> = [
-    { 'type': 'structure', 'mode': 'exact', 'query': 'C1=C(C=CC(O)=C1)NC(=O)C', 'label': 'exact search', 'description': 'acetaminophen (Tylenol)' },
-    { 'type': 'structure', 'molfile': "C1=CC=C2C(=C1)C(=CN2)CC(C(=O)O)NC(=O)CCC(C(=O)O)N", 'mode': 'stereofree', 'query': 'C1=CC=C2C(=C1)C(=CN2)CC(C(=O)O)NC(=O)CCC(C(=O)O)N', 'label': 'stereo-free exact search', 'description': 'orilotimod stereoisomers' },
-    { 'type': 'structure', 'mode': 'similarity', 'tanimoto': 0.35, 'query': 'C(C1C2=C(N(C)N=1)C1=C(C=NC(=N1)NC1=CC=C(N3CCN(C)CC3)C=C1)CC2)(=O)N', 'label': 'similarity search', 'description': 'milciclib backbone' }
-  ]
-
   constructor(private searchSvc: SearchResultService, private route: ActivatedRoute) {
     // service to check if the submit button has been pressed.
     this.submitSubscription = searchSvc.submitAnnounced$.subscribe(pressedStatus => {

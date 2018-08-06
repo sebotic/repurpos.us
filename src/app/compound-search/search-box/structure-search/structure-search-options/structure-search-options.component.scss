@@ -1,5 +1,5 @@
 .search-opt {
-  margin-top: 15px;
+  // margin-top: 15px;
   padding-right: 30px;
 }
 
@@ -16,71 +16,96 @@
 
 .search-label {
   text-transform: uppercase;
-  padding-right: 45px;
+  // padding-right: 45px;
   color: #73797d;
+  font-family: "Lato", sans-serif;
 }
 
 #tanimoto {
   display: inline-block;
 }
-
 /* Tanimoto slider */
-
 /deep/ .slider-label {
   font-family: "Lato", Arial, sans-serif;
   text-transform: uppercase;
   font-size: 0.9em;
-  opacity: .4;
-  padding-top: 7px;
+  color: #c5cbd0;
+  // opacity: 0.4;
+  // padding-top: 7px;
   padding-left: 10px;
   font-weight: 400;
+}
+
+.tanimoto-val {
+  color: #9ba4ae;
+}
+
+.with-tanimoto {
+  margin-top: -20px;
 }
 
 #tanimoto-slider {
   width: 200px;
 }
 
+.slider {
+  margin-top: -10px;
+}
 /* Reverse coloring of Tanimoto slider to highlight the results included */
-
 /* Highlight larger part of slider */
-
 /deep/ .mat-slider-track-background {
   background-color: #fc5457;
 }
-
 /* de-highlight smaller part of slider */
-
 /deep/ .mat-accent .mat-slider-track-fill {
-  background-color: #c3c4c5;
+  background-color: #c5cbd0;
 }
-
 /* When change slider */
-
-/deep/ .mat-slider:hover .mat-slider-track-background, .cdk-focused .mat-slider-track-background {
-  background-color: #fc54576e;
+.cdk-focused .mat-slider-track-background,
+/deep/ .mat-slider:hover .mat-slider-track-background {
+  background-color: #cd0407;
 }
-
 /* When lose focus on slider, before clicking */
-
+// basically: default color
 /deep/ .mat-slider .mat-slider-track-background {
-  background-color: #fc5457ad;
+  background-color: #fc6d70;
 }
 
+.submit-btn {
+  width: 100px;
+}
 
 .search-btn {
   margin-left: 10px;
   background: #fecccd;
   border-radius: 15%;
-  margin-top: 10px;
+  // margin-top: 10px;
   position: absolute;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   /* display: inline-block; */
 }
 
 .search {
-  display: inline-block;
-  width: 70%;
-  margin-left: 60px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  // display: inline-block;
+  // width: 70%;
+  // margin-left: 60px;
+  // margin-top: 10px;
+  // margin-bottom: 10px;
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+}
+// examples
+.examples {
+  // float: right;
+  // margin-left: 10px;
+  font-family: 'Lato', sans-serif;
+}
+
+.ex-type {
+  text-decoration: underline;
+}
+
+.ex-query {
+  font-size: 1em;
+  font-weight: 300;
 }
