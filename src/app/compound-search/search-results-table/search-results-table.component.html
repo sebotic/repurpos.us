@@ -66,54 +66,8 @@
                   <span class="circle"></span>
                 </div>
 
+                <app-search-result-similar [compound_result]="element"></app-search-result-similar>
 
-
-                <div>
-                  <!-- Check if there are similar compounds, if not a Reframe compound -->
-                  <div class="similar" *ngIf="element['reframeid'] === false && element['similar_compounds'].length > 0" matTooltip="Tanimoto score > 0.85">
-                    <div>
-                      {{element['similar_compounds'].length === 1 ? "similar library compound:" : "similar library compounds:"}}
-                    </div>
-
-
-                    <ng-container *ngIf="element['similar_compounds'].length <= num_similar; else lotsa_similar">
-                      <ng-container *ngFor="let related of element['similar_compounds'] | slice:0:num_similar; let i=index">
-                        <a [routerLink]="['/compound_data', related.compound_id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
-                        {{related['main_label']}}
-                      </a>
-                        <span *ngIf="i + 1 < element['similar_compounds'].length" class='data-separator'></span>
-                      </ng-container>
-                    </ng-container>
-
-                    <!-- If there are > 2 similar compounds -->
-                    <ng-template #lotsa_similar>
-                      <mat-expansion-panel (opened)="element.similar_showall = true" (closed)="element.similar_showall = false">
-                        <mat-expansion-panel-header collapsedHeight="auto">
-                          <mat-panel-title>
-                            <ng-container *ngFor="let related of element['similar_compounds'] | slice:0:num_similar; let i=index">
-                              <a [routerLink]="['/compound_data', related.compound_id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
-            {{related['main_label']}}
-          </a>
-                              <span *ngIf="i + 1 < num_similar" class='data-separator'></span>
-
-                            </ng-container>
-                            <a>show {{element['similar_showall'] ? "less" : "more"}}</a>
-                          </mat-panel-title>
-                        </mat-expansion-panel-header>
-
-                        <ng-container *ngFor="let related of element['similar_compounds'] | slice:num_similar:element['similar_compounds'].length; let i=index">
-                          <a [routerLink]="['/compound_data', related.compound_id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
-        {{related['main_label']}}
-      </a>
-                          <span *ngIf="i + 1 < element['similar_compounds'].length - num_similar" class='data-separator'></span>
-
-                        </ng-container>
-
-                      </mat-expansion-panel>
-                    </ng-template>
-                  </div>
-
-                </div>
               </div>
 
               <!-- <div class="parent">

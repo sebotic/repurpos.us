@@ -151,25 +151,6 @@ a#more {
   margin-left: 25px;
   font-size: 1.25em;
 }
-// Accordion
-
-/deep/ .mat-expansion-panel:not([class*=mat-elevation-z]) {
-  box-shadow: none;
-}
-
-/deep/ .mat-expansion-panel-body,
-/deep/ .mat-expansion-panel-header {
-  padding: 1px;
-}
-
-.similar,
-/deep/ .mat-table .mat-expansion-panel-content a,
-/deep/ .mat-table .mat-expansion-panel-header a {
-  font-size: 0.9em;
-  font-family: "Lato", sans-serif;
-  font-style: italic;
-  font-weight: 300;
-}
 
 .flex-container {
     height: 100%;
@@ -200,7 +181,7 @@ a#more {
     text-align: center;
 }
 
-@media 
+@media
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px) {
   .search-result-container {
