@@ -34,7 +34,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {
   // MatAutocompleteModule,
   MatButtonModule,
-  // MatButtonToggleModule,
+  MatButtonToggleModule,
   // MatCardModule,
   // MatCheckboxModule,
   MatChipsModule,
@@ -112,6 +112,7 @@ import {
   StructureService,
   TanimotoScaleService,
   StructureSvgService,
+  ColorPaletteService,
   BackendSearchService
 } from './_services/index';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
@@ -131,13 +132,15 @@ import { Struct2dComponent } from './struct2d/struct2d.component';
 import { AvailableDataComponent } from './compound-data/available-data/available-data.component';
 import { ClinicalPhaseComponent } from './compound-data/clinical-phase/clinical-phase.component';
 import { SaltFormComponent } from './compound-data/salt-form/salt-form.component';
+import { SearchResultSimilarComponent } from './compound-search/search-results-table/search-result-similar/search-result-similar.component';
+import { SciItalicizePipe } from './_pipes/sci-italicize.pipe';
 
 @NgModule({
   exports: [
     // CdkTableModule,
     // MatAutocompleteModule,
     MatButtonModule,
-    // MatButtonToggleModule,
+    MatButtonToggleModule,
     // MatCardModule,
     // MatCheckboxModule,
     MatChipsModule,
@@ -210,6 +213,7 @@ export class MaterialModule {}
     ShowMorePane,
     ShowMoreButtonComponent,
     SearchResultsTableComponent,
+    SearchResultSimilarComponent,
     UserRegistrationComponent,
     UserLoginComponent,
     UserRegButtonComponent,
@@ -236,7 +240,8 @@ export class MaterialModule {}
     SaltWarningComponent,
     SaltWarningDialogComponent,
     ClinicalPhaseComponent,
-    SaltFormComponent
+    SaltFormComponent,
+    SciItalicizePipe
   ],
   imports: [
     BrowserModule,
@@ -269,11 +274,12 @@ export class MaterialModule {}
     { provide: WDQService, useClass: WDQService },
     { provide: TanimotoScaleService, useClass: TanimotoScaleService },
     { provide: StructureService, useClass: StructureService },
-    { provide: BackendSearchService, useClass: BackendSearchService},
-    { provide: StructureSvgService, useClass: StructureSvgService},
+    { provide: BackendSearchService, useClass: BackendSearchService },
+    { provide: StructureSvgService, useClass: StructureSvgService },
     // { provide: InteractionTableDataService, useClass: InteractionTableDataService },
     // { provide: CIDService, useClass: CIDService},
-    { provide: AuthService, useClass: AuthService},
+    { provide: AuthService, useClass: AuthService },
+    { provide: ColorPaletteService, useClass: ColorPaletteService },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true },
     LoaderStateService,
     LoginStateService,

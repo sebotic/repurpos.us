@@ -4,7 +4,8 @@ body {
   font-weight: 300;
 }
 
-a, a.dwnld-link:hover {
+a,
+a.dwnld-link:hover {
   color: #3D6DE0;
 }
 
@@ -22,16 +23,15 @@ a, a.dwnld-link:hover {
 }
 
 .summary {
-  font-size: 20px;
+  font-size: 1.1em;
+  margin-bottom: 25px;
+  line-height: 1.15em;
 }
 
-#label{
+#label {
   font-weight: 400;
 }
-
-
 /*Table widths for main assay page*/
-
 #assays {
   table-layout: fixed;
 }
@@ -62,7 +62,7 @@ a, a.dwnld-link:hover {
   padding-bottom: 12px;
 }
 
-#label>th {
+#label > th {
   font-size: 1.2em;
   opacity: 0.5;
   font-weight: 300;
@@ -81,10 +81,7 @@ a, a.dwnld-link:hover {
   background: #f7f7f7;
   border-right: #dadada 3px solid;
 }
-
-@media 
-only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px) {
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
   #label {
     th:not(#table_assay) {
       display: none;
@@ -118,7 +115,7 @@ only screen and (max-width: 760px),
       justify-content: flex-end;
       align-items: center;
       flex-direction: column;
-      max-height: 0px;
+      max-height: 0;
       min-height: unset;
       overflow: hidden;
       border-top: 1px dashed transparent;
@@ -130,17 +127,24 @@ only screen and (max-width: 760px),
         transition: max-height 0.5s ease-in-out;
       }
       //display: none;
-
       &:before {
         font-weight: 600;
-        max-height: 0px;
+        max-height: 0;
         transition: max-height 0.5s ease-in-out;
         overflow: hidden;
       }
 
-      &:nth-of-type(3):before { content: 'Indication'; }
-      &:nth-of-type(4):before { content: 'Type'; }
-      &:nth-of-type(5):before { content: 'Description'; }
+      &:nth-of-type(3):before {
+        content: 'Indication';
+      }
+
+      &:nth-of-type(4):before {
+        content: 'Type';
+      }
+
+      &:nth-of-type(5):before {
+        content: 'Description';
+      }
 
       &.expanded {
         max-height: 350px;
@@ -150,7 +154,8 @@ only screen and (max-width: 760px),
         * {
           max-height: 350px;
         }
-         &:before {
+
+        &:before {
           max-height: 100px;
         }
       }
@@ -162,7 +167,10 @@ only screen and (max-width: 760px),
       }
     }
 
-    &#table_assay, &#table_type, &#table_ind, &#table_descrip {
+    &#table_assay,
+    &#table_descrip,
+    &#table_ind,
+    &#table_type {
       width: auto;
     }
 
@@ -172,5 +180,29 @@ only screen and (max-width: 760px),
       justify-content: space-between;
       align-items: center;
     }
-  } // td
+  }
+  // td
+}
+
+.indication, .type {
+  cursor: pointer;
+}
+
+.type {
+  font-weight: 400;
+}
+
+.assay-type .card{
+  // border: 1px solid #9ba4ae;
+  padding: 15px;
+  // border-collapse: collapse !important;
+  margin-bottom: 25px;
+}
+
+.card-text a {
+  color: #212529;
+}
+
+.card-text a:hover {
+  text-decoration: none;
 }

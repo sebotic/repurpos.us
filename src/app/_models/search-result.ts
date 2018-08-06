@@ -25,9 +25,22 @@ export interface Compound {
   aliases: string[];
   assays: number;
   smiles: string;
-  properties: Object[];
-  similar_compounds?: Object[];
+  properties: AvailableData[];
+  similar_compounds?: SimilarCompound[];
   tanimoto: number;
   reframeid?: boolean;
+  qid?: string;
+}
+
+export interface AvailableData {
+  name: string;
+  value: boolean;
+  tooltip?: string;
+}
+
+export interface SimilarCompound {
+  compound_id: string;
+  main_label: string;
+  score: number;
   qid?: string;
 }

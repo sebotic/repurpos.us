@@ -16,7 +16,7 @@ export class CompoundHeaderComponent implements OnInit {
 
   private label: string;
   private aliases: Array<string> = [];
-  private reframeID: Array<string> = [];
+  private reframeCmpd: boolean;
   private whoName: string;
   private chemVendors: Array<Object> = [];
   private similarityResults: Array<Compound> = [];
@@ -33,8 +33,8 @@ export class CompoundHeaderComponent implements OnInit {
       }
     })
 
-    this.cmpdSvc.rfmState.subscribe((rfm: string[]) => {
-      this.reframeID = rfm;
+    this.cmpdSvc.rfmState.subscribe((rfm: boolean) => {
+      this.reframeCmpd = rfm;
     })
 
     this.cmpdSvc.whoState.subscribe((who: string) => {

@@ -9,7 +9,7 @@ import { environment } from "../../environments/environment";
 import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse } from "@angular/common/http";
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
-import { AssayData, GVKData, IntegrityData, InformaData, VendorData, WikiData, WDQSData, Compound, SearchResult, LoginState } from '../_models/index';
+import { AssayData, GVKData, IntegrityData, InformaData, VendorData, WikiData, AvailableData, WDQSData, Compound, SearchResult, LoginState } from '../_models/index';
 import { LoginStateService } from '../_services/login-state.service';
 import { BackendSearchService } from '../_services/backendsearch.service';
 // import { WDQService, BackendSearchService, LoginStateService } from '../_services/';
@@ -40,7 +40,7 @@ export class CompoundService {
   nameState = this.nameSubject.asObservable();
 
   // TODO: change RFM to bool
-  public rfmSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  public rfmSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   rfmState = this.rfmSubject.asObservable();
   public whoSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   whoState = this.whoSubject.asObservable();
@@ -67,22 +67,44 @@ export class CompoundService {
 
   // --- Vendor data ---
   // vendor data holders
-  public vendorSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  // public vendorSubject: BehaviorSubject<VendorData> = new BehaviorSubject<VendorData>(<VendorData>{});
+  public vendorSubject: BehaviorSubject<VendorData> = new BehaviorSubject<VendorData>(<VendorData>[{}, {}, {}]);
   vendorState = this.vendorSubject.asObservable();
 
   // available data holders: if not logged in, gather what data is available.
-  public availSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  public availSubject: BehaviorSubject<AvailableData[]> = new BehaviorSubject<AvailableData[]>([]);
   availState = this.availSubject.asObservable();
 
   // --- Wikidata ---
   public wikiTableSubject: BehaviorSubject<WikiData[]> = new BehaviorSubject<WikiData[]>([]);
-  // public wikiTableSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   wikiTableState = this.wikiTableSubject.asObservable();
 
   private table_data: WikiData[] = [];
   prop_name_map: Object = {};
   // from https://www.wikidata.org/wiki/Wikidata:List_of_properties/natural_science
+  //   // propsLabelMap: Object = {
+    //   'P274': 'Chemical Formula',
+    //   'P231': 'CAS Registry Number',
+    //   'P662': 'PubChem CID',
+    //   'P661': 'ChemSpider ID',
+    //   'P592': 'CHEMBL ID',
+    //   'P715': 'DrugBank ID',
+    //   'P683': 'ChEBI ID',
+    //   'P665': 'KEGG ID',
+    //   'P233': 'canonical SMILES',
+    //   'P2017': 'isomeric SMILES',
+    //   'P234': 'InChI',
+    //   'P235': 'InChI Key',
+    //   'P652': 'FDA UNII',
+    //   'P595': 'Guide to Pharmacology Ligand ID',
+    //   'P3636': 'PDB Ligand ID',
+    //   'P232': 'EINECS Number',
+    //   'P2275': 'WHO International Nonproprietary Name',
+    //   'P267': 'ATC code',
+    //   'P2892': 'UMLS CUI',
+    //   'P3345': 'RxNorm CUI',
+    //   'P486': 'MeSH ID',
+    //   'P2115': 'NDF-RT ID'
+    // };
   idPropsToDisplay: Array<string> = ['P231', 'P662', 'P661', 'P592', 'P715', 'P683', 'P665',
     'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115', 'P3098', 'P2874'];
 
@@ -93,7 +115,7 @@ export class CompoundService {
   // 'P3772', 'P3773', 'P3774', 'P3775', 'P3776', 'P3777', 'P3778', 'P3779', 'P924',
   // // stereoisomer
   //     'P3364']);
-  //
+
   showMoreProperties = ['P3489', 'P2868', 'P129', 'P3776', 'P3777', 'P3771'];
 
   excludeFromTableDisplay: Array<string> = [];//['P2275'];  // WHO Name
@@ -210,13 +232,13 @@ export class CompoundService {
       this.nameSubject.next('');
       this.whoSubject.next('');
       this.smilesSubject.next('');
-      this.rfmSubject.next([]);
+      this.rfmSubject.next(false);
       this.aliasSubject.next([]);
       this.chemSourceSubject.next([]);
       this.similarSubject.next([]);
       this.availSubject.next([]);
       this.wikiTableSubject.next([]);
-      this.vendorSubject.next([]);
+      this.vendorSubject.next(<VendorData>[{}, {}, {}]);
 
       // console.log('0 resetting ended')
       // setTimeout(resolve, 100, 'foo');
@@ -409,7 +431,7 @@ export class CompoundService {
             let b = r.body[id];
 
             // Is it a Reframe compound? --> compound-header
-            this.rfmSubject.next(b.reframe_id);
+            this.rfmSubject.next(b.reframe_id.length > 0);
 
             // Pull out assay data --> compound-assay-data
             this.assaysSubject.next(<AssayData[]>b.assay);
@@ -419,8 +441,7 @@ export class CompoundService {
             this.chemSourceSubject.next(<Object[]>b.chem_vendors);
 
             // Pull out vendor data --> compound-vendor-data
-            this.vendorSubject.next(<any>[b.gvk, b.integrity, b.informa])
-            // this.vendorSubject.next(<VendorData>{gvk: b.gvk, informa: b.informa, integrity: b.integrity})
+            this.vendorSubject.next(<VendorData>[b.gvk, b.integrity, b.informa])
 
             // pull out aliases & names
             // Main label is preferentially: WHO Name, then Integrity, then informa, then GVK
@@ -470,8 +491,9 @@ export class CompoundService {
               console.log(results.data)
             }
 
+            console.log(results)
             let search_results = results.data[0];
-            // console.log(search_results)
+            console.log(search_results)
             // make sure the first result's id matches what it should be
             if (id === search_results.id) {
 

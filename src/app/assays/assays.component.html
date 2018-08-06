@@ -1,12 +1,71 @@
 <div class="container-fluid" id="content">
-  <div class="summary-box">
-    <h1 class="title">Assay descriptions</h1>
-    <div class="summary" id="main_summary">
-      Experimental methodology and data for each high throughput screen
+  <div class="row summary-box">
+    <div class="col">
+      <h1>Assay descriptions</h1>
+      <div class="summary" id="main_summary">
+        Experimental methodology and data for each high throughput screen
+      </div>
+      <div class="filter float-center" *ngIf="isFiltered">
+        <mat-button-toggle value="bold" (click)="removeFilter()">remove filter</mat-button-toggle>
+      </div>
     </div>
+
   </div>
 
-  <div class="">
+  <div class="row flex-row">
+
+    <div *ngFor="let assay of selAssays" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 d-flex align-items-stretch assay-type d-flex">
+
+      <div class='card '>
+
+
+        <div class="row">
+          <div class="col card-title">
+            <a [routerLink]="['/assays/', assay.assay_id]">
+          <span [outerHTML]="assay.title | sciItalicize">
+            </span>
+        </a>
+          </div>
+
+          <div class="col-xs-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto">
+            {{ assay.assay_id }}
+          </div>
+        </div>
+
+        <div class="card-text">
+          <a [routerLink]="['/assays/', assay.assay_id]">
+        <span [outerHTML]="assay.summary | sciItalicize">
+          </span>
+      </a>
+        </div>
+
+        <div class="row align-items-end align-self-stretch">
+          <div class="col">
+            <mat-chip-list class="">
+              <mat-chip class="indication" (click)="filterIndic(assay.indication)" [ngStyle]="{'background-color': getIndicColor(assay.indication)['background'], 'color': getIndicColor(assay.indication)['font']}">
+                <span [outerHTML]="assay.indication | sciItalicize">
+              </span>
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+
+          <div class="col">
+            <mat-chip-list class="">
+              <mat-chip class="type float-right" *ngFor="let type of assay.assay_type.split(',')" (click)="filterType(type)" [ngStyle]="{'background-color': getTypeColor(type)[0], 'border': '1px solid ' + getTypeColor(type)[1], 'color': getTypeColor(type)[1]}">
+                <!-- (click)="filterType(type)" [ngStyle]="{'background-color': 'white', 'border': '1px solid ' + getTypeColor(type)[1], 'color': getTypeColor(type)[1]}"> -->
+                {{ type }}
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- table view -->
+  <!-- <div class="">
     <table style="width:100%" id="assays">
       <tr id="label">
         <th id="table_id">id</th>
@@ -17,7 +76,7 @@
       </tr>
 
 
-      <tr *ngFor="let assay of assayList">
+      <tr *ngFor="let assay of selAssays">
         <td class="id" id="table_id">
           {{ assay.assay_id }}
         </td>
@@ -29,12 +88,20 @@
           <mat-icon *ngIf="!notMobile" class="more-info" (click)="expandCell($event)">expand_more</mat-icon>
         </td>
 
-        <td >
-          {{ assay.indication }}
+        <td>
+          <mat-chip-list>
+            <mat-chip class="indication" (click)="filterIndic(assay.indication)" [ngStyle]="{'background-color': getIndicColor(assay.indication)['background'], 'color': getIndicColor(assay.indication)['font']}">
+              {{ assay.indication }}
+            </mat-chip>
+          </mat-chip-list>
         </td>
 
         <td>
-          {{ assay.assay_type }}
+          <mat-chip-list>
+            <mat-chip class="type" *ngFor="let type of assay.assay_type.split(',')" (click)="filterType(type)" [ngStyle]="{'background-color': getTypeColor(type)[0], 'border': '1px solid ' + getTypeColor(type)[1], 'color': getTypeColor(type)[1]}">
+              {{ type }}
+            </mat-chip>
+          </mat-chip-list>
         </td>
 
 
@@ -46,4 +113,4 @@
 
     </table>
   </div>
-</div>
+</div> -->
