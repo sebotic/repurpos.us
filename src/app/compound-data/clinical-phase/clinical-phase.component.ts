@@ -271,9 +271,9 @@ export class ClinicalPhaseComponent implements OnInit {
     } else if ((Math.round(this.current_phase) === i) || (Math.floor(this.current_phase) === i)) {
       return ('in-between current')
     } else if (i > this.current_phase) {
-      return ('high')
+      return ('todo')
     } else {
-      return ('low')
+      return ('completed')
     }
   }
 
