@@ -239,9 +239,9 @@ export class ClinicalPhaseComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.vendorName)
-    console.log(this.phase)
-    console.log(this.phases)
+    // console.log(this.vendorName)
+    // console.log(this.phase)
+    // console.log(this.phases)
     if (this.phases.hasOwnProperty(this.vendorName)) {
       // filter out any half-steps in process
       this.sel_phases = this.phases[this.vendorName].filter(d => (d.order || d.order === 0) && !((d.order * 2) % 2) && d.order > -1 && d.synonym != true);
@@ -253,10 +253,10 @@ export class ClinicalPhaseComponent implements OnInit {
 
   findPhase() {
     let tmp = this.phases[this.vendorName].filter((d: any) => this.phase.includes(d.name))
-    console.log(tmp)
+    // console.log(tmp)
     if (tmp.length > 0) {
       this.current_phase = Math.max(<number>tmp.map((d: any) => d.order));
-      console.log(this.current_phase)
+      // console.log(this.current_phase)
     } else {
       this.current_phase = null;
     }
