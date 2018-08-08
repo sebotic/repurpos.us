@@ -25,7 +25,7 @@
   <!-- SUMMARY -->
   <div class="row summary-box">
 
-    <div class="col-sm-9">
+    <div class="col-md-9">
       <div class="summary">
         <span [outerHTML]="assayDetails.summary | sciItalicize"></span>
       </div>
@@ -36,7 +36,7 @@
 
     </div>
 
-    <div class="col-sm-3 overview">
+    <div class="col-md-3 overview">
       <ul>
         <li><span id="label">indication: </span>
           <span [outerHTML]="assayDetails.indication | sciItalicize"></span></li>
@@ -63,14 +63,14 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-6" id="drug-condits">
+      <div class="col-md-6" id="drug-condits">
         <div class="row subtitle">Drug incubation conditions</div>
         <div class="row">
-          <div class="col-sm-7 condits">
+          <div class="col-md-7 condits">
             <span [outerHTML]="assayDetails.protocol | sciItalicize"></span>
           </div>
 
-          <div class="col-sm-5 overview">
+          <div class="col-md-5 overview">
             <ul>
               <li><span id="label">assay type: </span> {{ assayDetails.assay_type }}</li>
               <li><span id="label">components: </span>
@@ -84,14 +84,14 @@
 
       </div>
 
-      <div class="col-sm-6" id="detect-condits">
+      <div class="col-md-6" id="detect-condits">
         <div class="row subtitle">Detection conditions</div>
         <div class="row">
-          <div class="col-sm-7 condits">
+          <div class="col-md-7 condits">
             <span [outerHTML]="assayDetails.protocol_detection | sciItalicize"></span>
           </div>
 
-          <div class="col-sm-5 overview">
+          <div class="col-md-5 overview">
             <ul>
               <li><span id="label">detection method: </span> {{ assayDetails.detection_method }}</li>
               <li *ngIf="assayDetails.detection_dye">
