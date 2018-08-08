@@ -14,10 +14,14 @@ export class TanimotoScaleService {
   getScale() {
     let domain = this.colorDomain;
 
-    let func = function(value: number, alpha: number = 1, colorDomain: string[] = domain, colorRange: number[] = [0.5, 1]) {
+    let func = function(value: number, alpha: number = 1, colorDomain: string[] = domain,
+      colorRange: number[] = [0.5, 1], defaultColor: string = "#eff1f2") {
       let scale = Chroma.scale(colorDomain).domain(colorRange).mode('lab');
 
-      return (scale(value).alpha(alpha).css());
+      let return_val = value < colorRange[0] || value > colorRange[1] ? defaultColor : scale(value).alpha(alpha).css();
+
+      return return_val;
+
     }
 
     return (func);
