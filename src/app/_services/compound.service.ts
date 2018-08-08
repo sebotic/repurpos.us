@@ -452,7 +452,7 @@ export class CompoundService {
             }
             if (Object.keys(b.informa).length > 0) {
               this.aliases.concat(b.informa.drug_name);
-              this.vendorName = b.informa.drug_name;
+              this.vendorName = b.informa.drug_name[0];
               this.vendor_smiles = b.informa.smiles;
             }
             if (Object.keys(b.integrity).length > 0) {
