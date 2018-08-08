@@ -106,7 +106,7 @@ export class SearchResultsTableComponent implements OnInit {
             d['max_aliases'] = false;
           });
 
-          console.log(results)
+          // console.log(results)
           // Sort results by multiple columns
           // this.dataSource.data = results;
           this.dataSource.data = this.sortResults(results);
@@ -186,7 +186,7 @@ export class SearchResultsTableComponent implements OnInit {
 
 
     if (this.notMobile) {
-      console.log(this.displayedColumns);
+      // console.log(this.displayedColumns);
       this.displayedColumns.splice(2, 0, 'struct') // insert structure into the cols
       this.displayedColumns = this.displayedColumns.concat('assays', 'assay_titles');
     } else {
