@@ -11,11 +11,16 @@ import { CompoundService } from '../../_services/index';
 
 export class CompoundAssayDataComponent implements OnInit {
   assayData: Array<AssayData> = [];
+  assayMin: number;
 
   constructor(private cmpdSvc: CompoundService) {
 
       this.cmpdSvc.assaysState.subscribe((assays: AssayData[]) => {
-        this.assayData = assays;
+        this.assayData = assays.sort((a: any, b:any) => a.ac50 - b.ac50);
+
+        this.assayMin = Math.min(... assays.map((d:any) => d.ac50));
+        // console.log(this.assayMin)
+        // this.assayMin = 1.27e-7;
       })
 
   }
