@@ -217,3 +217,16 @@ a.dwnld-link:hover {
     background: #7b9bea;
     color: white;
 }
+
+// Marco flexbox classes
+.flexP{
+  display:flex;
+  justify-content:space-between;
+  align-items: flex-end;
+}
+
+.flexC{
+  flex:1;
+  flex-basis:100%;
+  //  background: yellow;
+}
