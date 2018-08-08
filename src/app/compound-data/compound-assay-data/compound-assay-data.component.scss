@@ -2,8 +2,9 @@
   display: inline-block;
 }
 
-.float-right {
-  margin-top: 15px;
+.vendor-btn {
+  // margin-top: 15px;
+  color: #7e8b98;
 }
 
 .title {
@@ -11,6 +12,7 @@
   font-weight: 300;
   opacity: 0.6;
   font-size: 0.85em;
+  // border: 1px green solid;
 }
 
 .assay-name {
@@ -21,7 +23,7 @@
 table#cmpd-names,
 table.assay-table {
   width: 100%;
-  table-layout: fixed;
+  // table-layout: fixed;
   border: none;
   margin-bottom: 50px;
 }
@@ -32,7 +34,7 @@ td {
 }
 
 .content a, .assay-name {
-  padding-left: 15px;
+  // padding-left: 15px;
 }
 
 .warning {
