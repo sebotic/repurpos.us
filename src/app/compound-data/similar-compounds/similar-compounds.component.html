@@ -3,8 +3,8 @@
   <h3 class="similar-title" id="similar">Similar molecules</h3>
 
 
-  <div class="similar-grp clearfix">
-    <div class="col-md-4 col-sm-6 col-xs-12" *ngFor="let related of similarityResults; let i=index">
+  <div class="similar-grp clearfix row">
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12" *ngFor="let related of similarityResults; let i=index">
       <div class="similar-cmpds" *ngIf="i < num_results" id="{{related.id}}">
         <a [routerLink]="['/compound_data', related.id.split('/').pop(), {qid: related.qid.split('/').pop()}]" target="_blank">
           <!-- Compound name -->
@@ -29,9 +29,9 @@
 
 
 
-          <div class="similar-content">
+          <div class="similar-content row">
             <!-- 2D Chemical structure -->
-            <div class="col-sm-6 col-xs-12 similar-struct" *ngIf="related.id.length === 27">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 similar-struct" *ngIf="related.id.length === 27">
               <!-- PubChem API can search based on InChI keys- however only returns if there's a CID -->
                 <!-- <img src="https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchikey/{{related.id}}/PNG" class="img-responsive" alt="structure {{related.main_label}}"> -->
                 <!-- <img src="https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{{related.pubchem.replace('CID', '')}}/PNG" class="img-responsive" alt="structure {{related.main_label}}"> -->
@@ -40,7 +40,7 @@
             </div>
 
             <!-- List of available data -->
-            <div [ngClass]="related.id.length === 27 ? 'col-sm-6 col-xs-12 similar-avail' : 'col-xs-12 similar-avail'">
+            <div [ngClass]="related.id.length === 27 ? 'col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 similar-avail' : 'col-xs-12 similar-avail'">
               <app-available-data [availData] = related.properties></app-available-data>
             </div>
             <!-- end of available data -->

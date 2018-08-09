@@ -67,7 +67,6 @@ export class CompoundHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this._location)
   }
 
   showMore() {

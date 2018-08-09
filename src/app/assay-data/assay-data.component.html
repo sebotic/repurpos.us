@@ -8,17 +8,16 @@
 
 
 <div class="container" *ngIf="assayDetails; else no_assay">
-  <div class="row title">
-    <div class="col-10">
+  <div class="row d-flex">
+    <div class="col">
       <h1 class="assay-title">
         <span [outerHTML]="assayDetails.title | sciItalicize">
           </span>
       </h1>
-      <!-- <h1 class="title assay-title">{{ df.title }}</h1> -->
     </div>
-    <div class="col-2">
+    <div class="col-xs-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto align-self-end">
       <p class="text-right assay-id"> {{ assayDetails.assay_id }} </p>
-      <p class="text-right home-link"><a href="/#/assays">return to all assays</a></p>
+      <p class="text-right home-link"><a routerLink="/assays">return to all assays</a></p>
     </div>
   </div>
 
@@ -26,18 +25,18 @@
   <!-- SUMMARY -->
   <div class="row summary-box">
 
-    <div class="col-sm-9">
+    <div class="col-md-9">
       <div class="summary">
         <span [outerHTML]="assayDetails.summary | sciItalicize"></span>
       </div>
 
-      <div id="viewmore">
+      <div id="viewmore" class="view-more">
         <a (click)="onAnchorClick('protocol')">view detailed protocol</a>
       </div>
 
     </div>
 
-    <div class="col-sm-3 overview">
+    <div class="col-md-3 overview">
       <ul>
         <li><span id="label">indication: </span>
           <span [outerHTML]="assayDetails.indication | sciItalicize"></span></li>
@@ -64,18 +63,19 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-6" id="drug-condits">
+      <div class="col-md-6" id="drug-condits">
         <div class="row subtitle">Drug incubation conditions</div>
         <div class="row">
-          <div class="col-sm-7 condits">
+          <div class="col-md-7 condits">
             <span [outerHTML]="assayDetails.protocol | sciItalicize"></span>
           </div>
 
-          <div class="col-sm-5 overview">
+          <div class="col-md-5 overview">
             <ul>
               <li><span id="label">assay type: </span> {{ assayDetails.assay_type }}</li>
               <li><span id="label">components: </span>
-                <span [outerHTML]="assayDetails.components | sciItalicize"></span> </li>
+                <span [outerHTML]="assayDetails.components | sciItalicize"></span>
+              </li>
               <li><span id="label">drug concentration: </span> {{ assayDetails.drug_conc }} </li>
             </ul>
           </div>
@@ -84,17 +84,19 @@
 
       </div>
 
-      <div class="col-sm-6" id="detect-condits">
+      <div class="col-md-6" id="detect-condits">
         <div class="row subtitle">Detection conditions</div>
         <div class="row">
-          <div class="col-sm-7 condits">
-            {{ assayDetails.protocol_detection }}
+          <div class="col-md-7 condits">
+            <span [outerHTML]="assayDetails.protocol_detection | sciItalicize"></span>
           </div>
 
-          <div class="col-sm-5 overview">
+          <div class="col-md-5 overview">
             <ul>
               <li><span id="label">detection method: </span> {{ assayDetails.detection_method }}</li>
-              <li *ngIf="assayDetails.detection_dye"><span id="label">detection dye: </span> {{ assayDetails.detection_dye }}</li>
+              <li *ngIf="assayDetails.detection_dye">
+                <span id="label">detection dye: </span>
+                {{ assayDetails.detection_dye }}</li>
 
             </ul>
           </div>

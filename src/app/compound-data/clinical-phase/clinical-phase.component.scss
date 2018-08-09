@@ -1,40 +1,70 @@
-.circle, .rect, .chevron {
-  stroke-width: 1;
-  fill: #eff1f2;
-  stroke: #c5cbd0;
-  stroke-miterlimit:10;
-  // width: 20px;
-  // height: 20px;
+// Margins
+
+.phase-diagram {
+  margin-left: 48px;
 }
 
-.chevron.low, .chevron.current, .circle.low, .circle.current, .rect.low, .rect.current {
+.phase-diagram.informa {
+  margin-left: 108px;
+}
+// Strokes
+.chevron {
+  stroke-width: 1;
+  fill: #eff1f2; // todo: light grey
+  stroke: #c5cbd0; // medium grey
+  stroke-miterlimit: 10;
+}
+
+.chevron.completed,
+.chevron.current {
   stroke: #15584c;
 }
-
-.low {
-  fill: #98d4ca;
+// Background fills
+.chevron.failed {
+  // fill: #ff7345; // orange
+  fill: url("#ltorange-on-grey-1"); // orange stripes on grey
+  stroke: #ab2a00; // dark orange
+  stroke: #ff602c; // medium orange
 }
 
+.completed {
+  fill: #98d4ca; // light green
+}
+// Current phase fill
 .current {
-  fill: #29aa94;
+  fill: #29aa94; // medium green
 }
-
-.right-arrow {
+// Phase I/II
+.in-between.current {
+  fill: url("#green-diagonal-1");
+}
+// end
+.approved {
   stroke: #a9b1ba;
-  stroke-width: 1;
+  fill: #e7e9ec;
 }
 
-#arrow-head {
-  fill: #a9b1ba;
+.approved.current {
+  stroke: #a9b1ba;
+  fill: #249582;
 }
 
+.approved.failed {
+  stroke: #f83d00; // darker orange
+  // fill: #c53100;
+  fill: url("#ltorange-on-dkgrey-1"); // orange stripes on darker grey
+}
+
+// Text
 .phase {
   alignment-baseline: middle;
-    text-anchor: middle;
-    font-size: 0.8em;
+  text-anchor: middle;
+  font-size: 0.8em;
+  font-weight: 400;
+  letter-spacing: 0.1em;
 }
 
-.low.phase {
+.completed.phase {
   fill: #1a6c5e;
 }
 
@@ -42,15 +72,10 @@
   fill: white;
 }
 
-.high.phase {
+.todo.phase {
   fill: #847b7b;
 }
 
-.approved {
-  stroke: #a9b1ba;
-  fill: #e7e9ec;
-}
-
-.phase-diagram {
-  margin-left: 45px;
+.failed.phase {
+  fill: #212529;
 }

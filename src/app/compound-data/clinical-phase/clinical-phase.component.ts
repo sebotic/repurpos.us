@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-clinical-phase',
@@ -6,69 +6,230 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./clinical-phase.component.scss']
 })
 export class ClinicalPhaseComponent implements OnInit {
-
-  test: string[] = ['', '', 'I', 'II', "III", ''];
+  @Input() phase: string;
+  @Input() vendorName: string;
   phases: Object = {
+    'gvk': [
+      {
+        'name': 'Suspended',
+        'order': -1,
+        'failed': true
+      },
+      {
+        'name': 'WITHDRAWN DRUG',
+        'order': -1,
+        'failed': true
+      },
+      {
+        'name': 'Discontinued',
+        'order': -1,
+        'failed': true
+      },
+      {
+        'name': 'No Development',
+        'order': -1,
+        'failed': true
+      },
+      {
+        'name': 'Preclinical',
+        'order': 0
+      },
+      {
+        'name': 'Phase I',
+        'label': 'I',
+        'order': 1
+      },
+      {
+        'name': 'Phase II',
+        'label': 'II',
+        'order': 2
+      },
+      {
+        'name': 'Phase III',
+        'label': 'III',
+        'order': 3
+      },
+      {
+        'name': 'Pre-registration',
+        'order': 4
+      },
+      {
+        'name': 'PRESCRIPTION DRUG',
+        'order': 5,
+        'approved': true
+      },
+      {
+        'name': 'Clinical',
+        'order': 5,
+        'approved': true,
+        'synonym': true
+      },
+      {
+        'name': 'DRUG',
+        'order': 5,
+        'approved': true,
+        'synonym': true
+      },
+      {
+        'name': 'OVER THE COUNTER DRUG',
+        'order': 5,
+        'approved': true,
+        'synonym': true
+      },
+      {
+        'name': 'Clinical Phase Unknown',
+        'order': null
+      }],
     'integrity':
       [
         {
-          'name': 'preclinical',
-          'order': 0,
-          'label': '',
-          'failed': false
+          'name': 'Preclinical',
+          'order': 0
         },
         {
-          'name':
-            'IND filed',
-          'order': 1,
-          'label': '',
-          'failed': false
+          'name': 'IND Filed',
+          'order': 1
         }, {
-          'name': 'phase I',
+          'name': 'Phase 0',
           'order': 2,
-          'label': 'I',
-          'failed': false
+          'label': '0'
         }, {
-          'name': 'phase I/II',
-          'order': 2.5,
-          'label': '',
-          'failed': false
-        }, {
-          'name': 'phase II',
+          'name': 'Phase I',
           'order': 3,
-          'label': 'II',
-          'failed': false
-        },
-        {
-          'name': 'phase II/III',
-          'order': 3.5,
-          'label': '',
-          'failed': false
+          'label': 'I'
         }, {
-          'name': 'phase III',
+          'name': 'Phase I/II',
+          'order': 3.5
+        }, {
+          'name': 'Phase II',
           'order': 4,
-          'label': 'III',
-          'failed': false
-        }, {
-          'name': 'preregistered',
-          'order': 5,
-          'label': '',
-          'failed': false
-        }, {
-          'name': 'recommended approval',
-          'order': 6,
-          'label': '',
-          'failed': false
+          'label': 'II'
         },
         {
-          'name': 'registered',
-          'order': 7,
-          'label': '',
-          'failed': false,
+          'name': 'Phase II/III',
+          'order': 4.5
+        }, {
+          'name': 'Phase III',
+          'order': 5,
+          'label': 'III'
+        }, {
+          'name': 'Pre-Registered',
+          'order': 6,
+          'label': ''
+        }, {
+          'name': 'Recommended Approval',
+          'order': 7
+        },
+        {
+          'name': 'Registered',
+          'order': 8
+        },
+        {
+          'name': 'Launched',
+          'order': 9,
           'approved': true
-        }]
+        }, {
+          'name': 'Clinical',
+          'order': 9,
+          'approved': true,
+          'synonym': true
+        }, {
+          'name': 'Discontinued',
+          'order': -1,
+          'failed': true
+        }, {
+          'name': 'Suspended',
+          'order': -1,
+          'failed': true
+        }, {
+          'name': 'Withdrawn',
+          'order': -1,
+          'failed': true
+        }
+      ],
+    'informa': [
+      {
+        'name': 'Discontinued',
+        'order': -1,
+        'failed': true
+      },
+      {
+        'name': 'No Development Reported',
+        'order': -1,
+        'failed': true
+      },
+      {
+        'name': 'Suspended',
+        'order': -1,
+        'failed': true
+      },
+      {
+        'name': 'Withdrawn',
+        'order': -1,
+        'failed': true
+      },
+      {
+        'name': 'Preclinical',
+        'order': 0
+      },
+      {
+        'name': 'Phase I Clinical Trial',
+        'order': 1,
+        label: "I",
+      },
+      {
+        'name': 'Phase I',
+        'order': 1,
+        label: "I",
+        synonym: true
+      },
+      {
+        'name': 'Phase II Clinical Trial',
+        'order': 2,
+        label: "II"
+      },
+      {
+        'name': 'Phase II',
+        'order': 2,
+        label: "II",
+        synonym: true
+      },
+      {
+        'name': 'Phase II/III Clinical Trial',
+        'order': 2.5
+      },
+      {
+        'name': 'Phase III Clinical Trial',
+        'order': 3,
+        label: "III"
+      },
+      {
+        'name': 'Phase III',
+        'order': 3,
+        synonym: true
+      },
+      {
+        'name': 'Pre-registered',
+        'order': 4
+      },
+      {
+        'name': 'Pre-registration',
+        'order': 4,
+        synonym: true
+      },
+      {
+        'name': 'Registered',
+        'order': 5
+      },
+      {
+        'name': 'Launched',
+        'order': 6,
+        approved: true
+      }
+    ]
   }
 
+  // phase_order: number[];
   sel_phases: Object[];
 
   current_phase: number;
@@ -78,12 +239,42 @@ export class ClinicalPhaseComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    // filter out any half-steps in process
-    this.sel_phases = this.phases['integrity'].filter(d => !((d.order*2) % 2))
-    let tmp = this.sel_phases.filter((d:any) => d.name == "phase II")
-    // console.log(tmp)
-    this.current_phase = tmp[0]['order'];
+    // console.log(this.vendorName)
+    // console.log(this.phase)
+    // console.log(this.phases)
+    if (this.phases.hasOwnProperty(this.vendorName)) {
+      // filter out any half-steps in process
+      this.sel_phases = this.phases[this.vendorName].filter(d => (d.order || d.order === 0) && !((d.order * 2) % 2) && d.order > -1 && d.synonym != true);
 
+      this.findPhase();
+    }
+
+  }
+
+  findPhase() {
+    let tmp = this.phases[this.vendorName].filter((d: any) => this.phase.includes(d.name))
+    // console.log(tmp)
+    if (tmp.length > 0) {
+      this.current_phase = Math.max(<number>tmp.map((d: any) => d.order));
+      // console.log(this.current_phase)
+    } else {
+      this.current_phase = null;
+    }
+  }
+
+  findClass(i: number) {
+    if (this.current_phase < 0) {
+      return ('failed')
+    }
+    else if (i === this.current_phase) {
+      return ('current')
+    } else if ((Math.round(this.current_phase) === i) || (Math.floor(this.current_phase) === i)) {
+      return ('in-between current')
+    } else if (i > this.current_phase) {
+      return ('todo')
+    } else {
+      return ('completed')
+    }
   }
 
 }

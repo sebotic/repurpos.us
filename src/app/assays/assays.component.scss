@@ -70,11 +70,12 @@ a.dwnld-link:hover {
 }
 
 .id {
-  color: #c3c4c5;
-  float: left;
-  padding-top: 15%;
-  padding-bottom: 15%;
-  text-align: right;
+  font-size: 0.8em;
+  // color: #c3c4c5;
+  // float: left;
+  // padding-top: 15%;
+  // padding-bottom: 15%;
+  // text-align: right;
 }
 
 #assays tr:nth-child(even) {
@@ -197,6 +198,11 @@ a.dwnld-link:hover {
   padding: 15px;
   // border-collapse: collapse !important;
   margin-bottom: 25px;
+
+  background: #f5f6f7;
+  // box-shadow: 3px 3px #d3d7dc;
+  box-shadow: 5px 5px #e4e7e9;
+
 }
 
 .card-text a {
@@ -205,4 +211,22 @@ a.dwnld-link:hover {
 
 .card-text a:hover {
   text-decoration: none;
+}
+
+.mat-button-toggle {
+    background: #7b9bea;
+    color: white;
+}
+
+// Marco flexbox classes
+.flexP{
+  display:flex;
+  justify-content:space-between;
+  align-items: flex-end;
+}
+
+.flexC{
+  flex:1;
+  flex-basis:100%;
+  //  background: yellow;
 }

@@ -1,22 +1,26 @@
 /* Search input box */
-input, .input-group .form-control {
+.input-group .form-control,
+input {
   /* margin-top: 36px; */
   font-size: 1.5em;
   //min-width: 375px !important;
   max-width: 500px !important;
   //width: 33% !important;
   height: 1.5em;
+  font-weight: 300;
 }
+
 
 .search {
   // display: inline-block;
   // width: 100%;
   margin: 36px 0 0;
+  font-family: "Lato", sans-serif;
 }
 
 .examples {
   margin-left: 125px;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 h6 {
@@ -27,20 +31,20 @@ h6 {
   margin-left: 10px;
   border-radius: 15%;
   margin-top: 33px;
+  background: #fecccd;
   //position: absolute;
-    /* display: inline-block; */
+  /* display: inline-block; */
 }
+
 
 .ex-type {
   text-decoration: underline;
 }
-
 /* .ex-type::after {
   content: ": ";
   display: inline-block;
   text-decoration: none;
 } */
-
 .ex-query {
-  font-size: 0.85em;
+  font-size: 0.9em;
 }

@@ -452,7 +452,7 @@ export class CompoundService {
             }
             if (Object.keys(b.informa).length > 0) {
               this.aliases.concat(b.informa.drug_name);
-              this.vendorName = b.informa.drug_name;
+              this.vendorName = b.informa.drug_name[0];
               this.vendor_smiles = b.informa.smiles;
             }
             if (Object.keys(b.integrity).length > 0) {
@@ -491,9 +491,9 @@ export class CompoundService {
               console.log(results.data)
             }
 
-            console.log(results)
+            // console.log(results)
             let search_results = results.data[0];
-            console.log(search_results)
+            // console.log(search_results)
             // make sure the first result's id matches what it should be
             if (id === search_results.id) {
 
@@ -612,6 +612,9 @@ export class CompoundService {
             this.similarityResults.forEach((d: any) => {
               d['aliases'] = this.removeDupeAlias(d.aliases);
             });
+
+            this.similarityResults = this.similarityResults.sort((a: any, b: any) => b.tanimoto - a.tanimoto);
+            // console.log(this.similarityResults)
             this.similarSubject.next(<Compound[]>this.similarityResults);
 
           },

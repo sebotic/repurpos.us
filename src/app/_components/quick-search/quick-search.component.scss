@@ -1,8 +1,10 @@
 .quick-search {
-  -webkit-transition: all .3s ease;
-  -moz-transition: all .3s ease;
-  transition: all .3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
   float: right;
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
 }
 
 .quick-search:focus {

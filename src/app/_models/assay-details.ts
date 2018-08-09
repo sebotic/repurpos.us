@@ -4,11 +4,11 @@ export interface AssayDetails {
 	summary: string,
 	indication: string,
 	assay_type: string,
-	components: string,
-	detection_method: string,
-	description: string,
-	protocol: string,
-	drug_conc: string,
-	protocol_detection: string,
-	detection_dye: string
+	components?: string,
+	detection_method?: string,
+	description?: string,
+	protocol?: string,
+	drug_conc?: string,
+	protocol_detection?: string,
+	detection_dye?: string
 };

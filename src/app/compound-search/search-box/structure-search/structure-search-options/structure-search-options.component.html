@@ -1,37 +1,64 @@
-<div class="search-opts">
-  <!-- Label: search -->
-  <span class="search-label">search options</span>
-
-  <!-- Loop over search options to create radio buttons -->
-  <mat-radio-group [(ngModel)]="searchMode">
-    <mat-radio-button class="search-opt" *ngFor="let opt of searchOptions" (change)="hideResults()" [value]="opt.id" matTooltip="{{opt.tooltip}}">
-      {{opt.label}}
-    </mat-radio-button>
-  </mat-radio-group>
-
-  <!-- Add Tanimoto slider if searching for similar compounds -->
-  <div id="tanimoto" *ngIf="searchMode === 'similarity'">
-    <div class="slider-label">
-      Tanimoto threshold: {{ tanimotoThresh | number: '1.2-2'}}
-    </div>
-
-    <div class="slider">
-      <span class="slider-limit">0</span>
-      <mat-slider id="tanimoto-slider" min="0" max="1" step="0.05" (change)="submitQuery()" [(ngModel)]="tanimotoThresh" thumbLabel></mat-slider>
-      <!-- <mat-slider id="tanimoto-slider" min="0" max="1" step="0.05" [(ngModel)]="tanimotoThresh" (change)="onSubmit()" thumbLabel></mat-slider> -->
-      <span class="slider-limit">1</span>
-    </div>
-
+<div class="search-opts row">
+  <div class="col col-xs-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto">
+    <!-- Label: search -->
+    <span class="search-label">search options</span>
   </div>
 
-  <div class="search col-md-9">
+  <!-- <div class="col"> -->
 
-    <!-- Search bar -->
-    <input type="text" class="search form-control" placeholder="search by SMILES" autofocus [(ngModel)]="text_query" (keyup.enter)="onSubmit()" (input)="onChange()">
+    <!-- <div class="row"> -->
+      <!-- Loop over search options to create radio buttons -->
+      <div class="col" [ngClass] = "searchMode === 'similarity' ? 'with-tanimoto' : 'without-tanimoto'">
 
-    <button mat-icon-button class='search-btn' (click)="onSubmit()">
-      <mat-icon aria-label="search" color="accent" >search</mat-icon>
-    </button>
+        <mat-radio-group [(ngModel)]="searchMode">
+          <mat-radio-button class="search-opt" *ngFor="let opt of searchOptions" (change)="hideResults()" [value]="opt.id" matTooltip="{{opt.tooltip}}">
+            {{opt.label}}
+          </mat-radio-button>
+        </mat-radio-group>
 
+        <!-- Add Tanimoto slider if searching for similar compounds -->
+        <div id="tanimoto" *ngIf="searchMode === 'similarity'">
+          <div class="slider-label">
+            Tanimoto threshold:
+            <span class="tanimoto-val">
+              {{ tanimotoThresh | number: '1.2-2'}}
+            </span>
+          </div>
+
+          <div class="slider">
+            <span class="slider-limit">0</span>
+            <mat-slider id="tanimoto-slider" min="0" max="1" step="0.05" (change)="submitQuery()" [(ngModel)]="tanimotoThresh" thumbLabel></mat-slider>
+            <!-- <mat-slider id="tanimoto-slider" min="0" max="1" step="0.05" [(ngModel)]="tanimotoThresh" (change)="onSubmit()" thumbLabel></mat-slider> -->
+            <span class="slider-limit">1</span>
+          </div>
+        </div>
+
+      <!-- </div> -->
+    <!-- </div> -->
+
+
+    <div class="row">
+      <!-- Search bar -->
+      <div class="col">
+        <input type="text" class="search form-control" placeholder="search by SMILES" autofocus [(ngModel)]="text_query" (keyup.enter)="onSubmit()" (input)="onChange()">
+      </div>
+
+      <div class="submit-btn">
+        <button mat-icon-button class='search-btn' (click)="onSubmit()">
+        <mat-icon aria-label="search" color="accent" >search</mat-icon>
+      </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Example searches -->
+  <div class="search examples col-xs-12 col-sm-12 col-md-12 col-lg-auto col-xl-auto">
+    <h6>example queries</h6>
+    <div class="ex-query" *ngFor="let example of examples">
+      <a [routerLink]="['.']" [queryParams]="{ query: example.query, type: example.type, mode: example.mode, tanimoto: example.tanimoto }">
+        <!-- <a -->
+        <span class="ex-type">{{example.label}}</span>: {{example.description}}</a>
+    </div>
   </div>
 </div>
