@@ -4,6 +4,11 @@
   box-shadow: none;
 }
 
+.mat-expansion-panel-header-title {
+  // display: block;
+  flex-wrap: wrap;
+}
+
 /deep/ .mat-expansion-panel-body,
 /deep/ .mat-expansion-panel-header {
   padding: 1px;
@@ -18,7 +23,7 @@
   font-weight: 300;
 }
 
-button.mat-stroked-button.ng-star-inserted {
+button.mat-stroked-button {
   // padding: 7px;
   // border-radius: 7px;
   // margin: 3px 0px;
@@ -66,3 +71,7 @@ button a:hover{
 .stereo-free {
   color: #1f8170;
 }
+
+// .mat-expansion-panel:not([class*=mat-elevation-z]) {
+//     background: antiquewhite;
+// }

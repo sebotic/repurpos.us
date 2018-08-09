@@ -12,6 +12,28 @@
 </mat-chip-list>
 </div> -->
 
+<ng-template #sim_btn let-related="related">
+  <div class="align-items-start d-flex btn-grp">
+    <button mat-stroked-button>
+                <a [routerLink]="['/compound_data', related.compound_id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
+
+                <div class="sim-name">
+                    {{related['main_label']}}
+                </div>
+
+                <div class="sim-type stereo-free" *ngIf="related.score === 1; else tanimoto">
+                  stereo-free match
+                </div>
+                <ng-template #tanimoto>
+                  <div class="sim-type">tanimoto score: {{related.score | number: '1.2-2'}}</div>
+                </ng-template>
+
+              </a>
+              </button>
+  </div>
+</ng-template>
+
+
 <!-- Check if there are similar compounds, if not a Reframe compound -->
 <div class="similar" *ngIf="compound_result['reframeid'] === false && compound_result['similar_compounds'].length > 0">
 
@@ -19,7 +41,33 @@
     {{compound_result['similar_compounds'].length === 1 ? "similar library compound:" : "similar library compounds:"}}
   </div>
 
-<div class="align-items-center d-flex btn-grp">
+  <ng-container *ngIf="compound_result['similar_compounds'].length <= num_similar; else lotsa_similar">
+    <ng-container *ngFor="let related of compound_result['similar_compounds'] | slice:0:num_similar; let i=index">
+      <ng-container [ngTemplateOutlet]="sim_btn" [ngTemplateOutletContext]='{related: related}'></ng-container>
+    </ng-container>
+  </ng-container>
+
+  <!-- If there are > 2 similar compounds -->
+  <ng-template #lotsa_similar>
+    <mat-expansion-panel (opened)="compound_result.similar_showall = true" (closed)="compound_result.similar_showall = false">
+      <mat-expansion-panel-header collapsedHeight="auto">
+        <mat-panel-title>
+          <ng-container *ngFor="let related of compound_result['similar_compounds'] | slice:0:num_similar; let i=index">
+            <ng-container [ngTemplateOutlet]="sim_btn" [ngTemplateOutletContext]='{related: related}'></ng-container>
+          </ng-container>
+          <a>show {{compound_result['similar_showall'] ? "less" : "more"}}</a>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+
+      <ng-container *ngFor="let related of compound_result['similar_compounds'] | slice:num_similar:compound_result['similar_compounds'].length; let i=index">
+        <ng-container [ngTemplateOutlet]="sim_btn" [ngTemplateOutletContext]='{related: related}'></ng-container>
+      </ng-container>
+
+    </mat-expansion-panel>
+  </ng-template>
+
+  <!-- <div class="align-items-center d-flex btn-grp">
 
   <button mat-stroked-button *ngFor="let related of compound_result['similar_compounds']; let i=index">
     <a [routerLink]="['/compound_data', related.compound_id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
@@ -37,8 +85,8 @@
 
   </a>
   </button>
+</div> -->
 
-</div>
 </div>
 
 <!-- <div> -->
