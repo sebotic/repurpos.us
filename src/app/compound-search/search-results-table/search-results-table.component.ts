@@ -240,7 +240,7 @@ export class SearchResultsTableComponent implements OnInit {
 
   showMore(row_num) {
     let sortedData = this.dataSource.sortData(this.dataSource.data, this.dataSource.sort);
-    
+
     let idx = row_num + this.pageIdx * this.pageSize;
     if (sortedData[idx]['max_aliases']) {
       sortedData[idx]['alias_ct'] = this.num_aliases;
