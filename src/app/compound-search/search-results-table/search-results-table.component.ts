@@ -41,7 +41,8 @@ export class SearchResultsTableComponent implements OnInit {
 
   assays: string[];
   max_num_assays: number = 10;
-  minColumns: string[] = ['main_label', 'alias', 'id', 'reframeid']; // minimal set of columns to include
+  // minColumns: string[] = ['main_label', 'alias', 'id', 'reframeid']; // minimal set of columns to include
+  minColumns: string[] = ['struct', 'main_label', 'reframeid']; // minimal set of columns to include
   displayedColumns: string[]; // minimal set of columns to include
   dataSource = new MatTableDataSource<Compound>();
 
@@ -72,7 +73,7 @@ export class SearchResultsTableComponent implements OnInit {
     private tanimotoSvc: TanimotoScaleService
   ) {
     // media query
-    if (window.screen.width > 600) {
+    if (window.screen.width > 760) {
       this.notMobile = true;
     }
 
@@ -187,8 +188,9 @@ export class SearchResultsTableComponent implements OnInit {
 
     if (this.notMobile) {
       // console.log(this.displayedColumns);
-      this.displayedColumns.splice(2, 0, 'struct') // insert structure into the cols
-      this.displayedColumns = this.displayedColumns.concat('assays', 'assay_titles');
+      // this.displayedColumns.splice(2, 0, 'struct') // insert structure into the cols
+      // this.displayedColumns = this.displayedColumns.concat('assays', 'assay_titles');
+      this.displayedColumns = this.displayedColumns.concat('assays');
     } else {
       this.displayedColumns = this.displayedColumns.concat('assays');
       this.displayedColumns.splice(this.displayedColumns.indexOf('id'), 1);
@@ -238,6 +240,7 @@ export class SearchResultsTableComponent implements OnInit {
 
   showMore(row_num) {
     let sortedData = this.dataSource.sortData(this.dataSource.data, this.dataSource.sort);
+
     let idx = row_num + this.pageIdx * this.pageSize;
     if (sortedData[idx]['max_aliases']) {
       sortedData[idx]['alias_ct'] = this.num_aliases;

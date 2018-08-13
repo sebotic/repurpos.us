@@ -9,54 +9,66 @@
 
           <!-- Drug name -->
           <ng-container matColumnDef="main_label">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Name
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header">
+              <span class="mat-header">Name</span>
               <mat-icon class='sort-icon' matTooltip="sort by name">sort</mat-icon>
             </mat-header-cell>
-            <mat-cell *matCellDef="let element">
+            <mat-cell *matCellDef="let element; let row=index" class="main-label">
               <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
-                {{element['main_label']}}
+                <h5>{{element['main_label']}}</h5>
               </a>
               <mat-icon *ngIf="!notMobile" class="more-info" (click)="expandCell($event)">expand_more</mat-icon>
+
+
+
+              <table class="table cmpd-info">
+                <tbody>
+
+                  <!-- Aliases -->
+                  <tr *ngIf="element.aliases.length > 0">
+                    <th class="label" scope="row">Aliases:</th>
+                    <td class="aliases">
+                      <ul class="alias-list">
+                        <li *ngFor="let alias of element.aliases | slice:0:element.alias_ct; let i=index" class="alias">
+                          <!-- <ng-container *ngIf="i < num_aliases"> -->
+                          {{alias}}
+                          <span *ngIf="i + 1 < element.alias_ct && i + 1 < element.aliases.length" class='data-separator'></span>
+                        </li>
+                        <li>
+                          <a *ngIf="element.alias_ct < element.aliases.length || element.max_aliases" id="more" (click)="showMore(row)" class="center-block">
+                          {{ element.max_aliases ? 'show less' : 'show more' }}
+                        </a>
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+
+                  <!-- Inchi key / ID -->
+                  <tr>
+                    <th class="label" scope="row">ID:</th>
+                    <td class="inchi-id">
+                      {{element['id']}}
+                    </td>
+                  </tr>
+
+
+                </tbody>
+              </table>
+
+
             </mat-cell>
           </ng-container>
 
 
 
-          <!-- Aliases -->
-          <ng-container matColumnDef="alias">
-            <mat-header-cell *matHeaderCellDef>Aliases
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element; let row=index">
-              <div>
-                <ul class="alias-list">
-                  <li *ngFor="let alias of element.aliases | slice:0:element.alias_ct; let i=index" class="alias">
-                    <!-- <ng-container *ngIf="i < num_aliases"> -->
-                    {{alias}}
-                    <span *ngIf="i + 1 < element.alias_ct && i + 1 < element.aliases.length" class='data-separator'></span>
-                  </li>
-                  <li>
-                    <a *ngIf="element.alias_ct < element.aliases.length || element.max_aliases" id="more" (click)="showMore(row)" class="center-block">
-                  {{ element.max_aliases ? 'show less' : 'show more' }}
-                </a>
-                  </li>
-                </ul>
-              </div>
-              <!-- Button to load more results -->
-
-            </mat-cell>
-          </ng-container>
-
-          <!-- Main ID -->
-          <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element['id']}}</mat-cell>
-          </ng-container>
 
 
 
           <!-- In physical library -->
           <ng-container matColumnDef="reframeid">
-            <mat-header-cell *matHeaderCellDef mat-sort-header start="desc">Sample in Screening Library
+            <mat-header-cell *matHeaderCellDef mat-sort-header start="desc" class="mat-header">
+              <span class="mat-header">
+              Sample in Screening Library </span>
               <mat-icon class='sort-icon' matTooltip="sort by library compound">sort</mat-icon>
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
@@ -70,10 +82,6 @@
 
               </div>
 
-              <!-- <div class="parent">
-   <div class="child">***</div>
-</div> -->
-
 
 
             </mat-cell>
@@ -81,19 +89,23 @@
 
           <!-- Tanimoto score -->
           <ng-container matColumnDef="tanimoto">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Tanimoto Similarity Score
+            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header">
+              <span class="mat-header">Tanimoto Similarity Score</span>
               <mat-icon class='sort-icon' matTooltip="sort by Tanimoto score">sort</mat-icon>
             </mat-header-cell>
-            <mat-cell *matCellDef="let element"
-            [ngStyle]="{'background-color': tanimotoScale(element['tanimoto']), 'color': getFontColor(element['tanimoto'])}">
-              {{element['tanimoto'] | number: '1.2-2'}}</mat-cell>
+            <mat-cell *matCellDef="let element" [ngStyle]="{'background-color': tanimotoScale(element['tanimoto']), 'color': getFontColor(element['tanimoto'])}">
+              {{element['tanimoto'] | number: '1.2-2'}}
+              <!-- </div> -->
+
+              <!-- <div class="exact-match">exact match</div> -->
+
+            </mat-cell>
           </ng-container>
 
           <!-- Structure -->
           <ng-container matColumnDef="struct">
             <mat-header-cell *matHeaderCellDef>
-              Structure
+              <span class="mat-header">Structure</span>
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
               <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
@@ -104,12 +116,19 @@
 
           <!-- Assay titles -->
           <ng-container matColumnDef="assays">
-            <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header start="desc">
-              assay hits
+            <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header start="desc" class="mat-header">
+              <span class="mat-header">Assay Hits</span>
               <mat-icon class='sort-icon' matTooltip="sort by number of assay hits">sort</mat-icon>
             </mat-header-cell>
-            <mat-cell *matCellDef="let element">
+            <mat-cell *matCellDef="let element" class="flex-column">
               <span class="circle" [ngStyle]="{'background-color': 'rgba(65, 74, 81,' + getColor(element.assay_types) + ')'}"></span>
+
+              <ul class="assay-list">
+                <li class="assay-title" *ngFor="let assay of element.assay_types; let i=index">
+                  <a [routerLink]="['/assays', assay[1]]" target="_blank">{{assay[0]}}</a>
+                  <!-- <span *ngIf="i + 1 < element.assay_types.length" class='data-separator'></span> -->
+                </li>
+              </ul>
               <!-- <span class="circle" [ngStyle]="{'background-color': 'rgba(85, 98, 109,' + getColor(element.assay_types) + ')'}"></span> -->
             </mat-cell>
           </ng-container>

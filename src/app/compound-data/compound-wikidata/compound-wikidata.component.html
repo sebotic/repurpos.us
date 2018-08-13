@@ -1,6 +1,6 @@
 <div id="wikidata" *ngIf="qid">
   <H3><a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">Wikidata data</a></H3>
-  <div class="cmpd-table" *ngFor="let temp of [1]; let i=index">
+  <div class="cmpd-table table" *ngFor="let temp of [1]; let i=index">
 
 
 
@@ -15,7 +15,7 @@
 
     </div>
 
-<table class="cmpd-table" [ngClass]="i === [1].length - 1 ? 'last-entry' : ''">
+<table class="cmpd-table table" [ngClass]="i === [1].length - 1 ? 'last-entry' : ''">
     <tr *ngFor="let x of table_data">
       <!-- <ng-container> -->
       <ng-container>

@@ -1,56 +1,58 @@
 <div id='assays'>
     <div *ngIf="assayData.length > 0">
-      <h3 class="title-plus-btn">Activity data</h3>
+      <h3 class="header-title-plus-btn">Activity data</h3>
       <button class="float-right vendor-btn" (click)="showVendor = !showVendor">show vendor source</button>
 
 
 <!-- ASSAY TABLE -->
 <div class="table-responsive">
       <table class="assay-table table">
-        <tr class="d-flex">
-          <th class="title assay-name col">Assay type</th>
-          <th class="title col-xl-auto col-lg-auto col-md-auto col-sm-auto">Activity<br/>type</th>
-          <th class="title col-xl-auto col-lg-auto col-md-auto col-sm-auto">Measurement</th>
-          <th class="title col-xl-auto col-lg-auto col-md-auto col-sm-auto">Assay Source</th>
-          <th class="title col-xl-auto col-lg-auto col-md-auto col-sm-auto" *ngIf="showVendor">Compound Vendor</th>
-          <th class="title col-xl-auto col-lg-auto col-md-auto col-sm-auto" *ngIf="showVendor">Compound Vendor ID</th>
+        <tr class="">
+          <th class="header-title align-middle assay-name col">Assay type</th>
+          <th class="header-title align-middle">Activity<br/>type</th>
+          <th class="header-title align-middle">Measurement</th>
+          <th class="header-title align-middle"><span class="invisible">Measure</span></th>
+          <th class="header-title align-middle">Assay Source</th>
+          <th class="header-title align-middle" *ngIf="showVendor">Compound Vendor</th>
+          <th class="header-title align-middle" *ngIf="showVendor">Compound Vendor ID</th>
         </tr>
 
 
 
-        <tr class="d-flex" *ngFor="let x of assayData">
+        <tr class="" *ngFor="let x of assayData">
           <!-- Assay Name -->
-          <td class="content col"><a href="#/assays/{{x['assay_id']}}">
+          <td class="content align-middle"><a href="#/assays/{{x['assay_id']}}">
             <span [outerHTML]="x['assay_title'] | sciItalicize"></span>
           </a></td>
 
 
           <!-- Assay type (IC/EC50) -->
-          <td class="col-xl-auto col-lg-auto col-md-auto col-sm-auto">
+          <td class="align-middle">
             <span *ngIf="x['activity_type']" [outerHTML] = "x['activity_type'].replace('50', '<sub>50</sub>')"></span>
           </td>
 
 
           <!-- Assay Measurement bargraph -->
-          <td class="col-xl-auto col-lg-auto col-md-auto d-sm-none d-md-block">
+          <td class="align-middle">
+          <!-- <td class="col-xl-auto col-lg-auto col-md-auto d-sm-none d-md-block"> -->
             <app-assay-sparkline [currentVal]="[x['ac50']]" [assayMin] = "assayMin"></app-assay-sparkline>
           </td>
 
           <!-- Assay Measurement -->
-          <td class="col-xl-auto col-lg-auto col-md-auto col-sm-auto">{{x['ac50'].toExponential(2)}}</td>
+          <td class="align-middle">{{x['ac50'].toExponential(2)}}</td>
 
 
           <!-- Assay Source -->
-          <td class="col-xl-auto col-lg-auto col-md-auto col-sm-auto">
+          <td class="align-middle">
             <a href="https://www.calibr.org/" target="_blank">Calibr</a>
           </td>
 
 
           <!-- Compound Source -->
-          <td class="col-xl-auto col-lg-auto col-md-auto col-sm-auto" *ngIf="showVendor">{{x['chem_vendor']}}</td>
+          <td class="align-middle" *ngIf="showVendor">{{x['chem_vendor']}}</td>
 
           <!-- Compound Source ID -->
-          <td class="col-xl-auto col-lg-auto col-md-auto col-sm-auto" *ngIf="showVendor">{{x['chem_vendor_id']}}</td>
+          <td class="align-middle" *ngIf="showVendor">{{x['chem_vendor_id']}}</td>
         </tr>
       </table>
     </div>

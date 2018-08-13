@@ -172,6 +172,16 @@ table#cmpd-names, table.cmpd-table, .cmpd-table {
   border-bottom: #717e8c 1px dashed;
 }
 
+.cmpd-table tr, .assay-table tr {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.cmpd-table td, .assay-table td {
+  background: #f5f6f7;
+  padding: 5px 2px;
+}
+
+
 .vendor-header {
   margin-left: 2px;
   margin-right: 2px;
@@ -198,11 +208,9 @@ table#cmpd-names, table.cmpd-table, .cmpd-table {
 .assay-table th {
   border-bottom: #717e8c 2px solid;
   background: #f8f9f9;
+  padding: 3px 10px;
 }
 
-.cmpd-table td, .assay-table td{
-  background: #f5f6f7;
-}
 
 .title {
   text-transform: uppercase;

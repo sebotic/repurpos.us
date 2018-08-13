@@ -17,7 +17,6 @@ export class StructureSearchOptionsComponent implements OnInit {
   tmSubscription: Subscription;
   modeSubscription: Subscription;
   submitSubscription: Subscription;
-  submitted: boolean = false;
 
   // initial options + placeholders to save from user input
   searchMode: string = 'exact';
@@ -58,12 +57,6 @@ export class StructureSearchOptionsComponent implements OnInit {
         this.tanimotoThresh = tm_thresh;
       });
 
-    // check if submitted previously
-    this.submitSubscription = searchResultService.submitAnnounced$.subscribe(
-      submitted => {
-        this.submitted = submitted;
-      });
-
   }
 
   ngOnInit() {
@@ -86,7 +79,6 @@ export class StructureSearchOptionsComponent implements OnInit {
       if (params.hasOwnProperty('mode')) this.searchMode = params['mode'];
       if (params.hasOwnProperty('tanimoto')) this.tanimotoThresh = params['tanimoto'];
       if (params.hasOwnProperty('query')) {
-        this.submitted = true;
         this.structSvc.announceSmiles(params['query']);
       };
     }
@@ -121,15 +113,18 @@ export class StructureSearchOptionsComponent implements OnInit {
       query['tanimoto'] = this.tanimotoThresh;
     }
 
+    // Update that search has been completed.
+    this.searchResultService.announceSubmit(true);
+
     this.router.navigate(['search/'], {
       queryParams: query
-
     });
     // } else {
     // turn off results
     // this.hideResults();
     // }
   }
+
 
   hideResults() {
     this.searchResultService.announceSubmit(false);

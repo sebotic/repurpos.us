@@ -12,24 +12,42 @@
 </mat-chip-list>
 </div> -->
 
+
+
+<!-- <ng-template #sim_btn let-related="related">
+  <div class="trapeezoid">
+    <span class="sim-type">stereo-free match</span>
+    <span class="triangle"></span>
+    <span class="sim-name">{{related['main_label']}}</span>
+  </div>
+</ng-template> -->
+
 <ng-template #sim_btn let-related="related">
-  <div class="align-items-start d-flex btn-grp">
-    <button mat-stroked-button>
-                <a [routerLink]="['/compound_data', related.compound_id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
+  <div class="trapezoid">
+    <!-- <div class="align-items-start d-flex btn-grp"> -->
+    <!-- <div class="align-items-start d-flex btn-grp"> -->
+    <!-- <button mat-stroked-button> -->
+    <a [routerLink]="['/compound_data', related.compound_id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
+                  <span  *ngIf="related.score === 1; else tanimoto" [matTooltip] = "'Stereochemistry-free match'">
+                    <span class="sim-type stereo-free">stereo-free match</span>
+                    <span class="triangle stereo-free"></span>
+                    <span class="sim-name stereo-free">
+                        {{related['main_label']}}
+                    </span>
+                  </span>
 
-                <div class="sim-name">
-                    {{related['main_label']}}
-                </div>
-
-                <div class="sim-type stereo-free" *ngIf="related.score === 1; else tanimoto">
-                  stereo-free match
-                </div>
-                <ng-template #tanimoto>
-                  <div class="sim-type">tanimoto score: {{related.score | number: '1.2-2'}}</div>
-                </ng-template>
+                  <ng-template #tanimoto>
+                    <span matTooltip = "Tanimoto similarity score: {{related.score | number: '1.2-2'}}">
+                      <span class="sim-type">similarity: {{related.score | number: '1.2-2'}}</span>
+                      <span class="triangle"></span>
+                      <span class="sim-name">
+                          {{related['main_label']}}
+                      </span>
+                    </span>
+                  </ng-template>
 
               </a>
-              </button>
+    <!-- </button> -->
   </div>
 </ng-template>
 
@@ -37,7 +55,7 @@
 <!-- Check if there are similar compounds, if not a Reframe compound -->
 <div class="similar" *ngIf="compound_result['reframeid'] === false && compound_result['similar_compounds'].length > 0">
 
-  <div class='sim-title' matTooltip="Tanimoto score > 0.85">
+  <div class='sim-title'>
     {{compound_result['similar_compounds'].length === 1 ? "similar library compound:" : "similar library compounds:"}}
   </div>
 
@@ -55,7 +73,8 @@
           <ng-container *ngFor="let related of compound_result['similar_compounds'] | slice:0:num_similar; let i=index">
             <ng-container [ngTemplateOutlet]="sim_btn" [ngTemplateOutletContext]='{related: related}'></ng-container>
           </ng-container>
-          <a>show {{compound_result['similar_showall'] ? "less" : "more"}}</a>
+          <a id="more">{{compound_result['similar_showall'] ? '' : 'show more'}}</a>
+          <!-- <a>show {{compound_result['similar_showall'] ? "less" : "more"}}</a> -->
         </mat-panel-title>
       </mat-expansion-panel-header>
 
