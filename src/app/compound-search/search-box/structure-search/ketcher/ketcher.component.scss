@@ -4,6 +4,14 @@
   margin: auto;
 }
 
+@media only screen and (max-width: 900px) {
+  .ketcher{
+    margin: 15px;
+    width: 100%;
+  }
+
+}
+
 .ketcher-iframe {
   width:100%;
 

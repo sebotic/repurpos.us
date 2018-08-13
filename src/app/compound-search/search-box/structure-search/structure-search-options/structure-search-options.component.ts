@@ -16,7 +16,6 @@ export class StructureSearchOptionsComponent implements OnInit {
   structureSubscription: Subscription;
   tmSubscription: Subscription;
   modeSubscription: Subscription;
-  submitSubscription: Subscription;
 
   // initial options + placeholders to save from user input
   searchMode: string = 'exact';
@@ -67,7 +66,6 @@ export class StructureSearchOptionsComponent implements OnInit {
     this.structureSubscription.unsubscribe();
     this.tmSubscription.unsubscribe();
     this.modeSubscription.unsubscribe();
-    this.submitSubscription.unsubscribe();
   }
 
   // A bit klugey; for some reason, service doesn't work if the URL is pre-defined

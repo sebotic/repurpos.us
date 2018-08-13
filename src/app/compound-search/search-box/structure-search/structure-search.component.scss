@@ -1,6 +1,6 @@
 /deep/ .mat-tab-body.mat-tab-body-active {
   // overflow-y: hidden;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 .accordion-title {
@@ -8,11 +8,16 @@
   font-size: 1.2em;
 }
 
-
 h6 {
   margin-bottom: 0;
 }
 
 .expansion-content {
+  margin-top: 25px;
   margin-bottom: 25px;
+  margin-right: 0;
+}
+
+.expansion-content.submitted {
+  margin-top: 0;
 }
