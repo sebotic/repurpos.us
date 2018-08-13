@@ -7,7 +7,7 @@ import * as d3Chromatic from 'd3-scale-chromatic';
   selector: 'app-assay-sparkline',
   templateUrl: './assay-sparkline.component.html',
   styleUrls: ['./assay-sparkline.component.scss'],
-  encapsulation: ViewEncapsulation.Native
+  encapsulation: ViewEncapsulation.None
 })
 export class AssaySparklineComponent implements OnInit {
   @Input() currentVal: [number];
