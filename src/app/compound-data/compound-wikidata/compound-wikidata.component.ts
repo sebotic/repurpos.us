@@ -9,8 +9,8 @@ import { WikiData } from '../../_models/vendor-data/index';
 })
 
 export class CompoundWikidataComponent implements OnInit {
-  private table_data: WikiData[] = [];
-  private qid: string;
+  public table_data: WikiData[] = [];
+  public qid: string;
 
   constructor(private cmpdSvc: CompoundService) {
 

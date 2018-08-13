@@ -16,7 +16,7 @@ export class CompoundVendorDataComponent implements OnInit {
     { 'name': 'Citeline Pharmaprojects', 'link': 'https://pharmaintelligence.informa.com/contact/contact-us', 'id': 'informa'}
   ];
 
-  private vendor_data: VendorData;
+  public vendor_data: VendorData;
 
   constructor(private cmpdSvc: CompoundService) {
     this.cmpdSvc.vendorState.subscribe((vdata: VendorData) => {

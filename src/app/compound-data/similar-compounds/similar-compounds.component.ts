@@ -14,7 +14,7 @@ import { TanimotoScaleService } from '../../_services/index';
 })
 
 export class SimilarCompoundsComponent implements OnInit {
-  private similarityResults: Array<Compound>;
+  public similarityResults: Array<Compound>;
   @Input() results_per_page: number;
 
   tanimotoScale: any; // color scale for tanimoto scores
