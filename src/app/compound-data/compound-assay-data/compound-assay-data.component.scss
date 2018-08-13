@@ -7,16 +7,15 @@
   color: #7e8b98;
 }
 
-.title {
+.header-title {
   text-transform: uppercase;
   font-weight: 300;
   opacity: 0.6;
   font-size: 0.85em;
-  // border: 1px green solid;
 }
 
 .assay-name {
-  width: 50%;
+  // width: 50%;
 }
 
 .assay-table,
@@ -31,6 +30,12 @@ table.assay-table {
 td {
   padding-top: 3px;
   padding-bottom: 3px;
+  line-height: 1.2em;
+  height: 40px;
+}
+
+.td-fit {
+  width: 1px;
 }
 
 .content a, .assay-name {
