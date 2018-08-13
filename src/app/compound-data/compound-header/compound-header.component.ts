@@ -14,12 +14,12 @@ export class CompoundHeaderComponent implements OnInit {
     @Input() results_per_page: number;
     @Input() _location: Location;
 
-  private label: string;
-  private aliases: Array<string> = [];
-  private reframeCmpd: boolean;
-  private whoName: string;
-  private chemVendors: Array<Object> = [];
-  private similarityResults: Array<Compound> = [];
+  public label: string;
+  public aliases: Array<string> = [];
+  public reframeCmpd: boolean;
+  public whoName: string;
+  public chemVendors: Array<Object> = [];
+  public similarityResults: Array<Compound> = [];
 
   num_aliases: number = 15;
   alias_ct: number = this.num_aliases;
