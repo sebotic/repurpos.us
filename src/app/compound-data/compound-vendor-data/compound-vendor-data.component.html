@@ -32,11 +32,11 @@
           </div>
 
           <!-- Phase -->
-          <div *ngIf="x && x.hasOwnProperty('phase') && x['phase'].length > 0" class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+          <div *ngIf="x && x.hasOwnProperty('phase') && x['phase'].length > 0" class="col-xl-6 col-lg-6 col-md-6">
             <span class="title">Phase: </span>
             <span><span *ngFor="let y of x['phase']; let i = index">{{y}}<span *ngIf="i + 1 < x['phase'].length" class='data-separator'></span></span>
             </span>
-            <app-clinical-phase [phase]="x['phase']" [vendorName]="vendors[k].id"></app-clinical-phase>
+            <app-clinical-phase [phase]="x['phase']" [vendorName]="vendors[k].id" class="d-none d-sm-block"></app-clinical-phase>
           </div>
 
           <!-- Salt form -->
