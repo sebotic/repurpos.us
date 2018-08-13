@@ -1,3 +1,5 @@
 /deep/ .mat-tab-body-content {
-    overflow: hidden !important;
+    // overflow: hidden !important;
+    overflow-y: hidden;
+    overflow-x: scroll;
 }

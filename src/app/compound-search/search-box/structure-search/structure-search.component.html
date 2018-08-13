@@ -1,7 +1,7 @@
 <mat-accordion class="ketcher-accordion">
 
-  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" hideToggle="panelOpenState" [disabled]="!pressed" [expanded]="panelOpenState">
-    <mat-expansion-panel-header>
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]="!pressed" hideToggle="panelOpenState" [expanded]="panelOpenState">
+    <mat-expansion-panel-header [hidden]="!pressed">
       <mat-panel-title class="accordion-title col">
         {{ !pressed ? '' : panelOpenState ? 'Hide search options' : 'Show search options' }}
       </mat-panel-title>
@@ -9,20 +9,9 @@
 
     <!-- EXPANSION PANEL CONTENT -->
 
-    <div class="row d-flex expansion-content">
-
+    <div class="row d-flex expansion-content" [ngClass] = "pressed ? 'submitted' : ''">
       <!-- Search options -->
       <app-structure-search-options class="col"></app-structure-search-options>
-      <!-- <app-structure-search-options [structure_query] = "structureQuery"></app-structure-search-options> -->
-
-      <!-- Example searches -->
-      <!-- <div class="search examples col-xs-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto">
-      <h6>example queries</h6>
-      <div class="ex-query" *ngFor="let example of examples">
-        <a [routerLink]="['.']" [queryParams]="{ query: example.query, type: example.type, mode: example.mode, tanimoto: example.tanimoto }">
-          <span class="ex-type">{{example.label}}</span>: {{example.description}}</a>
-      </div>
-    </div> -->
     </div>
 
     <!-- Ketcher-based structure drawing input -->
