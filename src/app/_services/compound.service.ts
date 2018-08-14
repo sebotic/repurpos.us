@@ -2,8 +2,9 @@
 // Checks if the user is logged in before returning either assay data
 
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, pipe } from 'rxjs';
 import { combineLatest } from "rxjs/index";
+import { debounceTime } from 'rxjs/operators';
 import { environment } from "../../environments/environment";
 
 import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse } from "@angular/common/http";
@@ -19,14 +20,16 @@ import { BackendSearchService } from '../_services/backendsearch.service';
 })
 export class CompoundService {
 
+  // Amount of time to wait between checking if ID/QID change and login state
+  // Necessary to make sure not too many API calls are made simultaneously
+  debouncetime = pipe(debounceTime(300));
+
   // --- IDs ---
-  // ID holder (InChIkey or internal ID) -- used to access the compound data
-  // idState is the event listener of idSubject which calls the backend API to get the data
+  // ID holder (InChIkey or internal ID + QID) -- used to access the compound data
+  // idStates is the event listener of idSubject which calls the backend API to get the data
   // idSubject is updated within compound-data.component, based on the URL route
   public idSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({});
   idStates = this.idSubject.asObservable();
-  // public qidSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  // qidState = this.qidSubject.asObservable();
 
   // --- Assays ---
   // Assay data holder
@@ -79,32 +82,32 @@ export class CompoundService {
   wikiTableState = this.wikiTableSubject.asObservable();
 
   private table_data: WikiData[] = [];
-  prop_name_map: Object = {};
+  public prop_name_map: Object = {};
   // from https://www.wikidata.org/wiki/Wikidata:List_of_properties/natural_science
   //   // propsLabelMap: Object = {
-    //   'P274': 'Chemical Formula',
-    //   'P231': 'CAS Registry Number',
-    //   'P662': 'PubChem CID',
-    //   'P661': 'ChemSpider ID',
-    //   'P592': 'CHEMBL ID',
-    //   'P715': 'DrugBank ID',
-    //   'P683': 'ChEBI ID',
-    //   'P665': 'KEGG ID',
-    //   'P233': 'canonical SMILES',
-    //   'P2017': 'isomeric SMILES',
-    //   'P234': 'InChI',
-    //   'P235': 'InChI Key',
-    //   'P652': 'FDA UNII',
-    //   'P595': 'Guide to Pharmacology Ligand ID',
-    //   'P3636': 'PDB Ligand ID',
-    //   'P232': 'EINECS Number',
-    //   'P2275': 'WHO International Nonproprietary Name',
-    //   'P267': 'ATC code',
-    //   'P2892': 'UMLS CUI',
-    //   'P3345': 'RxNorm CUI',
-    //   'P486': 'MeSH ID',
-    //   'P2115': 'NDF-RT ID'
-    // };
+  //   'P274': 'Chemical Formula',
+  //   'P231': 'CAS Registry Number',
+  //   'P662': 'PubChem CID',
+  //   'P661': 'ChemSpider ID',
+  //   'P592': 'CHEMBL ID',
+  //   'P715': 'DrugBank ID',
+  //   'P683': 'ChEBI ID',
+  //   'P665': 'KEGG ID',
+  //   'P233': 'canonical SMILES',
+  //   'P2017': 'isomeric SMILES',
+  //   'P234': 'InChI',
+  //   'P235': 'InChI Key',
+  //   'P652': 'FDA UNII',
+  //   'P595': 'Guide to Pharmacology Ligand ID',
+  //   'P3636': 'PDB Ligand ID',
+  //   'P232': 'EINECS Number',
+  //   'P2275': 'WHO International Nonproprietary Name',
+  //   'P267': 'ATC code',
+  //   'P2892': 'UMLS CUI',
+  //   'P3345': 'RxNorm CUI',
+  //   'P486': 'MeSH ID',
+  //   'P2115': 'NDF-RT ID'
+  // };
   idPropsToDisplay: Array<string> = ['P231', 'P662', 'P661', 'P592', 'P715', 'P683', 'P665',
     'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115', 'P3098', 'P2874'];
 
@@ -129,8 +132,6 @@ export class CompoundService {
     private loginStateService: LoginStateService,
     private http2: HttpClient,
     public searchSvc: BackendSearchService,
-    // private route: ActivatedRoute,
-    // private router: Router,
   ) {
 
 
@@ -139,95 +140,79 @@ export class CompoundService {
     combineLatest(
       loginStateService.isUserLoggedIn,
       this.idStates,
-
       (log, ids) => ({ log, ids })
-    ).subscribe(
-      data => {
-        // console.log(data.log)
-        // console.log(data.ids)
-        // console.log(data.qid)
-        this.buildData(data.log.loggedIn, data.ids['id'], data.ids['qid']);
-      },
-      err => console.error(err)
-    );
-
+    )
+      .pipe(this.debouncetime)
+      .subscribe(
+        data => {
+          // console.log(data)
+          // console.log(data.log)
+          // console.log(data.ids)
+          // console.log(data.qid)
+          this.buildData(data['log'].loggedIn, data['ids']['id'], data['ids']['qid']);
+        },
+        err => console.error(err)
+      );
   }
+
+  // sleep(ms) {
+  //   return new Promise(resolve => setTimeout(resolve, ms));
+  // }
 
   // --- MAIN FUNCTION ---
   buildData(loginState: boolean, id: string, qid: string) {
-
+    // Series of nested promises
     // Wait for all the data to come back before making the call to get similarity data and append all aliases
-    return [
-    // clear results
-    this.resetVars(),
-    // Tell Wikidata what want to grab
-    this.getWDVars(),
-    // Get Wikidata
-    this.buildWD(qid),
-    // Get vendor and assay data
-    this.retrieveData(loginState, id)].reduce((promiseChain, currentTask) => {
-      // console.log(promiseChain)
-      // console.log(currentTask)
-      return promiseChain.then(chainResults =>
-        currentTask.then((currentResult) => {
-          // console.log('currentResult')
-          // console.log(chainResults)
-          // console.log(currentResult)
-          return [...chainResults, currentResult]
-        }
-        )
-      );
-    }, Promise.resolve([])).then(allData => {
-      // console.log('4 promises all resolved: id=' + id + '; qid=' + qid + '; login=' + loginState)
-      // console.log(allData)
-      this.getAliases();
+    // First, reset variables and get the Wikidata labels (if haven't already)
+    // Then, hit the Wikidata API to get Wikidata and the compound backend to get vendor + assay data
+    // (... or, if not logged in, run the /search to get what data are available)
+    // Lastly, grab the name, aliases, and call to get the similarity results.
+    Promise.all([this.resetVars(), this.getWDVars()])
+      // pause (for testing purposes)
+      // .then(promises0 => {
+      //   console.log(promises0)
+      //   console.log('sleeping')
+      //   return this.sleep(5000);
+      // })
+      .then(promises1 => {
+        // console.log(promises1)
 
-      // Set SMILES
-      let smiles = this.wiki_smiles || this.vendor_smiles;
-      this.smilesSubject.next(smiles);
+        return Promise.all([
+          // Get Wikidata
+          this.buildWD(qid),
+          // Get vendor and assay data
+          this.retrieveData(loginState, id)]).then(promises2 => {
+            console.log(promises2)
 
-      // Run a query to get any compounds that are similar
-      this.retrieveSimilarData(id, smiles);
+            console.log('4 promises all resolved: id=' + id + '; qid=' + qid + '; login=' + loginState)
+            this.getAliases();
 
-    })
-    // Parallel version: problem == aliases not returned correctly.
-    // Wait for all the data to come back before making the call to get similarity data and append all aliases
-    // Promise.all([this.resetVars(), this.buildWD(qid), this.retrieveData(loginState, id)]).then(allData => {
-    //   // Interdependent Wikidata / backend API calls
-    //
-    //   // Merge together Wikidata + vendor aliases & set the label name
-    //   this.getAliases();
-    //
-    //   // Set SMILES
-    //   let smiles = this.wiki_smiles || this.vendor_smiles;
-    //   console.log(smiles)
-    //   this.smilesSubject.next(smiles);
-    //
-    //   // Run a query to get any compounds that are similar
-    //   this.retrieveSimilarData(id, smiles);
-    //
-    // })
+            // Set SMILES
+            let smiles = this.wiki_smiles || this.vendor_smiles;
+            this.smilesSubject.next(smiles);
+
+            // Run a query to get any compounds that are similar
+            this.retrieveSimilarData(id, smiles);
+          })
+      })
+
   }
 
   resetVars(): Promise<void> {
     return new Promise<any>((resolve, reject) => {
-      // console.log('0 resetting')
+      console.log('0 resetting')
+
       // Clear previous data, if it exists.  Prevents past states or duplicate data if both the login subscription service and the route params service are both called.
       this.main_label = '';
       this.vendorName = '';
       this.aliases = [];
-      // this.tableData = [];
       this.wiki_smiles = '';
       this.vendor_smiles = '';
       this.table_data = [];
 
       this.similarityResults = [];
-      // this.idData = [];
 
       // announce changes
-      // idSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-      // public qidSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-
       this.assaysSubject.next([]);
       this.nameSubject.next('');
       this.whoSubject.next('');
@@ -240,24 +225,19 @@ export class CompoundService {
       this.wikiTableSubject.next([]);
       this.vendorSubject.next(<VendorData>[{}, {}, {}]);
 
-      // console.log('0 resetting ended')
-      // setTimeout(resolve, 100, 'foo');
+      console.log('0 resetting ended')
       resolve("Clear vars");
     })
   }
-
-  // resetVars(): Promise<void> {
-  //   return new Promise<any>((resolve, reject) => {
-  //   setTimeout(resolve, 100, 'foo');
-  // });
 
 
   // --- WIKIDATA ---
   getWDVars(): Promise<void> {
     return new Promise<any>((resolve, reject) => {
-  // console.log('1 getting wd mapping')
-    // Run query to determine which Wikidata variables to grab
-    let query: string = `
+      console.log('1 getting wd mapping')
+      if (!localStorage.getItem('wd_vars')) {
+        // Run query to determine which Wikidata variables to grab
+        let query: string = `
   SELECT ?prop ?propLabel ?furl WHERE {
     VALUES ?prop { wd:${this.propsToDisplay.join(' wd:')} }
     OPTIONAL {?prop wdt:P1630 ?furl .}
@@ -265,32 +245,46 @@ export class CompoundService {
     SERVICE wikibase:label {bd:serviceParam wikibase:language "en" . }
     }`;
 
-    this.http2.get<WDQSData>('https://query.wikidata.org/sparql', {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: new HttpParams()
-        .set('query', query)
-        .set('format', 'json')
-    }).subscribe((r) => {
-      let b = r.body;
+        this.http2.get<WDQSData>('https://query.wikidata.org/sparql', {
+          observe: 'response',
+          headers: new HttpHeaders()
+            .set('Accept', 'application/json'),
+          params: new HttpParams()
+            .set('query', query)
+            .set('format', 'json')
+        }).subscribe((r) => {
+          let b = r.body;
 
-      for (let i of b.results.bindings) {
-        let p: string = i['prop']['value'].split('/').pop();
+          for (let i of b.results.bindings) {
+            let p: string = i['prop']['value'].split('/').pop();
 
-        this.prop_name_map[p] = i['propLabel']['value'];
+            this.prop_name_map[p] = i['propLabel']['value'];
+          }
+
+          localStorage.setItem('wd_vars', JSON.stringify(this.prop_name_map));
+          console.log('1 wd mapping ended')
+          resolve("WD property variables found!")
+        },
+          (err: any) => {
+            console.log("WD get variables error")
+            console.log(err)
+            resolve('WD get variables error')
+
+          })
+      } else {
+        this.prop_name_map = JSON.parse(localStorage.getItem('wd_vars'));
+        console.log('1 WD mapping ended w/o call')
+        // console.log(this.prop_name_map)
+        resolve("WD property variables already found!")
       }
-      // console.log('1 wd mapping ended')
-      resolve("WD property variables found!")
     })
-  })
-}
+  }
 
 
   // Main function to gather Wikidata data
   buildWD(qid: string): Promise<void> {
     return new Promise<any>((resolve, reject) => {
-      // console.log('2 retrieving wikidata')
+      console.log('2 retrieving wikidata')
       // console.log(qid)
       // console.log(this.prop_name_map)
 
@@ -317,7 +311,6 @@ export class CompoundService {
           let tmp: Object = {};
 
           for (let i of b.results.bindings) {
-            // this.label = i['compoundLabel']['value'];
 
             let p: string = i['prop']['value'].split('/').pop();
 
@@ -398,12 +391,17 @@ export class CompoundService {
           //   this.retrieveLabels(Array.from(tmp['P2175']['qids']).map((x: string) => x.split('/').pop()));
           // }
           //
-          // console.log('2 retrieving wikidata ended')
+          console.log('2 retrieving wikidata ended')
 
           resolve("Success with WD!");
-        });
+        },
+          (err: any) => {
+            // reset
+            console.log('WD failure')
+            console.log(err)
+          });
       } else {
-        // console.log('2 retrieving wikidata ended')
+        console.log('2 retrieving wikidata ended-- no QID')
         resolve("No QID found; WD exiting");
       }
     })
@@ -414,9 +412,9 @@ export class CompoundService {
   // Main function to grab the data from the backend from the vendors and the assay results
   retrieveData(loggedIn: boolean, id: string): Promise<void> {
     return new Promise<any>((resolve, reject) => {
+      console.log('3 retrieving data')
       if (id) {
         if (loggedIn) {
-            // console.log('3 retrieving data')
           this.http2.get<any>(environment.host_url + '/data', {
             // this.http2.get<VendorData>(environment.host_url + '/data', {
             observe: 'response',
@@ -429,13 +427,13 @@ export class CompoundService {
           }).subscribe((r) => {
             // search results
             let b = r.body[id];
+            console.log(b)
 
             // Is it a Reframe compound? --> compound-header
             this.rfmSubject.next(b.reframe_id.length > 0);
 
             // Pull out assay data --> compound-assay-data
             this.assaysSubject.next(<AssayData[]>b.assay);
-            console.log(b)
 
             // Pull out chemical vendor source data --> compound-header
             this.chemSourceSubject.next(<Object[]>b.chem_vendors);
@@ -446,34 +444,37 @@ export class CompoundService {
             // pull out aliases & names
             // Main label is preferentially: WHO Name, then Integrity, then informa, then GVK
             if (Object.keys(b.gvk).length > 0) {
-              this.aliases.concat(b.gvk.synonyms).concat(b.gvk.drug_name);
+              this.aliases = this.aliases.concat(b.gvk.synonyms).concat(b.gvk.drug_name);
               this.vendorName = b.gvk.drug_name;
               this.vendor_smiles = b.gvk.smiles;
             }
             if (Object.keys(b.informa).length > 0) {
-              this.aliases.concat(b.informa.drug_name);
+              this.aliases = this.aliases.concat(b.informa.drug_name);
               this.vendorName = b.informa.drug_name[0];
               this.vendor_smiles = b.informa.smiles;
             }
             if (Object.keys(b.integrity).length > 0) {
-              this.aliases.concat(b.integrity.drug_name);
+              this.aliases = this.aliases.concat(b.integrity.drug_name);
               this.vendorName = b.integrity.drug_name;
               this.vendor_smiles = b.integrity.smiles;
             }
 
-            // console.log('3 retrieving data ended')
+            console.log('3 retrieving data ended')
             resolve("Success with vendor data!");
           });
 
         } else {
           // not logged in: grab the basics
-          // console.log('3 getting basic info')
+          console.log('3b getting basic info')
           let prmse = this.retrieveBasicInfo(id);
-          // console.log('3 retrieving data ended w/ basic info')
+
           // Wait for promise from getting basic info before returning from getting vendor data
           resolve(prmse);
 
         }
+      } else {
+        console.log('3 retrieving data ended w/ no ID found')
+        resolve("No ID found; data retrieval exiting");
       }
     })
   }
@@ -481,46 +482,49 @@ export class CompoundService {
   retrieveBasicInfo(id: string): Promise<void> {
     return new Promise<any>((resolve, reject) => {
 
-    if (id) {
-      this.searchSvc.search(id)
-        .subscribe(
-          (results: SearchResult) => {
+      if (id) {
+        this.searchSvc.search(id)
+          .subscribe(
+            (results: SearchResult) => {
 
-            if (results.data.length > 1) {
-              console.log('too many results returned')
-              console.log(results.data)
+              if (results.data.length > 1) {
+                console.log('too many results returned')
+                console.log(results.data)
+              }
+
+              // console.log(results)
+              let search_results = results.data[0];
+              // console.log(search_results)
+              // make sure the first result's id matches what it should be
+              if (id === search_results.id) {
+
+                this.main_label = search_results.main_label;
+                this.wiki_smiles = search_results.smiles;
+                this.getAliases(search_results.aliases);
+
+                // Is it a Reframe compound? --> compound-header
+                // TODO: make sure this works when flip RFM id
+                this.rfmSubject.next(search_results.reframeid);
+
+
+                // Send off what data are available
+                this.availSubject.next(search_results.properties);
+              }
+              console.log('3b retrieving data ended w/ basic info')
+              resolve("Basic data retrieved!");
+
+            },
+            (err: any) => {
+              console.log('error in search')
+              console.log('3b retrieving data ended w/ ERROR')
+              resolve("Error in basic data retrieval");
             }
-
-            // console.log(results)
-            let search_results = results.data[0];
-            // console.log(search_results)
-            // make sure the first result's id matches what it should be
-            if (id === search_results.id) {
-
-              this.main_label = search_results.main_label;
-              this.wiki_smiles = search_results.smiles;
-              this.getAliases(search_results.aliases);
-
-              // Is it a Reframe compound? --> compound-header
-              // TODO: make sure this works when flip RFM id
-              this.rfmSubject.next(search_results.reframeid);
-
-
-              // Send off what data are available
-              this.availSubject.next(search_results.properties);
-            }
-            resolve("Basic data retrieved!");
-
-          },
-          (err: any) => {
-            console.log('error in search')
-            resolve("Error in basic data retrieval");
-          }
-        );
-    } else {
-      resolve("No id; exiting basic data retrieval");
-    }
-  })
+          );
+      } else {
+        console.log('3b retrieving data ended w/o ID in basic info')
+        resolve("No id; exiting basic data retrieval");
+      }
+    })
   }
 
   getAliases(searchAliases: string[] = []) {
@@ -616,6 +620,7 @@ export class CompoundService {
             this.similarityResults = this.similarityResults.sort((a: any, b: any) => b.tanimoto - a.tanimoto);
             // console.log(this.similarityResults)
             this.similarSubject.next(<Compound[]>this.similarityResults);
+            console.log('4 finished getting similar data')
 
           },
           (err: any) => {

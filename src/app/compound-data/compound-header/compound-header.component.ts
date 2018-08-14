@@ -29,9 +29,7 @@ export class CompoundHeaderComponent implements OnInit {
   constructor(private cmpdSvc: CompoundService) {
 
     this.cmpdSvc.nameState.subscribe(cmpdName => {
-      if (cmpdName) {
         this.label = cmpdName;
-      }
     })
 
     this.cmpdSvc.rfmState.subscribe((rfm: boolean) => {
