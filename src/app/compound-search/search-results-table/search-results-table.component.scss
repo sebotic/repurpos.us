@@ -24,6 +24,12 @@ mat-row:first-of-type {
 
 .mat-header-row {
   border: none;
+  top: 0;
+  position: sticky;
+  z-index: 1;
+  border-bottom: #9ba4ae 4px solid;
+  background-color: inherit;
+  margin-bottom: -1px;
 }
 
 .mat-header {
@@ -32,7 +38,7 @@ mat-row:first-of-type {
   text-transform: uppercase;
   text-align: center;
   // font-size: 0.75em;
-  font-weight: 300;
+  font-weight: 400;
   border: none;
 }
 
@@ -197,8 +203,9 @@ li.assay-title:hover {
 }
 
 a#more {
-  color: #797c7e;
+  color: #a9b1ba;
   cursor: pointer;
+  font-size: 0.9em;
 }
 
 .cmpd-avail,
@@ -252,6 +259,19 @@ a#more {
 //   text-align: center;
 // }
 
+.flex-row {
+  display: flex;
+  flex-flow: wrap;
+  width: 100%;
+}
+
+.flex-half {
+  flex: 0 0 50%;
+  padding: 10px;
+  background: yellow;
+  border: navy 1px solid;
+}
+
 .main-label {
   flex-direction: column;
   align-items: flex-start !important;
@@ -304,19 +324,17 @@ a#more {
         transition: max-height 0.5s ease-in-out;
         overflow: hidden;
       }
-
-      &:nth-of-type(2):before {
-        content: 'Aliases';
-      }
-
-      &:nth-of-type(3):before {
-        content: 'Sample in Screening Library';
-      }
-
-      &:nth-of-type(4):before {
-        content: 'Assay Hits';
-      }
-
+      // &:nth-of-type(2):before {
+      //   content: 'Aliases';
+      // }
+      //
+      // &:nth-of-type(3):before {
+      //   content: 'Sample in Screening Library';
+      // }
+      //
+      // &:nth-of-type(4):before {
+      //   content: 'Assay Hits';
+      // }
       &.expanded {
         max-height: 350px;
         border-top-color: #c3c4c5;
@@ -351,4 +369,10 @@ a#more {
   mat-row::after {
     min-height: unset;
   }
+}
+
+mat-cell .mat-cell {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  background: red;
 }

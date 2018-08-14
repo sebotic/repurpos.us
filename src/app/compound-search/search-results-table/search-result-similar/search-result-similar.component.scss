@@ -35,6 +35,13 @@ button.mat-stroked-button {
   background-color: #eff1f2;
 }
 
+.sim-title {
+  color: #a9b1ba;
+  text-transform: uppercase;
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+}
+
 .sim-name,
 .sim-type {
   font-family: "Lato", sans-serif;
@@ -87,9 +94,10 @@ button a:hover {
 // }
 //
 a#more {
-  color: #797c7e;
-  cursor: pointer;
-  font-size: 14px;
+
+  color: #a9b1ba;
+cursor: pointer;
+font-size: 0.9em;
   font-family: "Lato", sans-serif;
   font-weight: 300;
   margin-left: 10px;
