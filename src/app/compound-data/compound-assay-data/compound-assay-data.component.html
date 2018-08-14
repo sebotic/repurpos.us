@@ -21,7 +21,7 @@
 
         <tr class="" *ngFor="let x of assayData">
           <!-- Assay Name -->
-          <td class="content align-middle"><a href="#/assays/{{x['assay_id']}}">
+          <td class="content align-middle assay-title"><a href="#/assays/{{x['assay_id']}}">
             <span [outerHTML]="x['assay_title'] | sciItalicize"></span>
           </a></td>
 
