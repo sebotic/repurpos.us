@@ -182,9 +182,9 @@ export class CompoundService {
           this.buildWD(qid),
           // Get vendor and assay data
           this.retrieveData(loginState, id)]).then(promises2 => {
-            console.log(promises2)
+            // console.log(promises2)
 
-            console.log('4 promises all resolved: id=' + id + '; qid=' + qid + '; login=' + loginState)
+            // console.log('4 promises all resolved: id=' + id + '; qid=' + qid + '; login=' + loginState)
             this.getAliases();
 
             // Set SMILES
@@ -200,7 +200,7 @@ export class CompoundService {
 
   resetVars(): Promise<void> {
     return new Promise<any>((resolve, reject) => {
-      console.log('0 resetting')
+      // console.log('0 resetting')
 
       // Clear previous data, if it exists.  Prevents past states or duplicate data if both the login subscription service and the route params service are both called.
       this.main_label = '';
@@ -225,7 +225,7 @@ export class CompoundService {
       this.wikiTableSubject.next([]);
       this.vendorSubject.next(<VendorData>[{}, {}, {}]);
 
-      console.log('0 resetting ended')
+      // console.log('0 resetting ended')
       resolve("Clear vars");
     })
   }
@@ -234,7 +234,7 @@ export class CompoundService {
   // --- WIKIDATA ---
   getWDVars(): Promise<void> {
     return new Promise<any>((resolve, reject) => {
-      console.log('1 getting wd mapping')
+      // console.log('1 getting wd mapping')
       if (!localStorage.getItem('wd_vars')) {
         // Run query to determine which Wikidata variables to grab
         let query: string = `
@@ -262,18 +262,17 @@ export class CompoundService {
           }
 
           localStorage.setItem('wd_vars', JSON.stringify(this.prop_name_map));
-          console.log('1 wd mapping ended')
+          // console.log('1 wd mapping ended')
           resolve("WD property variables found!")
         },
           (err: any) => {
             console.log("WD get variables error")
             console.log(err)
             resolve('WD get variables error')
-
           })
       } else {
         this.prop_name_map = JSON.parse(localStorage.getItem('wd_vars'));
-        console.log('1 WD mapping ended w/o call')
+        // console.log('1 WD mapping ended w/o call')
         // console.log(this.prop_name_map)
         resolve("WD property variables already found!")
       }
@@ -284,7 +283,7 @@ export class CompoundService {
   // Main function to gather Wikidata data
   buildWD(qid: string): Promise<void> {
     return new Promise<any>((resolve, reject) => {
-      console.log('2 retrieving wikidata')
+      // console.log('2 retrieving wikidata')
       // console.log(qid)
       // console.log(this.prop_name_map)
 
@@ -391,7 +390,7 @@ export class CompoundService {
           //   this.retrieveLabels(Array.from(tmp['P2175']['qids']).map((x: string) => x.split('/').pop()));
           // }
           //
-          console.log('2 retrieving wikidata ended')
+          // console.log('2 retrieving wikidata ended')
 
           resolve("Success with WD!");
         },
@@ -399,9 +398,10 @@ export class CompoundService {
             // reset
             console.log('WD failure')
             console.log(err)
+            resolve('WD retrieval error')
           });
       } else {
-        console.log('2 retrieving wikidata ended-- no QID')
+        // console.log('2 retrieving wikidata ended-- no QID')
         resolve("No QID found; WD exiting");
       }
     })
@@ -412,7 +412,7 @@ export class CompoundService {
   // Main function to grab the data from the backend from the vendors and the assay results
   retrieveData(loggedIn: boolean, id: string): Promise<void> {
     return new Promise<any>((resolve, reject) => {
-      console.log('3 retrieving data')
+      // console.log('3 retrieving data')
       if (id) {
         if (loggedIn) {
           this.http2.get<any>(environment.host_url + '/data', {
@@ -459,13 +459,18 @@ export class CompoundService {
               this.vendor_smiles = b.integrity.smiles;
             }
 
-            console.log('3 retrieving data ended')
+            // console.log('3 retrieving data ended')
             resolve("Success with vendor data!");
-          });
+          },
+            (err: any) => {
+              console.log("Error getting data from backend")
+              console.log(err)
+              resolve('Error fetching data from /data API')
+            });
 
         } else {
           // not logged in: grab the basics
-          console.log('3b getting basic info')
+          // console.log('3b getting basic info')
           let prmse = this.retrieveBasicInfo(id);
 
           // Wait for promise from getting basic info before returning from getting vendor data
@@ -473,7 +478,7 @@ export class CompoundService {
 
         }
       } else {
-        console.log('3 retrieving data ended w/ no ID found')
+        // console.log('3 retrieving data ended w/ no ID found')
         resolve("No ID found; data retrieval exiting");
       }
     })
@@ -510,18 +515,19 @@ export class CompoundService {
                 // Send off what data are available
                 this.availSubject.next(search_results.properties);
               }
-              console.log('3b retrieving data ended w/ basic info')
+              // console.log('3b retrieving data ended w/ basic info')
               resolve("Basic data retrieved!");
 
             },
             (err: any) => {
               console.log('error in search')
-              console.log('3b retrieving data ended w/ ERROR')
+              console.log(err)
+              // console.log('3b retrieving data ended w/ ERROR')
               resolve("Error in basic data retrieval");
             }
           );
       } else {
-        console.log('3b retrieving data ended w/o ID in basic info')
+        // console.log('3b retrieving data ended w/o ID in basic info')
         resolve("No id; exiting basic data retrieval");
       }
     })
@@ -620,7 +626,7 @@ export class CompoundService {
             this.similarityResults = this.similarityResults.sort((a: any, b: any) => b.tanimoto - a.tanimoto);
             // console.log(this.similarityResults)
             this.similarSubject.next(<Compound[]>this.similarityResults);
-            console.log('4 finished getting similar data')
+            // console.log('4 finished getting similar data')
 
           },
           (err: any) => {
