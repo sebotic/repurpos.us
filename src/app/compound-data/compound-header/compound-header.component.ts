@@ -11,8 +11,8 @@ import { Compound } from '../../_models';
 })
 
 export class CompoundHeaderComponent implements OnInit {
-    @Input() results_per_page: number;
-    @Input() _location: Location;
+  @Input() results_per_page: number;
+  @Input() _location: Location;
 
   public label: string;
   public aliases: Array<string> = [];
@@ -22,6 +22,7 @@ export class CompoundHeaderComponent implements OnInit {
   public similarityResults: Array<Compound> = [];
 
   num_aliases: number = 15;
+  all_shown: boolean = false;
   alias_ct: number = this.num_aliases;
 
 
@@ -70,8 +71,12 @@ export class CompoundHeaderComponent implements OnInit {
   }
 
   showMore() {
-    this.alias_ct += this.num_aliases;
-    this.alias_ct = this.aliases.length;
+    if (this.all_shown) {
+      this.alias_ct = this.num_aliases;
+    } else {
+      this.alias_ct = this.aliases.length;
+    }
+    this.all_shown = !this.all_shown;
   }
 
 }
