@@ -1,7 +1,9 @@
 <div id='assays'>
     <div *ngIf="assayData.length > 0">
-      <h3 class="header-title-plus-btn">Activity data</h3>
-      <button class="float-right vendor-btn" (click)="showVendor = !showVendor">show vendor source</button>
+      <div class="d-flex justify-content-between assay-header">
+        <h3 class="header-title-plus-btn">Activity data</h3>
+        <button class="float-right vendor-btn" (click)="showVendor = !showVendor">show vendor source</button>  
+      </div>
 
 
 <!-- ASSAY TABLE -->
