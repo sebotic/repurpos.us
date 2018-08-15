@@ -59,12 +59,6 @@ export class ClinicalPhaseComponent implements OnInit {
         'approved': true
       },
       {
-        'name': 'Clinical',
-        'order': 5,
-        'approved': true,
-        'synonym': true
-      },
-      {
         'name': 'DRUG',
         'order': 5,
         'approved': true,
@@ -77,9 +71,15 @@ export class ClinicalPhaseComponent implements OnInit {
         'synonym': true
       },
       {
+          // At some random stage of clinical trials
+        'name': 'Clinical',
+        'order': null
+      },
+      {
         'name': 'Clinical Phase Unknown',
         'order': null
       }],
+
     'integrity':
       [
         {
@@ -129,10 +129,9 @@ export class ClinicalPhaseComponent implements OnInit {
           'order': 9,
           'approved': true
         }, {
+          // At some random stage of clinical trials
           'name': 'Clinical',
-          'order': 9,
-          'approved': true,
-          'synonym': true
+          'order': null
         }, {
           'name': 'Discontinued',
           'order': -1,
@@ -147,6 +146,7 @@ export class ClinicalPhaseComponent implements OnInit {
           'failed': true
         }
       ],
+
     'informa': [
       {
         'name': 'Discontinued',
