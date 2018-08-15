@@ -223,6 +223,7 @@ export class CompoundService {
       this.vendor_smiles = '';
       this.table_data = [];
       this.idData = [];
+      this.chemData = [];
 
       this.similarityResults = [];
 
@@ -444,8 +445,8 @@ export class CompoundService {
           this.wikiTableSubject.next(<WikiData[]>this.table_data)
           this.wikiIDsSubject.next(<Object>
             {'chem': this.chemData,
-            'ids': this.idData.sort((a: Object, b: Object) => a['property'] > b['property'])
-          })
+            'ids': this.idData.sort((a: WikiData, b: WikiData) => a['property'] > b['property'] ? 1 : -1)
+          });
 
           // console.log('2 retrieving wikidata ended')
 
