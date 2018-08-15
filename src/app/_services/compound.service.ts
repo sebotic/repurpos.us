@@ -36,7 +36,7 @@ export class CompoundService {
   public assaysSubject: BehaviorSubject<AssayData[]> = new BehaviorSubject<AssayData[]>([]);
   assaysState = this.assaysSubject.asObservable();
 
-  // --- Header ---
+  // --- Header data ---
   private main_label: string;
   private vendorName: string;
   public nameSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -78,50 +78,63 @@ export class CompoundService {
   availState = this.availSubject.asObservable();
 
   // --- Wikidata ---
+  // Main biological/pharmacological data
   public wikiTableSubject: BehaviorSubject<WikiData[]> = new BehaviorSubject<WikiData[]>([]);
   wikiTableState = this.wikiTableSubject.asObservable();
 
+  // Minor chemical / ID data
+  public wikiIDsSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({'chem': [], 'ids': []});
+  wikiIDsState = this.wikiIDsSubject.asObservable();
+
   private table_data: WikiData[] = [];
+  private idData: WikiData[] = [];
+  private chemData: WikiData[] = [];
   public prop_name_map: Object = {};
   // from https://www.wikidata.org/wiki/Wikidata:List_of_properties/natural_science
   //   // propsLabelMap: Object = {
-  //   'P274': 'Chemical Formula',
-  //   'P231': 'CAS Registry Number',
-  //   'P662': 'PubChem CID',
-  //   'P661': 'ChemSpider ID',
-  //   'P592': 'CHEMBL ID',
-  //   'P715': 'DrugBank ID',
-  //   'P683': 'ChEBI ID',
-  //   'P665': 'KEGG ID',
-  //   'P233': 'canonical SMILES',
-  //   'P2017': 'isomeric SMILES',
-  //   'P234': 'InChI',
-  //   'P235': 'InChI Key',
-  //   'P652': 'FDA UNII',
-  //   'P595': 'Guide to Pharmacology Ligand ID',
-  //   'P3636': 'PDB Ligand ID',
-  //   'P232': 'EINECS Number',
-  //   'P2275': 'WHO International Nonproprietary Name',
-  //   'P267': 'ATC code',
-  //   'P2892': 'UMLS CUI',
-  //   'P3345': 'RxNorm CUI',
-  //   'P486': 'MeSH ID',
-  //   'P2115': 'NDF-RT ID'
+  // // biological/pharmacological activity
+  // P129: "physically interacts with"
+  // P2175: "medical condition treated"
+  // P2868: "subject has role"
+  // P3489: "pregnancy category"
+  // P3780: "active ingredient in"
+  //
+  // // chem props
+  // P274: "chemical formula"
+  // P2017: "isomeric SMILES"
+  // P233: "canonical SMILES"
+  // P234: "InChI"
+  // P235: "InChIKey"
+  // P2275: "World Health Organisation International Nonproprietary Name"
+  //
+  // // ids
+  // P231: "CAS Registry Number"
+  // P232: "EC ID"
+  // P267: "ATC code"
+  // P486: "MeSH ID"
+  // P592: "ChEMBL ID"
+  // P595: "Guide to Pharmacology Ligand ID"
+  // P652: "UNII"
+  // P661: "ChemSpider ID"
+  // P662: "PubChem CID"
+  // P665: "KEGG ID"
+  // P683: "ChEBI ID"
+  // P715: "Drugbank ID"
+  // P2115: "NDF-RT ID"
+  // P2892: "UMLS CUI"
+  // P3345: "RxNorm CUI"
+  // P3636: "PDB ligand ID"
   // };
-  idPropsToDisplay: Array<string> = ['P231', 'P662', 'P661', 'P592', 'P715', 'P683', 'P665',
-    'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115', 'P3098', 'P2874'];
+  idPropsToDisplay: string[] = ['P231', 'P232', 'P267', 'P486', 'P592', 'P595', 'P652', 'P661', 'P662', 'P665', 'P683', 'P715', 'P2115', 'P2892', 'P3345', 'P3636'];
+  whoProp: string = 'P2275'; // WHO Name
+  chemPropsToDisplay: string[] = ['P2017', 'P274', 'P233', 'P234', 'P235'];
+  drugPropsToDisplay: string[] = ['P129', 'P2175', 'P2868', 'P3489', 'P3780'];
 
-  propsToDisplay: Array<string> = this.idPropsToDisplay.concat(["P274", "P233", "P2017", "P234", "P235", "P3780", "P3776", "P3777", "P3771", "P129", "P3489", "P2868", "P2175", "P2177", "P2993", "P3772", "P3773", "P3774", "P3775", "P3776", "P3777", "P3778", "P3779", "P924", "P3364"]);
-  //   propsToDisplay: Array<string> = this.idPropsToDisplay.concat(['P274', 'P231', 'P662', 'P661', 'P592', 'P715', 'P683', 'P665', 'P233', 'P2017',
-  //     'P234', 'P235', 'P652', 'P595', 'P3636', 'P232', 'P2275', 'P3350', 'P267', 'P2892', 'P3345', 'P486', 'P2115', 'P3780',
-  //     'P3776', 'P3777', 'P3771', 'P129', 'P3489', 'P2868', 'P2175', 'P2177', 'P2993',
-  // 'P3772', 'P3773', 'P3774', 'P3775', 'P3776', 'P3777', 'P3778', 'P3779', 'P924',
-  // // stereoisomer
-  //     'P3364']);
+  propsToDisplay: Array<string> = this.idPropsToDisplay.concat(this.chemPropsToDisplay).concat(this.drugPropsToDisplay).concat(this.whoProp);
 
   showMoreProperties = ['P3489', 'P2868', 'P129', 'P3776', 'P3777', 'P3771'];
 
-  excludeFromTableDisplay: Array<string> = [];//['P2275'];  // WHO Name
+  excludeFromTableDisplay: Array<string> = ['P2275'];  // WHO Name
   // excludeFromTableDisplay: Array<string> = this.idPropsToDisplay;
   // excludeFromTableDisplay: Array<string> = this.idPropsToDisplay.filter(d => d !== 'P233');
   // excludeFromTableDisplay: Array<string> = ['P2175'];
@@ -209,6 +222,7 @@ export class CompoundService {
       this.wiki_smiles = '';
       this.vendor_smiles = '';
       this.table_data = [];
+      this.idData = [];
 
       this.similarityResults = [];
 
@@ -223,6 +237,7 @@ export class CompoundService {
       this.similarSubject.next([]);
       this.availSubject.next([]);
       this.wikiTableSubject.next([]);
+      this.wikiIDsSubject.next({'chem': [], 'ids': []});
       this.vendorSubject.next(<VendorData>[{}, {}, {}]);
 
       // console.log('0 resetting ended')
@@ -253,12 +268,19 @@ export class CompoundService {
             .set('query', query)
             .set('format', 'json')
         }).subscribe((r) => {
-          let b = r.body;
+          let b = r.body.results.bindings;
 
-          for (let i of b.results.bindings) {
+          console.log(b)
+
+          for (let i of b) {
             let p: string = i['prop']['value'].split('/').pop();
 
-            this.prop_name_map[p] = i['propLabel']['value'];
+            this.prop_name_map[p] = {};
+            this.prop_name_map[p]['name'] = i['propLabel']['value'];
+
+            if(i.hasOwnProperty('furl')) {
+              this.prop_name_map[p]['url'] = i['furl']['value'].replace("$1", "");
+            }
           }
 
           localStorage.setItem('wd_vars', JSON.stringify(this.prop_name_map));
@@ -296,8 +318,6 @@ export class CompoundService {
         SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
       }`;
 
-
-
         this.http2.get<WDQSData>('https://query.wikidata.org/sparql', {
           observe: 'response',
           headers: new HttpHeaders()
@@ -306,73 +326,112 @@ export class CompoundService {
             .set('query', q)
             .set('format', 'json')
         }).subscribe((r) => {
-          let b = r.body;
-          let tmp: Object = {};
+          let b = r.body.results.bindings;
+          // console.log(b);
 
-          for (let i of b.results.bindings) {
+          // for some reason, the sparql endpoint returns a result for properties which actually not on that item
+          let filtered = b.filter((d: Object) => d.hasOwnProperty('id'));
+          // console.log(filtered)
+          //
+          // console.log(this.prop_name_map)
 
-            let p: string = i['prop']['value'].split('/').pop();
+          let addTo = function(arr: WikiData[], propObj: Object, value, pid: string) {
+            let prop = propObj['name'];
+            let url = propObj['url'] ? propObj['url'] + value : null;
 
-            // for some reason, the sparql endpoint returns a result for properties which actually not on that item
-            if (!i.hasOwnProperty('id')) {
-              continue;
+            // Check if already exists
+            let idxProp = arr.map((d: Object) => d['property']).indexOf(prop);
+            if ((idxProp > -1) && (arr.map((d: Object) => d['pid']).indexOf(pid) > -1)) {
+              arr[idxProp]['values'].push(value);
+            } else {
+              arr.push({ 'property': prop, 'values': [value], 'pid': pid, 'url': url});
             }
 
-            // separate out aliases
-            if (p === 'core#altLabel') {
-              this.aliases.push(i['idLabel']['value']);
-              continue;
-            }
-
-            let qid: string = i['id']['value'];
-            let v: string = i['idLabel']['value'];
-
-            if (p.startsWith('P')) {
-              if (tmp.hasOwnProperty(p)) {
-
-                tmp[p]['values'].push(v);
-                if (qid.startsWith('http://www.wikidata.org/entity/Q')) {
-                  tmp[p]['qids'].push(qid.split('/').pop());
-                }
-              }
-              else {
-                tmp[p] = {
-                  values: [v],
-                  qids: [],
-                  showMore: false,
-                  pid: ''
-                };
-
-                if (qid.startsWith('http://www.wikidata.org/entity/Q')) {
-                  tmp[p]['qids'].push(qid.split('/').pop());
-                }
-              }
-
-            }
           }
 
-          for (let y of this.propsToDisplay) {
+          for (let row of filtered) {
+            let pid: string = row['prop']['value'].split('/').pop();
+            let value = row['idLabel']['value'];
+            let propObj = this.prop_name_map[pid];
 
-            if (tmp.hasOwnProperty(y)) {
-              let sm: boolean = this.showMoreProperties.includes(y);
-
+            // pull out the aliases
+            if (pid === 'core#altLabel') {
+              this.aliases.push(value);
               // Pull out WHO name
-              if (this.prop_name_map[y] === 'World Health Organisation International Nonproprietary Name') {
-                this.main_label = tmp[y]['values'];
-                this.whoSubject.next(this.main_label)
-              }
-
-
-              if (this.idPropsToDisplay.includes(y) && !this.excludeFromTableDisplay.includes(y)) {
-                // this.idData.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'showMore': sm, 'pid': y });
-              }
-              else if (!this.excludeFromTableDisplay.includes(y)) {
-
-                this.table_data.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'qids': tmp[y]['qids'], 'showMore': sm, 'pid': y });
-              }
-
+            } else if (pid === this.whoProp) {
+              this.main_label = value;
+              this.whoSubject.next(this.main_label)
+            } else if (this.idPropsToDisplay.includes(pid) && !this.excludeFromTableDisplay.includes(pid)) {
+              addTo(this.idData, propObj, value, pid);
+            } else if (this.chemPropsToDisplay.includes(pid) && !this.excludeFromTableDisplay.includes(pid)) {
+              addTo(this.chemData, propObj, value, pid);
+            }
+            else if (!this.excludeFromTableDisplay.includes(pid)) {
+              addTo(this.table_data, propObj, value, pid);
             }
           }
+
+          // Sebastian code; rebuilt to be a bit simpler
+          // for (let i of b) {
+          //
+          //   let p: string = i['prop']['value'].split('/').pop();
+          //
+          //   if (!i.hasOwnProperty('id')) {
+          //     continue;
+          //   }
+          //
+          //   // separate out aliases
+          //   if (p === 'core#altLabel') {
+          //     this.aliases.push(i['idLabel']['value']);
+          //     continue;
+          //   }
+          //
+          //   let qid: string = i['id']['value'];
+          //   let v: string = i['idLabel']['value'];
+          //
+          //   if (p.startsWith('P')) {
+          //     if (tmp.hasOwnProperty(p)) {
+          //
+          //       tmp[p]['values'].push(v);
+          //       if (qid.startsWith('http://www.wikidata.org/entity/Q')) {
+          //         tmp[p]['qids'].push(qid.split('/').pop());
+          //       }
+          //     }
+          //     else {
+          //       tmp[p] = {
+          //         values: [v],
+          //         qids: [],
+          //         showMore: false,
+          //         pid: ''
+          //       };
+          //
+          //       if (qid.startsWith('http://www.wikidata.org/entity/Q')) {
+          //         tmp[p]['qids'].push(qid.split('/').pop());
+          //       }
+          //     }
+          //
+          //   }
+          // }
+
+          // for (let y of this.propsToDisplay) {
+          //
+          //   if (tmp.hasOwnProperty(y)) {
+          //     let sm: boolean = this.showMoreProperties.includes(y);
+          //
+          //
+          //     if (this.prop_name_map[y] === 'World Health Organisation International Nonproprietary Name') {
+          //       this.main_label = tmp[y]['values'];
+          //       this.whoSubject.next(this.main_label)
+          //     } else if (this.idPropsToDisplay.includes(y) && !this.excludeFromTableDisplay.includes(y)) {
+          //       this.idData.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'showMore': sm, 'pid': y });
+          //     }
+          //     else if (!this.excludeFromTableDisplay.includes(y)) {
+          //
+          //       this.table_data.push({ 'property': this.prop_name_map[y], 'values': tmp[y]['values'], 'qids': tmp[y]['qids'], 'showMore': sm, 'pid': y });
+          //     }
+          //
+          //   }
+          // }
 
           // Pull out SMILES string
           if (this.table_data.map((d: any) => d.property).indexOf('isomeric SMILES') > -1) {
@@ -381,15 +440,13 @@ export class CompoundService {
             this.wiki_smiles = this.table_data.find((d: any) => d.property === "canonical SMILES")['values'][0];
           }
 
+          // Send off the IDs, drug info-- and sort the entries.
           this.wikiTableSubject.next(<WikiData[]>this.table_data)
+          this.wikiIDsSubject.next(<Object>
+            {'chem': this.chemData,
+            'ids': this.idData.sort((a: Object, b: Object) => a['property'] > b['property'])
+          })
 
-          // if (!tmp.hasOwnProperty('P2175')) {
-          //   this.retrieveLabels([]);
-          // }
-          // else {
-          //   this.retrieveLabels(Array.from(tmp['P2175']['qids']).map((x: string) => x.split('/').pop()));
-          // }
-          //
           // console.log('2 retrieving wikidata ended')
 
           resolve("Success with WD!");

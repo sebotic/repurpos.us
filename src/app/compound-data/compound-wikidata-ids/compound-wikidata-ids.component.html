@@ -1,60 +1,76 @@
-<ng-container *ngIf="table_data.length > 0; else vendor_cheminfo">
-  <div>
-    <h4>Chemical data (Wikidata)</h4>
-  </div>
-  <!-- Chemical formula, InChIKey, SMILES -->
-  <div class="chem-props alias wikidata" *ngFor="let x of table_data">
-    <span *ngIf="x['property'] == 'chemical formula' || x['property'] == 'InChI' || x['property'] == 'InChIKey' || x['property'] == 'canonical SMILES' || x['property'] == 'isomeric SMILES'">
-  <div [ngClass]="x['property'] === 'chemical formula' ? 'formula-title' : 'title'" scope="row">{{ x['property'] }}</div>
-  <div scope="row" [ngClass]="{'wrap': x['property'] == 'canonical SMILES' || x['property'] == 'isomeric SMILES' || x['property'] == 'InChI'}">
-    <span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;" [ngClass]="x['property'] === 'chemical formula' ? 'formula' : ''">
-      {{z}}
-    </span>
-  </div>
-  </span>
+<!-- Chemical formula, InChIKey, SMILES -->
+<div *ngIf="chemData.length > 0 && qid">
+
+  <div class="formula text-center" *ngIf="formula">
+    {{formula}}
   </div>
 
-  <!-- Add in additional ID references -->
-  <div class="chem-ids alias">
-    <div class="col-xs-6" id="left">
+  <div class="chem-props-container">
+    <h5>Chemical properties (<a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">Wikidata</a>)</h5>
 
+    <div class="chem-props alias wikidata" *ngFor="let x of chemData">
+      <div scope="row" class="title">{{ x['property'] }}</div>
+      <div scope="row" class="wrap">
+        <span *ngFor="let z of x['values']; let i = index;">
+        {{z}}
+      </span>
+      </div>
+    </div>
 
+  </div>
+</div>
+
+<!-- Add in additional ID references -->
+<div class="resource-ids" *ngIf="idData.length > 0 && qid">
+  <div class="row">
+    <div class="col-12">
+      <h6>External Resources</h6>
+    </div>
+  </div>
+
+  <div class="chem-ids alias row">
+    <!-- template for the ID data -->
+    <ng-template #id_div let-obj="obj">
+      <div class="title" scope="row">{{obj['property']}}</div>
+
+      <div scope="row">
+        <span *ngFor="let id of obj['values']">
+          <a [href]="obj['url']" target="_blank">{{ id }}</a>
+        </span>
+      </div>
+    </ng-template>
+
+    <div class="col-sm-6" id="left">
+      <!-- Wikidata ID -->
       <div class="title" scope="row">Wikidata</div>
       <div scope="row">
-        <a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">{{qid}}</a>
+        <a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">
+            {{ qid }}
+          </a>
       </div>
 
-      <span *ngFor="let x of idData; let i=index">
-  <ng-container *ngIf="i < idData.length/2">
-  <div class="title" scope="row">{{x['property']}}</div>
-
-  <div scope="row">
-  <span *ngFor="let ii of x['values']">{{ ii }}</span>
+      <span *ngFor="let obj of idData | slice:0:idData.length/2; let i=index">
+            <ng-container [ngTemplateOutlet]="id_div" [ngTemplateOutletContext]='{obj: obj}'>
+            </ng-container>
+        </span>
     </div>
-</ng-container>
-</span>
+
+    <div class="col-sm-6" id="right">
+      <span *ngFor="let obj of idData | slice:idData.length/2:idData.length; let i=index">
+          <ng-container [ngTemplateOutlet]="id_div" [ngTemplateOutletContext]='{obj: obj}'>
+          </ng-container>
+      </span>
+    </div>
+
+  </div>
 </div>
 
-<span *ngFor="let x of idData; let i=index">
-  <div class="col-xs-6" id="right" *ngIf="i >= idData.length/2">
-  <div class="title" scope="row">{{x['property']}}</div>
-
-  <div scope="row">
-  <span *ngFor="let ii of x['values']">{{ ii }}</span>
-</div>
-</div>
-</span>
-
-
-</div>
-
-</ng-container>
 
 <!-- If no wikidata data are available, use the information from the vendors -->
-<ng-template #vendor_cheminfo>
+<!-- <ng-template #vendor_cheminfo>
 
   <div *ngIf="gvkData || informaData || integrityData">
-    <h4>Chemical data</h4>
+    <h4>Chemical properties</h4>
   </div>
 
   <ng-container *ngIf='gvkData'>
@@ -86,4 +102,4 @@
   </ng-container>
 
 
-</ng-template>
+</ng-template> -->

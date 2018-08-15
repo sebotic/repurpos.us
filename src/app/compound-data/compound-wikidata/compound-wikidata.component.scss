@@ -1,8 +1,12 @@
 /* // Reset bootstrap */
-.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
   border: none;
 }
-
 
 td.title {
   padding-left: 15px;
@@ -12,6 +16,8 @@ td.content {
   padding-right: 15px;
 }
 
-table#cmpd-names, table.cmpd-table, .cmpd-table {
+.cmpd-table,
+table#cmpd-names,
+table.cmpd-table {
   margin-bottom: 50px;
 }

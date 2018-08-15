@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-
-import { GVKData, IntegrityData, InformaData } from '../../_models/index';
+import { CompoundService } from '../../_services/index';
+import { WikiData } from '../../_models/index';
 
 @Component({
   selector: 'app-compound-wikidata-ids',
@@ -10,14 +10,25 @@ import { GVKData, IntegrityData, InformaData } from '../../_models/index';
 })
 
 export class CompoundWikidataIdsComponent implements OnInit {
-  @Input() qid: string;
-  @Input() table_data: Array<Object> = [];
-  @Input() idData: Array<Object> = [];
-  @Input() gvkData: GVKData;
-  @Input() informaData: InformaData;
-  @Input() integrityData: IntegrityData;
+  private qid: string;
+  private chemData: WikiData[] = [];
+  private idData: WikiData[] = [];
+  private formula: string;
+  // private gvkData: GVKData;
+  // private informaData: InformaData;
+  // private integrityData: IntegrityData;
 
-  constructor() { }
+  constructor(private cmpdSvc: CompoundService) {
+    this.cmpdSvc.idStates.subscribe((ids: Object) => {
+      this.qid = ids['qid'];
+    })
+
+    this.cmpdSvc.wikiIDsState.subscribe((ids: Object) => {
+      this.chemData = ids['chem'].filter((d: Object) => d['property'] !== 'chemical formula');
+      this.idData = ids['ids'];
+      this.formula = ids['chem'].filter((d: Object) => d['property'] === 'chemical formula').map((d: Object) => d['values'])[0];
+  })
+  }
 
   ngOnInit() {
   }
