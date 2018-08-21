@@ -198,7 +198,7 @@ export class CompoundService {
             // console.log(promises2)
 
             // console.log('4 promises all resolved: id=' + id + '; qid=' + qid + '; login=' + loginState)
-            this.getAliases();
+            this.getAliases(id);
 
             // Set SMILES
             let smiles = this.wiki_smiles || this.vendor_smiles;
@@ -591,10 +591,10 @@ export class CompoundService {
     })
   }
 
-  getAliases(searchAliases: string[] = []) {
+  getAliases(id: string, searchAliases: string[] = []) {
     // Set main label
     if (!this.main_label) {
-      this.main_label = this.vendorName;
+      this.main_label = this.vendorName || id;
     }
 
     this.nameSubject.next(this.main_label);
