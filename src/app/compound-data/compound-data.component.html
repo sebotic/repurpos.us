@@ -4,19 +4,19 @@
 
   <div class="row">
     <!-- LEFT COLUMN -->
-    <div class="col-lg-4">
+    <div class="col-lg-4 pr-4">
 
       <!-- PubChem 3D structure -->
       <app-struct2d [structure]="smiles" struct_type="smiles" *ngIf="smiles"></app-struct2d>
 
       <!-- Chemical ids -->
-      <!-- <app-compound-wikidata-ids [qid]="qid" [table_data]="table_data" [idData]="idData" [gvkData]="gvkData" [integrityData]="integrityData" [informaData]="informaData"></app-compound-wikidata-ids> -->
+      <app-compound-wikidata-ids></app-compound-wikidata-ids>
 
 
     </div>
 
     <!-- RIGHT COLUMN -->
-    <div class="col-lg-8">
+    <div class="col-lg-8 pl-4">
       <!-- Assays -->
       <app-compound-assay-data></app-compound-assay-data>
 

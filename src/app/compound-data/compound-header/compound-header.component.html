@@ -72,8 +72,8 @@
           {{alias}}
           <span *ngIf="i + 1 < alias_ct && i + 1 < aliases.length" class='data-separator'></span></span>
 
-            <a *ngIf="alias_ct < aliases.length" id="more" (click)="showMore()" class="center-block">
-            show more
+            <a *ngIf="alias_ct <= aliases.length" id="more" (click)="showMore()" class="center-block">
+            show {{ all_shown ? 'less' : 'more' }}
           </a>
           </div>
         </div>

@@ -1,7 +1,9 @@
 <div id='assays'>
     <div *ngIf="assayData.length > 0">
-      <h3 class="header-title-plus-btn">Activity data</h3>
-      <button class="float-right vendor-btn" (click)="showVendor = !showVendor">show vendor source</button>
+      <div class="d-flex justify-content-between assay-header">
+        <h3 class="header-title-plus-btn">Activity data</h3>
+        <button class="float-right vendor-btn" (click)="showVendor = !showVendor">show vendor source</button>  
+      </div>
 
 
 <!-- ASSAY TABLE -->
@@ -21,7 +23,7 @@
 
         <tr class="" *ngFor="let x of assayData">
           <!-- Assay Name -->
-          <td class="content align-middle"><a href="#/assays/{{x['assay_id']}}">
+          <td class="content align-middle assay-title"><a href="#/assays/{{x['assay_id']}}">
             <span [outerHTML]="x['assay_title'] | sciItalicize"></span>
           </a></td>
 

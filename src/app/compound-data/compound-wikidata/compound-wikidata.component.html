@@ -1,8 +1,6 @@
-<div id="wikidata" *ngIf="qid">
+<div id="wikidata" *ngIf="table_data.length > 0">
   <H3><a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">Wikidata data</a></H3>
   <div class="cmpd-table table" *ngFor="let temp of [1]; let i=index">
-
-
 
       <div class="vendor-header" [ngClass]="i === 0 ? 'first-entry' : 'notfirst-entry'">
       <div class="col-sm-3">
@@ -21,7 +19,10 @@
       <ng-container>
         <!-- <ng-container *ngIf="x['property'] != 'chemical formula' && x['property'] != 'InChI' && x['property'] != 'InChIKey' && x['property'] != 'canonical SMILES'&& x['property'] != 'isomeric SMILES'"> -->
         <td class="title" scope="row">{{ x['property'] }}</td>
-        <td class="content" scope="row" [ngClass]="x['property'] === 'InChI' || x['property'] === 'canonical SMILES' || x['property'] === 'isomeric SMILES' ? 'smiles' : ''"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}}
+        <td class="content" scope="row">
+        <span *ngFor="let z of x['values']; let i = index;">
+          {{z}}
+        <!-- <td class="content" scope="row" [ngClass]="x['property'] === 'InChI' || x['property'] === 'canonical SMILES' || x['property'] === 'isomeric SMILES' ? 'smiles' : ''"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}} -->
       <!-- <span *ngIf="!x['showMore']"></span> -->
           <span *ngIf="i + 1 < x['values'].length" class='data-separator'></span>
           <!-- <span *ngIf="x['showMore']">

@@ -1,6 +1,7 @@
 // Colors
 $stereofree-color: #74c5b7; // #1f8170;
 // Accordion
+
 /deep/ .mat-expansion-panel:not([class*=mat-elevation-z]) {
   box-shadow: none;
 }
@@ -33,6 +34,13 @@ button.mat-stroked-button {
   border-radius: 65px;
   margin: 3px 0;
   background-color: #eff1f2;
+}
+
+.sim-title {
+  color: #a9b1ba;
+  text-transform: uppercase;
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
 }
 
 .sim-name,
@@ -86,10 +94,11 @@ button a:hover {
 //   border-color: $stereofree-color transparent transparent transparent;
 // }
 //
+
 a#more {
-  color: #797c7e;
+  color: #a9b1ba;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.9em;
   font-family: "Lato", sans-serif;
   font-weight: 300;
   margin-left: 10px;
@@ -111,7 +120,6 @@ a#more {
   background: $stereofree-color;
 }
 
-
 .sim-name {
   background: #e4e7e9;
   color: #212529;
@@ -130,8 +138,6 @@ a#more {
 .trapezoid a:hover {
   text-decoration: none;
 }
-
-
 // hover states
 .trapezoid:hover .sim-name {
   background: lighten(#b7bec5, 7%);
@@ -148,8 +154,6 @@ a#more {
 .trapezoid:hover .sim-name.stereo-free {
   background: lighten($stereofree-color, 10%);
 }
-
-
 // .stereo-free {
 //   background: #1f8170;
 //   color: white;
