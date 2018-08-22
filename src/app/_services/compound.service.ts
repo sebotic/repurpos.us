@@ -70,7 +70,7 @@ export class CompoundService {
 
   // --- Vendor data ---
   // vendor data holders
-  public vendorSubject: BehaviorSubject<VendorData> = new BehaviorSubject<VendorData>(<VendorData>[{}, {}, {}]);
+  public vendorSubject: BehaviorSubject<VendorData> = new BehaviorSubject<VendorData>(<VendorData>[[{}], [{}], [{}]]);
   vendorState = this.vendorSubject.asObservable();
 
   // available data holders: if not logged in, gather what data is available.
@@ -83,7 +83,7 @@ export class CompoundService {
   wikiTableState = this.wikiTableSubject.asObservable();
 
   // Minor chemical / ID data
-  public wikiIDsSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({'chem': [], 'ids': []});
+  public wikiIDsSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>({ 'chem': [], 'ids': [] });
   wikiIDsState = this.wikiIDsSubject.asObservable();
 
   private table_data: WikiData[] = [];
@@ -238,8 +238,8 @@ export class CompoundService {
       this.similarSubject.next([]);
       this.availSubject.next([]);
       this.wikiTableSubject.next([]);
-      this.wikiIDsSubject.next({'chem': [], 'ids': []});
-      this.vendorSubject.next(<VendorData>[{}, {}, {}]);
+      this.wikiIDsSubject.next({ 'chem': [], 'ids': [] });
+      this.vendorSubject.next(<VendorData>[[{}], [{}], [{}]]);
 
       // console.log('0 resetting ended')
       resolve("Clear vars");
@@ -279,7 +279,7 @@ export class CompoundService {
             this.prop_name_map[p] = {};
             this.prop_name_map[p]['name'] = i['propLabel']['value'];
 
-            if(i.hasOwnProperty('furl')) {
+            if (i.hasOwnProperty('furl')) {
               this.prop_name_map[p]['url'] = i['furl']['value'].replace("$1", "");
             }
           }
@@ -345,7 +345,7 @@ export class CompoundService {
             if ((idxProp > -1) && (arr.map((d: Object) => d['pid']).indexOf(pid) > -1)) {
               arr[idxProp]['values'].push(value);
             } else {
-              arr.push({ 'property': prop, 'values': [value], 'pid': pid, 'url': url});
+              arr.push({ 'property': prop, 'values': [value], 'pid': pid, 'url': url });
             }
 
           }
@@ -444,9 +444,10 @@ export class CompoundService {
           // Send off the IDs, drug info-- and sort the entries.
           this.wikiTableSubject.next(<WikiData[]>this.table_data)
           this.wikiIDsSubject.next(<Object>
-            {'chem': this.chemData,
-            'ids': this.idData.sort((a: WikiData, b: WikiData) => a['property'] > b['property'] ? 1 : -1)
-          });
+            {
+              'chem': this.chemData,
+              'ids': this.idData.sort((a: WikiData, b: WikiData) => a['property'] > b['property'] ? 1 : -1)
+            });
 
           // console.log('2 retrieving wikidata ended')
 
@@ -497,25 +498,16 @@ export class CompoundService {
             this.chemSourceSubject.next(<Object[]>b.chem_vendors);
 
             // Pull out vendor data --> compound-vendor-data
-            this.vendorSubject.next(<VendorData>[b.gvk, b.integrity, b.informa])
+            // b.gvk = [b.gvk]
+            // b.integrity = [b.integrity]
+            // b.informa = [b.informa]
+            this.vendorSubject.next(<VendorData>[b.gvk, b.integrity, b.informa]);
+
 
             // pull out aliases & names
-            // Main label is preferentially: WHO Name, then Integrity, then informa, then GVK
-            if (Object.keys(b.gvk).length > 0) {
-              this.aliases = this.aliases.concat(b.gvk.synonyms).concat(b.gvk.drug_name);
-              this.vendorName = b.gvk.drug_name;
-              this.vendor_smiles = b.gvk.smiles;
-            }
-            if (Object.keys(b.informa).length > 0) {
-              this.aliases = this.aliases.concat(b.informa.drug_name);
-              this.vendorName = b.informa.drug_name[0];
-              this.vendor_smiles = b.informa.smiles;
-            }
-            if (Object.keys(b.integrity).length > 0) {
-              this.aliases = this.aliases.concat(b.integrity.drug_name);
-              this.vendorName = b.integrity.drug_name;
-              this.vendor_smiles = b.integrity.smiles;
-            }
+            this.getVendorHeaderInfo(b.gvk);
+            this.getVendorHeaderInfo(b.informa);
+            this.getVendorHeaderInfo(b.integrity);
 
             // console.log('3 retrieving data ended')
             resolve("Success with vendor data!");
@@ -542,6 +534,18 @@ export class CompoundService {
     })
   }
 
+  getVendorHeaderInfo(vendor_data: Object[]): void {
+    if (vendor_data.length > 0 && Object.keys(vendor_data[0]).length > 0) {
+      for (let compound of vendor_data) {
+        this.aliases = this.aliases.concat(compound['drug_name']);
+      }
+
+      // Arbitrarily: choose the first name, first SMILES string
+      this.vendorName = vendor_data[0]['drug_name'][0];
+      this.vendor_smiles = vendor_data[0]['smiles'];
+    }
+  }
+
   retrieveBasicInfo(id: string): Promise<void> {
     return new Promise<any>((resolve, reject) => {
 
@@ -563,7 +567,7 @@ export class CompoundService {
 
                 this.main_label = search_results.main_label;
                 this.wiki_smiles = search_results.smiles;
-                this.getAliases(search_results.aliases);
+                this.getAliases(id, search_results.aliases);
 
                 // Is it a Reframe compound? --> compound-header
                 // TODO: make sure this works when flip RFM id
