@@ -16,22 +16,11 @@ export class CompoundVendorDataComponent implements OnInit {
     { 'name': 'Citeline Pharmaprojects', 'link': 'https://pharmaintelligence.informa.com/contact/contact-us', 'id': 'informa'}
   ];
 
-  public vendor_data: VendorData = [[], [], []];
+  public vendor_data: VendorData;
 
   constructor(private cmpdSvc: CompoundService) {
-    console.log(this.vendor_data)
-    for (let vendor of this.vendor_data){
-    console.log(vendor.length > 0 && Object.keys(vendor[0]).length > 0)
-    }
-
-
     this.cmpdSvc.vendorState.subscribe((vdata: VendorData) => {
       this.vendor_data = vdata;
-      console.log(this.vendor_data)
-
-      for (let vendor of this.vendor_data){
-      console.log(vendor.length > 0 && Object.keys(vendor[0]).length > 0)
-      }
     })
   }
 

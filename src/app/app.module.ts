@@ -135,6 +135,7 @@ import { SaltFormComponent } from './compound-data/salt-form/salt-form.component
 import { SearchResultSimilarComponent } from './compound-search/search-results-table/search-result-similar/search-result-similar.component';
 import { SciItalicizePipe } from './_pipes/sci-italicize.pipe';
 import { AssaySparklineComponent } from './compound-data/assay-sparkline/assay-sparkline.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   exports: [
@@ -180,6 +181,7 @@ export class MaterialModule {}
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
     MenuBarComponent,
     MenubarItemComponent,
     CompoundSearchComponent,

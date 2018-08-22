@@ -21,14 +21,16 @@ export class CompoundHeaderComponent implements OnInit {
   public chemVendors: Array<Object> = [];
   public similarityResults: Array<Compound> = [];
 
-  num_aliases: number = 15;
+  num_aliases: number;
   all_shown: boolean = false;
-  alias_ct: number = this.num_aliases;
+  alias_ct: number;
 
 
   constructor(private cmpdSvc: CompoundService) {
+    this.getNumAliases();
 
     this.cmpdSvc.nameState.subscribe(cmpdName => {
+      // console.log(cmpdName)
         this.label = cmpdName;
     })
 
@@ -75,6 +77,21 @@ export class CompoundHeaderComponent implements OnInit {
       this.alias_ct = this.aliases.length;
     }
     this.all_shown = !this.all_shown;
+  }
+
+  getNumAliases() {
+    // determine how many aliases to show
+        if (window.screen.width > 800) {
+          this.num_aliases = 15;
+        } else {
+          this.num_aliases = 5;
+        }
+        this.alias_ct = this.num_aliases;
+  }
+
+  onResize(event) {
+    console.log('resized')
+    this.getNumAliases();
   }
 
 }

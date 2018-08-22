@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs/subscription';
 
@@ -18,6 +18,9 @@ export class LoaderComponent implements OnInit {
   constructor(private loaderService: LoaderStateService) { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
     this.subscription = this.loaderService.loaderState
       .subscribe((state: LoaderState) => {
         this.show = state.show;
