@@ -1,8 +1,6 @@
-<div id="vendor-data" *ngIf="vendor_data.length > 0">
+<div id="vendor-data" *ngIf="vendor_data && vendor_data.length > 0">
   <div *ngFor="let vendor of vendor_data; let k = index;">
-    <div *ngIf="vendor.length > 0 ">
-      <ng-container>
-    <!-- <div *ngIf="vendor && (vendor.ikey || vendor.drug_name || vendor.phase || vendor.gvk_id || vendor.id)"> -->
+    <div *ngIf="vendor && vendor.length > 0 && (vendor[0].ikey || vendor[0].drug_name || vendor[0].phase || vendor[0].gvk_id || vendor[0].id)">
       <H3><a href="{{vendors[k].link}}" target="_blank">{{vendors[k].name}} data</a>
       </H3>
 
@@ -149,7 +147,6 @@
         </table>
         <!-- END OF NGFOR OVER VENDOR LOOP -->
       </div>
-      </ng-container>
     </div>
   </div>
 
