@@ -1,12 +1,32 @@
-.quick-search {
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-  float: right;
-  font-family: "Lato", sans-serif;
-  font-weight: 300;
+form {
+  margin-top: 5px;
+  margin-right: 10px;
 }
 
-.quick-search:focus {
+.search label,
+.search mat-icon {
+  position: absolute;
+  margin: 1px 0px;
+  // color: #9ba4ae;
+}
+
+.search input[type="text"] {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  text-indent: 10px;
+  padding: 0 0 0 22px;
+  width: 0;
+  height: 30px;
+  background: none;
+  border: none;
+  -webkit-transition: width 0.5s ease-in-out;
+  -moz-transition: width 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.search input[type="text"]:focus {
   width: 300px;
+  background: white;
+  outline: none;
+  cursor: text;
 }

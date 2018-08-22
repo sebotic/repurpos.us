@@ -28,87 +28,13 @@ export class AppComponent implements OnInit {
   current_year: number;
   private loginSubscription: Subscription;
 
-  constructor(@Inject(DOCUMENT) private document: any, private http: HttpClient, private loginStateService: LoginStateService) {
+  constructor(@Inject(DOCUMENT) private document: any, private http: HttpClient) {
     this.appendGaTrackingCode();
 
     this.current_year = (new Date()).getFullYear();
   }
 
-  login() {
-    this.http.post(environment.host_url + '/auth/login', { "email": "sebastian.burgstaller@gmail.com", "password": "test" }, {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('content-type', 'application/json')
-    }
-
-    ).subscribe((re) => {
-      let credentials = re.body;
-      console.log(credentials['auth_token']);
-      localStorage.setItem('auth_token', credentials['auth_token']);
-
-      console.log(JSON.stringify(re));
-      // console.log(re.status);
-    },
-      (err: HttpErrorResponse) => {
-        console.log(err.error.message);
-        console.log(JSON.stringify(err));
-        console.log(err.status);
-      }
-    );
-  }
-
-  showLogin() {
-    this.loginBox = !this.loginBox;
-  }
-
-  toggleNav() {
-    this.expanded = !this.expanded;
-    if (!this.expanded) {
-      this.loginBox = false;
-    }
-  }
-
   ngOnInit(): void {
-    // subscribe to the login state
-    this.loginSubscription = this.loginStateService.loginState
-      .subscribe((state: LoginState) => {
-        this.loggedIn = state.loggedIn;
-      });
-    // console.log(this.document.location.pathname);
-    // console.log(this.document.location.href);
-
-    /*
-     * This seems to be legacy and has been moved to user-login.component
-    if (localStorage.getItem('auth_token') ){
-      this.http.get(environment.host_url + '/auth/status', {
-          observe: 'response',
-          headers: new HttpHeaders()
-            .set('content-type', 'application/json')
-            .set('Authorization', localStorage.getItem('auth_token'))
-        }
-
-      ).subscribe((re) => {
-          let credentials = re.body;
-          // console.log(credentials['auth_token']);
-          // localStorage.setItem('auth_token', credentials['auth_token']);
-
-          // console.log(JSON.stringify(re));
-          // console.log(re.status);
-        },
-        (err: HttpErrorResponse) => {
-          console.log('error executed');
-          this.login();
-        }
-      );
-
-    } else {
-      this.login();
-    }*/
-
-
-
-
-
     if (this.document.location.href.startsWith('https://repurpos') && this.document.location.href.includes('oauth_verifier')) {
       this.document.location.href = 'http://localhost:4200/?' + this.document.location.href.split('?')[1];
     }

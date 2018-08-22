@@ -1,88 +1,23 @@
 <http-loader></http-loader>
+
+<!-- Header -->
+<app-header></app-header>
 <div class="ui menu">
-  <header class="blue-fill">
-    <nav class="navbar navbar-expand-lg">
-      <div class="container-fluid change">
-        <div class="d-flex">
-          <a class="navbar-brand" href="/">
-            <img src="../assets/logo-app.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            <div class="site-name">
-              <span class="bold">reframe</span><span class="thin">db</span>
-            </div>
-            <div class="site-subtitle">
-              <span class="wide">open & extendable </span><span class="narrow">drug repurposing data</span>
-            </div>
-          </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNav()">
-            <mat-icon aria-label="menu" color="accent" >menu</mat-icon>
-          </button>
-        </div>
-  <!--       <div class="logo pull-left">
-          <a href="/"><img src="../assets/logo-app.png" width="40px" /></a>
-
-          <div class="name">
-              <div class="site-name">
-                <a href="/"><span class="bold">reframe</span><span class="thin">db</span></a>
-              </div>
-
-              <div class="site-subtitle">
-                <a href="/"><span class="wide">open & extendable </span><span class="narrow">drug repurposing data</span></a>
-              </div>
-          </div>
-
-        </div> -->
-
-        <div class="collapse navbar-collapse" [ngClass]="{'logout-wrap': loggedIn, 'show': expanded}" id="navbarContent">
-          <ul class="navbar-nav ml-auto">
-            <li>
-              <!-- <a href="">search</a> -->
-              <app-quick-search></app-quick-search>
-            </li>
-            <li>
-              <a href="/#/assays">assays</a>
-            </li>
-            <li>
-              <a href="/#/about">about</a>
-            </li>
-            <li class="sign-in">
-              <a *ngIf="!loggedIn" (click)="showLogin()">sign in</a>
-            </li>
-          </ul>
-          
-        </div>
-        <div class="reveal" [ngClass]="{'open': loginBox, 'logout': loggedIn, 'sign-in-box': !loggedIn, 'show': expanded}">
-          <div class="pull-right float-right">
-            <app-user-login></app-user-login>
-          </div>
-        </div>
-      </div>
-
-    </nav>
-
-
-  </header>
-
   <!--<div class="header item borderless">-->
   <!--<app-mail-signup></app-mail-signup>-->
   <!--</div>-->
-
-  <!--<div class="header item borderless">-->
-  <!--<app-auth></app-auth>-->
-  <!--</div>-->
-
-
-
 </div>
 
+<!-- Content -->
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span12">
-      <!-- <menu-bar [items]="routeDef"></menu-bar> -->
       <router-outlet></router-outlet>
     </div>
   </div>
 </div>
 
+<!-- Footer -->
 <div class="container-fluid">
   <footer>
     <ul>
@@ -109,9 +44,6 @@
       view code</a>
       </li>
 
-      <!-- <li>
-        <a rel="license" href="https://creativecommons.org/share-your-work/public-domain/cc0/"><img alt="Creative Commons License" style="border-width:0" src="https://licensebuttons.net/l/publicdomain/80x15.png" /></a>.
-      </li> -->
     </ul>
   </footer>
 </div>

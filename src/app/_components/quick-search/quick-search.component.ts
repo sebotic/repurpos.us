@@ -15,11 +15,13 @@ export class QuickSearchComponent implements OnInit {
   }
 
   onEnter() {
-    // console.log(this.router.url);
+    let curr_query = this.query;
+    // reset query
+    this.query = '';
     this.router.navigate(['search/'], {
       queryParams:
         {
-          query: this.query,
+          query: curr_query,
           type: 'string'
         }
     });

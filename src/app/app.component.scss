@@ -1,11 +1,5 @@
 /* -- header -- */
 
-.blue-fill {
-  background-color: #3d6de00d;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  margin-bottom: 6px;
-}
 
 .logo {
   display: -webkit-inline-box;
@@ -30,14 +24,6 @@
 }
 
 
-.narrow {
-  letter-spacing: -0.2px;
-}
-
-.wide {
-  letter-spacing: 1px;
-}
-
 header ul, footer ul {
   list-style-type: none;
 }
@@ -49,9 +35,6 @@ header li, footer li {
   padding-right: 12px;
 }
 
-header a {
-  color: #212529;
-}
 
 /* footer */
 
@@ -84,139 +67,4 @@ footer li {
 
 .left-spacer {
   padding-left: 6px;
-}
-
-.nav {
-  flex-wrap: nowrap;
-}
-
-.navbar-brand {
-  display: flex;
-  align-items: center;
-  font-size: unset;
-
-  .site-name {
-    font-size: 1.4em;
-    margin-left: 12px;
-  }
-
-  .site-subtitle {
-    display: flex;
-    flex-direction: column;
-    font-size: 0.9em;
-    opacity: 0.65;
-    line-height: 1em;
-    margin-left: 12px;
-  }
-}
-
-.navbar-collapse {
-  height: 0px;
-  width: 0px;
-  overflow: hidden;
-  transition: height, 0.3s linear;
-
-  &:not(.show) {
-    display: block;
-  }
-  &.show {
-    height: 140px;
-    width: 100%;
-  }
-}
-
-.navbar-nav {
-  align-items: flex-end;
-  padding-top: 0.5em;
-
-  li {
-    padding-top: 5px;
-  }
-}
-
-.links {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.links.logout-wrap {
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.links ul {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.reveal {
-  height:0px;
-  width: 0px;
-  overflow: hidden;
-  background: #f5f8fd;
-  border-bottom-left-radius: 15px;
-  -webkit-transition:height, 0.3s linear;
-  -moz-transition: height, 0.3s linear;
-  -ms-transition: height, 0.3s linear;
-  -o-transition: height, 0.3s linear;
-  transition: height, 0.3s linear;
-
-  &.open {
-    height: 200px;
-    width: 100%;
-    z-index: 10;
-    padding-right: 15px;
-    -webkit-transition:height, 0.3s linear;
-    -moz-transition: height, 0.3s linear;
-    -ms-transition: height, 0.3s linear;
-    -o-transition: height, 0.3s linear;
-    transition: height, 0.3s linear;
-  }
-
-  &.sign-in {
-    margin-top: 16px;
-  }
-
-  &.show.logout {
-    height: auto;
-    width: 100%;
-  }
-}
-
-.sign-in {
-  cursor: pointer;
-}
-
-@media only screen and (min-width: 992px) {
-  .navbar-collapse {
-    height: auto;
-    width: auto;
-  }
-  .navbar-nav {
-    align-items: center;
-
-    li {
-      padding-top: 0;
-    }
-  }
-
-  .reveal {
-    &:not(.logout) {
-      position: absolute;
-      top: 62px;
-      right: 0;
-    }
-    &.open {
-      height: 100px;
-      width: 530px;
-    }
-
-    &.logout {
-      height: auto;
-      width: auto;
-    }
-  }
 }

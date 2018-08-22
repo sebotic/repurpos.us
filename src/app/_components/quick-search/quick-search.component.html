@@ -1,2 +1,7 @@
-<input type="text" class="quick-search form-control" placeholder="search for drugs, classes ..." autofocus [(ngModel)]="query" (keyup.enter)="onEnter()">
-<!-- <mat-icon>search</mat-icon> -->
+<form class="search" method="post" action="">
+    <label for="search-box-add"><mat-icon>search</mat-icon></label>
+
+    <input id="search-box-add" type="text" class="quick-search form-control" name="quick_search"
+    placeholder="search for drugs, classes ..." autofocus [(ngModel)]="query" (keyup.enter)="onEnter()">
+
+</form>
