@@ -10,10 +10,10 @@ import { WikiData } from '../../_models/index';
 })
 
 export class CompoundWikidataIdsComponent implements OnInit {
-  private qid: string;
-  private chemData: WikiData[] = [];
-  private idData: WikiData[] = [];
-  private formula: string;
+  public qid: string;
+  public chemData: WikiData[] = [];
+  public idData: WikiData[] = [];
+  public formula: string;
   // private gvkData: GVKData;
   // private informaData: InformaData;
   // private integrityData: IntegrityData;
