@@ -1,11 +1,13 @@
 <div id="vendor-data" *ngIf="vendor_data.length > 0">
-  <div *ngFor="let x of vendor_data; let k = index;">
-    <div *ngIf="x && (x.ikey || x.drug_name || x.phase || x.gvk_id || x.id)">
+  <div *ngFor="let vendor of vendor_data; let k = index;">
+    <div *ngIf="vendor.length > 0 ">
+      <ng-container>
+    <!-- <div *ngIf="vendor && (vendor.ikey || vendor.drug_name || vendor.phase || vendor.gvk_id || vendor.id)"> -->
       <H3><a href="{{vendors[k].link}}" target="_blank">{{vendors[k].name}} data</a>
       </H3>
 
       <!-- <div class="cmpd-table"> -->
-      <div class="cmpd-table" *ngFor="let temp of [1]; let i=index">
+      <div class="cmpd-table" *ngFor="let x of vendor; let i=index">
 
         <div class="vendor-header row" [ngClass]="i === 0 ? 'first-entry' : 'notfirst-entry'">
           <!-- Vendor ID: GVK -->
@@ -147,6 +149,7 @@
         </table>
         <!-- END OF NGFOR OVER VENDOR LOOP -->
       </div>
+      </ng-container>
     </div>
   </div>
 
