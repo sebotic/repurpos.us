@@ -56,8 +56,9 @@ export class CompoundService {
   chemSourceState = this.chemSourceSubject.asObservable();
 
   // --- SMILES ---
-  private wiki_smiles: string;
-  private vendor_smiles: string;
+  // private wiki_smiles: string;
+  // private vendor_smiles: string;
+  private smiles: string;
   public smilesSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   smilesState = this.smilesSubject.asObservable();
 
@@ -201,11 +202,11 @@ export class CompoundService {
             this.getAliases(id);
 
             // Set SMILES
-            let smiles = this.wiki_smiles || this.vendor_smiles;
-            this.smilesSubject.next(smiles);
+            // let smiles = this.wiki_smiles || this.vendor_smiles;
+            // this.smilesSubject.next(smiles);
 
             // Run a query to get any compounds that are similar
-            this.retrieveSimilarData(id, smiles);
+            this.retrieveSimilarData(id, this.smiles);
           })
       })
 
@@ -219,8 +220,9 @@ export class CompoundService {
       this.main_label = '';
       this.vendorName = '';
       this.aliases = [];
-      this.wiki_smiles = '';
-      this.vendor_smiles = '';
+      this.smiles = '';
+      // this.wiki_smiles = '';
+      // this.vendor_smiles = '';
       this.table_data = [];
       this.idData = [];
       this.chemData = [];
@@ -435,11 +437,11 @@ export class CompoundService {
           // }
 
           // Pull out SMILES string
-          if (this.table_data.map((d: any) => d.property).indexOf('isomeric SMILES') > -1) {
-            this.wiki_smiles = this.table_data.find((d: any) => d.property === "isomeric SMILES")['values'][0];
-          } else if (this.table_data.map((d: any) => d.property).indexOf('canonical SMILES') > -1) {
-            this.wiki_smiles = this.table_data.find((d: any) => d.property === "canonical SMILES")['values'][0];
-          }
+          // if (this.table_data.map((d: any) => d.property).indexOf('isomeric SMILES') > -1) {
+          //   this.wiki_smiles = this.table_data.find((d: any) => d.property === "isomeric SMILES")['values'][0];
+          // } else if (this.table_data.map((d: any) => d.property).indexOf('canonical SMILES') > -1) {
+          //   this.wiki_smiles = this.table_data.find((d: any) => d.property === "canonical SMILES")['values'][0];
+          // }
 
           // Send off the IDs, drug info-- and sort the entries.
           this.wikiTableSubject.next(<WikiData[]>this.table_data)
@@ -494,6 +496,10 @@ export class CompoundService {
             // Pull out assay data --> compound-assay-data
             this.assaysSubject.next(<AssayData[]>b.assay);
 
+            // Pull out SMILES string
+            this.smiles = b.smiles;
+            this.smilesSubject.next(this.smiles);
+
             // Pull out chemical vendor source data --> compound-header
             this.chemSourceSubject.next(<Object[]>b.chem_vendors);
 
@@ -542,7 +548,7 @@ export class CompoundService {
 
       // Arbitrarily: choose the first name, first SMILES string
       this.vendorName = vendor_data[0]['drug_name'][0];
-      this.vendor_smiles = vendor_data[0]['smiles'];
+      // this.vendor_smiles = vendor_data[0]['smiles'];
     }
   }
 
@@ -566,7 +572,7 @@ export class CompoundService {
               if (id === search_results.id) {
 
                 this.main_label = search_results.main_label;
-                this.wiki_smiles = search_results.smiles;
+                // this.wiki_smiles = search_results.smiles;
                 this.getAliases(id, search_results.aliases);
 
                 // Is it a Reframe compound? --> compound-header
