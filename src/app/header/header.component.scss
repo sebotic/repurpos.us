@@ -196,35 +196,35 @@ footer li {
   cursor: pointer;
 }
 
-// @media only screen and (min-width: 992px) {
-//   .navbar-collapse {
-//     height: auto;
-//     width: auto;
-//   }
-//
-//   .navbar-nav {
-//     align-items: center;
-//
-//     li {
-//       padding-top: 0;
-//     }
-//   }
-//
-//   .reveal {
-//     &:not(.logout) {
-//       position: absolute;
-//       top: 62px;
-//       right: 0;
-//     }
-//
-//     &.open {
-//       height: 100px;
-//       width: 530px;
-//     }
-//
-//     &.logout {
-//       height: auto;
-//       width: auto;
-//     }
-//   }
-// }
+@media only screen and (min-width: 992px) {
+  .navbar-collapse {
+    height: auto;
+    width: auto;
+  }
+
+  .navbar-nav {
+    align-items: center;
+
+    li {
+      padding-top: 0;
+    }
+  }
+
+  .reveal {
+    &:not(.logout) {
+      position: absolute;
+      top: 62px;
+      right: 0;
+    }
+
+    &.open {
+      height: 100px;
+      width: 530px;
+    }
+
+    &.logout {
+      height: auto;
+      width: auto;
+    }
+  }
+}
