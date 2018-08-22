@@ -70,7 +70,7 @@ export class CompoundService {
 
   // --- Vendor data ---
   // vendor data holders
-  public vendorSubject: BehaviorSubject<VendorData> = new BehaviorSubject<VendorData>(<VendorData>[[], [], []]);
+  public vendorSubject: BehaviorSubject<VendorData> = new BehaviorSubject<VendorData>(<VendorData>[[{}], [{}], [{}]]);
   vendorState = this.vendorSubject.asObservable();
 
   // available data holders: if not logged in, gather what data is available.
@@ -239,7 +239,7 @@ export class CompoundService {
       this.availSubject.next([]);
       this.wikiTableSubject.next([]);
       this.wikiIDsSubject.next({ 'chem': [], 'ids': [] });
-      this.vendorSubject.next(<VendorData>[[], [], []]);
+      this.vendorSubject.next(<VendorData>[[{}], [{}], [{}]]);
 
       // console.log('0 resetting ended')
       resolve("Clear vars");
