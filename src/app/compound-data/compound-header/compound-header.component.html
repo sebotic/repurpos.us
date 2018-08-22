@@ -1,4 +1,4 @@
-<div class="cmpd-header">
+<div class="cmpd-header" (window:resize)="onResize($event)">
 
   <!-- Back button -->
   <div class="row float-right">
@@ -13,7 +13,7 @@
     <div class="row">
 
       <!-- LEFT SIDE -->
-      <div id="cmpd-names" class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div id="cmpd-names" class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
         <!-- Drug Name -->
         <div class="row">
           <div class="cmpd-name col-12">
@@ -57,7 +57,7 @@
 
       <!-- RIGHT SIDE -->
       <!-- WHO Name -->
-      <div id="cmpd-names" class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+      <div id="cmpd-names" class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
         <div class="row who-name" *ngIf="whoName">
           <div class="col-12">
             <b>World Health Organisation International Nonproprietary Name:</b> {{ whoName }}
