@@ -33,8 +33,10 @@ export class SearchResultsTableComponent implements OnInit {
 
   responseCode: number; // response coming back from the API query
   APIquery: string;
+  queryString: string;
+  probSMILES: boolean = false;
   displayResults: boolean; // if results are being reset, don't show the results
-  notMobile: boolean; // media query for if on small screen
+  isMobile: boolean; // media query for if on small screen
 
   pageIdx: number = 0; // holder for current page in pagination
   pageSize: number = 10; // holder for current page in pagination
@@ -50,6 +52,8 @@ export class SearchResultsTableComponent implements OnInit {
 
   tanimotoScale: any; // color scale for tanimoto scores
   getFontColor: any; // function to get the font color for a tanimoto score
+
+  // expanded: boolean = false; // trigger to turn table to shortened form.
 
   setDataSourceAttributes() {
     this.dataSource.paginator = this.paginator;
@@ -73,9 +77,7 @@ export class SearchResultsTableComponent implements OnInit {
     private tanimotoSvc: TanimotoScaleService
   ) {
     // media query
-    if (window.screen.width > 760) {
-      this.notMobile = true;
-    }
+    this.checkMobile()
 
     // make sure search has been executed
     searchResultService.submitAnnounced$.subscribe(
@@ -95,6 +97,9 @@ export class SearchResultsTableComponent implements OnInit {
 
         this.responseCode = result.status;
         this.APIquery = result.url;
+        this.queryString = decodeURIComponent(result.url.split("&")[0].split("query=")[1]);
+        this.probSMILES = this.queryString.indexOf("(") > -1 || this.queryString.indexOf("=") > -1;
+        // console.log(decodeURIComponent(this.APIquery))
 
         if (result.data) {
           let results = result.data;
@@ -105,6 +110,7 @@ export class SearchResultsTableComponent implements OnInit {
             d['aliases'] = this.removeDupeAlias(d.aliases);
             d['alias_ct'] = this.num_aliases;
             d['max_aliases'] = false;
+            d['expanded'] = false; // trigger to turn table to shortened form.
           });
 
           // console.log(results)
@@ -152,6 +158,14 @@ export class SearchResultsTableComponent implements OnInit {
     // console.log(this.dataSource)
   }
 
+  checkMobile() {
+    if (window.matchMedia('(max-width: 760px)').matches) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
+  }
+
   sortResults(results) {
     // apply the sorting function
     // NOTE: Chrome and Firefox --> different sorting results since Chrome sorts by arbitrary values in ties.
@@ -185,16 +199,16 @@ export class SearchResultsTableComponent implements OnInit {
       this.displayedColumns.push('tanimoto')
     }
 
-
-    if (this.notMobile) {
-      // console.log(this.displayedColumns);
-      // this.displayedColumns.splice(2, 0, 'struct') // insert structure into the cols
-      // this.displayedColumns = this.displayedColumns.concat('assays', 'assay_titles');
-      this.displayedColumns = this.displayedColumns.concat('assays');
-    } else {
-      this.displayedColumns = this.displayedColumns.concat('assays');
-      this.displayedColumns.splice(this.displayedColumns.indexOf('id'), 1);
-    }
+    this.displayedColumns = this.displayedColumns.concat('assays');
+    // if (!this.isMobile) {
+    //   // console.log(this.displayedColumns);
+    //   // this.displayedColumns.splice(2, 0, 'struct') // insert structure into the cols
+    //   // this.displayedColumns = this.displayedColumns.concat('assays', 'assay_titles');
+    //   this.displayedColumns = this.displayedColumns.concat('assays');
+    // } else {
+    //   this.displayedColumns = this.displayedColumns.concat('assays');
+    //   this.displayedColumns.splice(this.displayedColumns.indexOf('id'), 1);
+    // }
 
   }
 
@@ -255,11 +269,12 @@ export class SearchResultsTableComponent implements OnInit {
     // this.dataSource.data[row_num + this.pageIdx * this.pageSize]['alias_ct'] += this.num_aliases;
   }
 
-  expandCell(e) {
-    e.target.parentNode.parentNode.children[0].classList.toggle('expanded');
-    e.target.parentNode.parentNode.children[1].classList.toggle('expanded');
-    e.target.parentNode.parentNode.children[2].classList.toggle('expanded');
-    e.target.parentNode.parentNode.children[3].classList.toggle('expanded');
-    //e.target.parentNode.parentNode.childNodes.addClass('expanded');
+  expandCell(row_num) {
+    let sortedData = this.dataSource.sortData(this.dataSource.data, this.dataSource.sort);
+
+    let idx = row_num + this.pageIdx * this.pageSize;
+    sortedData[idx]['expanded'] = !sortedData[idx]['expanded'];
+
+    this.dataSource.data = sortedData;
   }
 }
