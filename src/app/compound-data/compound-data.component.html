@@ -1,18 +1,24 @@
 <div class="container-fluid clearfix">
 
-  <app-compound-header [results_per_page] ='num_similar_per_page' [_location]="_location"></app-compound-header>
+  <app-compound-header [results_per_page]='num_similar_per_page' [_location]="_location"></app-compound-header>
 
   <div class="row">
     <!-- LEFT COLUMN -->
     <div class="col-lg-4 pr-4">
 
-      <!-- PubChem 3D structure -->
-      <app-struct2d [structure]="smiles" struct_type="smiles" *ngIf="smiles"></app-struct2d>
+      <div class="row">
 
-      <!-- Chemical ids -->
-      <app-compound-wikidata-ids></app-compound-wikidata-ids>
+        <!-- 2D structure -->
+        <div class="col-lg-12 col-md-8 col-sm-6 col-xs-12">
+          <app-struct2d [structure]="smiles" struct_type="smiles" *ngIf="smiles"></app-struct2d>
+        </div>
 
 
+        <!-- Chemical ids -->
+        <div class="col-lg-12 col-md-4 col-sm-6 col-xs-12">
+          <app-compound-wikidata-ids></app-compound-wikidata-ids>
+        </div>
+      </div>
     </div>
 
     <!-- RIGHT COLUMN -->
@@ -48,6 +54,6 @@
   <div class="clearfix">
   </div>
 
-  <app-similar-compounds [results_per_page] ='num_similar_per_page'></app-similar-compounds>
+  <app-similar-compounds [results_per_page]='num_similar_per_page'></app-similar-compounds>
 
 </div>

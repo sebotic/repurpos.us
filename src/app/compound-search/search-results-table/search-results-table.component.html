@@ -1,4 +1,4 @@
-<div class="container-fluid" *ngIf="displayResults">
+<div class="container-fluid" *ngIf="displayResults" (window:resize)="checkMobile()">
   <h3>Search results</h3>
 
   <ng-container [ngSwitch]="responseCode">
@@ -13,20 +13,24 @@
               <span class="mat-header">Name</span>
               <mat-icon class='sort-icon' matTooltip="sort by name">sort</mat-icon>
             </mat-header-cell>
-            <mat-cell *matCellDef="let element; let row=index" class="main-label">
-              <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
-                <h5>{{element['main_label']}}</h5>
-              </a>
-              <mat-icon *ngIf="!notMobile" class="more-info" (click)="expandCell($event)">expand_more</mat-icon>
 
+            <mat-cell *matCellDef="let element; let row=index" class="main-label d-flex">
 
+              <!-- Name -->
+              <div class="col-xs-auto">
+                <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
+                  <h5>{{element['main_label']}}</h5>
+                </a>
 
-              <table class="table cmpd-info">
+              </div>
+
+              <!-- Aliases + InChI key/ID -->
+              <table class="table cmpd-info" (click)="expandCell(row)">
                 <tbody>
 
                   <!-- Aliases -->
-                  <tr *ngIf="element.aliases.length > 0">
-                    <th class="label" scope="row">Aliases:</th>
+                  <tr *ngIf="element.aliases.length > 0" id="aliases">
+                    <th class="label" scope="row" *ngIf="!isMobile">Aliases:</th>
                     <td class="aliases">
                       <ul class="alias-list">
                         <li *ngFor="let alias of element.aliases | slice:0:element.alias_ct; let i=index" class="alias">
@@ -36,7 +40,7 @@
                         </li>
                         <li>
                           <a *ngIf="element.alias_ct < element.aliases.length || element.max_aliases" id="more" (click)="showMore(row)" class="center-block">
-                          {{ element.max_aliases ? 'show less' : 'show more' }}
+                          {{ element.max_aliases ? 'show fewer' : isMobile ? 'show all aliases' : 'show all' }}
                         </a>
                         </li>
                       </ul>
@@ -44,22 +48,21 @@
                   </tr>
 
                   <!-- Inchi key / ID -->
-                  <tr>
+                  <tr id="id" *ngIf="!isMobile">
                     <th class="label" scope="row">ID:</th>
                     <td class="inchi-id">
                       {{element['id']}}
                     </td>
                   </tr>
 
-
                 </tbody>
               </table>
-
+              <!-- Expand on small screens -->
+              <mat-icon *ngIf="isMobile" class="more-info" [matTooltip]="element['expanded'] ? 'hide details' : 'show details'"
+              (click)="expandCell(row)">{{element['expanded'] ? 'expand_less': 'expand_more'}}</mat-icon>
 
             </mat-cell>
           </ng-container>
-
-
 
 
 
@@ -68,21 +71,29 @@
           <ng-container matColumnDef="reframeid">
             <mat-header-cell *matHeaderCellDef mat-sort-header start="desc" class="mat-header">
               <span class="mat-header">
-              Sample in Screening Library </span>
+              Sample in Screening Library</span>
               <mat-icon class='sort-icon' matTooltip="sort by library compound">sort</mat-icon>
             </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-              <!-- binary circle if compound in reframe library -->
-              <div id="reframe_cmpd" [ngClass]="element['reframeid'] === true ? 'cmpd-avail' : 'no-cmpd'">
-                <div>
-                  <span class="circle"></span>
+            <mat-cell *matCellDef="let element" class="flex-column"
+            [ngClass]="element['expanded'] ? 'expanded' : ''">
+
+              <div class="d-flex flex-row justify-content-center">
+                <!-- Label for small screens -->
+                <div class="label" id="reframe_label" *ngIf="isMobile">
+                  Sample in Screening Library
                 </div>
-
-                <app-search-result-similar [compound_result]="element"></app-search-result-similar>
-
+                <!-- binary circle if compound in reframe library -->
+                <div id="reframe_cmpd" [ngClass]="element['reframeid'] === true ? 'cmpd-avail' : 'no-cmpd'">
+                  <div>
+                    <span class="circle"></span>
+                  </div>
+                </div>
               </div>
 
-
+              <!-- Similar compounds -->
+              <div class="d-flex flex-row sim-cmpds">
+                <app-search-result-similar [compound_result]="element" [mobile]="isMobile"></app-search-result-similar>
+              </div>
 
             </mat-cell>
           </ng-container>
@@ -93,9 +104,19 @@
               <span class="mat-header">Tanimoto Similarity Score</span>
               <mat-icon class='sort-icon' matTooltip="sort by Tanimoto score">sort</mat-icon>
             </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngStyle]="{'background-color': tanimotoScale(element['tanimoto']), 'color': getFontColor(element['tanimoto'])}">
-              {{element['tanimoto'] | number: '1.2-2'}}
-              <!-- </div> -->
+            <mat-cell *matCellDef="let element" [ngClass]="element['expanded'] ? 'expanded' : ''">
+              <div class="d-flex flex-row">
+                <!-- Label for small screens -->
+                <div class="label" id="tanimoto_label" *ngIf="isMobile">
+                  Tanimoto Similarity Score
+                </div>
+                <!-- Tanimoto score -->
+                <div id="tanimoto_score" class="d-flex justify-content-center">
+                  <div class="tm-icon" [ngStyle]="{'background-color': tanimotoScale(element['tanimoto']), 'color': getFontColor(element['tanimoto'])}">{{element['tanimoto'] | number: '1.2-2'}}</div>
+                </div>
+              </div>
+
+
 
               <!-- <div class="exact-match">exact match</div> -->
 
@@ -107,7 +128,7 @@
             <mat-header-cell *matHeaderCellDef>
               <span class="mat-header">Structure</span>
             </mat-header-cell>
-            <mat-cell *matCellDef="let element">
+            <mat-cell *matCellDef="let element" [ngClass]="element['expanded'] ? 'expanded' : ''">
               <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
                 <app-struct2d [structure]="element['id']" struct_type="inchikey" *ngIf="element['id'].length === 27"></app-struct2d>
               </a>
@@ -120,16 +141,29 @@
               <span class="mat-header">Assay Hits</span>
               <mat-icon class='sort-icon' matTooltip="sort by number of assay hits">sort</mat-icon>
             </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="flex-column">
-              <span class="circle" [ngStyle]="{'background-color': 'rgba(65, 74, 81,' + getColor(element.assay_types) + ')'}"></span>
+            <mat-cell *matCellDef="let element" class="flex-column"
+            [ngClass]="element['expanded'] ? 'expanded' : ''">
+
+              <div class="d-flex flex-row justify-content-center">
+                <!-- Label for small screens -->
+                <div class="label" id="assay_label" *ngIf="isMobile">
+                  Assay Hits
+                </div>
+                <!-- binary circle if compound in reframe library -->
+                <div id="assay_hits">
+                  <div>
+                    <span class="circle" [ngStyle]="{'background-color': 'rgba(65, 74, 81,' + getColor(element.assay_types) + ')'}"></span>
+                  </div>
+                </div>
+              </div>
+
+
 
               <ul class="assay-list">
                 <li class="assay-title" *ngFor="let assay of element.assay_types; let i=index">
                   <a [routerLink]="['/assays', assay[1]]" target="_blank">{{assay[0]}}</a>
-                  <!-- <span *ngIf="i + 1 < element.assay_types.length" class='data-separator'></span> -->
                 </li>
               </ul>
-              <!-- <span class="circle" [ngStyle]="{'background-color': 'rgba(85, 98, 109,' + getColor(element.assay_types) + ')'}"></span> -->
             </mat-cell>
           </ng-container>
 
@@ -166,22 +200,28 @@
       </div>
     </ng-template>
 
-    <ng-container *ngSwitchCase="500">
+    <!-- <ng-container *ngSwitchCase="500">
       <p>
         ReframeDB is currently down. Please email <a href="mailto:help@reframedb.org?subject=ReFrameDB 500 status: {{ APIquery }}">help@reframedb.org</a> to let us know.
         <p>
-
-    </ng-container>
+    </ng-container> -->
 
     <ng-container *ngSwitchDefault>
-      <p>
-        Your query resulted in an error. Often, this happens if the inputted structure is an invalid SMILES string or InChI key. </p>
-      <p>
-        Check the SMILES structure for improper aromatization, use keuklized SMILES strings, and/or remove generic atoms.</p>
-      <p>
+      <h5>Your query resulted in an error.</h5>
 
-        Please try again and if it persists, email <a href="mailto:help@reframedb.org?subject=ReFrameDB bad query: {{ APIquery }}">help@reframedb.org</a>
+      <p *ngIf="probSMILES">
+        Did you mean to search for a structure match by SMILES string? Try a
+        <a [routerLink]="['/search/']" [queryParams]='{ query:  queryString, type: "structure", mode: "exact" }'>structure search</a>.
       </p>
+
+      <p>
+        Often, this happens if the inputted structure is too complicated (contains too many terms separated by spaces or special characters). Consider deleting some words, or enclose the search in double quotes (e.g. "tyrosine kinase inhibitor")</p>
+      <p>
+        <!-- If using a SMILES string, check the SMILES structure for improper aromatization, use keuklized SMILES strings, and/or remove generic atoms.</p> -->
+
+        <p>
+          Please try again and if it persists, email <a href="mailto:help@reframedb.org?subject=ReFrameDB bad query: {{ APIquery }}">help@reframedb.org</a>
+        </p>
     </ng-container>
   </ng-container>
 

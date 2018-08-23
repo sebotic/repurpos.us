@@ -10,6 +10,7 @@ import { Compound } from '../../../_models';
 
 export class SearchResultSimilarComponent implements OnInit {
   @Input() compound_result: Compound;
+  @Input() mobile: boolean;
   num_similar: number = 2; // maximum number of similar compounds to show at one time
 
   constructor() { }

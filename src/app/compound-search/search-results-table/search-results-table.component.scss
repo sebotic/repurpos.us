@@ -4,7 +4,7 @@
   flex-direction: column;
   /* max-height: 500px; */
   min-width: 300px;
-  max-width: 1400px;
+  max-width: 1800px;
   width: 100%;
   position: relative;
 }
@@ -14,12 +14,12 @@
 }
 
 mat-row {
-  border-bottom: 1px solid #c3c4c5;
+  border-bottom: 1px solid #7e8b98;
   align-items: stretch;
 }
 
 mat-row:first-of-type {
-  border-top: 1px solid #c3c4c5;
+  border-top: 1px solid #7e8b98;
 }
 
 .mat-header-row {
@@ -93,10 +93,8 @@ mat-row:first-of-type {
 }
 
 .mat-column-reframeid {
-  // flex: 0 0 auto;
-  padding: 0 24px;
   align-items: center;
-  // justify-content: center;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -104,13 +102,6 @@ mat-row:first-of-type {
   flex: 0 0 auto;
 }
 
-.mat-column-assay_titles {
-  flex: 0 0 auto;
-}
-
-.mat-column-alias {
-  flex: 0 0 400px;
-}
 
 .mat-column-tanimoto {
   flex: 0 0 110px;
@@ -123,10 +114,18 @@ mat-row:first-of-type {
 mat-cell.mat-cell.cdk-column-tanimoto.mat-column-tanimoto.ng-star-inserted {
   display: flex !important;
   justify-content: center !important;
+}
+
+#tanimoto_score {
+  width: 100%;
+  max-width: 80px;
+}
+
+.tm-icon {
   border-radius: 3px;
-  margin: 1%;
-  max-height: 25px;
-  align-self: center;
+  text-align: center;
+  padding: 7px 25px;
+  max-width: 100px !important;
 }
 
 .exact-match {
@@ -148,7 +147,7 @@ div#reframe_cmpd {
 // Aliases and IDs
 
 .label {
-  color: #a9b1ba;
+  color: #4e5861;
   text-transform: uppercase;
   font-family: "Lato", sans-serif;
   font-weight: 300;
@@ -210,10 +209,6 @@ a#more {
 
 .cmpd-avail,
 .no-cmpd {}
-
-.assay-avail {
-  background-color: #c3c4c5;
-}
 
 .no-assay,
 .no-cmpd {
@@ -289,17 +284,52 @@ a#more {
     display: none;
   }
 
+  td.aliases {
+    border: none !important;
+  }
+
   mat-row {
     flex-direction: column;
+    // border-bottom-width: 2px;
   }
 
   .mat-icon {
     transition: transform 0.5s ease-in-out;
   }
 
+  .sim-cmpds {
+    width: 80%;
+  }
+
+  #assay_hits,
+  #assay_label,
+  #reframe_cmpd,
+  #reframe_label,
+  #tanimoto_label,
+  #tanimoto_score {
+    flex: 0 0 50% !important;
+    max-width: 100%;
+    align-self: center;
+  }
+
   mat-cell {
-    padding: 0 24px;
+    padding: 6px 15px !important;
+    margin: 0;
     justify-content: space-between;
+
+    &.mat-column-main_label {
+      flex-direction: row;
+      order: -1;
+      background: #f5f6f7;
+    }
+
+    &.mat-column-struct {
+      order: 99;
+    }
+
+    &.mat-column-tanimoto {
+      width: 100%;
+    }
 
     &:not(.mat-column-main_label) {
       flex: 0;
@@ -337,7 +367,7 @@ a#more {
       // }
       &.expanded {
         max-height: 350px;
-        border-top-color: #c3c4c5;
+        border-top-color: #7e8b98;
 
         * {
           max-height: 350px;
@@ -355,12 +385,6 @@ a#more {
 
     &.mat-column-reframeid {
       padding: 0 15px;
-    }
-
-    &.expanded {
-      .mat-icon {
-        transform: rotate(180deg);
-      }
     }
   }
   // mat-cell

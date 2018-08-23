@@ -9,30 +9,30 @@
 
         <div class="vendor-header row" [ngClass]="i === 0 ? 'first-entry' : 'notfirst-entry'">
           <!-- Vendor ID: GVK -->
-          <div *ngIf="x && x.hasOwnProperty('gvk_id')" class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+          <div *ngIf="x && x.hasOwnProperty('gvk_id')" class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
             <span class="title">{{vendors[k].name}} ID: </span>
             <span>{{ x['gvk_id'] }}</span>
           </div>
           <!-- Vendor ID: Integrity -->
-          <div *ngIf="x && x.hasOwnProperty('id')" class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+          <div *ngIf="x && x.hasOwnProperty('id')" class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
             <span class="title">{{vendors[k].name}} ID: </span>
             <span>{{ x['id'] }}</span>
           </div>
           <!-- Vendor ID: Informa -->
-          <div *ngIf="x && x.hasOwnProperty('informa_id')" class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+          <div *ngIf="x && x.hasOwnProperty('informa_id')" class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
             <!-- <span class="title">{{vendors[k].name}} ID: </span>
             <span>{{ x['informa_id'] }}</span> -->
           </div>
 
           <!-- Highest phase -->
-          <div *ngIf="x && x.hasOwnProperty('highest_phase')" class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+          <div *ngIf="x && x.hasOwnProperty('highest_phase')" class="col-xl-5 col-lg-5 col-md-5">
             <span class="title">Highest Phase: </span>
             <span>{{x['highest_phase']}}</span>
             <app-clinical-phase [phase]="[x['highest_phase']]" [vendorName]="vendors[k].id"></app-clinical-phase>
           </div>
 
           <!-- Phase -->
-          <div *ngIf="x && x.hasOwnProperty('phase') && x['phase'].length > 0" class="col-xl-6 col-lg-6 col-md-6">
+          <div *ngIf="x && x.hasOwnProperty('phase') && x['phase'].length > 0" class="col-xl-5 col-lg-5 col-md-5">
             <span class="title">Phase: </span>
             <span><span *ngFor="let y of x['phase']; let i = index">{{y}}<span *ngIf="i + 1 < x['phase'].length" class='data-separator'></span></span>
             </span>
@@ -40,7 +40,7 @@
           </div>
 
           <!-- Salt form -->
-          <!-- <app-salt-form class="col-xl-3 col-lg-3 col-md-3 col-sm-3 float-right"></app-salt-form> -->
+          <!-- <app-salt-form class="col-xl-3 col-lg-3 col-md-3 col-sm-6 float-right"></app-salt-form> -->
 
           <!-- END OF VENDOR HEADER -->
         </div>
