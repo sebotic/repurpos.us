@@ -74,7 +74,8 @@
               Sample in Screening Library</span>
               <mat-icon class='sort-icon' matTooltip="sort by library compound">sort</mat-icon>
             </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngClass]="element['expanded'] ? 'expanded' : ''">
+            <mat-cell *matCellDef="let element" class="flex-column"
+            [ngClass]="element['expanded'] ? 'expanded' : ''">
 
               <div class="d-flex flex-row justify-content-center">
                 <!-- Label for small screens -->
@@ -140,7 +141,8 @@
               <span class="mat-header">Assay Hits</span>
               <mat-icon class='sort-icon' matTooltip="sort by number of assay hits">sort</mat-icon>
             </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="flex-column" [ngClass]="element['expanded'] ? 'expanded' : ''">
+            <mat-cell *matCellDef="let element" class="flex-column"
+            [ngClass]="element['expanded'] ? 'expanded' : ''">
 
               <div class="d-flex flex-row justify-content-center">
                 <!-- Label for small screens -->

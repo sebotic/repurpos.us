@@ -93,8 +93,8 @@ mat-row:first-of-type {
 }
 
 .mat-column-reframeid {
-  padding: 0 24px;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -102,13 +102,6 @@ mat-row:first-of-type {
   flex: 0 0 auto;
 }
 
-.mat-column-assay_titles {
-  flex: 0 0 auto;
-}
-
-.mat-column-alias {
-  flex: 0 0 400px;
-}
 
 .mat-column-tanimoto {
   flex: 0 0 110px;
@@ -320,7 +313,7 @@ a#more {
   }
 
   mat-cell {
-    padding: 6px 15px;
+    padding: 6px 15px !important;
     margin: 0;
     justify-content: space-between;
 
