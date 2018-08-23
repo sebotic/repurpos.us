@@ -4,7 +4,11 @@
     To aid in comparing data between data sources, compounds were combined if they contained the same primary ingredient.
   </p>
   <p>
-    Primary ingredients were identified by desalting the compound's SMILES string and normalizing tautomers and protonation states.
+    If there was more than one compound in the SMILES string, the primary ingredient was isolated by first splitting the compound's SMILES string into separate components.
+    The primary ingredient was identified by comparing the frequency of the components to the rest of the Reframe collection; the more frequent components were deemed to be counterions and removed.
+  </p>
+  <p>
+    Compounds from different data sources were combined if they shared the same InChI key for the primary ingredient, after normalizing tautomers and protonation states.
   </p>
   <p>
     No stereoisomers (or unknown stereochemistry) were combined.
