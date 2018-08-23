@@ -28,7 +28,6 @@ import { environment } from "../../environments/environment";
 export class AssaysComponent implements OnInit {
   assayList: AssayDetails[] = [];
   selAssays: AssayDetails[] = [];
-  notMobile: boolean;
   // store unique indications
   indicationList: string[];
   // map to indication colors
@@ -43,9 +42,6 @@ export class AssaysComponent implements OnInit {
     // private http: Http,
     private http2: HttpClient
   ) {
-    if (window.screen.width > 760) {
-      this.notMobile = true;
-    }
 
     // get colors
     this.indicColors = colorSvc.colorList;
