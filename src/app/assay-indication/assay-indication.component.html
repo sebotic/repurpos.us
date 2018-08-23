@@ -1,0 +1,14 @@
+<ng-container *ngIf="assay_name && assay_link">
+  <a [routerLink]="['/assays', assay_link]" target="_blank">
+  <span class="assay-type"
+  [ngStyle]="{'background-color': colorSvc.getIndicColor(assay_type)['background'], 'color': colorSvc.getIndicColor(assay_type)['font']}">
+  <!-- <span class="assay-type" [ngStyle]="{'background-color': colorSvc.getIndicColor(assay_type)['bg-lt']}"> -->
+    <span [outerHTML]="assay_type | sciItalicize"></span>
+  </span>
+  <span class="assay-name" [ngStyle]="{'background-color': colorSvc.getIndicColor(assay_type)['bg-lt']}">
+  <!-- <span class="assay-name" [ngStyle]="{'background-color': colorSvc.getIndicColor(assay_type)['background'], 'color': colorSvc.getIndicColor(assay_type)['font']}"> -->
+      <span [outerHTML]="assay_name | sciItalicize"></span>
+  </span>
+
+</a>
+</ng-container>

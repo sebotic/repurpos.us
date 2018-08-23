@@ -136,6 +136,7 @@ import { SearchResultSimilarComponent } from './compound-search/search-results-t
 import { SciItalicizePipe } from './_pipes/sci-italicize.pipe';
 import { AssaySparklineComponent } from './compound-data/assay-sparkline/assay-sparkline.component';
 import { HeaderComponent } from './header/header.component';
+import { AssayIndicationComponent } from './assay-indication/assay-indication.component';
 
 @NgModule({
   exports: [
@@ -242,6 +243,7 @@ export class MaterialModule {}
     Struct2dComponent,
     SaltWarningComponent,
     SaltWarningDialogComponent,
+    AssayIndicationComponent,
     ClinicalPhaseComponent,
     SaltFormComponent,
     AssaySparklineComponent,

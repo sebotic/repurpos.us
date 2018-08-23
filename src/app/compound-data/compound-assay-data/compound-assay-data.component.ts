@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { AssayData } from '../../_models/index';
-import { CompoundService } from '../../_services/index';
+import { CompoundService, ColorPaletteService } from '../../_services/index';
 
 @Component({
   selector: 'app-compound-assay-data',
@@ -12,8 +12,11 @@ import { CompoundService } from '../../_services/index';
 export class CompoundAssayDataComponent implements OnInit {
   assayData: Array<AssayData> = [];
   assayMin: number;
+  // assay_type: string;
+  // indic: string[] = ["Zika", "Malaria", "M. tuberculosis", "Helminth: anti-Wolbachia", "Cryptosporidium", '']
 
-  constructor(private cmpdSvc: CompoundService) {
+
+  constructor(private cmpdSvc: CompoundService, private colorSvc: ColorPaletteService) {
 
     this.cmpdSvc.assaysState.subscribe((assays: AssayData[]) => {
       this.assayData = assays.sort((a: any, b: any) => a.ac50 - b.ac50);
@@ -25,6 +28,8 @@ export class CompoundAssayDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    // let rand = Math.floor(Math.random() * 6);
+    // this.assay_type = this.indic[rand];
   }
 
 }

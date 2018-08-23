@@ -161,7 +161,7 @@
 
               <ul class="assay-list">
                 <li class="assay-title" *ngFor="let assay of element.assay_types; let i=index">
-                  <a [routerLink]="['/assays', assay[1]]" target="_blank">{{assay[0]}}</a>
+                  <app-assay-indication [assay_name]="assay[0]" [assay_link]="assay[1]" [assay_type]="assay[2]"></app-assay-indication>
                 </li>
               </ul>
             </mat-cell>
