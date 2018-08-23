@@ -22,7 +22,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
   // --- Plot sizing ---
   private element: any;
   private element_dims: any;
-  private margin: any = { top: 70, bottom: 0, left: 160, right: 40, colorbar: 20, xaxis: 15, pages: 40};
+  private margin: any = { top: 70, bottom: 0, left: 160, right: 40, colorbar: 20, xaxis: 15, pages: 40 };
   private width: number;
   private height: number;
   private min_height: number = 400;
@@ -60,7 +60,16 @@ export class DotPlotComponent implements OnInit, OnChanges {
     }
   }
 
+  resizePlot(event) {
+    this.updateChartSize();
+    if (this.data) {
+      this.updateChart();
+    }
+  }
+
   ngOnChanges() {
+    console.log(this.data)
+    console.log(this.tooltipData)
     if (this.chart) {
       this.updateChart();
     }
@@ -75,6 +84,51 @@ export class DotPlotComponent implements OnInit, OnChanges {
     this.height = Math.max(this.min_height, window.innerHeight - this.element_dims.top) - this.margin.top - this.margin.bottom - this.margin.pages;
   }
 
+  updateChartSize() {
+    this.getSVGDims();
+    let svg = d3.select('.svg_dotplot');
+
+    svg.attr("width", this.width + this.margin.left + this.margin.right)
+      .attr("height", this.height + this.margin.top + this.margin.bottom);
+
+    // Update things that change with widths
+    // --- x & y axes --
+    this.x = d3.scaleLog()
+      .rangeRound([0, this.width]);
+
+    this.y = d3.scaleBand()
+      .rangeRound([0, this.height])
+      .paddingInner(0.05)
+      .paddingOuter(0.35);
+
+    this.xAxis = d3.axisTop(this.x)
+      .ticks(6, '.0e')
+
+    this.yAxis = d3.axisLeft(this.y);
+
+
+    // create initial x & y axis
+    d3.select('.axis--x')
+      .attr('transform', `translate(${this.margin.left}, ${this.margin.top - this.margin.xaxis})`);
+
+
+    let scalebar = d3.select("#scalebar");
+
+    // Draw the rectangle and fill with gradient
+    scalebar
+      .attr("width", this.width);
+
+    scalebar.select('rect')
+      .attr("width", this.width);
+
+    scalebar.select(".annotation-right")
+      .attr("transform", `translate(${this.width}, -${this.margin.colorbar + this.margin.xaxis})`);
+
+    // d3.select(".annotation-left")
+    //   .attr("transform", `translate(0, -${this.margin.colorbar + this.margin.xaxis})`)
+
+  }
+
   // Data-independent setup
   createChart() {
     this.getSVGDims();
@@ -82,6 +136,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
     // Append SVG
     const svg = d3.select(this.element)
       .append('svg')
+      .attr("class", "svg_dotplot")
       .attr("width", this.width + this.margin.left + this.margin.right)
       .attr("height", this.height + this.margin.top + this.margin.bottom)
 
