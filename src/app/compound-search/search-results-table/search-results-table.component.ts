@@ -74,7 +74,7 @@ export class SearchResultsTableComponent implements OnInit {
     private backendSvc: BackendSearchService,
     private searchResultService: SearchResultService,
     private titleService: Title,
-    private tanimotoSvc: TanimotoScaleService
+    private tanimotoSvc: TanimotoScaleService,
   ) {
     // media query
     this.checkMobile()

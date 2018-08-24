@@ -43,8 +43,7 @@ export class AssaysComponent implements OnInit {
     private http2: HttpClient
   ) {
 
-    // get colors
-    this.indicColors = colorSvc.colorList;
+
   }
 
   ngOnInit() {
@@ -52,39 +51,11 @@ export class AssaysComponent implements OnInit {
     this.titleService.setTitle("assays | reframeDB");
   }
 
-
-  retrieveAssayList(): void {
-    this.http2.get(environment.host_url + '/assay_list', {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-    }).subscribe((r: any) => {
-      let b = r.body;
-      this.assayList = b;
-      this.selAssays = b;
-      console.log(this.assayList)
-      this.indicationList = this.assayList.map((d: any) => d.indication);
-    });
-  }
-
-  expandCell(e) {
-    e.target.parentNode.parentNode.children[1].classList.toggle('expanded');
-    e.target.parentNode.parentNode.children[2].classList.toggle('expanded');
-    e.target.parentNode.parentNode.children[3].classList.toggle('expanded');
-    e.target.parentNode.parentNode.children[4].classList.toggle('expanded');
-    //e.target.parentNode.parentNode.childNodes.addClass('expanded');
-  }
-
-  getIndicColor(indication: string) {
-    // hijack d3's color scale mapping
-    let indicColorScale = d3.scaleOrdinal().domain(this.indicationList).range(this.indicColors);
-
-    let bg = indicColorScale(indication);
-
-    // Note: recommendation is for a more stringent contrast cutoff at 4.5.
-    let font_color = chroma.contrast(bg, 'white') < 3 ? '#212529' : 'white';
-
-    return ({ 'background': bg, 'font': font_color })
+  retrieveAssayList() {
+    this.colorSvc.assaysState.subscribe((aList: AssayDetails[]) => {
+      this.assayList = aList;
+      this.selAssays = aList;
+    })
   }
 
   getTypeColor(type: string) {

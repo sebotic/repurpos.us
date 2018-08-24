@@ -15,22 +15,24 @@ export class SciItalicizePipe implements PipeTransform {
   private micron_words: string[] = ['uM']
 
   transform(content) {
-    let content_xform = content;
+    if (content) {
+      let content_xform = content;
 
-    for (let word of this.micron_words) {
-      // use global options to replace all w/i regex
-      // italicize words
-      content_xform = content_xform.replace(new RegExp(word, 'g'), this.micronize(word));
+      for (let word of this.micron_words) {
+        // use global options to replace all w/i regex
+        // italicize words
+        content_xform = content_xform.replace(new RegExp(word, 'g'), this.micronize(word));
+      }
+
+      for (let word of this.italic_words) {
+        // use global options to replace all w/i regex
+        // italicize words
+        content_xform = content_xform.replace(new RegExp(word, 'g'), this.italicize(word));
+      }
+
+
+      return `${content_xform}`;
     }
-
-    for (let word of this.italic_words) {
-      // use global options to replace all w/i regex
-      // italicize words
-      content_xform = content_xform.replace(new RegExp(word, 'g'), this.italicize(word));
-    }
-
-
-    return `${content_xform}`;
   }
 
   italicize(word: string) {

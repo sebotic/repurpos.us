@@ -43,7 +43,7 @@
         <div class="flexP">
           <div class="flexC">
             <mat-chip-list class="">
-              <mat-chip class="indication mr-auto" (click)="filterIndic(assay.indication)" [ngStyle]="{'background-color': getIndicColor(assay.indication)['background'], 'color': getIndicColor(assay.indication)['font']}">
+              <mat-chip class="indication mr-auto" (click)="filterIndic(assay.indication)" [ngStyle]="{'background-color': colorSvc.getIndicColor(assay.indication)['bg1'], 'color': colorSvc.getIndicColor(assay.indication)['font1']}">
                 <span [outerHTML]="assay.indication | sciItalicize">
               </span>
               </mat-chip>
