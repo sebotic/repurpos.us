@@ -9,7 +9,7 @@
 
           <!-- Drug name -->
           <ng-container matColumnDef="main_label">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header">
+            <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="mat-header">
               <span class="mat-header">Name</span>
               <mat-icon class='sort-icon' matTooltip="sort by name">sort</mat-icon>
             </mat-header-cell>
@@ -69,7 +69,7 @@
 
           <!-- In physical library -->
           <ng-container matColumnDef="reframeid">
-            <mat-header-cell *matHeaderCellDef mat-sort-header start="desc" class="mat-header">
+            <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" start="desc" class="mat-header">
               <span class="mat-header">
               Sample in Screening Library</span>
               <mat-icon class='sort-icon' matTooltip="sort by library compound">sort</mat-icon>
@@ -100,7 +100,7 @@
 
           <!-- Tanimoto score -->
           <ng-container matColumnDef="tanimoto">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header">
+            <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="mat-header">
               <span class="mat-header">Tanimoto Similarity Score</span>
               <mat-icon class='sort-icon' matTooltip="sort by Tanimoto score">sort</mat-icon>
             </mat-header-cell>
@@ -137,7 +137,7 @@
 
           <!-- Assay titles -->
           <ng-container matColumnDef="assays">
-            <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header start="desc" class="mat-header">
+            <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header disableClear="true" start="desc" class="mat-header">
               <span class="mat-header">Assay Hits</span>
               <mat-icon class='sort-icon' matTooltip="sort by number of assay hits">sort</mat-icon>
             </mat-header-cell>
