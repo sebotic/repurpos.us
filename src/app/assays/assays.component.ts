@@ -34,6 +34,8 @@ export class AssaysComponent implements OnInit {
   indicColors: string[];
   typeColors: string[];
   isFiltered: boolean = false;
+  filter: string;
+  filter_color: string;
 
   constructor(
     // private route: ActivatedRoute,
@@ -85,11 +87,15 @@ export class AssaysComponent implements OnInit {
 
   filterIndic(indication: string) {
     this.selAssays = this.assayList.filter((d: any) => d.indication === indication);
+    this.filter = indication;
+    this.filter_color = <string>this.colorSvc.getIndicColor(indication)['bg1'];
     this.isFiltered = true;
   }
 
   filterType(type: string) {
     this.selAssays = this.assayList.filter((d: any) => d.assay_type.includes(type));
+    this.filter = type;
+    this.filter_color = this.getTypeColor(type)[1];
     this.isFiltered = true;
   }
 
