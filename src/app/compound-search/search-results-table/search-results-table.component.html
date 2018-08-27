@@ -159,7 +159,7 @@
                     </li>
                   </ul>
                 </div>
-                
+
                 <ng-template #no_assays>
                   <div class="align-self-center">none</div>
                 </ng-template>
@@ -174,7 +174,7 @@
             <mat-cell *matCellDef="let element">
               <ul class="assay-list">
                 <li class="assay-title" *ngFor="let assay of element.assay_types; let i=index">
-                  <a [routerLink]="['/assays', assay[1]]" target="_blank">{{assay[0]}}</a>
+                  <a [routerLink]="['/assays', assay[1]]">{{assay[0]}}</a>
                   <!-- <span *ngIf="i + 1 < element.assay_types.length" class='data-separator'></span> -->
                 </li>
               </ul>

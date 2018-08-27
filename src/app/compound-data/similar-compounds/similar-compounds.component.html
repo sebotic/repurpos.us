@@ -6,7 +6,7 @@
   <div class="similar-grp clearfix row">
     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12" *ngFor="let related of similarityResults; let i=index">
       <div class="similar-cmpds" *ngIf="i < num_results" id="{{related.id}}">
-        <a [routerLink]="['/compound_data', related.id.split('/').pop(), {qid: related.qid.split('/').pop()}]" target="_blank">
+        <a [routerLink]="['/compound_data', related.id.split('/').pop(), {qid: related.qid.split('/').pop()}]">
           <!-- Compound name -->
           <div class="similar-label">
             <h4>{{ related.main_label }}</h4>
