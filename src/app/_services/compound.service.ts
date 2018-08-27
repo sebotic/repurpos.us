@@ -488,7 +488,16 @@ export class CompoundService {
           }).subscribe((r) => {
             // search results
             let b = r.body[id];
-            console.log(b)
+            console.log(b);
+
+            // make sure certain keys exist as Arrays
+            let doc_keys = Array('reframe_id', 'gvk', 'informa', 'integrity');
+
+            for (let x of doc_keys) {
+              if (!b.hasOwnProperty(x)) {
+                b[x] = [];
+              }
+            }
 
             // Is it a Reframe compound? --> compound-header
             this.rfmSubject.next(b.reframe_id.length > 0);
