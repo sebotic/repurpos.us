@@ -282,7 +282,7 @@ export class CompoundService {
             this.prop_name_map[p]['name'] = i['propLabel']['value'];
 
             if (i.hasOwnProperty('furl')) {
-              this.prop_name_map[p]['url'] = i['furl']['value'].replace("$1", "");
+              this.prop_name_map[p]['url'] = i['furl']['value'];
             }
           }
 
@@ -340,7 +340,7 @@ export class CompoundService {
 
           let addTo = function(arr: WikiData[], propObj: Object, value, pid: string) {
             let prop = propObj['name'];
-            let url = propObj['url'] ? propObj['url'] + value : null;
+            let url = propObj['url'] ? propObj['url'].replace("$1", value) : null;
 
             // Check if already exists
             let idxProp = arr.map((d: Object) => d['property']).indexOf(prop);

@@ -34,9 +34,11 @@
       <div class="title" scope="row">{{obj['property']}}</div>
 
       <div scope="row">
-        <span *ngFor="let id of obj['values']">
-          <a [href]="obj['url']" target="_blank">{{ id }}</a>
+        <span *ngFor="let id of obj['values']; let i = index">
+          <a [href]="obj['url']" target="_blank" *ngIf="obj['url']; else no_link">{{ id }}</a>
+          <span class='data-separator' *ngIf="i + 1 < obj['values'].length"></span>
         </span>
+        <ng-template #no_link> id </ng-template>
       </div>
     </ng-template>
 
