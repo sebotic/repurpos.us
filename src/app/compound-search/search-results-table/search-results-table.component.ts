@@ -106,6 +106,7 @@ export class SearchResultsTableComponent implements OnInit {
 
           // Calculate the number of assays per hit
           results.forEach((d: any) => {
+            d['assay_types'] = d.assay_types.sort((a,b) => a[2] > b[2]);
             d['assays'] = d.assay_types.length;
             d['aliases'] = this.removeDupeAlias(d.aliases);
             d['alias_ct'] = this.num_aliases;
