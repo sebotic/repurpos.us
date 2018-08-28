@@ -588,6 +588,10 @@ export class CompoundService {
                 // TODO: make sure this works when flip RFM id
                 this.rfmSubject.next(search_results.reframeid);
 
+                // send off SMILES structure
+                this.smiles = search_results.smiles;
+                this.smilesSubject.next(this.smiles);
+
 
                 // Send off what data are available
                 this.availSubject.next(search_results.properties);
