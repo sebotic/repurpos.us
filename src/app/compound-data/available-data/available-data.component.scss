@@ -1,8 +1,8 @@
-h4 {
+.avail-table h4 {
   margin-top: 0;
 }
 
-h5 {
+.avail-table h5 {
   font-size: 1.25em;
   /* font-weight: 300; */
   color: #b7bec5;
@@ -20,7 +20,7 @@ h5 {
   border-spacing: 25px;
 }
 
-td {
+.avail-table td {
   padding-bottom: 10px;
   vertical-align: baseline;
   padding-right: 5px;
@@ -36,7 +36,7 @@ td {
 }
 
 
-.mat-tooltip {
-  font-size: 1em !important;
+/deep/ .mat-tooltip {
+  font-size: 0.9em !important;
   font-family: "Lato", Arial, sans-serif;
 }

@@ -5,7 +5,7 @@
       <td matTooltip="{{property.value ? property.tooltip.replace('available', 'AVAILABLE') : property.tooltip.replace('available', 'NOT AVAILABLE').replace('1+', '0')}}">
         {{property.name}}
       </td>
-      <td [ngClass]="property.value ? 'circle available' : 'circle not-available'">
+      <td [ngClass]="property.value ? 'circle available' : 'circle not-available'" matTooltip="{{property.value ? property.tooltip.replace('available', 'AVAILABLE') : property.tooltip.replace('available', 'NOT AVAILABLE').replace('1+', '0')}}">
       </td>
     </tr>
   </table>
