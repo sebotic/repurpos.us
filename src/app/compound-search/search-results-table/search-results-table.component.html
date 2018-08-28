@@ -69,7 +69,7 @@
           <!-- In physical library -->
           <ng-container matColumnDef="reframeid">
             <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" start="desc" class="mat-header">
-              <span class="mat-header">
+              <span class="mat-header" [matTooltip]="rfmTooltip">
               Sample in Screening Library</span>
               <mat-icon class='sort-icon' matTooltip="sort by library compound">sort</mat-icon>
             </mat-header-cell>
@@ -77,7 +77,7 @@
 
               <div class="d-flex flex-row justify-content-center">
                 <!-- Label for small screens -->
-                <div class="label" id="reframe_label" *ngIf="isMobile">
+                <div class="label" id="reframe_label" *ngIf="isMobile" [matTooltip]="rfmTooltip">
                   Sample in Screening Library
                 </div>
                 <!-- binary circle if compound in reframe library -->
@@ -98,14 +98,15 @@
 
           <!-- Tanimoto score -->
           <ng-container matColumnDef="tanimoto">
-            <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" class="mat-header">
+            <mat-header-cell *matHeaderCellDef class="mat-header" [matTooltip]="tanimotoTooltip"
+            mat-sort-header disableClear="true" >
               <span class="mat-header">Tanimoto Similarity Score</span>
               <mat-icon class='sort-icon' matTooltip="sort by Tanimoto score">sort</mat-icon>
             </mat-header-cell>
             <mat-cell *matCellDef="let element" [ngClass]="element['expanded'] ? 'expanded' : ''">
               <div class="d-flex flex-row">
                 <!-- Label for small screens -->
-                <div class="label" id="tanimoto_label" *ngIf="isMobile">
+                <div class="label" id="tanimoto_label" *ngIf="isMobile" [matTooltip]="tanimotoTooltip">
                   Tanimoto Similarity Score
                 </div>
                 <!-- Tanimoto score -->
@@ -135,7 +136,7 @@
 
           <!-- Assay titles -->
           <ng-container matColumnDef="assays">
-            <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header disableClear="true" start="desc" class="mat-header">
+            <mat-header-cell *matHeaderCellDef class="assay-label" mat-sort-header disableClear="true" start="desc" class="mat-header" [matTooltip]="assayTooltip">
               <span class="mat-header">Assay Hits</span>
               <mat-icon class='sort-icon' matTooltip="sort by number of assay hits">sort</mat-icon>
             </mat-header-cell>
@@ -143,7 +144,7 @@
 
               <div class="d-flex flex-row">
                 <!-- Label for small screens -->
-                <div class="label" id="assay_label" *ngIf="isMobile">
+                <div class="label" id="assay_label" *ngIf="isMobile" [matTooltip]="assayTooltip">
                   Assay Hits
                 </div>
                 <!-- binary circle if compound in reframe library -->
@@ -161,7 +162,7 @@
                 </div>
 
                 <ng-template #no_assays>
-                  <div class="align-self-center">none</div>
+                  <!-- <div class="align-self-center">none</div> -->
                 </ng-template>
 
 
