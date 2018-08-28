@@ -39,7 +39,7 @@
         <!-- If there's a URL provided for the resource from Wikidata, hyperlink out -->
         <ng-template #resource_link let-obj="obj">
           <span *ngFor="let id of obj['values']; let i = index">
-            <a [href]="obj['url']" target="_blank" *ngIf="obj['url']; else no_link">{{ id }}</a>
+            <a [href]="obj['url']" target="_blank">{{ id }}</a>
             <span class='data-separator' *ngIf="i + 1 < obj['values'].length"></span>
           </span>
         </ng-template>
