@@ -34,11 +34,23 @@
       <div class="title" scope="row">{{obj['property']}}</div>
 
       <div scope="row">
-        <span *ngFor="let id of obj['values']; let i = index">
-          <a [href]="obj['url']" target="_blank" *ngIf="obj['url']; else no_link">{{ id }}</a>
-          <span class='data-separator' *ngIf="i + 1 < obj['values'].length"></span>
-        </span>
-        <ng-template #no_link> id </ng-template>
+        <ng-container [ngTemplateOutlet]="obj['url'] ? resource_link : no_link" [ngTemplateOutletContext]="{obj:obj}"></ng-container>
+
+        <!-- If there's a URL provided for the resource from Wikidata, hyperlink out -->
+        <ng-template #resource_link let-obj="obj">
+          <span *ngFor="let id of obj['values']; let i = index">
+            <a [href]="obj['url']" target="_blank" *ngIf="obj['url']; else no_link">{{ id }}</a>
+            <span class='data-separator' *ngIf="i + 1 < obj['values'].length"></span>
+          </span>
+        </ng-template>
+
+        <!-- If there's no URL provided for the resource from Wikidata, don't hyperlink out -->
+        <ng-template #no_link let-obj="obj">
+          <span *ngFor="let id of obj['values']; let i = index">
+            {{ id }}
+            <span class='data-separator' *ngIf="i + 1 < obj['values'].length"></span>
+          </span>
+        </ng-template>
       </div>
     </ng-template>
 
