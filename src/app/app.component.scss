@@ -35,6 +35,10 @@ header li, footer li {
   padding-right: 12px;
 }
 
+.main-container {
+  min-height: calc(100vh - 230px);
+}
+
 
 /* footer */
 
@@ -45,18 +49,54 @@ footer {
   font-size: 1em;
   margin-top: 50px;
   margin-bottom: 6px;
-  vertical-align: middle;
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
-footer li {
-  padding-top: 6px;
-  padding-right: 18px;
+.logos {
+  a {
+    padding: 0 1em;
+  }
 }
 
-.calibr-logo {
+.logo {
   margin-top: 4px;
-  height: 30px;
+  height: 50px;
   vertical-align: middle;
+  transition: fill 0.5s;
+
+  &.scripps-logo {
+    .st0 {
+      transition: fill 0.5s;
+      fill: #FDB927;
+    }
+
+    &:hover {
+      fill: #FDB927;
+
+      .st0 {
+        //fill: darken(#FDB927, 20);
+      }
+    }
+  }
+
+  &.calibr-logo {
+    .st0 {
+      transition: fill 0.5s;
+      fill: #0D6E78;
+    }
+
+    &:hover {
+      fill: #0D6E79;
+
+      .st0 {
+        //fill: darken(#0D6E79, 10);
+      }
+    }
+  }
 }
 
 .gh {
@@ -67,4 +107,17 @@ footer li {
 
 .left-spacer {
   padding-left: 6px;
+}
+
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+  footer {
+    flex-direction: column;
+  }
+
+  .logos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em 0;
+  }
 }
