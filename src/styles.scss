@@ -1,52 +1,3 @@
-/*@import './app/vendor/semantic.min.css';*/
-/* Angular material themes */
-/*@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';*/
-/* @import '~@angular/material/prebuilt-themes/indigo-pink.css'; */
-/* @import '~@angular/material/prebuilt-themes/pink-bluegrey.css'; */
-/* @import '~@angular/material/prebuilt-themes/purple-green.css'; */
-/*@import 'https://fonts.googleapis.com/icon?family=Material+Icons';*/
-/*.ui.menu .item img.logo {*/
-/*margin-right: 1.5em;*/
-/*}*/
-/*form.ui.segment.form {*/
-/*background-color: #F1F9FF;*/
-/*margin-top: 2em;*/
-/*}*/
-/*form.form:after {*/
-/*content: '';*/
-/*display: block;*/
-/*height: 0;*/
-/*clear: both;*/
-/*visibility: hidden;*/
-/*}*/
-/*.votes {*/
-/*display: flex;*/
-/*align-items: center;*/
-/*justify-content: center;*/
-/*background-color: #E6E6E6;*/
-/*padding: 1em 0;*/
-/*border-radius: 5px;*/
-/*}*/
-/*.ui.grid.posts {*/
-/*margin-top: 2em;*/
-/*}*/
-/*.meta {*/
-/*color: #9A9A9A*/
-/*}*/
-/*.ui.grid>.row>.column.votes {*/
-/*display: flex;*/
-/*}*/
-/*ul.ui.list li:before {*/
-/*content: '';*/
-/*}*/
-/*.voters {*/
-/*clear: both;*/
-/*width: 100%;*/
-/*}*/
-/*make sure the material design modal dialog does not display a scrollbar, as this moves the content each time the
-modal dialog is being displayed. This could have side effects for other material design components using
-cdk-global-scrollblock!!
-*/
 // support for Firefox / Opera use of Material Icons
 // from: https://stackoverflow.com/questions/47671219/material-icons-not-working-via-react-materialize
 @font-face {
@@ -93,6 +44,8 @@ header {
   color: #212529;
 }
 
+
+// For reframedb brand
 .bold {
   font-weight: 400;
 }
@@ -101,6 +54,7 @@ header {
   opacity: 0.8;
   padding-left: 1px;
 }
+
 /* initial loading page */
 .loading {
   font-size: 1.25em;
@@ -119,8 +73,8 @@ a:hover {
 a.launch-search {
   color: #212529;
 }
-// colors
 
+// colors
 .main-color {
   color: #3D6DE0;
 }
@@ -146,12 +100,13 @@ a.launch-search {
     }
   }
 }
-// Font changes
 
+// Font changes
 button.mat-raised-button {
   font-family: "Lato", sans-serif;
   font-size: 16px;
 }
+
 /* • separator */
 .data-separator:after {
   content: "\2022";
@@ -159,6 +114,8 @@ button.mat-raised-button {
   padding-left: 3px;
   padding-right: 3px;
 }
+
+
 /* Radio buttons if data exist */
 $circle_diam: 15px;
 
@@ -176,8 +133,8 @@ $circle_diam: 15px;
 .cmpd-avail .circle {
   background-color: #FF5B67;
 }
-// Commonalities across compound report page
 
+// Commonalities across compound report page
 .smiles,
 .wrap {
   word-break: break-all !important;
@@ -186,12 +143,8 @@ $circle_diam: 15px;
 app-clinical-phase {
   display: block;
 }
-// .assay-table > tbody,
-// th {
-//   /* border-top: #717e8c 1px solid; */
-//   border-bottom: #717e8c 1px solid;
-// }
 
+// vendor/wikidata table commonalities
 .cmpd-table,
 table#cmpd-names,
 table.cmpd-table {
@@ -259,6 +212,7 @@ table.cmpd-table {
   border-bottom: 1px solid #c3c4c5; */
   word-break: normal;
 }
+
 /* Clearfix */
 @mixin clearfix() {
   &::after {
@@ -271,6 +225,7 @@ table.cmpd-table {
 .element {
   @include clearfix;
 }
+
 // date of last update
 .vendor-title {
   margin-bottom: 0;

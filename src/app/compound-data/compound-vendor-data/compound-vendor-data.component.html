@@ -1,6 +1,6 @@
 <div id="vendor-data" *ngIf="vendor_data && vendor_data.length > 0">
-  <div *ngFor="let vendor of vendor_data; let k = index;">
-    <div *ngIf="vendor && vendor.length > 0 && (vendor[0].ikey || vendor[0].drug_name || vendor[0].phase || vendor[0].gvk_id || vendor[0].id)">
+  <ng-container *ngFor="let vendor of vendor_data; let k = index;">
+    <div [id]="vendors[k].name" *ngIf="vendor && vendor.length > 0 && (vendor[0].ikey || vendor[0].drug_name || vendor[0].phase || vendor[0].gvk_id || vendor[0].id)">
       <h3 class="vendor-title">
         <a href="{{vendors[k].link}}" target="_blank">
           {{vendors[k].name}} data
@@ -61,7 +61,7 @@
         <!-- </div> -->
 
 
-        <table class="table cmpd-table" [ngClass]="i === [1].length - 1 ? 'last-entry' : ''">
+        <table class="table cmpd-table" [ngClass]="i === vendor.length - 1 ? 'last-entry' : ''">
 
           <!-- Category -->
           <tr *ngIf="x && x.hasOwnProperty('category') && x['category'].length > 0">
@@ -155,6 +155,6 @@
         <!-- END OF NGFOR OVER VENDOR LOOP -->
       </div>
     </div>
-  </div>
+  </ng-container>
 
 </div>
