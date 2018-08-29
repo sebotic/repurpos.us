@@ -8,14 +8,18 @@ input {
   //width: 33% !important;
   height: 1.5em;
   font-weight: 300;
+  background: white !important;
 }
-
 
 .search {
   // display: inline-block;
   // width: 100%;
-  margin: 36px 0 0;
+  // margin: 36px 0 0;
+  margin: 36px 0 10px;
   font-family: "Lato", sans-serif;
+  background: #eff1f2;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .examples {
@@ -35,7 +39,6 @@ h6 {
   //position: absolute;
   /* display: inline-block; */
 }
-
 
 .ex-type {
   text-decoration: underline;
