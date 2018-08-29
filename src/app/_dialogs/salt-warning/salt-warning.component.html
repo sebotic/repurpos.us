@@ -5,13 +5,13 @@
   </p>
   <p>
     If there was more than one compound in the SMILES string, the primary ingredient was isolated by first splitting the compound's SMILES string into separate components.
-    The primary ingredient was identified by comparing the frequency of the components to the rest of the Reframe collection; the more frequent components were deemed to be counterions and removed.
+    The primary ingredient was identified by comparing the frequency of the components to the rest of the Reframe collection; the more frequent components under 194 Daltons were deemed to be counterions and removed.
   </p>
   <p>
     Compounds from different data sources were combined if they shared the same InChI key for the primary ingredient, after normalizing tautomers and protonation states.
   </p>
   <p>
-    No stereoisomers (or unknown stereochemistry) were combined.
+    No stereoisomers (or unknown stereochemistry) were combined. In a small number of cases, manual inspection was used to resolve edge cases.
   </p>
   <p>
     To determine the precise form of the compound for each data source, look at the SMILES string listed.
