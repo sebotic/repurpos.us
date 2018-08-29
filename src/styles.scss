@@ -47,18 +47,13 @@
 modal dialog is being displayed. This could have side effects for other material design components using
 cdk-global-scrollblock!!
 */
-
 // support for Firefox / Opera use of Material Icons
 // from: https://stackoverflow.com/questions/47671219/material-icons-not-working-via-react-materialize
 @font-face {
   font-family: "Material Icons";
   font-style: normal;
   font-weight: 400;
-  src: local("Material Icons"),
-       local("MaterialIcons-Regular"),
-       url(https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.woff2) format("woff2"),
-       url(https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.woff) format("woff"),
-       url(https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.ttf) format("truetype");
+  src: local("Material Icons"), local("MaterialIcons-Regular"), url("https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.woff2") format("woff2"), url("https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.woff") format("woff"), url("https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.ttf") format("truetype");
 }
 
 .material-icons {
@@ -73,16 +68,12 @@ cdk-global-scrollblock!!
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
-
   /* Support for all WebKit browsers. */
   -webkit-font-smoothing: antialiased;
-
   /* Support for Safari and Chrome. */
   text-rendering: optimizeLegibility;
-
   /* Support for Firefox. */
   -moz-osx-font-smoothing: grayscale;
-
   /* Support for IE. */
   font-feature-settings: "liga";
 }
@@ -115,8 +106,8 @@ header {
   font-size: 1.25em;
   margin: 18px;
 }
-
 // hyperlinks
+
 a {
   color: #3D6DE0;
 }
@@ -125,42 +116,42 @@ a:hover {
   text-decoration: underline;
 }
 
-
 a.launch-search {
   color: #212529;
 }
-
 // colors
+
 .main-color {
   color: #3D6DE0;
 }
 
-.accent-color, .mat-error {
+.accent-color,
+.mat-error {
   color: #fd5457 !important;
 }
 
-
 .mat-form-field {
   &.mat-form-field-invalid {
-    .mat-input-element, .mat-form-field-label {
+    .mat-form-field-label,
+    .mat-input-element {
       color: #fd5457 !important;
+
       &.mat-accent {
         color: #fd5457 !important;
       }
+
       .mat-form-field-required-marker {
         color: #fd5457 !important;
       }
     }
   }
 }
-
 // Font changes
+
 button.mat-raised-button {
   font-family: "Lato", sans-serif;
   font-size: 16px;
 }
-
-
 /* • separator */
 .data-separator:after {
   content: "\2022";
@@ -185,8 +176,8 @@ $circle_diam: 15px;
 .cmpd-avail .circle {
   background-color: #FF5B67;
 }
-
 // Commonalities across compound report page
+
 .smiles,
 .wrap {
   word-break: break-all !important;
@@ -195,14 +186,15 @@ $circle_diam: 15px;
 app-clinical-phase {
   display: block;
 }
-
 // .assay-table > tbody,
 // th {
 //   /* border-top: #717e8c 1px solid; */
 //   border-bottom: #717e8c 1px solid;
 // }
 
-table#cmpd-names, table.cmpd-table, .cmpd-table {
+.cmpd-table,
+table#cmpd-names,
+table.cmpd-table {
   width: 100%;
   table-layout: fixed;
 }
@@ -212,15 +204,16 @@ table#cmpd-names, table.cmpd-table, .cmpd-table {
   border-bottom: #717e8c 1px dashed;
 }
 
-.cmpd-table tr, .assay-table tr {
+.assay-table tr,
+.cmpd-table tr {
   border-bottom: 1px solid #dee2e6;
 }
 
-.cmpd-table td, .assay-table td {
+.assay-table td,
+.cmpd-table td {
   background: #f5f6f7;
   padding: 5px 2px;
 }
-
 
 .vendor-header {
   margin-left: 2px;
@@ -251,7 +244,6 @@ table#cmpd-names, table.cmpd-table, .cmpd-table {
   padding: 3px 10px;
 }
 
-
 .title {
   text-transform: uppercase;
   font-weight: 300;
@@ -267,7 +259,6 @@ table#cmpd-names, table.cmpd-table, .cmpd-table {
   border-bottom: 1px solid #c3c4c5; */
   word-break: normal;
 }
-
 /* Clearfix */
 @mixin clearfix() {
   &::after {
@@ -279,4 +270,13 @@ table#cmpd-names, table.cmpd-table, .cmpd-table {
 
 .element {
   @include clearfix;
+}
+// date of last update
+.vendor-title {
+  margin-bottom: 0;
+}
+
+.updated {
+  font-size: 0.8em;
+  color: #8d98a3;
 }

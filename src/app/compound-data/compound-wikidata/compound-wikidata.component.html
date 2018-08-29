@@ -1,5 +1,10 @@
 <div id="wikidata" *ngIf="table_data.length > 0">
-  <H3><a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">Wikidata data</a></H3>
+  <h3 class="vendor-title"><a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">Wikidata data</a></h3>
+
+  <div class="updated" *ngIf="today">
+    last updated {{ today | date:'d MMMM yyyy'}}
+  </div>
+
   <div class="cmpd-table table" *ngFor="let temp of [1]; let i=index">
 
     <div class="vendor-header" [ngClass]="i === 0 ? 'first-entry' : 'notfirst-entry'">

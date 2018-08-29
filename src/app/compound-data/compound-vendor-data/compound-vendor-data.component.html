@@ -1,8 +1,15 @@
 <div id="vendor-data" *ngIf="vendor_data && vendor_data.length > 0">
   <div *ngFor="let vendor of vendor_data; let k = index;">
     <div *ngIf="vendor && vendor.length > 0 && (vendor[0].ikey || vendor[0].drug_name || vendor[0].phase || vendor[0].gvk_id || vendor[0].id)">
-      <H3><a href="{{vendors[k].link}}" target="_blank">{{vendors[k].name}} data</a>
-      </H3>
+      <h3 class="vendor-title">
+        <a href="{{vendors[k].link}}" target="_blank">
+          {{vendors[k].name}} data
+        </a>
+      </h3>
+
+      <div class="updated" *ngIf="vendors[k].updated">
+        last updated {{ vendors[k].updated | date:'d MMMM yyyy'}}
+      </div>
 
       <!-- <div class="cmpd-table"> -->
       <div class="cmpd-table" *ngFor="let x of vendor; let i=index">
