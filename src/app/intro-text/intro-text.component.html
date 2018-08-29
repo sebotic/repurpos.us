@@ -1,19 +1,33 @@
 <!-- <h1 ><span class="bold">reframe</span><span class="thin">db</span></h1> -->
 <div class="intro">
-  <span class="bold">reframe</span><span class="thin">db</span> is a screening library of 12,000 molecules assembled by combining
-  three databases (Clarivate Integrity, GVK Excelra GoStar and Citeline Pharmaprojects) to facilitate drug repurposing.
-</div>
+  <div class="intro-header">
 
-<div class="capabilities">
-  Search the database for:
-  <ul>
-    <li>
-      pharmaceutical and biological properties of the library, plus additional data on compounds not in the collection
-    </li>
-    <li>
-      screening data for select compounds which responded in specific <a routerLink="/assays">assays</a>
-    </li>
-  </ul>
+    <div class="d-flex justify-content-center">
+      <h1><span class="bold">reframe</span><span class="thin">db</span></h1>
+    </div>
+    <h5>A screening library of 12,000 molecules assembled by combining
+  three databases (Clarivate Integrity, GVK Excelra GoStar and Citeline Pharmaprojects) to facilitate drug repurposing</h5>
+  </div>
+
+  <div class="d-flex justify-content-center capabilities">
+    <h6>How to use the database</h6>
+
+    <ul>
+      <li>
+        Explore pharmaceutical and biological properties of individual compounds like <a [routerLink]="['/search/']" [queryParams]="{ query: 'imatinib', type: 'string' }">imatinib</a>
+      </li>
+
+      <li>
+        View screening data for all compounds which responded in a <a routerLink="/assays">specific assay</a> like <a routerLink="/assays/A00093">Crypto-C. parvum proliferation assay</a> (requires sign-in)
+      </li>
+
+      <li>
+        Search for <a [routerLink]="['/search/']" [queryParams]="{ query: 'C(C1C2=C(N(C)N=1)C1=C(C=NC(=N1)NC1=CC=C(N3CCN(C)CC3)C=C1)CC2)(=O)N', type: 'structure', mode: 'similarity', tanimoto: '0.35' }">similar structures</a> to view pharmaceutical and
+        biological annotation data and assay responses
+      </li>
+
+    </ul>
+  </div>
 </div>
 
 <app-compound-search></app-compound-search>
