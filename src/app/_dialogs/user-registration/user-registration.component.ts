@@ -48,7 +48,9 @@ export class UserRegistrationComponent implements OnInit {
 
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.form)
+  }
 
   onSubmit(event){
 

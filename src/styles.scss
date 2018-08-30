@@ -1,64 +1,10 @@
-/*@import './app/vendor/semantic.min.css';*/
-/* Angular material themes */
-/*@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';*/
-/* @import '~@angular/material/prebuilt-themes/indigo-pink.css'; */
-/* @import '~@angular/material/prebuilt-themes/pink-bluegrey.css'; */
-/* @import '~@angular/material/prebuilt-themes/purple-green.css'; */
-/*@import 'https://fonts.googleapis.com/icon?family=Material+Icons';*/
-/*.ui.menu .item img.logo {*/
-/*margin-right: 1.5em;*/
-/*}*/
-/*form.ui.segment.form {*/
-/*background-color: #F1F9FF;*/
-/*margin-top: 2em;*/
-/*}*/
-/*form.form:after {*/
-/*content: '';*/
-/*display: block;*/
-/*height: 0;*/
-/*clear: both;*/
-/*visibility: hidden;*/
-/*}*/
-/*.votes {*/
-/*display: flex;*/
-/*align-items: center;*/
-/*justify-content: center;*/
-/*background-color: #E6E6E6;*/
-/*padding: 1em 0;*/
-/*border-radius: 5px;*/
-/*}*/
-/*.ui.grid.posts {*/
-/*margin-top: 2em;*/
-/*}*/
-/*.meta {*/
-/*color: #9A9A9A*/
-/*}*/
-/*.ui.grid>.row>.column.votes {*/
-/*display: flex;*/
-/*}*/
-/*ul.ui.list li:before {*/
-/*content: '';*/
-/*}*/
-/*.voters {*/
-/*clear: both;*/
-/*width: 100%;*/
-/*}*/
-/*make sure the material design modal dialog does not display a scrollbar, as this moves the content each time the
-modal dialog is being displayed. This could have side effects for other material design components using
-cdk-global-scrollblock!!
-*/
-
 // support for Firefox / Opera use of Material Icons
 // from: https://stackoverflow.com/questions/47671219/material-icons-not-working-via-react-materialize
 @font-face {
   font-family: "Material Icons";
   font-style: normal;
   font-weight: 400;
-  src: local("Material Icons"),
-       local("MaterialIcons-Regular"),
-       url(https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.woff2) format("woff2"),
-       url(https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.woff) format("woff"),
-       url(https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.ttf) format("truetype");
+  src: local("Material Icons"), local("MaterialIcons-Regular"), url("https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.woff2") format("woff2"), url("https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.woff") format("woff"), url("https://rawgit.com/google/material-design-icons/master/iconfont/MaterialIcons-Regular.ttf") format("truetype");
 }
 
 .material-icons {
@@ -73,16 +19,12 @@ cdk-global-scrollblock!!
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
-
   /* Support for all WebKit browsers. */
   -webkit-font-smoothing: antialiased;
-
   /* Support for Safari and Chrome. */
   text-rendering: optimizeLegibility;
-
   /* Support for Firefox. */
   -moz-osx-font-smoothing: grayscale;
-
   /* Support for IE. */
   font-feature-settings: "liga";
 }
@@ -102,6 +44,8 @@ header {
   color: #212529;
 }
 
+
+// For reframedb brand
 .bold {
   font-weight: 400;
 }
@@ -110,13 +54,14 @@ header {
   opacity: 0.8;
   padding-left: 1px;
 }
+
 /* initial loading page */
 .loading {
   font-size: 1.25em;
   margin: 18px;
 }
-
 // hyperlinks
+
 a {
   color: #3D6DE0;
 }
@@ -124,7 +69,6 @@ a {
 a:hover {
   text-decoration: underline;
 }
-
 
 a.launch-search {
   color: #212529;
@@ -135,18 +79,21 @@ a.launch-search {
   color: #3D6DE0;
 }
 
-.accent-color, .mat-error {
+.accent-color,
+.mat-error {
   color: #fd5457 !important;
 }
 
-
 .mat-form-field {
   &.mat-form-field-invalid {
-    .mat-input-element, .mat-form-field-label {
+    .mat-form-field-label,
+    .mat-input-element {
       color: #fd5457 !important;
+
       &.mat-accent {
         color: #fd5457 !important;
       }
+
       .mat-form-field-required-marker {
         color: #fd5457 !important;
       }
@@ -160,7 +107,6 @@ button.mat-raised-button {
   font-size: 16px;
 }
 
-
 /* • separator */
 .data-separator:after {
   content: "\2022";
@@ -168,6 +114,8 @@ button.mat-raised-button {
   padding-left: 3px;
   padding-right: 3px;
 }
+
+
 /* Radio buttons if data exist */
 $circle_diam: 15px;
 
@@ -196,13 +144,10 @@ app-clinical-phase {
   display: block;
 }
 
-// .assay-table > tbody,
-// th {
-//   /* border-top: #717e8c 1px solid; */
-//   border-bottom: #717e8c 1px solid;
-// }
-
-table#cmpd-names, table.cmpd-table, .cmpd-table {
+// vendor/wikidata table commonalities
+.cmpd-table,
+table#cmpd-names,
+table.cmpd-table {
   width: 100%;
   table-layout: fixed;
 }
@@ -212,15 +157,16 @@ table#cmpd-names, table.cmpd-table, .cmpd-table {
   border-bottom: #717e8c 1px dashed;
 }
 
-.cmpd-table tr, .assay-table tr {
+.assay-table tr,
+.cmpd-table tr {
   border-bottom: 1px solid #dee2e6;
 }
 
-.cmpd-table td, .assay-table td {
+.assay-table td,
+.cmpd-table td {
   background: #f5f6f7;
   padding: 5px 2px;
 }
-
 
 .vendor-header {
   margin-left: 2px;
@@ -251,7 +197,6 @@ table#cmpd-names, table.cmpd-table, .cmpd-table {
   padding: 3px 10px;
 }
 
-
 .title {
   text-transform: uppercase;
   font-weight: 300;
@@ -279,4 +224,14 @@ table#cmpd-names, table.cmpd-table, .cmpd-table {
 
 .element {
   @include clearfix;
+}
+
+// date of last update
+.vendor-title {
+  margin-bottom: 0;
+}
+
+.updated {
+  font-size: 0.8em;
+  color: #8d98a3;
 }

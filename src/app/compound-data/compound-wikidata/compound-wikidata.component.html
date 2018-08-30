@@ -1,8 +1,13 @@
 <div id="wikidata" *ngIf="table_data.length > 0">
-  <H3><a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">Wikidata data</a></H3>
+  <h3 class="vendor-title"><a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">Wikidata data</a></h3>
+
+  <div class="updated" *ngIf="today">
+    last updated {{ today | date:'d MMMM yyyy'}}
+  </div>
+
   <div class="cmpd-table table" *ngFor="let temp of [1]; let i=index">
 
-      <div class="vendor-header" [ngClass]="i === 0 ? 'first-entry' : 'notfirst-entry'">
+    <div class="vendor-header" [ngClass]="i === 0 ? 'first-entry' : 'notfirst-entry'">
       <div class="col-sm-3">
         <span class="title">Wikidata ID: </span>
         <span><a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">{{ qid }}</a></span>
@@ -13,28 +18,28 @@
 
     </div>
 
-<table class="cmpd-table table" [ngClass]="i === [1].length - 1 ? 'last-entry' : ''">
-    <tr *ngFor="let x of table_data">
-      <!-- <ng-container> -->
-      <ng-container>
-        <!-- <ng-container *ngIf="x['property'] != 'chemical formula' && x['property'] != 'InChI' && x['property'] != 'InChIKey' && x['property'] != 'canonical SMILES'&& x['property'] != 'isomeric SMILES'"> -->
-        <td class="title" scope="row">{{ x['property'] }}</td>
-        <td class="content" scope="row">
-        <span *ngFor="let z of x['values']; let i = index;">
-          {{z}}
+    <table class="cmpd-table table" [ngClass]="i === [1].length - 1 ? 'last-entry' : ''">
+      <tr *ngFor="let x of table_data">
+        <ng-container>
+          <td class="title" scope="row">{{ x['property'] }}</td>
+          <td class="content" scope="row">
+            <span *ngFor="let z of x['values']; let i = index;">
+          <a class="launch-search" [routerLink]="['/search/']" [queryParams]='{ query: "\"" + z + "\"", type: "string" }'>
+            {{z}}
+          </a>
         <!-- <td class="content" scope="row" [ngClass]="x['property'] === 'InChI' || x['property'] === 'canonical SMILES' || x['property'] === 'isomeric SMILES' ? 'smiles' : ''"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}} -->
       <!-- <span *ngIf="!x['showMore']"></span> -->
-          <span *ngIf="i + 1 < x['values'].length" class='data-separator'></span>
-          <!-- <span *ngIf="x['showMore']">
+            <span *ngIf="i + 1 < x['values'].length" class='data-separator'></span>
+            <!-- <span *ngIf="x['showMore']">
             <app-show-more-button [qid]="x['qids'][i]" [pid]="x['pid']" [mainQID]="qid"></app-show-more-button>
 
           </span> -->
-          </span>
-          <!--<app-edit-item></app-edit-item>-->
-        </td>
-      </ng-container>
-    </tr>
+            </span>
+            <!--<app-edit-item></app-edit-item>-->
+          </td>
+        </ng-container>
+      </tr>
 
-  </table>
+    </table>
   </div>
 </div>

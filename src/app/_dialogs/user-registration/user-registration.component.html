@@ -12,7 +12,7 @@
                >
         <!--<mat-error *ngIf="form['controls'].name['controls'].firstName.errors && !form['controls'].name['controls'].firstName.pristine" [hidden]="!form['controls'].name['controls'].firstName.errors.required">Name is required</mat-error>-->
         <mat-error *ngIf="form['controls'].name['controls'].firstName.errors  && !form['controls'].name['controls'].firstName.pristine"
-                   [hidden]="!form['controls'].name['controls'].firstName.hasError('minLength')">Name too short</mat-error>
+                   [hidden]="!form['controls'].name['controls'].firstName.hasError('minlength')">Name too short</mat-error>
 
       </mat-form-field>
         <!--<span *ngIf="form['controls'].name['controls'].firstName.errors && !form['controls'].name['controls'].firstName.pristine" class="mat-error">-->
@@ -24,7 +24,7 @@
                formControlName="lastName"
                >
         <mat-error *ngIf="form['controls'].name['controls'].lastName.errors  && !form['controls'].name['controls'].lastName.pristine"
-                   [hidden]="!form['controls'].name['controls'].lastName.hasError('minLength')">Name too short</mat-error>
+                   [hidden]="!form['controls'].name['controls'].lastName.hasError('minlength')">Name too short</mat-error>
       </mat-form-field>
     </div>
 
@@ -40,40 +40,6 @@
     </mat-form-field>
 
 
-    <!--<mat-form-field>-->
-      <!--<input matInput placeholder="Phone" class="form-control" id="phone"-->
-             <!--[(ngModel)]="user.phone" name="phone"-->
-             <!--#name="ngModel">-->
-    <!--</mat-form-field>-->
-
-    <!--<mat-form-field>-->
-      <!--<input matInput placeholder="Institution" class="form-control" id="institution"-->
-             <!--required-->
-             <!--[(ngModel)]="user.institution" name="institution"-->
-             <!--#name="ngModel">-->
-    <!--</mat-form-field>-->
-
-    <!--<mat-form-field>-->
-      <!--<input matInput placeholder="Address" class="form-control" id="address"-->
-             <!--required-->
-             <!--[(ngModel)]="user.address" name="address"-->
-             <!--#name="ngModel">-->
-    <!--</mat-form-field>-->
-
-    <!--<mat-form-field>-->
-      <!--<input matInput placeholder="City" class="form-control" id="city"-->
-             <!--required-->
-             <!--[(ngModel)]="user.city" name="city"-->
-             <!--#name="ngModel">-->
-    <!--</mat-form-field>-->
-
-    <!--<mat-form-field>-->
-      <!--<input matInput placeholder="Zip Code" class="form-control" id="zipCode"-->
-             <!--required-->
-             <!--[(ngModel)]="user.zipCode" name="zipCode"-->
-             <!--#name="ngModel">-->
-    <!--</mat-form-field>-->
-
     <div class="form-group" formGroupName="password">
     <mat-form-field>
       <input matInput placeholder="Password" id="password" [type]="'password'"
@@ -83,7 +49,7 @@
              >
       <mat-error *ngIf="form['controls'].password['controls'].password.errors
                         && !form['controls'].password['controls'].password.pristine"
-                 [hidden]="!form['controls'].password['controls'].password.hasError('minLength')"
+                 [hidden]="!form['controls'].password['controls'].password.hasError('minlength')"
       >8 characters minimum</mat-error>
     </mat-form-field>
 

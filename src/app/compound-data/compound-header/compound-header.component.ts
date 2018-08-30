@@ -90,7 +90,6 @@ export class CompoundHeaderComponent implements OnInit {
   }
 
   onResize(event) {
-    console.log('resized')
     this.getNumAliases();
   }
 

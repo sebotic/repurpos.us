@@ -68,8 +68,8 @@ export class DotPlotComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log(this.data)
-    console.log(this.tooltipData)
+    // console.log(this.data)
+    // console.log(this.tooltipData)
     if (this.chart) {
       this.updateChart();
     }
@@ -102,7 +102,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
       .paddingOuter(0.35);
 
     this.xAxis = d3.axisTop(this.x)
-      .ticks(6, '.0e')
+      .tickValues(d3.range(-10, -4, 0.25).map(d => Math.pow(10, d)).filter(d => d <= this.assay_domain[0] && d >= this.assay_domain[1]));
 
     this.yAxis = d3.axisLeft(this.y);
 
@@ -166,7 +166,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
 
 
     this.xAxis = d3.axisTop(this.x)
-      .ticks(6, '.0e')
+      .tickFormat(d3.format(".0e"));
 
     this.yAxis = d3.axisLeft(this.y);
 
@@ -282,6 +282,8 @@ export class DotPlotComponent implements OnInit, OnChanges {
     // update domains when data changes
     this.x.domain(this.assay_domain);
     this.y.domain(this.data.map(function(d) { return d.calibr_id; }));
+
+    this.xAxis.tickValues(d3.range(-10, -4, 0.25).map(d => Math.pow(10, d)).filter(d => d <= this.assay_domain[0] && d >= this.assay_domain[1]));
 
     // update color domain
     // Code if using d3.scaleSequential
