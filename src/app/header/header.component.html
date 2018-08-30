@@ -38,10 +38,10 @@
               <a href="/#/about" (click)="collapseNav()">about</a>
             </li>
             <li class="sign-in" [hidden]="loggedIn">
-              <a *ngIf="!loggedIn" (click)="showLogin()">sign in</a>
+              <a *ngIf="!loggedIn" (click)="showLogin()" (click)="clickedInside($event)">sign in</a>
             </li>
 
-            <li class="reveal" [ngClass]="{'open': loginBox, 'logout': loggedIn, 'sign-in-box': !loggedIn, 'show': expanded}">
+            <li class="reveal" [ngClass]="{'open': loginBox, 'logout': loggedIn, 'sign-in-box': !loggedIn, 'show': expanded}" (click)="clickedInside($event)">
               <app-user-login></app-user-login>
             </li>
           </ul>

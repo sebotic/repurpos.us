@@ -68,6 +68,11 @@ footer {
   vertical-align: middle;
   transition: fill 0.5s;
 
+  rect {
+    fill: #000;
+    transition: fill 0.5s;
+  }
+
   &.scripps-logo {
     .st0 {
       transition: fill 0.5s;
@@ -91,6 +96,9 @@ footer {
 
     &:hover {
       fill: #0D6E79;
+      rect {
+        fill: #0D6E79;
+      }
 
       .st0 {
         //fill: darken(#0D6E79, 10);
