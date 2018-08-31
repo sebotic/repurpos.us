@@ -25,10 +25,12 @@ export class HeaderComponent implements OnInit {
   loginBox: boolean = false;
   loggedIn: boolean = false;
   expanded: boolean = false;
+  isMobile: boolean;
   current_year: number;
   private loginSubscription: Subscription;
 
   constructor(@Inject(DOCUMENT) private document: any, private http: HttpClient, private loginStateService: LoginStateService) {
+    this.checkMobile();
   }
 
   ngOnInit(): void {
@@ -57,6 +59,14 @@ export class HeaderComponent implements OnInit {
 
   collapseNav() {
     this.expanded = false;
+  }
+
+  checkMobile() {
+    if (window.matchMedia('(max-width: 760px)').matches) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
   }
 
   @HostListener('document:click', ['$event']) clickedOutside($event){
