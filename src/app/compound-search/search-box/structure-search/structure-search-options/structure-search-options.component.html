@@ -15,7 +15,7 @@
 
     <!-- Add Tanimoto slider if searching for similar compounds -->
     <div id="tanimoto" *ngIf="searchMode === 'similarity'">
-      <div class="slider-label">
+      <div class="slider-label" matTooltip="Structural similarity threshold, ranging from 0 (no similarity) to 1 (identical atom connectivity)">
         Tanimoto threshold:
         <span class="tanimoto-val">
               {{ tanimotoThresh | number: '1.2-2'}}
@@ -24,7 +24,7 @@
 
       <div class="slider">
         <span class="slider-limit">0</span>
-        <mat-slider id="tanimoto-slider" min="0" max="1" step="0.05" (change)="submitQuery()" [(ngModel)]="tanimotoThresh" thumbLabel></mat-slider>
+        <mat-slider id="tanimoto-slider" min="0" max="1" step="0.05" [(ngModel)]="tanimotoThresh" thumbLabel></mat-slider>
         <span class="slider-limit">1</span>
       </div>
     </div>

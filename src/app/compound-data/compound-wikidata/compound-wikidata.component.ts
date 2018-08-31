@@ -11,6 +11,7 @@ import { WikiData } from '../../_models/vendor-data/index';
 export class CompoundWikidataComponent implements OnInit {
   public table_data: WikiData[] = [];
   public qid: string;
+  private today: number = Date.now();
 
   constructor(private cmpdSvc: CompoundService) {
 

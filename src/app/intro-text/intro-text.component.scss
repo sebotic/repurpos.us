@@ -2,3 +2,36 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.intro h5 {
+  font-weight: 300;
+  color: #ff602c;
+}
+
+.capabilities {
+  max-width: 600px;
+  // border-bottom: 10px solid #c1d0f5;
+  // border-top: 10px solid #c1d0f5;
+  border-top: 1px solid #3D6DE0;
+  border-bottom: 1px solid #3D6DE0;
+  background: #edf1fc66;
+  padding: 5px 15px;
+}
+
+.capabilities li {
+  padding: 7px 0;
+}
+
+.capabilities li:last-of-type {
+  padding: 0;
+}
+
+.intro-header {
+  padding-bottom: 10px;
+}
+
+.intro {
+  // border-bottom: 20px solid #c1d0f5;
+  border-bottom: 15px solid #d7e1f9;
+  padding: 10px 0 35px 0;
+}

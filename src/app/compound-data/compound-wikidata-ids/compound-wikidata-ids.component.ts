@@ -14,9 +14,6 @@ export class CompoundWikidataIdsComponent implements OnInit {
   public chemData: WikiData[] = [];
   public idData: WikiData[] = [];
   public formula: string;
-  // private gvkData: GVKData;
-  // private informaData: InformaData;
-  // private integrityData: IntegrityData;
 
   constructor(private cmpdSvc: CompoundService) {
     this.cmpdSvc.idStates.subscribe((ids: Object) => {

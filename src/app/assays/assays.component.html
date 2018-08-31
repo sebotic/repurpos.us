@@ -6,6 +6,13 @@
         Experimental methodology and data for each high throughput screen
       </div>
       <div class="filter float-right" *ngIf="isFiltered">
+        <span class="filter-descrip">
+          {{ selAssays.length }} of {{ assayList.length }} assays selected for:
+          <b [ngStyle]="{'color': filter_color}">
+            <span [outerHTML]="filter | sciItalicize"></span>
+          </b>
+        </span>
+
         <mat-button-toggle value="bold" (click)="removeFilter()">remove filter</mat-button-toggle>
       </div>
     </div>

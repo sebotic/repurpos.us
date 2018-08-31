@@ -53,6 +53,11 @@ export class SearchResultsTableComponent implements OnInit {
   tanimotoScale: any; // color scale for tanimoto scores
   getFontColor: any; // function to get the font color for a tanimoto score
 
+  tanimotoTooltip: string = "Structural similarity metric, ranging from 0 (no similarity) to 1 (identical atom connectivity)";
+  assayTooltip: string = "Assays for which the compound has been measured to be active";
+  rfmTooltip: string = "Sample has been purchased or synthesized as part of Reframe library";
+
+
   // expanded: boolean = false; // trigger to turn table to shortened form.
 
   setDataSourceAttributes() {
@@ -106,6 +111,7 @@ export class SearchResultsTableComponent implements OnInit {
 
           // Calculate the number of assays per hit
           results.forEach((d: any) => {
+            d['assay_types'] = d.assay_types.sort((a,b) => a[2] > b[2]);
             d['assays'] = d.assay_types.length;
             d['aliases'] = this.removeDupeAlias(d.aliases);
             d['alias_ct'] = this.num_aliases;
