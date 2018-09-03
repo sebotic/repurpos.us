@@ -76,6 +76,8 @@ export class UserRegistrationComponent implements OnInit {
 
         } else if (credentials['status'] === 'fail') {
           this.loginResponse = credentials['message'];
+          this.form.controls.password.reset();
+          grecaptcha.reset();
         }
       },
       (err: HttpErrorResponse) => {

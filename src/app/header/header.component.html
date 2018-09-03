@@ -1,57 +1,78 @@
 <header>
   <nav class="navbar navbar-expand-lg d-flex blue-fill">
-    <div class="navbar-brand">
-      <!-- logo -->
-      <a href="/" class="d-flex">
-            <img src="../assets/logo-app.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            <div class="site-name">
-              <span class="bold">reframe</span><span class="thin">db</span>
-            </div>
-            <div class="site-subtitle">
-              <span class="wide">open & extendable </span><span class="narrow">drug repurposing data</span>
-            </div>
-          </a>
-    </div>
-
-    <div class="d-flex">
-      <!-- Quick search bar -->
-      <div class="search" id="searchContent">
-        <app-quick-search></app-quick-search>
+    
+    <div class="top-nav">
+      <div class="navbar-brand">
+        <!-- logo -->
+        <a href="/" class="d-flex">
+              <img src="../assets/logo-app.png" width="30" height="30" class="d-inline-block align-top" alt="">
+              <div class="site-name">
+                <span class="bold">reframe</span><span class="thin">db</span>
+              </div>
+              <div class="site-subtitle">
+                <span class="wide">open & extendable </span><span class="narrow">drug repurposing data</span>
+              </div>
+            </a>
       </div>
-
-
       <!-- Hamburger menu: small screens -->
       <div class='hamburger'>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNav()">
           <mat-icon aria-label="menu" color="accent" >menu</mat-icon>
         </button>
       </div>
-
-      <div class="d-flex link-menu">
-        <!-- Horizontal menu -->
-        <div class="collapse navbar-collapse" id="navbarContent" [ngClass]="{'logout-wrap': loggedIn, 'show': expanded}">
-          <ul class="navbar-nav ml-auto">
-            <li>
-              <a href="/#/assays" (click)="collapseNav()">assays</a>
-            </li>
-            <li>
-              <a href="/#/about" (click)="collapseNav()">about</a>
-            </li>
-            <li class="sign-in" [hidden]="loggedIn">
-              <a *ngIf="!loggedIn" (click)="showLogin()">sign in</a>
-            </li>
-
-            <li class="reveal" [ngClass]="{'open': loginBox, 'logout': loggedIn, 'sign-in-box': !loggedIn, 'show': expanded}">
-              <app-user-login></app-user-login>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-
     </div>
 
+    <!-- Desktop nav has quick search next to nav list -->
+    <div *ngIf="!isMobile; else nowrap" class="d-flex">
+      <div class="search" id="searchContent">
+        <app-quick-search></app-quick-search>
+      </div>
 
+      <!-- Horizontal menu -->
+      <div class="collapse navbar-collapse" id="navbarContent" [ngClass]="{'logout-wrap': loggedIn, 'show': expanded}">
+        <ul class="navbar-nav ml-auto">
+          <li class="menu-item">
+            <a href="/#/assays" (click)="collapseNav()">assays</a>
+          </li>
+          <li class="menu-item">
+            <a href="/#/about" (click)="collapseNav()">about</a>
+          </li>
+          <li class="menu-item sign-in" [hidden]="loggedIn">
+            <a *ngIf="!loggedIn" (click)="showLogin()" (click)="clickedInside($event)">sign in</a>
+          </li>
+
+          <li class="reveal user-login" [ngClass]="{'open': loginBox, 'logout': loggedIn, 'sign-in-box': !loggedIn, 'show': expanded}" (click)="clickedInside($event)">
+            <app-user-login></app-user-login>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Mobile nav shows quick search always -->
+    <ng-template #nowrap>
+      <div class="search" id="searchContent">
+        <app-quick-search></app-quick-search>
+      </div>
+
+      <!-- Horizontal menu -->
+      <div class="collapse navbar-collapse" id="navbarContent" [ngClass]="{'logout-wrap': loggedIn, 'show': expanded}">
+        <ul class="navbar-nav ml-auto">
+          <li class="menu-item">
+            <a href="/#/assays" (click)="collapseNav()">assays</a>
+          </li>
+          <li class="menu-item">
+            <a href="/#/about" (click)="collapseNav()">about</a>
+          </li>
+          <li class="menu-item sign-in" [hidden]="loggedIn">
+            <a *ngIf="!loggedIn" (click)="showLogin()" (click)="clickedInside($event)">sign in</a>
+          </li>
+
+          <li class="reveal user-login" [ngClass]="{'open': loginBox, 'logout': loggedIn, 'sign-in-box': !loggedIn, 'show': expanded}" (click)="clickedInside($event)">
+            <app-user-login></app-user-login>
+          </li>
+        </ul>
+      </div>
+    </ng-template>
 
   </nav>
 </header>
