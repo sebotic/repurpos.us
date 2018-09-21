@@ -11,7 +11,7 @@
   <div class="row d-flex">
     <div class="col">
       <h1 class="assay-title">
-        <span [outerHTML]="assayDetails.title | sciItalicize">
+        <span [outerHTML]="assayDetails.title_short | sciItalicize">
           </span>
       </h1>
     </div>
@@ -24,29 +24,43 @@
 
   <!-- SUMMARY -->
   <div class="row summary-box">
-
-    <div class="col-md-9">
-      <div class="summary">
-        <span [outerHTML]="assayDetails.summary | sciItalicize"></span>
-      </div>
-
-      <div id="viewmore" class="view-more">
-        <a (click)="onAnchorClick('protocol')">view detailed protocol</a>
-      </div>
-
+    <div class="row author" *ngIf="assayDetails.authors">
+      by {{ assayDetails.authors }}
     </div>
 
-    <div class="col-md-3 overview">
-      <ul>
-        <li><span id="label">indication: </span>
-          <span [outerHTML]="assayDetails.indication | sciItalicize"></span></li>
-        <li><span id="label">assay type: </span> {{ assayDetails.assay_type }}</li>
-        <li><span id="label">components: </span>
-        <span [outerHTML]="assayDetails.components | sciItalicize"></span></li>
-        <li><span id="label">detection method: </span> {{ assayDetails.detection_method }}</li>
-      </ul>
-    </div>
+    <div class='row summary-content'>
 
+      <div class="col-md-9">
+        <div class="summary">
+          <span [outerHTML]="assayDetails.summary | sciItalicize"></span>
+        </div>
+
+
+        <div id="viewmore" class="view-more">
+          <a (click)="onAnchorClick('protocol')">view detailed protocol</a>
+        </div>
+
+        <!-- <app-citation [pmid]="'28158186'" [cite]="assayDetails.bibliography"></app-citation> -->
+        <app-citation [pmid]="'28158186, 18579783'" [cite]="assayDetails.bibliography"></app-citation>
+        <!-- <app-citation [pmid]="assayDetails.refs_PMID"></app-citation> -->
+
+        <div>
+        </div>
+
+
+      </div>
+
+      <div class="col-md-3 overview">
+        <ul>
+          <li><span id="label">indication: </span>
+            <span [outerHTML]="assayDetails.indication | sciItalicize"></span></li>
+          <li><span id="label">assay type: </span> {{ assayDetails.assay_type }}</li>
+          <li><span id="label">components: </span>
+            <span [outerHTML]="assayDetails.components | sciItalicize"></span></li>
+          <li><span id="label">detection method: </span> {{ assayDetails.detection_method }}</li>
+        </ul>
+      </div>
+    </div>
   </div>
   <!-- end summary -->
 
@@ -56,10 +70,10 @@
 
   <!-- DETAILS -->
   <div class='row' id="protocol">
-    <h3><span [outerHTML]="assayDetails.title | sciItalicize"></span> protocol</h3>
+    <h3><span [outerHTML]="assayDetails.title_short | sciItalicize"></span> protocol</h3>
 
     <div class="description">
-      <span [outerHTML]="assayDetails.description | sciItalicize"></span>
+      <span [outerHTML]="assayDetails.purpose | sciItalicize"></span>
     </div>
 
     <div class="row">
@@ -88,15 +102,14 @@
         <div class="row subtitle">Detection conditions</div>
         <div class="row">
           <div class="col-md-7 condits">
-            <span [outerHTML]="assayDetails.protocol_detection | sciItalicize"></span>
+            <span [outerHTML]="assayDetails.readout | sciItalicize"></span>
           </div>
 
           <div class="col-md-5 overview">
             <ul>
               <li><span id="label">detection method: </span> {{ assayDetails.detection_method }}</li>
-              <li *ngIf="assayDetails.detection_dye">
-                <span id="label">detection dye: </span>
-                {{ assayDetails.detection_dye }}</li>
+              <li *ngIf="assayDetails.detection_reagents">
+                <span id="label">detection reagents: </span> {{ assayDetails.detection_reagents }}</li>
 
             </ul>
           </div>

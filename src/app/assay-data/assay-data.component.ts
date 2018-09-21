@@ -34,7 +34,6 @@ export class AssayDataComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.retrieveAssayList();
   }
 
@@ -49,8 +48,10 @@ export class AssayDataComponent implements OnInit {
     }).subscribe((r) => {
       let v = r.body;
 
+// console.log(r)
+// console.log(v)
       this.assayDetails = v[0];
-      this.titleService.setTitle( this.assayDetails.title + " | reframeDB");
+      this.titleService.setTitle( this.assayDetails.title_short + " | reframeDB");
     },
       err => { }
     );
