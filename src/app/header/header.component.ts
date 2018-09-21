@@ -1,4 +1,4 @@
-import { Component, Inject, Injectable, OnInit } from '@angular/core';
+import { Component, Inject, Injectable, OnInit, HostListener } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 import { Subscription } from 'rxjs/subscription';
@@ -25,14 +25,29 @@ export class HeaderComponent implements OnInit {
   loginBox: boolean = false;
   loggedIn: boolean = false;
   expanded: boolean = false;
+  isMobile: boolean;
   current_year: number;
   private loginSubscription: Subscription;
 
   constructor(@Inject(DOCUMENT) private document: any, private http: HttpClient, private loginStateService: LoginStateService) {
+    this.checkMobile();
+  }
+
+  ngOnInit(): void {
+    // subscribe to the login state
+    this.loginSubscription = this.loginStateService.loginState
+      .subscribe((state: LoginState) => {
+        this.loggedIn = state.loggedIn;
+      });
   }
 
   showLogin() {
     this.loginBox = !this.loginBox;
+  }
+
+  clickedInside($event: Event) {
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
   toggleNav() {
@@ -46,13 +61,16 @@ export class HeaderComponent implements OnInit {
     this.expanded = false;
   }
 
+  checkMobile() {
+    if (window.matchMedia('(max-width: 760px)').matches) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
+  }
 
-  ngOnInit(): void {
-    // subscribe to the login state
-    this.loginSubscription = this.loginStateService.loginState
-      .subscribe((state: LoginState) => {
-        this.loggedIn = state.loggedIn;
-      });
-
+  @HostListener('document:click', ['$event']) clickedOutside($event){
+    if (this.loginBox)
+      this.loginBox = false;
   }
 }

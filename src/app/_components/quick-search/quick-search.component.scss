@@ -30,3 +30,9 @@ form {
   outline: none;
   cursor: text;
 }
+
+@media only screen and (max-width: 760px) {
+  .search input[type="text"]:focus {
+    width: 75vw;
+  }
+}
