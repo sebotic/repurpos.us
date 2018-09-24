@@ -3,7 +3,8 @@
 
 <ng-template #lgin>
 
-  <form (ngSubmit)="onSubmit($event)" #userForm="ngForm">
+  <!-- ngSubmit not firing so removed and put a click event on button -->
+  <form #userForm="ngForm">
       <span>
       <mat-form-field color="primary">
         <input matInput placeholder="Enter your email" [formControl]="email" required  id="email"
@@ -22,7 +23,7 @@
 
       </span>
       <div class="divider"></div>
-      <button class="login-button" mat-raised-button color="primary" type="submit">Login</button>
+      <button class="login-button" mat-raised-button color="primary" type="submit" (click)="onSubmit()">Login</button>
   </form>
   <app-reg-user-dialog class="link"></app-reg-user-dialog>
   <app-forgot-pass-button class="link"></app-forgot-pass-button>
