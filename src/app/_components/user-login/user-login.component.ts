@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpErrorResponse, HttpHeaders, HttpClient} from "@angular/common/http";
-import {FormControl, Validators} from "@angular/forms";
+import { HttpErrorResponse, HttpHeaders, HttpClient } from "@angular/common/http";
+import { FormControl, Validators   } from "@angular/forms";
 import { MatDialog } from '@angular/material';
 import {environment} from "../../../environments/environment";
 
@@ -23,7 +23,7 @@ export class UserLoginComponent implements OnInit {
   constructor(private http: HttpClient, private loginStateService: LoginStateService, public dialog: MatDialog) { }
 
   ngOnInit() {
-
+    
     if(localStorage.getItem('auth_token')){
       this.http.get(environment.host_url + '/auth/status', {
           observe: 'response',
@@ -57,7 +57,8 @@ export class UserLoginComponent implements OnInit {
     }
   }
 
-  onSubmit(event){
+  onSubmit(){
+    console.log('submit');
     // console.log(this.user.email, this.user.password);
 
     this.http.post(environment.host_url + '/auth/login', {"email": this.email.value, "password": this.password.value}, {
