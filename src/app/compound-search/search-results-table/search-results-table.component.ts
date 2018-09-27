@@ -44,7 +44,7 @@ export class SearchResultsTableComponent implements OnInit {
   assays: string[];
   max_num_assays: number = 10;
   // minColumns: string[] = ['main_label', 'alias', 'id', 'reframeid']; // minimal set of columns to include
-  minColumns: string[] = ['struct', 'main_label', 'avail', 'similar']; // minimal set of columns to include
+  minColumns: string[] = ['struct', 'main_label', 'assays', 'similar']; // minimal set of columns to include
   displayedColumns: string[]; // minimal set of columns to include
   dataSource = new MatTableDataSource<Compound>();
 
@@ -169,7 +169,7 @@ export class SearchResultsTableComponent implements OnInit {
   }
 
   checkMobile() {
-    if (window.matchMedia('(max-width: 760px)').matches) {
+    if (window.matchMedia('(max-width: 900px)').matches) {
       this.isMobile = true;
     } else {
       this.isMobile = false;
@@ -209,7 +209,7 @@ export class SearchResultsTableComponent implements OnInit {
       this.displayedColumns.push('tanimoto')
     }
 
-    this.displayedColumns = this.displayedColumns.concat('assays');
+    // this.displayedColumns = this.displayedColumns.concat('assays');
     // if (!this.isMobile) {
     //   // console.log(this.displayedColumns);
     //   // this.displayedColumns.splice(2, 0, 'struct') // insert structure into the cols

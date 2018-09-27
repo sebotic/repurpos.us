@@ -1,4 +1,5 @@
 <div class="container-fluid" *ngIf="displayResults" (window:resize)="checkMobile()">
+  <h3>Search results</h3>
 
   <ng-container [ngSwitch]="responseCode">
     <ng-container *ngSwitchCase="200">
@@ -14,16 +15,15 @@
             </mat-header-cell>
 
             <mat-cell *matCellDef="let element; let row=index" class="main-label d-flex" (click)="expandCell(row)">
-
               <!-- Name -->
-              <div class="col-md-auto">
+              <div class="smscreen-name">
                 <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
                   <h5>{{element['main_label']}}</h5>
                 </a>
 
               </div>
 
-              <div  *ngIf="element['reframeid'] === true" [matTooltip]="rfmTooltip" [ngClass]="element['reframeid'] === true ? 'cmpd-avail' : 'no-cmpd'">
+              <div *ngIf="element['reframeid'] === true" [matTooltip]="rfmTooltip" [ngClass]="element['reframeid'] === true ? 'cmpd-avail' : 'no-cmpd'">
                 Reframe library compound
               </div>
 
@@ -101,8 +101,7 @@
 
           <!-- Tanimoto score -->
           <ng-container matColumnDef="tanimoto">
-            <mat-header-cell *matHeaderCellDef class="mat-header" [matTooltip]="tanimotoTooltip"
-            mat-sort-header disableClear="true" >
+            <mat-header-cell *matHeaderCellDef class="mat-header" [matTooltip]="tanimotoTooltip" mat-sort-header disableClear="true">
               <span class="mat-header">Tanimoto Similarity Score</span>
               <mat-icon class='sort-icon' matTooltip="sort by Tanimoto score">sort</mat-icon>
             </mat-header-cell>
@@ -173,16 +172,14 @@
             </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="assay_titles">
+          <!-- <ng-container matColumnDef="assay_titles">
             <mat-header-cell *matHeaderCellDef class="assay-label"></mat-header-cell>
             <mat-cell *matCellDef="let element">
               <ul class="assay-list">
                 <li class="assay-title" *ngFor="let assay of element.assay_types; let i=index">
                   <a [routerLink]="['/assays', assay[1]]">{{assay[0]}}</a>
-                  <!-- <span *ngIf="i + 1 < element.assay_types.length" class='data-separator'></span> -->
                 </li>
               </ul>
-              <!-- <span [ngClass]="element['assay_types'].indexOf(assay) > -1 ? 'circle assay-avail' : 'circle no-assay'"></span> -->
             </mat-cell>
           </ng-container>
 
@@ -193,12 +190,10 @@
               <ul class="assay-list">
                 <li class="assay-title" *ngFor="let assay of element.assay_types; let i=index">
                   <a [routerLink]="['/assays', assay[1]]">{{assay[0]}}</a>
-                  <!-- <span *ngIf="i + 1 < element.assay_types.length" class='data-separator'></span> -->
                 </li>
               </ul>
-              <!-- <span [ngClass]="element['assay_types'].indexOf(assay) > -1 ? 'circle assay-avail' : 'circle no-assay'"></span> -->
             </mat-cell>
-          </ng-container>
+          </ng-container> -->
 
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
