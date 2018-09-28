@@ -1,6 +1,4 @@
-<!-- <div class="d3-chart" #chart></div> -->
-
 <!-- SVG dotplot -->
-  <div (window:resize)="resizePlot($event)" id="dotplot-container" #chart>
-    <app-cmpd-tooltip *ngIf="tooltipData" [dataObj]="tooltipData"></app-cmpd-tooltip>
+<div (window:resize)="resizePlot($event)" id="dotplot-container" #chart>
+  <app-cmpd-tooltip *ngIf="tooltipData" [dataObj]="tooltipData"></app-cmpd-tooltip>
 </div>
