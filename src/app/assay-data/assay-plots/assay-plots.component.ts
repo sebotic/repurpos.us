@@ -54,7 +54,6 @@ export class AssayPlotsComponent implements OnInit {
         this.retrieveAssayData();
       }
     })
-
     // this.retrieveAssayData();
   }
 
@@ -109,15 +108,14 @@ export class AssayPlotsComponent implements OnInit {
 
   retrieveAssayData(): void {
     if (this.loggedIn) {
-      this.http2.get(environment.host_url + '/assaydata_plot', {
-        // this.http2.get(environment.host_url + '/data', {
+        this.http2.get(environment.host_url + '/data', {
         observe: 'response',
         headers: new HttpHeaders()
           .set('Accept', 'application/json')
           .set('Authorization', localStorage.getItem('auth_token')),
         params: new HttpParams()
-          .set('assay_id', this.aid)
-          .set('aid', this.aid)
+          .set('assay', this.aid)
+          // .set('aid', this.aid)
       }).subscribe((r) => {
         // console.log('results returned from API call')
         // console.log(r)
