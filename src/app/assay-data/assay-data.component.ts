@@ -42,16 +42,13 @@ export class AssayDataComponent implements OnInit {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
-      // .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
         .set('aid', this.aid)
     }).subscribe((r) => {
       let v = r.body;
-
-// console.log(r)
-// console.log(v)
+      // console.log(r)
       this.assayDetails = v[0];
-      this.titleService.setTitle( this.assayDetails.title_short + " | reframeDB");
+      this.titleService.setTitle(this.assayDetails.title_short + " | reframeDB");
     },
       err => { }
     );
@@ -59,9 +56,7 @@ export class AssayDataComponent implements OnInit {
   }
 
   onAnchorClick(anchor_tag: string) {
-    // console.log(anchor_tag)
     let anchor_div = document.querySelector("#" + anchor_tag);
-    // console.log(anchor_div)
     if (anchor_div) {
       anchor_div.scrollIntoView();
     }
