@@ -44,7 +44,7 @@ export class SearchResultsTableComponent implements OnInit {
   assays: string[];
   max_num_assays: number = 10;
   // minColumns: string[] = ['main_label', 'alias', 'id', 'reframeid']; // minimal set of columns to include
-  minColumns: string[] = ['struct', 'main_label', 'reframeid']; // minimal set of columns to include
+  minColumns: string[] = ['struct', 'main_label', 'assays', 'similar']; // minimal set of columns to include
   displayedColumns: string[]; // minimal set of columns to include
   dataSource = new MatTableDataSource<Compound>();
 
@@ -54,6 +54,7 @@ export class SearchResultsTableComponent implements OnInit {
   getFontColor: any; // function to get the font color for a tanimoto score
 
   tanimotoTooltip: string = "Structural similarity metric, ranging from 0 (no similarity) to 1 (identical atom connectivity)";
+  similarTooltip: string = "Structures have a 0.85 or higher Tanimoto similarity score";
   assayTooltip: string = "Assays for which the compound has been measured to be active";
   rfmTooltip: string = "Sample has been purchased or synthesized as part of Reframe library";
 
@@ -103,15 +104,18 @@ export class SearchResultsTableComponent implements OnInit {
         this.responseCode = result.status;
         this.APIquery = result.url;
         this.queryString = decodeURIComponent(result.url.split("&")[0].split("query=")[1]);
-        this.probSMILES = this.queryString.indexOf("(") > -1 || this.queryString.indexOf("=") > -1;
+        this.probSMILES = this.queryString.indexOf("(") > -1 || this.queryString.indexOf("=") > -1; // If query fails, see if the query was probably a SMILES input
         // console.log(decodeURIComponent(this.APIquery))
 
         if (result.data) {
           let results = result.data;
 
+          // example filtering
+          // results = results.filter(d => d.reframeid === true);
+
           // Calculate the number of assays per hit
           results.forEach((d: any) => {
-            d['assay_types'] = d.assay_types.sort((a,b) => a[2] > b[2]);
+            d['assay_types'] = d.assay_types.sort((a, b) => a[2] > b[2]);
             d['assays'] = d.assay_types.length;
             d['aliases'] = this.removeDupeAlias(d.aliases);
             d['alias_ct'] = this.num_aliases;
@@ -165,7 +169,7 @@ export class SearchResultsTableComponent implements OnInit {
   }
 
   checkMobile() {
-    if (window.matchMedia('(max-width: 760px)').matches) {
+    if (window.matchMedia('(max-width: 900px)').matches) {
       this.isMobile = true;
     } else {
       this.isMobile = false;
@@ -205,7 +209,7 @@ export class SearchResultsTableComponent implements OnInit {
       this.displayedColumns.push('tanimoto')
     }
 
-    this.displayedColumns = this.displayedColumns.concat('assays');
+    // this.displayedColumns = this.displayedColumns.concat('assays');
     // if (!this.isMobile) {
     //   // console.log(this.displayedColumns);
     //   // this.displayedColumns.splice(2, 0, 'struct') // insert structure into the cols

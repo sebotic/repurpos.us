@@ -33,7 +33,7 @@ a, a.dwnld-link:hover, .view-more {
 .overview > ul {
   list-style: none;
   padding: 6px 10px 6px 10px;
-  background: #3d6de00d;
+  background: #edf1fc;
   border-radius: 3px;
 }
 
@@ -42,7 +42,7 @@ a, a.dwnld-link:hover, .view-more {
   border-top: 1px solid #212529;
   margin-top: 15px;
   margin-bottom: 20px;
-  padding-top: 15px;
+  // padding-top: 15px;
   padding-bottom: 15px;
 }
 
@@ -82,4 +82,21 @@ a, a.dwnld-link:hover, .view-more {
   margin-top: 0.5rem;
   margin-top: 15px;
   padding-top: 12px;
+}
+
+.summary-content {
+  margin-top: 15px;
+}
+
+.author {
+  width: 100%;
+  margin-top: 0;
+  border-top: none;
+  font-size: 0.8em;
+  color: #9ba4ae;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-left: 1px;
+  padding-left: 10px;
+  border-bottom: #717e8c 1px dashed;
 }

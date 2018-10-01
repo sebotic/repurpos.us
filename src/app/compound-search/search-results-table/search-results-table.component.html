@@ -14,18 +14,21 @@
               <mat-icon class='sort-icon' matTooltip="sort by name">sort</mat-icon>
             </mat-header-cell>
 
-            <mat-cell *matCellDef="let element; let row=index" class="main-label d-flex">
-
+            <mat-cell *matCellDef="let element; let row=index" class="main-label d-flex" (click)="expandCell(row)">
               <!-- Name -->
-              <div class="col-xs-auto">
+              <div class="smscreen-name">
                 <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
                   <h5>{{element['main_label']}}</h5>
                 </a>
 
               </div>
 
+              <div *ngIf="element['reframeid'] === true" [matTooltip]="rfmTooltip" [ngClass]="element['reframeid'] === true ? 'cmpd-avail' : 'no-cmpd'">
+                Reframe library compound
+              </div>
+
               <!-- Aliases + InChI key/ID -->
-              <table class="table cmpd-info" (click)="expandCell(row)">
+              <table class="table cmpd-info">
                 <tbody>
 
                   <!-- Aliases -->
@@ -67,29 +70,29 @@
 
 
           <!-- In physical library -->
-          <ng-container matColumnDef="reframeid">
+          <ng-container matColumnDef="similar">
             <mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true" start="desc" class="mat-header">
-              <span class="mat-header" [matTooltip]="rfmTooltip">
-              Sample in Screening Library</span>
+              <span class="mat-header" [matTooltip]="similarTooltip">
+              Similar compounds</span>
               <mat-icon class='sort-icon' matTooltip="sort by library compound">sort</mat-icon>
             </mat-header-cell>
             <mat-cell *matCellDef="let element" class="flex-column" [ngClass]="element['expanded'] ? 'expanded' : ''">
 
-              <div class="d-flex flex-row justify-content-center">
+              <div class="d-flex flex-row">
                 <!-- Label for small screens -->
-                <div class="label" id="reframe_label" *ngIf="isMobile" [matTooltip]="rfmTooltip">
-                  Sample in Screening Library
+                <div class="label" id="reframe_label" *ngIf="isMobile" [matTooltip]="similarTooltip">
+                  Similar compounds
                 </div>
                 <!-- binary circle if compound in reframe library -->
-                <div id="reframe_cmpd" [ngClass]="element['reframeid'] === true ? 'cmpd-avail' : 'no-cmpd'">
+                <!-- <div id="reframe_cmpd" [ngClass]="element['reframeid'] === true ? 'cmpd-avail' : 'no-cmpd'">
                   <div>
                     <span class="circle"></span>
                   </div>
-                </div>
+                </div> -->
               </div>
 
               <!-- Similar compounds -->
-              <div class="d-flex flex-row sim-cmpds">
+              <div class="d-flex justify-content-end flex-grow-1 sim-cmpds">
                 <app-search-result-similar [compound_result]="element" [mobile]="isMobile"></app-search-result-similar>
               </div>
 
@@ -98,8 +101,7 @@
 
           <!-- Tanimoto score -->
           <ng-container matColumnDef="tanimoto">
-            <mat-header-cell *matHeaderCellDef class="mat-header" [matTooltip]="tanimotoTooltip"
-            mat-sort-header disableClear="true" >
+            <mat-header-cell *matHeaderCellDef class="mat-header" [matTooltip]="tanimotoTooltip" mat-sort-header disableClear="true">
               <span class="mat-header">Tanimoto Similarity Score</span>
               <mat-icon class='sort-icon' matTooltip="sort by Tanimoto score">sort</mat-icon>
             </mat-header-cell>
@@ -170,18 +172,28 @@
             </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="assay_titles">
+          <!-- <ng-container matColumnDef="assay_titles">
             <mat-header-cell *matHeaderCellDef class="assay-label"></mat-header-cell>
             <mat-cell *matCellDef="let element">
               <ul class="assay-list">
                 <li class="assay-title" *ngFor="let assay of element.assay_types; let i=index">
                   <a [routerLink]="['/assays', assay[1]]">{{assay[0]}}</a>
-                  <!-- <span *ngIf="i + 1 < element.assay_types.length" class='data-separator'></span> -->
                 </li>
               </ul>
-              <!-- <span [ngClass]="element['assay_types'].indexOf(assay) > -1 ? 'circle assay-avail' : 'circle no-assay'"></span> -->
             </mat-cell>
           </ng-container>
+
+
+          <ng-container matColumnDef="avail">
+            <mat-header-cell *matHeaderCellDef class="assay-label"></mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <ul class="assay-list">
+                <li class="assay-title" *ngFor="let assay of element.assay_types; let i=index">
+                  <a [routerLink]="['/assays', assay[1]]">{{assay[0]}}</a>
+                </li>
+              </ul>
+            </mat-cell>
+          </ng-container> -->
 
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

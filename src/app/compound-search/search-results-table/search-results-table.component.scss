@@ -72,6 +72,10 @@ mat-row:first-of-type {
   padding-left: 3px;
 }
 
+.mat-cell {
+  padding: 0 10px;
+}
+
 .search-result-rate-limit-reached {
   color: #980000;
   max-width: 360px;
@@ -92,7 +96,7 @@ mat-row:first-of-type {
   flex: 0 0 25%;
 }
 
-.mat-column-reframeid {
+.mat-column-similar {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
@@ -101,7 +105,6 @@ mat-row:first-of-type {
 .mat-column-assay_titles {
   flex: 0 0 auto;
 }
-
 
 .mat-column-tanimoto {
   flex: 0 0 110px;
@@ -207,8 +210,13 @@ a#more {
   font-size: 0.9em;
 }
 
-.cmpd-avail,
-.no-cmpd {}
+.cmpd-avail {
+  background: #fd5457;
+  padding: 5px 10px;
+  border-radius: 30px;
+  color: white;
+  margin-bottom: 10px;
+}
 
 .no-assay,
 .no-cmpd {
@@ -273,7 +281,7 @@ a#more {
   justify-content: center;
 }
 // Media queries: small screens
-@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+@media only screen and (max-width: 900px), (min-device-width: 768px) and (max-device-width: 1024px) {
   .search-result-container {
     margin-left: 0;
     min-width: unset;
@@ -383,7 +391,7 @@ a#more {
       text-align: right;
     }
 
-    &.mat-column-reframeid {
+    &.mat-column-similar {
       padding: 0 15px;
     }
   }
@@ -393,6 +401,10 @@ a#more {
   mat-row::after {
     min-height: unset;
   }
+}
+
+.smscreen-name {
+  margin-right: 15px;
 }
 
 /deep/ mat-cell {

@@ -6,8 +6,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SciItalicizePipe implements PipeTransform {
   private italic_words: string[] = [
     'Cryptosporidium parvum', 'Cryptosporidium hominis',
-    'C. hominis', 'C. parvum', 'Cryptosporidium', 'Crypto',
+    'C. hominis', 'C. parvum', 'Cryptosporidium', 'Crypto ',
     'Wolbachia ',
+    'Candida auris', 'Candida',
+    'Giardia lamblia', 'Giardia',
+    'Brugia malayi', 'B. malayi', 'Brugia pahangi', 'B. pahangi', 'Brugia',
+    'Acinetobacter baumannii', 'A. baumannii', 'Acinetobacter',
     'Mycobacterium tuberculosis', 'M. tuberculosis', 'P.falciparum', 'P. falciparum',
     'M. smegmatis', 'in vivo', 'in vitro', 'In Situ', 'in situ', 'Drosophila'
   ];

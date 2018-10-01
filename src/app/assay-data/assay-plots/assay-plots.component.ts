@@ -40,10 +40,6 @@ export class AssayPlotsComponent implements OnInit {
     route.params.subscribe(params => {
       this.aid = params['aid'];
     });
-
-
-    console.log('construct');
-
   }
 
   @ViewChild(AssayPaginationComponent)
@@ -51,23 +47,14 @@ export class AssayPlotsComponent implements OnInit {
 
 
   ngOnInit() {
-    // if (localStorage.getItem('auth_token')) {
-    //   this.loggedIn = true;
-    // } else {
-    //   this.loggedIn = false;
-    // }
+
     this.loginSubscription = this.loginStateService.isUserLoggedIn.subscribe(val => {
-      if (val) {
+      if (val.loggedIn === true) {
         this.loggedIn = true;
-        this.retrieveAssayList();
+        this.retrieveAssayData();
       }
     })
-    if (localStorage.getItem('auth_token'))
-      this.loggedIn = true;
-    else
-      this.loggedIn = false;
-
-    this.retrieveAssayList();
+    // this.retrieveAssayData();
   }
 
 
@@ -116,19 +103,22 @@ export class AssayPlotsComponent implements OnInit {
   }
 
   ngOnChanges() {
-    this.retrieveAssayList();
+    this.retrieveAssayData();
   }
 
-  retrieveAssayList(): void {
+  retrieveAssayData(): void {
     if (this.loggedIn) {
-      this.http2.get(environment.host_url + '/assaydata_plot', {
+        this.http2.get(environment.host_url + '/data', {
         observe: 'response',
         headers: new HttpHeaders()
           .set('Accept', 'application/json')
           .set('Authorization', localStorage.getItem('auth_token')),
         params: new HttpParams()
-          .set('aid', this.aid)
+          .set('assay', this.aid)
+          // .set('aid', this.aid)
       }).subscribe((r) => {
+        // console.log('results returned from API call')
+        // console.log(r)
         // assign data to assayData object
         let v = r.body;
         this.assayData = v;

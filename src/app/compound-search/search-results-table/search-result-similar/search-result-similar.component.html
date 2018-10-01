@@ -53,10 +53,11 @@
 
 
 <!-- Check if there are similar compounds, if not a Reframe compound -->
-<div class="similar" *ngIf="compound_result['reframeid'] === false && compound_result['similar_compounds'].length > 0">
+<div class="similar" *ngIf="compound_result['similar_compounds'].length > 0">
+<!-- <div class="similar" *ngIf="compound_result['reframeid'] === false && compound_result['similar_compounds'].length > 0"> -->
 
   <div class='sim-title'>
-    {{compound_result['similar_compounds'].length === 1 ? "similar library compound:" : "similar library compounds:"}}
+    <!-- {{compound_result['similar_compounds'].length === 1 ? "similar library compound:" : "similar library compounds:"}} -->
   </div>
 
   <ng-container *ngIf="compound_result['similar_compounds'].length <= num_similar; else lotsa_similar">

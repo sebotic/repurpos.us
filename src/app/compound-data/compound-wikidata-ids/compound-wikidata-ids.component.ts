@@ -14,10 +14,17 @@ export class CompoundWikidataIdsComponent implements OnInit {
   public chemData: WikiData[] = [];
   public idData: WikiData[] = [];
   public formula: string;
+  public smiles: string;
+  public ikey: string;
 
   constructor(private cmpdSvc: CompoundService) {
     this.cmpdSvc.idStates.subscribe((ids: Object) => {
       this.qid = ids['qid'];
+      this.ikey = ids['id'];
+    })
+
+    this.cmpdSvc.smilesSubject.subscribe((smiles: string) => {
+      this.smiles = smiles;
     })
 
     this.cmpdSvc.wikiIDsState.subscribe((ids: Object) => {

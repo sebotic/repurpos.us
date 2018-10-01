@@ -137,6 +137,10 @@ import { SciItalicizePipe } from './_pipes/sci-italicize.pipe';
 import { AssaySparklineComponent } from './compound-data/assay-sparkline/assay-sparkline.component';
 import { HeaderComponent } from './header/header.component';
 import { AssayIndicationComponent } from './assay-indication/assay-indication.component';
+import { CitationComponent } from './citation/citation.component';
+// import { SearchResultHeaderComponent } from './compound-search/search-result-header/search-result-header.component';
+// import { ReframeFilterComponent } from './compound-search/search-result-header/reframe-filter/reframe-filter.component';
+// import { AssaysFilterComponent } from './compound-search/search-result-header/assays-filter/assays-filter.component';
 
 @NgModule({
   exports: [
@@ -247,7 +251,9 @@ export class MaterialModule {}
     ClinicalPhaseComponent,
     SaltFormComponent,
     AssaySparklineComponent,
-    SciItalicizePipe
+    SciItalicizePipe,
+    CitationComponent,
+    // SearchResultHeaderComponent, ReframeFilterComponent, AssaysFilterComponent
   ],
   imports: [
     BrowserModule,

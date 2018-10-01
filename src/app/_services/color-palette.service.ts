@@ -12,6 +12,7 @@ import * as chroma from 'chroma-js';
 export class ColorPaletteService {
 
   public uniqueColors: Object = {
+    "aquamarine": "#00b8a0",
     "orange-red": "#ff602c",
     "jade": "#00a650",
     "purple": "#9d02d7",
@@ -31,11 +32,10 @@ export class ColorPaletteService {
     "lt-pink": "#ce617a",
     "yellow-green": "#80aa0e",
     "mauve": "#805c6e",
-    "aquamarine": "#00b8a0",
+    "emerald": "#1f8170",
     "violet": "#9e378e",
     "navy": "#4f4b6c",
     "avocado": "#809200",
-    "emerald": "#1f8170",
     "brand-red": "#ff003c",
     "default": "#9ba4ae"
   };
@@ -70,7 +70,31 @@ export class ColorPaletteService {
     });
   }
 
+  getColorPalette = function(color: string, num_vals: number) {
+
+    let vals: number[] = d3.range(0.25, 2.75, (2.5 / Math.floor(num_vals/2)));
+    let arr = [];
+
+    for (let i = vals.length - 1; i >= 0; i--) {
+      arr.push(chroma(color).darken(vals[i]).hex());
+    }
+
+    if (num_vals % 2) {
+      arr.push(color);
+    }
+
+    for (let j = 0; j < vals.length; j++) {
+      arr.push(chroma(color).brighten(vals[j]).hex());
+    }
+
+    // console.log(arr)
+    return (arr)
+  }
+
+
+
   getIndicColor(indication: string, lt_pct: number = 0.75) {
+    // this.getColorPalette('ff602c', 3)
     if (this.indicationList) {
       let indicColors = this.colorList;
 
@@ -91,5 +115,7 @@ export class ColorPaletteService {
       return ({ 'background': 'none', 'bg-lt': 'none', 'font': 'none' })
     }
   }
+
+
 
 }

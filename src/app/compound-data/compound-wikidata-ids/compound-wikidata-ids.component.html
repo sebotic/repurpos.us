@@ -1,5 +1,5 @@
 <!-- Chemical formula, InChIKey, SMILES -->
-<div *ngIf="chemData.length > 0 && qid">
+<div *ngIf="chemData.length > 0 && qid; else no_wd">
 
   <div class="formula text-center" *ngIf="formula">
     {{formula}}
@@ -81,13 +81,21 @@
 
 
 <!-- If no wikidata data are available, use the information from the vendors -->
-<!-- <ng-template #vendor_cheminfo>
+<ng-template #no_wd>
+  <div class="chem-props-container">
+    <div>
+      <h5>Chemical properties</h5>
+    </div>
 
-  <div *ngIf="gvkData || informaData || integrityData">
-    <h4>Chemical properties</h4>
+    <div class="chem-props alias wikidata">
+      <div scope="row" class="title">SMILES</div>
+      <div scope="row" class="wrap">{{ smiles }}</div>
+
+      <div scope="row" class="title">InChIKey</div>
+      <div scope="row" class="wrap">{{ ikey }}</div>
+    </div>
   </div>
-
-  <ng-container *ngIf='gvkData'>
+  <!-- <ng-container *ngIf='gvkData'>
     <div class="chem-props alias" *ngIf="gvkData.hasOwnProperty('smiles')">
       <div class="title" scope="row">SMILES (<a href="/#/about/#gvk" target="_blank">GVK Excelra GoStar</a>)</div>
       <div scope="row" class="smiles">
@@ -113,7 +121,7 @@
         {{integrityData['smiles']}}
       </div>
     </div>
-  </ng-container>
+  </ng-container> -->
 
 
-</ng-template> -->
+</ng-template>
