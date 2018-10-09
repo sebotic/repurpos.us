@@ -35,10 +35,10 @@ export class SearchBoxComponent implements OnInit {
       .subscribe(params => {
 
         // Launch text-based query
-        if (params['query'] && 'type' in params && params['type'] === 'string') {
+        if (params['query'] && 'type' in params && (params['type'] === 'string' || params['type'] === 'substructure')) {
           this.searchQuery = params['query'];
 
-          this.searchSvc.search(this.searchQuery)
+          this.searchSvc.search(this.searchQuery, params['type'])
             .subscribe(
               (results: SearchResult) => {
                 // console.log(results)
@@ -74,19 +74,8 @@ export class SearchBoxComponent implements OnInit {
         }
 
         // Launch Exact and stereo-free structure matches
-        if (params['query'] && 'type' in params && params['type'] === 'structure' && params['mode'] === 'exact') {
-          this.searchSvc.searchStructExact(this.searchQuery, 'exact')
-            .subscribe(
-              (results: SearchResult) => {
-                this.searchResultService.announceNewSearchResult(results);
-              },
-              (err: any) => {
-                this.catchError(err);
-              }
-            );
-        } else if (params['query'] && 'type' in params && params['type'] === 'structure' && params['mode'] === 'stereofree') {
-
-          this.searchSvc.searchStructExact(this.searchQuery, 'stereofree')
+        if (params['query'] && 'type' in params && params['type'] === 'structure' && (params['mode'] === 'exact' || params['mode'] === 'stereofree' )) {
+          this.searchSvc.searchStructExact(this.searchQuery, params['mode'])
             .subscribe(
               (results: SearchResult) => {
                 this.searchResultService.announceNewSearchResult(results);
@@ -96,6 +85,20 @@ export class SearchBoxComponent implements OnInit {
               }
             );
         }
+
+
+        // else if (params['query'] && 'type' in params && params['type'] === 'structure' && params['mode'] === 'stereofree') {
+        //
+        //   this.searchSvc.searchStructExact(this.searchQuery, 'stereofree')
+        //     .subscribe(
+        //       (results: SearchResult) => {
+        //         this.searchResultService.announceNewSearchResult(results);
+        //       },
+        //       (err: any) => {
+        //         this.catchError(err);
+        //       }
+        //     );
+        // }
 
 
 

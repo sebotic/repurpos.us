@@ -18,7 +18,7 @@ export class BackendSearchService {
 
   }
 
-  search(query: string): Observable<SearchResult> {
+  search(query: string, type: string): Observable<SearchResult> {
 
     return this.http.get(environment.host_url + '/search', {
       observe: 'response',
@@ -28,7 +28,7 @@ export class BackendSearchService {
         .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
         .set('query', query)
-        .set('type', 'string')
+        .set('type', type)
     }).pipe(
       map(item => {
         return new SearchResult({ data: item });

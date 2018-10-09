@@ -24,13 +24,15 @@ export class StructureSearchOptionsComponent implements OnInit {
   searchOptions: any = [
     { 'id': 'exact', 'label': 'exact match', 'tooltip': 'search only exact matches' },
     { 'id': 'stereofree', 'label': 'stereo-free exact match', 'tooltip': 'ignoring stereochemistry, return only exact matches' },
-    { 'id': 'similarity', 'label': 'search similar compounds', 'tooltip': 'search based on a Tanimoto similarity score' }
+    { 'id': 'similarity', 'label': 'similar compounds', 'tooltip': 'search based on a Tanimoto similarity score' },
+    { 'id': 'substructure', 'label': 'substructure', 'tooltip': 'search based on part of a structure' }
   ]
 
   examples: Array<any> = [
     { 'type': 'structure', 'mode': 'exact', 'query': 'C1=C(C=CC(O)=C1)NC(=O)C', 'label': 'exact search', 'description': 'acetaminophen (Tylenol)' },
     { 'type': 'structure', 'molfile': "C1=CC=C2C(=C1)C(=CN2)CC(C(=O)O)NC(=O)CCC(C(=O)O)N", 'mode': 'stereofree', 'query': 'C1=CC=C2C(=C1)C(=CN2)CC(C(=O)O)NC(=O)CCC(C(=O)O)N', 'label': 'stereo-free exact search', 'description': 'orilotimod stereoisomers' },
-    { 'type': 'structure', 'mode': 'similarity', 'tanimoto': 0.35, 'query': 'C(C1C2=C(N(C)N=1)C1=C(C=NC(=N1)NC1=CC=C(N3CCN(C)CC3)C=C1)CC2)(=O)N', 'label': 'similarity search', 'description': 'milciclib backbone' }
+    { 'type': 'structure', 'mode': 'similarity', 'tanimoto': 0.35, 'query': 'C(C1C2=C(N(C)N=1)C1=C(C=NC(=N1)NC1=CC=C(N3CCN(C)CC3)C=C1)CC2)(=O)N', 'label': 'similarity search', 'description': 'milciclib backbone' },
+    { 'type': 'substructure', 'query': 'CSc1ccccc1', 'label': 'substructure search', 'description': 'thioanisole' }
   ]
 
 
