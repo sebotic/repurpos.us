@@ -17,24 +17,28 @@ export class Struct2dComponent implements OnInit {
   constructor(private domSanitizer: DomSanitizer, private svgSvc: StructureSvgService) { }
 
   ngOnInit() {
-    
+
 
   }
 
   ngOnChanges() {
-    this.svgSvc.getSVG(this.structure, this.struct_type)
-      .subscribe(
-        (results: string) => {
-          // console.log(results)
+    if (this.struct_type !== 'svg') {
+      this.svgSvc.getSVG(this.structure, this.struct_type)
+        .subscribe(
+          (results: string) => {
+            // console.log(results)
 
-          this.svg = this.domSanitizer.bypassSecurityTrustHtml(results)
-        },
-        (err: any) => {
-          // console.log('error in SMILES')
-          // console.log(err)
-        }
-      );
-
+            this.svg = this.domSanitizer.bypassSecurityTrustHtml(results);
+          },
+          (err: any) => {
+            // console.log('error in SMILES')
+            // console.log(err)
+          }
+        );
+    }
+    else {
+      this.svg = this.domSanitizer.bypassSecurityTrustHtml(this.structure);
+    }
   }
 
 }
