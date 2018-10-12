@@ -8,7 +8,7 @@
         <mat-table #table matSort (matSortChange)="onSortChange($event)" [dataSource]="dataSource">
 
           <!-- TEMPORARY SHIM TO TEST OUT SUBSTRUCTURE SEARCH -->
-          <ng-container matColumnDef="compound_id">
+          <!-- <ng-container matColumnDef="compound_id">
             <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header">
               <span class="mat-header">compound_id</span>
             </mat-header-cell>
@@ -37,7 +37,7 @@
 
               <app-struct2d [structure]="element['svg']" struct_type="svg"></app-struct2d>
             </mat-cell>
-          </ng-container>
+          </ng-container> -->
 
 
 
@@ -61,9 +61,9 @@
                 Reframe library compound
               </div>
 
-              <div *ngIf="element['reframeid'] !== true" [matTooltip]="skeletonTooltip" class="skeleton-match">
+              <!-- <div *ngIf="element['reframeid'] !== true" [matTooltip]="skeletonTooltip" class="skeleton-match">
                 Reframe skeleton match
-              </div>
+              </div> -->
 
               <!-- Aliases + InChI key/ID -->
               <table class="table cmpd-info">
@@ -169,6 +169,7 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element" [ngClass]="element['expanded'] ? 'expanded' : ''">
               <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
+                <app-struct2d [structure]="element['svg']" struct_type="svg" *ngIf="element['svg']"></app-struct2d>
                 <app-struct2d [structure]="element['id']" struct_type="inchikey" *ngIf="element['id'].length === 27"></app-struct2d>
               </a>
             </mat-cell>

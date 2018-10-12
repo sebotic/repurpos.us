@@ -103,16 +103,24 @@ export class StructureSearchOptionsComponent implements OnInit {
   submitQuery() {
     // check if structure has been submitted; needed to only launch search when TM changed after already searched
     // if (this.submitted) {
-    let query = {
-      query: this.text_query.trim(),
-      type: 'structure',
-      mode: this.searchMode,
-    };
+    let query: Object;
 
-    if (this.searchMode === 'similarity') {
-      query['tanimoto'] = this.tanimotoThresh;
+    if (this.searchMode === 'substructure') {
+      query = {
+        query: this.text_query.trim(),
+        type: 'substructure',
+      }
+    } else {
+      query = {
+        query: this.text_query.trim(),
+        type: 'structure',
+        mode: this.searchMode,
+      };
+
+      if (this.searchMode === 'similarity') {
+        query['tanimoto'] = this.tanimotoThresh;
+      }
     }
-
     // Update that search has been completed.
     this.searchResultService.announceSubmit(true);
 
