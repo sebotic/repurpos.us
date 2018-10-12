@@ -216,9 +216,9 @@ export class SearchResultsTableComponent implements OnInit {
     }
 
     // TEMPORARY: SHIM TO VIEW SUBSTRUCTURE DATA
-    if (df.some(el => el.hasOwnProperty('compound_id'))) {
-      this.displayedColumns = ['compound_id', 'smiles', 'svg']
-    }
+    // if (df.some(el => el.hasOwnProperty('compound_id'))) {
+    //   this.displayedColumns = ['compound_id', 'smiles', 'svg']
+    // }
     // console.log(this.displayedColumns)
 
     // this.displayedColumns = this.displayedColumns.concat('assays');
