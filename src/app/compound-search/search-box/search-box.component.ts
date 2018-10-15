@@ -51,11 +51,16 @@ export class SearchBoxComponent implements OnInit {
         }
 
         // Update the structure and get the molfile returned
-        if (params['query'] && 'type' in params && params['type'] === 'structure') {
+        if (params['query'] && 'type' in params && (params['type'] === 'structure' || params['type'] === 'substructure')) {
           this.searchQuery = params['query'];
           this.structSvc.announceSmiles(this.searchQuery);
           this.structSvc.getMolfile(this.searchQuery);
-          this.structSvc.announceMode(params['mode']);
+          if (params['type'] === 'substructure') {
+            this.structSvc.announceMode('substructure');
+          } else {
+            this.structSvc.announceMode(params['mode']);
+          }
+
         }
 
         // Launch Tanimoto similarity search
@@ -74,7 +79,7 @@ export class SearchBoxComponent implements OnInit {
         }
 
         // Launch Exact and stereo-free structure matches
-        if (params['query'] && 'type' in params && params['type'] === 'structure' && (params['mode'] === 'exact' || params['mode'] === 'stereofree' )) {
+        if (params['query'] && 'type' in params && params['type'] === 'structure' && (params['mode'] === 'exact' || params['mode'] === 'stereofree')) {
           this.searchSvc.searchStructExact(this.searchQuery, params['mode'])
             .subscribe(
               (results: SearchResult) => {
@@ -142,7 +147,7 @@ export class SearchBoxComponent implements OnInit {
     this.route.queryParams.subscribe(values => {
       if (values.type === 'string') {
         this.selectedTab = this.textSearch_tabIdx;
-      } else if (values.type === 'structure') {
+      } else if (values.type === 'structure' || values.type === 'substructure') {
         this.selectedTab = this.structSearch_tabIdx;
       }
     });
