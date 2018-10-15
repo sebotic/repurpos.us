@@ -50,7 +50,6 @@ export class StructureSearchOptionsComponent implements OnInit {
     // look for pass back of input parameters
     this.modeSubscription = structSvc.modeAnnounced$.subscribe(
       mode => {
-        console.log(mode)
         this.searchMode = mode;
       });
 

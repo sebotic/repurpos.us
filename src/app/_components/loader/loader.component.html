@@ -1,3 +1,15 @@
-<div class="loading-indicator" [hidden]="show === 0">
-  <mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner>
+<div class="loading-container" [hidden]="show === 0">
+  <div class="loading-indicator">
+    <div *ngIf="mode === 'substructure'; else generic_load" class="substructure">
+        <h3>Searching by substructure...</h3>
+        <p>
+          Substructure searching can take up to a minute to complete
+        </p>
+        <mat-progress-spinner mode="indeterminate" color="primary" class="centered"></mat-progress-spinner>
+    </div>
+
+    <ng-template #generic_load>
+      <mat-progress-spinner mode="indeterminate" color="primary" class="centered"></mat-progress-spinner>
+    </ng-template>
+  </div>
 </div>
