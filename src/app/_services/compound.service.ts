@@ -565,7 +565,7 @@ export class CompoundService {
     return new Promise<any>((resolve, reject) => {
 
       if (id) {
-        this.searchSvc.search(id)
+        this.searchSvc.search(id, 'string')
           .subscribe(
             (results: SearchResult) => {
 
