@@ -32,7 +32,7 @@ export class StructureSvgService {
         .set('Accept', 'application/json')
         .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
-        .set('structure', query)
+        .set('structure', encodeURIComponent(query))
         .set('format', format)
     }).pipe(
       map(item => {

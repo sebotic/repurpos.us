@@ -160,7 +160,7 @@ export class StructureService {
         .set('Accept', 'application/json'),
       // .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
-        .set('compound_structure', query_string)
+        .set('compound_structure', encodeURIComponent(query_string))
     }).subscribe((r) => {
       let v = r.body;
       // console.log('structure returned from service');

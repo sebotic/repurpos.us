@@ -27,7 +27,7 @@ export class BackendSearchService {
         .set('Accept', 'application/json')
         .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
-        .set('query', query)
+        .set('query', encodeURIComponent(query))
         .set('type', type)
     }).pipe(
       map(item => {
@@ -44,7 +44,7 @@ export class BackendSearchService {
         .set('Accept', 'application/json')
         .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
-        .set('query', query)
+        .set('query', encodeURIComponent(query))
         .set('type', 'structure')
         .set('mode', mode)
     }).pipe(
@@ -62,7 +62,7 @@ export class BackendSearchService {
         .set('Accept', 'application/json')
         .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
-        .set('query', query)
+        .set('query', encodeURIComponent(query))
         .set('type', 'structure')
         .set('tanimoto', tanimoto.toString())
         .set('mode', 'similarity')
