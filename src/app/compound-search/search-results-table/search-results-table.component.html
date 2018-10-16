@@ -169,8 +169,10 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element" [ngClass]="element['expanded'] ? 'expanded' : ''">
               <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
-                <app-struct2d [structure]="element['svg']" struct_type="svg" *ngIf="element['svg']"></app-struct2d>
-                <app-struct2d [structure]="element['id']" struct_type="inchikey" *ngIf="element['id'].length === 27"></app-struct2d>
+                <app-struct2d [structure]="element['svg']" struct_type="svg" *ngIf="element['svg']; else no_glow"></app-struct2d>
+                <ng-template #no_glow>
+                  <app-struct2d [structure]="element['id']" struct_type="inchikey" *ngIf="element['id'].length === 27"></app-struct2d>
+                </ng-template>
               </a>
             </mat-cell>
           </ng-container>

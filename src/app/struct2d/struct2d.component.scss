@@ -1,20 +1,51 @@
+$substructure-highlight: #ffeab5;
+$substructure-strokewidth: 2.25; // 1.67 by default
+//#ffe5eb; // pink-ish
+//#ffeab5;
+//#fff2ce;
+//#
+
 .svg-wrapper {
   position: relative;
   width: 100%;
 }
 
 /deep/ .svg-wrapper svg {
-  margin: 10px auto 20px auto;
+  margin: 10px auto 20px;
   width: 90%;
   height: auto;
   max-height: 400px;
   display: inline-block;
 }
 
-/deep/ line {
-  stroke-width: 0.35;
-}
-
 /deep/ rect {
   // fill: none;
+}
+
+.outerglow > line,
+/deep/ .outerglow,
+line.outerglow {
+  stroke: $substructure-highlight;
+  stroke-width: $substructure-strokewidth;
+}
+
+/deep/ g.outerglow line {
+  stroke: $substructure-highlight !important;
+  stroke-width: $substructure-strokewidth;
+}
+
+
+// /deep/ line {
+//   stroke: $substructure-highlight;
+// }
+
+/deep/ .outerglow ellipse {
+  fill: $substructure-highlight;
+  stroke: $substructure-highlight;
+  stroke-width: 0.5;
+}
+
+/deep/ .bond {
+  stroke-width: 0.35;
+  stroke: #212529;
 }

@@ -1,6 +1,8 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Title } from '@angular/platform-browser';
+
+import { Subscription } from 'rxjs';
 
 import { SearchResult, Compound } from '../../_models/index';
 import { BackendSearchService, SearchResultService, TanimotoScaleService } from '../../_services/index';
@@ -30,7 +32,7 @@ export class SearchResultsTableComponent implements OnInit {
   }
 
   results: SearchResult[];
-
+  private resultsSubscription: Subscription;
 
   responseCode: number; // response coming back from the API query
   APIquery: string;
@@ -96,7 +98,7 @@ export class SearchResultsTableComponent implements OnInit {
     )
 
     // get search results
-    this.searchResultService.newSearchResult$.subscribe(
+    this.resultsSubscription = this.searchResultService.newSearchResult$.subscribe(
       result => {
         console.log(result)
         // reset pagination
@@ -169,6 +171,10 @@ export class SearchResultsTableComponent implements OnInit {
     //
     // this.dataSource.sort = this.sort;
     // console.log(this.dataSource)
+  }
+
+  ngOnDestroy() {
+    this.resultsSubscription.unsubscribe();
   }
 
   checkMobile() {

@@ -75,7 +75,8 @@ export class StructureSearchOptionsComponent implements OnInit {
   updateParams() {
     // Update the params, based on the route, if needed
     let params = this.route.queryParams['_value'];
-    if (params['type'] === 'structure') {
+    if (params['type'] === 'structure' || params['type'] === 'substructure') {
+      if(params['type'] === 'substructure') this.searchMode = 'substructure';
       if (params.hasOwnProperty('mode')) this.searchMode = params['mode'];
       if (params.hasOwnProperty('tanimoto')) this.tanimotoThresh = params['tanimoto'];
       if (params.hasOwnProperty('query')) {
