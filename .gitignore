@@ -39,3 +39,6 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+src/assets/structure_colors.json
+src/assets/atom_colors.png
+src/assets/atom_colors.ai
