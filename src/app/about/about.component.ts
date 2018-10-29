@@ -7,8 +7,10 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
+  reframe_pmid = "30282735";
 
-  constructor(private titleService: Title) { }
+  constructor(private titleService: Title) {
+   }
 
   ngOnInit() {
         this.titleService.setTitle("about | reframeDB");

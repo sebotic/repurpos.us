@@ -11,7 +11,10 @@ export class CitationService {
   entrez_stub = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
   // ex: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=18579783&retmode=xml&rettype=abstract
   ncbi_stub = 'https://www.ncbi.nlm.nih.gov/pmc/utils/ctxp';
+
+  // https://api.ncbi.nlm.nih.gov/lit/ctxp/v1/pubmed/?format=csl&id=30282735 ??
   // ex https://www.ncbi.nlm.nih.gov/pmc/utils/ctxp?ids=PMC2440361&report=citeproc';
+  // NOTE: only works if PMID also has PMCID (grr)
   citations: Object[] = [];
   result = [];
 
