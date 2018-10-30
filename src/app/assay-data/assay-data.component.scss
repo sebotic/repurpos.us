@@ -3,36 +3,52 @@ body {
   font-weight: 300;
 }
 
-a, a.dwnld-link:hover, .view-more {
+.view-more,
+a,
+a.dwnld-link:hover {
   color: #3D6DE0;
   cursor: pointer;
 }
 
-
-
-.assay-id, .home-link {
+.assay-id,
+.home-link {
   margin-top: 6px;
   margin-bottom: 0;
 }
 
 .assay-id {
-    color: #c3c4c5;
+  color: #c3c4c5;
 }
 
 .home-link {
-    color: #3D6DE0;
+  color: #3D6DE0;
+}
+
+#viewmore button {
+  background-color: #f4f4f4;
+  border-radius: 3px;
+  margin-left: 20px;
+  border: 1px #c5cbd0 solid;
+  -webkit-text-fill-color: #9ba4ae; // text
+  color: #b7bec5; // arrow
+  font-size: 0.75em;
+  font-weight: 300;
+  font-family: 'Lato', sans-serif;
 }
 
 #viewmore {
-  padding: 10px;
+  padding-top: 10px;
 }
 
-.overview {
+#viewmore button:hover {
+  background-color: #e1e4e7;
 }
+
+.overview {}
 
 .overview > ul {
   list-style: none;
-  padding: 6px 10px 6px 10px;
+  padding: 6px 10px;
   background: #edf1fc;
   border-radius: 3px;
 }
@@ -50,11 +66,11 @@ a, a.dwnld-link:hover, .view-more {
   font-size: 20px;
 }
 
-#label{
+#label {
   font-weight: 400;
 }
 
-.condits{
+.condits {
   color: #818182;
   padding-top: 6px;
 }
@@ -63,15 +79,13 @@ a, a.dwnld-link:hover, .view-more {
   font-size: 20px;
   color: #212529;
   padding-bottom: 3px;
-  margin-left: 0px;
-  margin-right: 0px;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .description {
   margin-bottom: 15px;
 }
-
-
 /* text */
 #protocol {
   margin-top: 32px;
