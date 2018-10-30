@@ -1,7 +1,11 @@
-$substructure-highlight: #ffeab5;
+$substructure-highlight: #f4e0f1; //purple
 $substructure-strokewidth: 2.25; // 1.67 by default
 //#ffe5eb; // pink-ish
-//#ffeab5;
+//#f4e0f1; // purple 50% of 9e378e
+//#f1d9c5; // brown 55% of 804a1e
+//#ffeab5; // soft yellow too subtle?
+//#cdebf7; // blue 45% of 1f93c0 NO.
+//#b8fff6 // aquamarine 50% of 00b8a0 50%
 //#fff2ce;
 //#
 
@@ -34,10 +38,9 @@ line.outerglow {
   stroke-width: $substructure-strokewidth;
 }
 
-
-// /deep/ line {
-//   stroke: $substructure-highlight;
-// }
+/deep/ .outerglow path {
+  stroke: $substructure-highlight;
+}
 
 /deep/ .outerglow ellipse {
   fill: $substructure-highlight;
