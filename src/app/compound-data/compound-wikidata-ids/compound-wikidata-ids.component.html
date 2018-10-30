@@ -6,7 +6,7 @@
   </div>
 
   <div class="chem-props-container">
-    <h5>Chemical properties (<a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">Wikidata</a>)</h5>
+    <h5>Chemical properties (<a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank" rel="noreferrer">Wikidata</a>)</h5>
 
     <div class="chem-props alias wikidata" *ngFor="let x of chemData">
       <div scope="row" class="title">{{ x['property'] }}</div>
@@ -39,7 +39,7 @@
         <!-- If there's a URL provided for the resource from Wikidata, hyperlink out -->
         <ng-template #resource_link let-obj="obj">
           <span *ngFor="let id of obj['values']; let i = index">
-            <a [href]="obj['url']" target="_blank">{{ id }}</a>
+            <a [href]="obj['url']" target="_blank" rel="noreferrer">{{ id }}</a>
             <span class='data-separator' *ngIf="i + 1 < obj['values'].length"></span>
           </span>
         </ng-template>
@@ -58,7 +58,7 @@
       <!-- Wikidata ID -->
       <div class="title" scope="row">Wikidata</div>
       <div scope="row">
-        <a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">
+        <a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank" rel="noreferrer">
             {{ qid }}
           </a>
       </div>
