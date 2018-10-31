@@ -2,7 +2,7 @@ import { Component, OnInit, forwardRef, Inject, Injectable, Input } from '@angul
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Http, Response } from "@angular/http";
 import { Location } from '@angular/common';
-import { Title } from '@angular/platform-browser';
+import { Title, Meta } from '@angular/platform-browser';
 
 // import { InteractionTableDataService } from "../interaction-table/interaction-table.component"
 
@@ -28,7 +28,7 @@ export class CompoundDataComponent implements OnInit {
   smiles: string;
   loggedIn: boolean;
   showVendor: boolean = false;
-  label: string;
+  // label: string;
   tableData: Array<Object> = [];
   aliases: Array<string> = [];
   chemVendors: Array<Object> = [];
@@ -41,6 +41,12 @@ export class CompoundDataComponent implements OnInit {
   // Parameters for similarity results
   num_similar_per_page: number = 3;
 
+  // Meta tags
+  meta_tags = [];
+
+  meta_title: string = ' data | reframeDB';
+  meta_descrip: string = ' data from reframeDB, including assay hit data, chemical properties, and biological properties (if available)';
+
 
   constructor(
     @Inject(forwardRef(() => WDQService)) public wd: WDQService,
@@ -52,8 +58,12 @@ export class CompoundDataComponent implements OnInit {
     private loginStateService: LoginStateService,
     private compoundService: CompoundService,
     // public searchSvc: BackendSearchService,
-    public _location: Location
+    public _location: Location,
+    private meta: Meta
   ) {
+    // Add url to meta tag
+    this.meta.updateTag({ property: 'og:url', content: window.location.href });
+
     this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
     }
@@ -65,7 +75,7 @@ export class CompoundDataComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       // console.log('routing... ')
-      this.compoundService.idSubject.next({id: params['id'], qid: params['qid']});
+      this.compoundService.idSubject.next({ id: params['id'], qid: params['qid'] });
     });
 
     // Pass along available data binaries to app-available-data
@@ -76,13 +86,25 @@ export class CompoundDataComponent implements OnInit {
 
     // Generate SMILES for structure viewer
     this.compoundService.smilesState.subscribe((smiles: string) => {
-    // console.log(smiles)
+      // console.log(smiles)
       this.smiles = smiles;
     })
 
     this.compoundService.nameState.subscribe((cmpdName: string) => {
-      if (cmpdName) {
-        this.titleService.setTitle(cmpdName + " | reframeDB");
+      if (!cmpdName) {
+        // If there's no name for the compound, set a generic title
+        cmpdName = 'compound'
+      }
+      this.titleService.setTitle(cmpdName + " | reframeDB");
+
+      // Set meta tags
+      this.meta_tags.push({ name: 'description', content: cmpdName + this.meta_descrip });
+      this.meta_tags.push({ property: 'og:description', content: cmpdName + this.meta_descrip });
+
+      this.meta_tags.push({ property: 'og:title', content: cmpdName + this.meta_title });
+
+      for(let i=0; i < this.meta_tags.length; i++){
+        this.meta.updateTag(this.meta_tags[i]);
       }
     })
 

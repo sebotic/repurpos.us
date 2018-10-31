@@ -23,7 +23,7 @@ export class LoaderComponent implements OnInit {
     this.rteSubscription = this.route.queryParams
       .subscribe(params => {
         this.mode = params.type;
-        console.log(this.mode)
+        // console.log(this.mode)
       });
 
     // let params = this.route;
