@@ -8,9 +8,9 @@ import { AuthService } from '../_services/index';
 @Component({
   selector: 'auth-button',
   template: `
-    <div *ngIf="authenticated; else lgin"><button type="submit" (click)="logout()" class="btn btn-danger">Logout</button></div> 
-    <ng-template #lgin><button type="submit" (click)="login()" class="btn btn-success">Authenticate</button></ng-template>
-    
+    <div *ngIf="authenticated; else lgin"><button type="submit" (click)="logout()" class="btn btn-danger" aria-label="logout">Logout</button></div>
+    <ng-template #lgin><button type="submit" (click)="login()" class="btn btn-success" aria-label="authenticate">Authenticate</button></ng-template>
+
   `,
 })
 export class AuthGuard implements CanActivate {

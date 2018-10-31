@@ -3,13 +3,15 @@
   <mat-expansion-panel class="structure-expansion" (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]="!pressed" hideToggle="panelOpenState" [expanded]="panelOpenState">
     <mat-expansion-panel-header [hidden]="!pressed">
       <mat-panel-title class="accordion-title col justify-content-end">
-        <button mat-raised-button class="expand-accordion">{{ !pressed ? '' : panelOpenState ? 'Hide search options' : 'Show search options' }}</button>
+        <button mat-raised-button class="expand-accordion" aria-label="show or hide search options">
+          {{ !pressed ? '' : panelOpenState ? 'Hide search options' : 'Show search options' }}
+        </button>
       </mat-panel-title>
     </mat-expansion-panel-header>
 
     <!-- EXPANSION PANEL CONTENT -->
 
-    <div class="row d-flex expansion-content" [ngClass] = "pressed ? 'submitted' : ''">
+    <div class="row d-flex expansion-content" [ngClass]="pressed ? 'submitted' : ''">
       <!-- Search options -->
       <app-structure-search-options class="col"></app-structure-search-options>
     </div>

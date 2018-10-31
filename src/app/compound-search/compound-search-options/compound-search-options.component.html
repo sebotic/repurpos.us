@@ -44,7 +44,7 @@
     <div class="form-group">
       <div class="radio" *ngFor="let searchMode of searchModes">
         <label>
-          <input type="radio" name="searchMode" [(ngModel)]="user.searchMode" [value]="searchMode.value">
+          <input type="radio" name="searchMode" [(ngModel)]="user.searchMode" [value]="searchMode.value" aria-label="search type">
           {{searchMode.display}}
         </label>
       </div>

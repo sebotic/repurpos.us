@@ -5,25 +5,23 @@
 
   <!-- ngSubmit not firing so removed and put a click event on button -->
   <form #userForm="ngForm">
-      <span>
+    <span>
       <mat-form-field color="primary">
         <input matInput placeholder="Enter your email" [formControl]="email" required  id="email"
-               name="email">
+               name="email" aria-label="email">
         <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       </span>
-      <div class="divider"></div>
-      <span>
+    <div class="divider"></div>
+    <span>
         <mat-form-field color="primary">
-          <input matInput placeholder="Password"  id="password"
-                 [type]="'password'"
-                 required
-                 [formControl]="password" name="password">
+          <input matInput placeholder="Password"  id="password" [type]="'password'"
+          aria-label="password" required [formControl]="password" name="password">
         </mat-form-field>
 
       </span>
-      <div class="divider"></div>
-      <button class="login-button" mat-raised-button color="primary" type="submit" (click)="onSubmit()">Login</button>
+    <div class="divider"></div>
+    <button class="login-button" mat-raised-button color="primary" type="submit" (click)="onSubmit()" aria-label="login">Login</button>
   </form>
   <app-reg-user-dialog class="link"></app-reg-user-dialog>
   <app-forgot-pass-button class="link"></app-forgot-pass-button>
