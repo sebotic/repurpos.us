@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Title } from '@angular/platform-browser';
+import { Title, Meta } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -37,6 +38,7 @@ export class SearchResultsTableComponent implements OnInit {
   responseCode: number; // response coming back from the API query
   APIquery: string;
   queryString: string;
+  queryType: string;
   probSMILES: boolean = false;
   displayResults: boolean; // if results are being reset, don't show the results
   isMobile: boolean; // media query for if on small screen
@@ -81,9 +83,11 @@ export class SearchResultsTableComponent implements OnInit {
 
 
   constructor(
+    private route: ActivatedRoute,
     private backendSvc: BackendSearchService,
     private searchResultService: SearchResultService,
     private titleService: Title,
+    private meta: Meta,
     private tanimotoSvc: TanimotoScaleService,
   ) {
     // media query
@@ -97,6 +101,11 @@ export class SearchResultsTableComponent implements OnInit {
 
     )
 
+    this.route.queryParams.subscribe(params => {
+      this.queryString = params.query;
+      this.queryType = params.mode ? `${params.mode} ${params.type}` : params.type;
+    });
+
     // get search results
     this.resultsSubscription = this.searchResultService.newSearchResult$.subscribe(
       result => {
@@ -107,7 +116,6 @@ export class SearchResultsTableComponent implements OnInit {
 
         this.responseCode = result.status;
         this.APIquery = result.url;
-        this.queryString = decodeURIComponent(result.url.split("&")[0].split("query=")[1]);
         this.probSMILES = this.queryString.indexOf("(") > -1 || this.queryString.indexOf("=") > -1; // If query fails, see if the query was probably a SMILES input
         // console.log(decodeURIComponent(this.APIquery))
 
@@ -138,6 +146,11 @@ export class SearchResultsTableComponent implements OnInit {
 
           // set title of page
           this.titleService.setTitle("search results | reframeDB");
+
+          this.meta.updateTag({ property: 'og:url', content: window.location.href });
+          this.meta.updateTag({property: 'og:title', content: `search results for ${this.queryString} | reframeDB`});
+          this.meta.updateTag({property: 'og:description', content: `search results for ${this.queryType} search of ${this.queryString} | reframeDB`});
+
         }
 
 
