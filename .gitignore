@@ -39,3 +39,9 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+src/assets/structure_colors.json
+src/assets/atom_colors.png
+src/assets/atom_colors.ai
+src/assets/clofazimine.svg
+src/assets/A00211_dotplot.svg
+src/assets/logo_card.ai

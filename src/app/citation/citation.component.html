@@ -7,13 +7,13 @@
   <ng-container *ngFor="let citation of citations">
     <div class="citation">
       <span id="title">
-        <a [href]="'https://doi.org/' + citation.DOI" target="_blank">
+        <a [href]="'https://doi.org/' + citation.DOI" target="_blank" rel="noreferrer">
         <span [outerHTML]= "citation.title"></span>
       </a>
       </span>.
 
       <span id="authors">
-        <span *ngFor="let author of citation.author; let i=index" id="author">
+        <span *ngFor="let author of citation.author; let i=index" class="author">
             {{ author.given }} {{ author.family}}<span>{{i === citation.author.length - 1 ? '. ' : ','}}</span>
       </span>
       </span>
@@ -24,9 +24,9 @@
     </div>
 
     <div class="links">
-      <span id="pmid">PubMed ID: <a [href]="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + citation.PMID" target="_blank">{{citation.PMID}}</a></span>
+      <span id="pmid">PubMed ID: <a [href]="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + citation.PMID" target="_blank" rel="noreferrer">{{citation.PMID}}</a></span>
       <span class="data-separator"></span>
-      <span id="doi">DOI: <a [href]="'https://doi.org/' + citation.DOI" target="_blank">{{ citation.DOI }}</a></span>
+      <span id="doi">DOI: <a [href]="'https://doi.org/' + citation.DOI" target="_blank" rel="noreferrer">{{ citation.DOI }}</a></span>
     </div>
   </ng-container>
 </ng-container>

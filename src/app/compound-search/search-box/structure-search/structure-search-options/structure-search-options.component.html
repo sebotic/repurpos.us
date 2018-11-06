@@ -33,12 +33,13 @@
     <div class="row">
       <!-- Search bar -->
       <div class="col">
-        <input type="text" class="search form-control" placeholder="search by SMILES" autofocus [(ngModel)]="text_query" (keyup.enter)="onSubmit()" (input)="onChange()">
+        <input type="text" class="search form-control" placeholder="search by SMILES" autofocus
+        aria-label="SMILES search" [(ngModel)]="text_query" (keyup.enter)="onSubmit()" (input)="onChange()">
       </div>
 
       <div class="submit-btn">
-        <button mat-icon-button class='search-btn' (click)="onSubmit()">
-        <mat-icon aria-label="search" color="accent" >search</mat-icon>
+        <button mat-icon-button class='search-btn' (click)="onSubmit()" aria-label="submit search">
+        <mat-icon aria-label="search" color="accent">search</mat-icon>
       </button>
       </div>
 

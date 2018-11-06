@@ -10,11 +10,12 @@
 		           formControlName="email"
 		           required
 		           id="confirm-email"
+							 aria-label="confirm email"
 		           name="confirm-email">
 
 		    <mat-error *ngIf="confirmForm.controls['email'].errors && !confirmForm.controls['email'].pristine">{{getErrorMessage()}}</mat-error>
 		  </mat-form-field>
-		  <button mat-raised-button color="primary" [disabled]="confirmForm.invalid" type="submit" [formGroup]="confirmForm">Submit</button>
+		  <button mat-raised-button color="primary" aria-label="submit" [disabled]="confirmForm.invalid" type="submit" [formGroup]="confirmForm">Submit</button>
 		</form>
 	</div>
 </div>

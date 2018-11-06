@@ -2,7 +2,7 @@
   <div *ngIf="assayData.length > 0">
     <div class="d-flex justify-content-between assay-header">
       <h3 class="header-title-plus-btn">Activity data</h3>
-      <button class="float-right vendor-btn" (click)="showVendor = !showVendor">show vendor source</button>
+      <button class="float-right vendor-btn" (click)="showVendor = !showVendor" aria-label="show vendor source data">show vendor source</button>
     </div>
 
 
@@ -59,7 +59,7 @@
 
           <!-- Assay Source -->
           <td class="align-middle">
-            <a href="https://www.calibr.org/" target="_blank">Calibr</a>
+            <a href="https://www.calibr.org/" target="_blank" rel="noreferrer">Calibr</a>
           </td>
 
 

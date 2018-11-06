@@ -1,7 +1,7 @@
 import { Component, OnInit, forwardRef, Inject, Injectable, Input } from '@angular/core';
 // import { ActivatedRoute } from '@angular/router';
 // import { Http, Response } from "@angular/http";
-import { Title } from '@angular/platform-browser';
+import { Title, Meta } from '@angular/platform-browser';
 
 import * as d3 from 'd3';
 import * as chroma from 'chroma-js';
@@ -37,14 +37,24 @@ export class AssaysComponent implements OnInit {
   filter: string;
   filter_color: string;
 
+  meta_tags = [
+    { property: 'og:title', content: 'reframeDB assay descriptions' },
+    { name: 'description', content: 'List of assays performed on the reframeDB compound library' },
+    { property: 'og:description', content: 'List of assays performed on the reframeDB compound library' },
+    { property: 'og:url', content: 'https://reframedb.org/#/assays' }
+  ];
+
   constructor(
     // private route: ActivatedRoute,
     private colorSvc: ColorPaletteService,
     private titleService: Title,
     // private http: Http,
-    private http2: HttpClient
-  ) {
+    private http2: HttpClient,
 
+    private meta: Meta) {
+      for(let i=0; i < this.meta_tags.length; i++){
+        this.meta.updateTag(this.meta_tags[i]);
+      }
 
   }
 

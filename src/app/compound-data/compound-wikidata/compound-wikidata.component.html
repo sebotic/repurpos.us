@@ -1,5 +1,5 @@
 <div id="wikidata" *ngIf="table_data.length > 0">
-  <h3 class="vendor-title"><a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">Wikidata data</a></h3>
+  <h3 class="vendor-title"><a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank" rel="noreferrer">Wikidata data</a></h3>
 
   <div class="updated" *ngIf="today">
     last updated {{ today | date:'d MMMM yyyy'}}
@@ -10,7 +10,7 @@
     <div class="vendor-header" [ngClass]="i === 0 ? 'first-entry' : 'notfirst-entry'">
       <div class="col-sm-3">
         <span class="title">Wikidata ID: </span>
-        <span><a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank">{{ qid }}</a></span>
+        <span><a href="{{'http://www.wikidata.org/entity/' + qid}}" target="_blank" rel="noreferrer">{{ qid }}</a></span>
       </div>
 
       <!-- Salt form -->
