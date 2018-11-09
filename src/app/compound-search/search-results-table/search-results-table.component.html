@@ -1,5 +1,5 @@
 <div class="container-fluid" *ngIf="displayResults" (window:resize)="checkMobile()">
-  <h3>Search results</h3>
+  <h4>{{ dataSource.data.length }} results found</h4>
 
   <ng-container [ngSwitch]="responseCode">
     <ng-container *ngSwitchCase="200">
