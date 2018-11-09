@@ -44,7 +44,8 @@ export class SearchResultsTableComponent implements OnInit {
   isMobile: boolean; // media query for if on small screen
 
   pageIdx: number = 0; // holder for current page in pagination
-  pageSize: number = 10; // holder for current page in pagination
+  pageSizeVal: number = 10; // holder for current page in pagination
+  pageSize: number = this.pageSizeVal; // holder for current page in pagination
 
   assays: string[];
   max_num_assays: number = 10;
@@ -112,7 +113,7 @@ export class SearchResultsTableComponent implements OnInit {
         console.log(result)
         // reset pagination
         this.pageIdx = 0;
-        this.pageSize = 10;
+        this.pageSize = this.pageSizeVal;
 
         this.responseCode = result.status;
         this.APIquery = result.url;
