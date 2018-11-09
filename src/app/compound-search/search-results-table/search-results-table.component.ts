@@ -44,7 +44,7 @@ export class SearchResultsTableComponent implements OnInit {
   isMobile: boolean; // media query for if on small screen
 
   pageIdx: number = 0; // holder for current page in pagination
-  pageSizeVal: number = 10; // holder for current page in pagination
+  pageSizeVal: number = 25; // holder for current page in pagination
   pageSize: number = this.pageSizeVal; // holder for current page in pagination
 
   assays: string[];
