@@ -7,39 +7,6 @@
       <div class="search-result-container mat-elevation-z0" *ngIf="dataSource.data.length > 0; else no_data">
         <mat-table #table matSort (matSortChange)="onSortChange($event)" [dataSource]="dataSource">
 
-          <!-- TEMPORARY SHIM TO TEST OUT SUBSTRUCTURE SEARCH -->
-          <!-- <ng-container matColumnDef="compound_id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header">
-              <span class="mat-header">compound_id</span>
-            </mat-header-cell>
-
-            <mat-cell *matCellDef="let element; let row=index" class="main-label d-flex">
-              {{element['compound_id']}}
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="smiles">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header">
-              <span class="mat-header">smiles</span>
-            </mat-header-cell>
-
-            <mat-cell *matCellDef="let element; let row=index" class="main-label d-flex">
-              {{element['smiles']}}
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="svg">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header">
-              <span class="mat-header">svg</span>
-            </mat-header-cell>
-
-            <mat-cell *matCellDef="let element; let row=index" class="main-label d-flex">
-
-              <app-struct2d [structure]="element['svg']" struct_type="svg"></app-struct2d>
-            </mat-cell>
-          </ng-container> -->
-
-
 
           <!-- Drug name -->
           <ng-container matColumnDef="main_label">
