@@ -1,10 +1,10 @@
 <div class="container-fluid" *ngIf="displayResults" (window:resize)="checkMobile()">
-  <h4>{{ dataSource.data.length }} results found</h4>
+  <h4>{{ dataSource.data.length }} {{dataSource.data.length === 1 ? "result" : "results"}} found</h4>
 
   <ng-container [ngSwitch]="responseCode">
     <ng-container *ngSwitchCase="200">
 
-      <div class="search-result-container mat-elevation-z0" *ngIf="dataSource.data.length > 0; else no_data">
+      <div class="search-result-container mat-elevation-z0" *ngIf="dataSource.data.length > 0">
         <mat-table #table matSort (matSortChange)="onSortChange($event)" [dataSource]="dataSource">
 
 
@@ -216,12 +216,6 @@
       </div>
     </ng-container>
 
-    <!-- Display "nothing found" if no data -->
-    <ng-template #no_data>
-      <div class="no-results">
-        No results found
-      </div>
-    </ng-template>
 
     <!-- <ng-container *ngSwitchCase="500">
       <p>
