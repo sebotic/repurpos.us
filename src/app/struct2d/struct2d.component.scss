@@ -52,3 +52,17 @@ line.outerglow {
   stroke-width: 0.35;
   stroke: #212529;
 }
+// --- Launch substructure search ---
+.struct-search {
+  font-size: 0.75em;
+  float: right;
+  // background: #fecccd;
+  // color: #990024;
+  // border: 1px solid #ff003c;
+  background: #e4e7e9;
+  border: 1px solid #b7bec5;
+  color: #717e8c;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}

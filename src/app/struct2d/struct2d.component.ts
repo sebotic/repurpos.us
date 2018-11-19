@@ -10,6 +10,7 @@ import { StructureSvgService } from '../_services/index';
   styleUrls: ['./struct2d.component.scss']
 })
 export class Struct2dComponent implements OnInit {
+  @Input() smiles: string;
   @Input() structure: string;
   @Input() struct_type: string;
   svg: SafeHtml;

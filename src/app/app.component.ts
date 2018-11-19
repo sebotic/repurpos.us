@@ -25,13 +25,12 @@ export class AppComponent implements OnInit {
   loginBox: boolean = false;
   loggedIn: boolean = false;
   expanded: boolean = false;
-  current_year: number;
+
   private loginSubscription: Subscription;
 
   constructor(@Inject(DOCUMENT) private document: any, private http: HttpClient) {
     this.appendGaTrackingCode();
 
-    this.current_year = (new Date()).getFullYear();
   }
 
   ngOnInit(): void {

@@ -1,3 +1,10 @@
-  <div class="svg-wrapper group" [innerHTML]="svg">
-  </div>
-  <!-- <img src="http://stitch.embl.de/images/chemicals/normal/{{smiles}}.png" class="img-responsive" alt="structure"> -->
+<div class="svg-wrapper group" [innerHTML]="svg">
+</div>
+
+<a [routerLink]="['/search/']" [queryParams]="{ query: smiles, type: 'structure' }">
+  <button aria-label="launch structure search" type="button" class="struct-search">
+  launch structure search
+</button>
+</a>
+
+<!-- <img src="http://stitch.embl.de/images/chemicals/normal/{{smiles}}.png" class="img-responsive" alt="structure"> -->

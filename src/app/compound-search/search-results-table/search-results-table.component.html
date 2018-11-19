@@ -1,44 +1,11 @@
 <div class="container-fluid" *ngIf="displayResults" (window:resize)="checkMobile()">
-  <h3>Search results</h3>
+  <h4>{{ dataSource.data.length }} {{dataSource.data.length === 1 ? "result" : "results"}} found</h4>
 
   <ng-container [ngSwitch]="responseCode">
     <ng-container *ngSwitchCase="200">
 
-      <div class="search-result-container mat-elevation-z0" *ngIf="dataSource.data.length > 0; else no_data">
+      <div class="search-result-container mat-elevation-z0" *ngIf="dataSource.data.length > 0">
         <mat-table #table matSort (matSortChange)="onSortChange($event)" [dataSource]="dataSource">
-
-          <!-- TEMPORARY SHIM TO TEST OUT SUBSTRUCTURE SEARCH -->
-          <!-- <ng-container matColumnDef="compound_id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header">
-              <span class="mat-header">compound_id</span>
-            </mat-header-cell>
-
-            <mat-cell *matCellDef="let element; let row=index" class="main-label d-flex">
-              {{element['compound_id']}}
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="smiles">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header">
-              <span class="mat-header">smiles</span>
-            </mat-header-cell>
-
-            <mat-cell *matCellDef="let element; let row=index" class="main-label d-flex">
-              {{element['smiles']}}
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="svg">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header">
-              <span class="mat-header">svg</span>
-            </mat-header-cell>
-
-            <mat-cell *matCellDef="let element; let row=index" class="main-label d-flex">
-
-              <app-struct2d [structure]="element['svg']" struct_type="svg"></app-struct2d>
-            </mat-cell>
-          </ng-container> -->
-
 
 
           <!-- Drug name -->
@@ -169,9 +136,9 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element" [ngClass]="element['expanded'] ? 'expanded' : ''">
               <a [routerLink]="['/compound_data', element.id.split('/').pop(), {qid: element.qid.split('/').pop()}]">
-                <app-struct2d [structure]="element['svg']" struct_type="svg" *ngIf="element['svg']; else no_glow"></app-struct2d>
+                <app-struct2d [structure]="element['svg']" [smiles]="element['smiles']" struct_type="svg" *ngIf="element['svg']; else no_glow"></app-struct2d>
                 <ng-template #no_glow>
-                  <app-struct2d [structure]="element['id']" struct_type="inchikey" *ngIf="element['id'].length === 27"></app-struct2d>
+                  <app-struct2d [structure]="element['smiles']" [smiles]="element['smiles']" struct_type="smiles" *ngIf="element['smiles']"></app-struct2d>
                 </ng-template>
               </a>
             </mat-cell>
@@ -243,18 +210,12 @@
           <!-- <mat-row *matRowDef="let row; columns: displayedColumns; let element;" (click)="rowClicked($event, element['qid'], element['id'])"></mat-row> -->
         </mat-table>
 
-        <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[10, 25, 50, 100]" (page)="onPageChange($event)">
+        <mat-paginator #paginator [pageSize]="pageSize" [pageIndex]="pageIdx" [pageSizeOptions]="[10, 25, 50, 100]" (page)="onPageChange($event)">
         </mat-paginator>
 
       </div>
     </ng-container>
 
-    <!-- Display "nothing found" if no data -->
-    <ng-template #no_data>
-      <div class="no-results">
-        No results found
-      </div>
-    </ng-template>
 
     <!-- <ng-container *ngSwitchCase="500">
       <p>

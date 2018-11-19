@@ -138,6 +138,7 @@ import { AssaySparklineComponent } from './compound-data/assay-sparkline/assay-s
 import { HeaderComponent } from './header/header.component';
 import { AssayIndicationComponent } from './assay-indication/assay-indication.component';
 import { CitationComponent } from './citation/citation.component';
+import { FooterComponent } from './footer/footer.component';
 // import { SearchResultHeaderComponent } from './compound-search/search-result-header/search-result-header.component';
 // import { ReframeFilterComponent } from './compound-search/search-result-header/reframe-filter/reframe-filter.component';
 // import { AssaysFilterComponent } from './compound-search/search-result-header/assays-filter/assays-filter.component';
@@ -253,6 +254,7 @@ export class MaterialModule {}
     AssaySparklineComponent,
     SciItalicizePipe,
     CitationComponent,
+    FooterComponent
     // SearchResultHeaderComponent, ReframeFilterComponent, AssaysFilterComponent
   ],
   imports: [
