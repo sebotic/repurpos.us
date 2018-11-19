@@ -27,6 +27,8 @@ export class CitationService {
   constructor(private http: HttpClient) { }
 
   getCitation(pmids: string[]) {
+    // reset citations
+    this.citations = [];
     let promises = [];
     for (let pmid of pmids) {
       let promise = this.getNCBI(pmid);
