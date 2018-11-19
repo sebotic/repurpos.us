@@ -8,9 +8,15 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
 
 export class CitationService {
+  reframe_pmid: string = "30282735";
+
   entrez_stub = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
   // ex: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=18579783&retmode=xml&rettype=abstract
-  ncbi_stub = 'https://www.ncbi.nlm.nih.gov/pmc/utils/ctxp';
+  ncbi_stub = 'https://api.ncbi.nlm.nih.gov/lit/ctxp/v1/pubmed/';
+  // ex: https://api.ncbi.nlm.nih.gov/lit/ctxp/v1/pubmed/?format=csl&id=30282735
+
+  // DEAD as of November 2018: 'https://www.ncbi.nlm.nih.gov/pmc/utils/ctxp';
+
 
   // https://api.ncbi.nlm.nih.gov/lit/ctxp/v1/pubmed/?format=csl&id=30282735 ??
   // ex https://www.ncbi.nlm.nih.gov/pmc/utils/ctxp?ids=PMC2440361&report=citeproc';
@@ -58,6 +64,8 @@ export class CitationService {
   // }
   //
 
+
+// Ex: https://api.ncbi.nlm.nih.gov/lit/ctxp/v1/pubmed/?format=csl&id=30282735
   getNCBI(pmid: string): Promise<void> {
     return new Promise<any>((resolve, reject) => {
       // console.log('calling NCBI')
@@ -67,8 +75,8 @@ export class CitationService {
         responseType: 'json',
         headers: new HttpHeaders(),
         params: new HttpParams()
-          .set('ids', pmid)
-          .set('report', 'citeproc')
+          .set('id', pmid)
+          .set('format', 'csl')
       }).subscribe((r) => {
         // console.log(r);
         let v = r.body;
