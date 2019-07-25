@@ -185,24 +185,33 @@ a.dwnld-link:hover {
   // td
 }
 
-.indication, .type {
+.indication-group {
+  margin-right: 10px;
+}
+
+.indication,
+.type {
   cursor: pointer;
 }
+
+
+/deep/ .indication .sci-italicize {
+  display: contents !important;
+}
+
 
 .type {
   font-weight: 400;
 }
 
-.assay-type .card{
+.assay-type .card {
   // border: 1px solid #9ba4ae;
   padding: 15px;
   // border-collapse: collapse !important;
   margin-bottom: 25px;
-
   background: #f5f6f7;
   // box-shadow: 3px 3px #d3d7dc;
   box-shadow: 5px 5px #e4e7e9;
-
 }
 
 .card-text a {
@@ -214,21 +223,20 @@ a.dwnld-link:hover {
 }
 
 .mat-button-toggle {
-    background: #7b9bea;
-    color: white;
+  background: #7b9bea;
+  color: white;
 }
-
 // Marco flexbox classes
-.flexP{
-  display:flex;
-  justify-content:space-between;
+.flexP {
+  display: flex;
+  justify-content: space-between;
   align-items: flex-end;
   // height: 100%;
 }
 
-.flexC{
-  flex:1;
-  flex-basis:100%;
+.flexC {
+  flex: 1;
+  flex-basis: 100%;
   //  background: yellow;
 }
 

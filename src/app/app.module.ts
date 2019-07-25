@@ -28,8 +28,8 @@ import { CompoundDataComponent } from './compound-data/compound-data.component';
 // import { DiseaseDataComponent } from './disease-data/disease-data.component';
 import { IndicationsGraphComponent } from './compound-data/indications-graph/indications-graph.component';
 // import { SearchResultTableComponent } from './compound-search/search-result-table/search-result-table.component';
-import {HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import {
   // MatAutocompleteModule,
@@ -68,7 +68,7 @@ import {
 import { ShowMoreButtonComponent, ShowMorePane } from './compound-data/show-more-button/show-more-button.component';
 // import {CdkTableModule} from "@angular/cdk/table";
 import { RecaptchaModule } from 'ng-recaptcha';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AboutComponent } from './about/about.component';
 import { AssaysComponent } from './assays/assays.component';
 import {
@@ -139,6 +139,7 @@ import { HeaderComponent } from './header/header.component';
 import { AssayIndicationComponent } from './assay-indication/assay-indication.component';
 import { CitationComponent } from './citation/citation.component';
 import { FooterComponent } from './footer/footer.component';
+import { StandardizeAssayTypePipe } from './_pipes/standardize-assay-type.pipe';
 // import { SearchResultHeaderComponent } from './compound-search/search-result-header/search-result-header.component';
 // import { ReframeFilterComponent } from './compound-search/search-result-header/reframe-filter/reframe-filter.component';
 // import { AssaysFilterComponent } from './compound-search/search-result-header/assays-filter/assays-filter.component';
@@ -181,7 +182,7 @@ import { FooterComponent } from './footer/footer.component';
   declarations: [],
 
 })
-export class MaterialModule {}
+export class MaterialModule { }
 
 
 @NgModule({
@@ -253,6 +254,7 @@ export class MaterialModule {}
     SaltFormComponent,
     AssaySparklineComponent,
     SciItalicizePipe,
+    StandardizeAssayTypePipe,
     CitationComponent,
     FooterComponent
     // SearchResultHeaderComponent, ReframeFilterComponent, AssaysFilterComponent
@@ -279,9 +281,8 @@ export class MaterialModule {}
 
     RecaptchaModule.forRoot(),
   ],
-
   providers: [
-    { provide: APP_BASE_HREF,    useValue: '/' },
+    { provide: APP_BASE_HREF, useValue: '/' },
     { provide: SearchResultService, useClass: SearchResultService },
     { provide: GraphDataService, useClass: GraphDataService },
     { provide: WDQService, useClass: WDQService },
@@ -296,7 +297,8 @@ export class MaterialModule {}
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true },
     LoaderStateService,
     LoginStateService,
-    GoogleAnalyticsService
+    GoogleAnalyticsService,
+    StandardizeAssayTypePipe
   ],
   entryComponents: [
     DialogOverviewExample,

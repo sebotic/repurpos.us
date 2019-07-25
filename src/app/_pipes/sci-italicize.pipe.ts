@@ -46,7 +46,7 @@ export class SciItalicizePipe implements PipeTransform {
   }
 
   italicize(word: string) {
-    return ("<em>" + word + "</em>");
+    return ("<em class='sci-italicize'>" + word + "</em>");
   }
 
   micronize(word: string) {

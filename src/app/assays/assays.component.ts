@@ -9,7 +9,7 @@ import * as chroma from 'chroma-js';
 import { AssayDetails } from '../_models/index';
 import { ColorPaletteService } from '../_services/index';
 
-import { SciItalicizePipe } from '../_pipes/sci-italicize.pipe';
+import { StandardizeAssayTypePipe } from '../_pipes/standardize-assay-type.pipe';
 
 import {
   HttpClient, HttpHeaders
@@ -32,7 +32,7 @@ export class AssaysComponent implements OnInit {
   indicationList: string[];
   // map to indication colors
   indicColors: string[];
-  typeColors: string[];
+  typeColorScale: any;
   isFiltered: boolean = false;
   filter: string;
   filter_color: string;
@@ -50,11 +50,11 @@ export class AssaysComponent implements OnInit {
     private titleService: Title,
     // private http: Http,
     private http2: HttpClient,
-
+    private stdize: StandardizeAssayTypePipe,
     private meta: Meta) {
-      for(let i=0; i < this.meta_tags.length; i++){
-        this.meta.updateTag(this.meta_tags[i]);
-      }
+    for (let i = 0; i < this.meta_tags.length; i++) {
+      this.meta.updateTag(this.meta_tags[i]);
+    }
 
   }
 
@@ -63,34 +63,56 @@ export class AssaysComponent implements OnInit {
     this.titleService.setTitle("assays | reframeDB");
   }
 
+
   retrieveAssayList() {
     this.colorSvc.assaysState.subscribe((aList: AssayDetails[]) => {
+      this.setTypeColors(aList);
+
       this.assayList = aList;
       this.selAssays = aList;
     })
   }
 
-  getTypeColor(type: string) {
-    let types = this.assayList.map((d: any) => d.assay_type.split(',')).reduce((acc, val) => acc.concat(val), []);
+  setTypeColors(assayList) {
+    let types = assayList.map((d: any) => d.assay_type.split(',')).reduce((acc, val) => acc.concat(val), []);
 
-    // types = new Set(types);
-    // types = Array.from(types);
-    //
+    types = types.map(d => this.stdize.transform(d));
+
     let colors = this.colorSvc.uniqueColors;
-    this.typeColors = [
-      // 'grey', // cell
+    let typeColors = [
       colors['brown'], // cell
       colors['magenta'], // HCI
-      colors['brand-red'], // cytotox
+      colors['green'], // viability
       colors['aquamarine'], // biochem
       colors['purple-blue'], // enzy
-      colors['orange']] //reporter
+      colors['brand-red'], // cytotox
 
-    // this.typeColors = this.indicColors
+      colors['orange'], // phenotypic
+      colors['navy'],
+      colors['jade'],
+      colors['purple'],
+      colors['pink'],
+      colors['default'],
+      colors['emerald'],
+      colors['lt-brown'],
+      colors['khaki'],
+      colors['mauve'],
+      colors['med-blue'],
+      colors['orange-red'],
+      colors['brand-blue'],
+      colors['lt-pink'],
+      colors['teal'],
+      colors['lt-green'],
+      colors['violet'],
+      colors['avocado']
+    ]
 
     // hijack d3's color scale mapping
-    let typeColorScale = d3.scaleOrdinal().domain(types).range(this.typeColors)
-    let sel_color = chroma(typeColorScale(type));
+    this.typeColorScale = d3.scaleOrdinal().domain(types).range(typeColors)
+  }
+
+  getTypeColor(type: string) {
+    let sel_color = chroma(this.typeColorScale(this.stdize.transform(type)));
 
     return ([sel_color.luminance(0.95), sel_color]);
   }

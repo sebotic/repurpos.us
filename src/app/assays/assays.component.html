@@ -48,7 +48,7 @@
 
 
         <div class="flexP">
-          <div class="flexC">
+          <div class="flexC indication-group">
             <mat-chip-list class="">
               <mat-chip class="indication mr-auto" (click)="filterIndic(assay.indication)" [ngStyle]="{'background-color': colorSvc.getIndicColor(assay.indication)['bg1'], 'color': colorSvc.getIndicColor(assay.indication)['font1']}">
                 <span [outerHTML]="assay.indication | sciItalicize">
@@ -61,7 +61,7 @@
             <mat-chip-list class="text-right">
               <mat-chip class="type text-right" *ngFor="let type of assay.assay_type.split(',')" (click)="filterType(type)" [ngStyle]="{'background-color': getTypeColor(type)[0], 'border': '1px solid ' + getTypeColor(type)[1], 'color': getTypeColor(type)[1]}">
                 <!-- (click)="filterType(type)" [ngStyle]="{'background-color': 'white', 'border': '1px solid ' + getTypeColor(type)[1], 'color': getTypeColor(type)[1]}"> -->
-                {{ type }}
+                {{ type | standardizeAssayType }}
               </mat-chip>
             </mat-chip-list>
           </div>
