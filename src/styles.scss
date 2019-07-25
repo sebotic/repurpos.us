@@ -101,6 +101,20 @@ a.launch-search {
   }
 }
 
+// search help
+.help a {
+  margin-left: 18px;
+  font-size: 0.85em;
+  font-family: "Lato", sans-serif;
+  color: #ff602c;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+
 // Font changes
 button.mat-raised-button {
   font-family: "Lato", sans-serif;
