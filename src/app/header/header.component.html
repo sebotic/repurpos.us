@@ -33,10 +33,10 @@
       <div class="collapse navbar-collapse" id="navbarContent" [ngClass]="{'logout-wrap': loggedIn, 'show': expanded}">
         <ul class="navbar-nav ml-auto">
           <li class="menu-item">
-            <a href="/#/assays" (click)="collapseNav()">assays</a>
+            <a routerLink="/assays" (click)="collapseNav()">assays</a>
           </li>
           <li class="menu-item">
-            <a href="/#/about" (click)="collapseNav()">about</a>
+            <a routerLink="/about" (click)="collapseNav()">about</a>
           </li>
           <li class="menu-item sign-in" [hidden]="loggedIn">
             <a *ngIf="!loggedIn" (click)="showLogin()" (click)="clickedInside($event)">sign in</a>
@@ -59,10 +59,10 @@
       <div class="collapse navbar-collapse" id="navbarContent" [ngClass]="{'logout-wrap': loggedIn, 'show': expanded}">
         <ul class="navbar-nav ml-auto">
           <li class="menu-item">
-            <a href="/#/assays" (click)="collapseNav()">assays</a>
+            <a routerLink="/assays" (click)="collapseNav()">assays</a>
           </li>
           <li class="menu-item">
-            <a href="/#/about" (click)="collapseNav()">about</a>
+            <a routerLink="/about" (click)="collapseNav()">about</a>
           </li>
           <li class="menu-item sign-in" [hidden]="loggedIn">
             <a *ngIf="!loggedIn" (click)="showLogin()" (click)="clickedInside($event)">sign in</a>

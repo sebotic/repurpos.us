@@ -17,7 +17,7 @@ import {
 import { AppRoutingModule, routedComponents } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy} from "@angular/common";
+import { APP_BASE_HREF } from "@angular/common";
 import { CompoundSearchComponent, CompoundSearchOptionsComponent, SearchBoxComponent, SearchResultComponent, SearchResultsTableComponent } from './compound-search/index';
 
 // import {cytoscape} from 'cytoscape';
@@ -282,7 +282,6 @@ export class MaterialModule {}
 
   providers: [
     { provide: APP_BASE_HREF,    useValue: '/' },
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: SearchResultService, useClass: SearchResultService },
     { provide: GraphDataService, useClass: GraphDataService },
     { provide: WDQService, useClass: WDQService },
