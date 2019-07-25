@@ -28,7 +28,7 @@ export interface Compound {
   properties: AvailableData[];
   similar_compounds?: SimilarCompound[];
   tanimoto: number;
-  reframeid?: boolean;
+  reframeid?: any;
   qid?: string;
 }
 
