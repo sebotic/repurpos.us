@@ -1,3 +1,7 @@
+$glow-color: #ffc01c;
+$glow-color: #f1ff1c;
+$glow-duration: 1.5s;
+$glow-blur: 20px;
 /* Container */
 #dotplot-container {
   position: relative;
@@ -12,6 +16,7 @@
   dominant-baseline: middle;
   /* dominant-baseline: mathematical; */
   text-anchor: end;
+  cursor: pointer;
 }
 
 .y-link:hover {
@@ -24,14 +29,17 @@
   opacity: 0;
 }
 
-.pointer {
-  cursor: pointer;
-}
-
-.pointer {
+.cmpd-name {
   text-decoration: underline;
 }
 
+.pointer {
+  cursor: pointer;
+}
+//
+// .pointer {
+//   text-decoration: underline;
+// }
 /* Dot styling */
 .assay-avg {
   stroke: #212529;
@@ -108,3 +116,29 @@
 .cmpd-link.inactive {
   opacity: 0.8;
 }
+// glow
+
+.cmpd-name {}
+
+.glow {
+  // color: yellow;
+  text-shadow: none;
+  -webkit-animation: add-glow $glow-duration;
+  -moz-animation: add-glow $glow-duration;
+  -ms-animation: add-glow $glow-duration;
+  animation: add-glow $glow-duration;
+}
+/* other prefixed animation blocks ommitted for brevity */
+@keyframes add-glow {
+  from {
+    text-shadow: -1px -1px $glow-blur $glow-color, -1px 1px $glow-blur $glow-color, 1px 1px $glow-blur $glow-color, 1px -1px $glow-blur $glow-color, -1px 0 $glow-blur $glow-color, 0 1px $glow-blur $glow-color, 1px 0 $glow-blur $glow-color, 0 -1px $glow-blur $glow-color;
+  }
+
+  to {
+    text-shadow: none;
+  }
+}
+
+// .glow {
+//   text-shadow: -1px -1px $glow-blur $glow-color, -1px 1px $glow-blur $glow-color, 1px 1px $glow-blur $glow-color, 1px -1px $glow-blur $glow-color, -1px 0 $glow-blur $glow-color, 0 1px $glow-blur $glow-color, 1px 0 $glow-blur $glow-color, 0 -1px $glow-blur $glow-color;
+// }

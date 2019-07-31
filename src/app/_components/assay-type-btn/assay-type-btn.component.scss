@@ -45,3 +45,11 @@ span.btn {
   /* Necessary to fix webkit error where child text screws up event firing */
   padding: 0;
 }
+
+.hidden {
+  display: none;
+}
+
+.nav-item {
+  display: block;
+}

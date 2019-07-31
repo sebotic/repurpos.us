@@ -30,3 +30,17 @@
   border-bottom: 1px solid #8d98a3;
   border-top: 1px solid #8d98a3;
 }
+
+#tooltip-avg,
+.meas_val {
+  text-align: right;
+}
+
+.meas_val {
+  padding-right: 10px;
+
+  &:last-child {
+    padding-left: 10px;
+    padding-right: 0;
+  }
+}
