@@ -1,0 +1,29 @@
+.rect {
+  stroke-width: 0.75;
+  shape-rendering: crispEdges;
+}
+
+.y-label {
+  text-anchor: end;
+  dominant-baseline: central;
+  font-weight: 400;
+}
+
+.right-align {
+  text-align: right;
+}
+
+.checkbox {
+  stroke-width: 2;
+  shape-rendering: crispEdges;
+  fill: white;
+  cursor: pointer;
+}
+
+.checkmark {
+  // stroke: white;
+  cursor: pointer;
+  pointer-events: none;
+  stroke-width: 2;
+  fill: none;
+}

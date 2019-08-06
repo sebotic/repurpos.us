@@ -20,7 +20,7 @@ export class StandardizeAssayTypePipe implements PipeTransform {
     if (idx > -1) {
       return (dict[idx]['label'].toLowerCase())
     }
-    return value.toLowerCase();
+    return value.trim().toLowerCase();
   }
 
 }

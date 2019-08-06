@@ -29,13 +29,15 @@ export class AssaysComponent implements OnInit {
   assayList: AssayDetails[] = [];
   selAssays: AssayDetails[] = [];
   // store unique indications
-  indicationList: string[];
+  indications: string[];
+  types: string[]
+  typeDomain: string[]
   // map to indication colors
-  indicColors: string[];
   typeColorScale: any;
+  indicColorScale: any;
   isFiltered: boolean = false;
-  filter: string;
-  filter_color: string;
+  filter: string[];
+  filter_color: string[];
 
   meta_tags = [
     { property: 'og:title', content: 'reframeDB assay descriptions' },
@@ -52,9 +54,22 @@ export class AssaysComponent implements OnInit {
     private http2: HttpClient,
     private stdize: StandardizeAssayTypePipe,
     private meta: Meta) {
+
     for (let i = 0; i < this.meta_tags.length; i++) {
       this.meta.updateTag(this.meta_tags[i]);
     }
+
+    this.colorSvc.selectedIndicationState.subscribe(indication => {
+      if (indication) {
+        this.filterIndic(indication);
+      }
+    })
+
+    this.colorSvc.selectedTypeState.subscribe(types => {
+      if (types) {
+        this.filterType(types);
+      }
+    })
 
   }
 
@@ -65,18 +80,33 @@ export class AssaysComponent implements OnInit {
 
 
   retrieveAssayList() {
-    this.colorSvc.assaysState.subscribe((aList: AssayDetails[]) => {
-      this.setTypeColors(aList);
+    this.colorSvc.assaysState.subscribe((aList: Object) => {
+      if (aList) {
+        this.assayList = aList['assayList'];
+        this.selAssays = this.assayList;
 
-      this.assayList = aList;
-      this.selAssays = aList;
+        // Standardize values
+        this.assayList.forEach((d: any) => {
+          d['type_arr'] = d.assay_type.split(',').map(d => this.stdize.transform(d));
+        })
+
+        this.typeDomain = d3.nest()
+          .key((d: any) => d)
+          .rollup((leaves: any) => leaves.length)
+          .entries(this.assayList.map((d: any) => d.type_arr).reduce((acc, val) => acc.concat(val), []))
+          .sort((a: any, b: any) => b.value - a.value || a.key - b.key)
+          .map(d => d.key);
+
+        this.setTypeColors(this.assayList);
+        this.indications = this.assayList.map(assay => assay.indication);
+
+        this.indicColorScale = aList['colorScale'];
+      }
     })
   }
 
   setTypeColors(assayList) {
-    let types = assayList.map((d: any) => d.assay_type.split(',')).reduce((acc, val) => acc.concat(val), []);
-
-    types = types.map(d => this.stdize.transform(d));
+    this.types = assayList.map((d: any) => d.type_arr).reduce((acc, val) => acc.concat(val), []);
 
     let colors = this.colorSvc.uniqueColors;
     let typeColors = [
@@ -108,7 +138,7 @@ export class AssaysComponent implements OnInit {
     ]
 
     // hijack d3's color scale mapping
-    this.typeColorScale = d3.scaleOrdinal().domain(types).range(typeColors)
+    this.typeColorScale = d3.scaleOrdinal().domain(this.types).range(typeColors)
   }
 
   getTypeColor(type: string) {
@@ -119,21 +149,31 @@ export class AssaysComponent implements OnInit {
 
   filterIndic(indication: string) {
     this.selAssays = this.assayList.filter((d: any) => d.indication === indication);
-    this.filter = indication;
-    this.filter_color = <string>this.colorSvc.getIndicColor(indication)['bg1'];
+    this.filter_color = [<string>this.colorSvc.getIndicColor(indication)['bg1']];
+    this.filter = [indication];
     this.isFiltered = true;
+    this.getAssayKinds();
   }
 
-  filterType(type: string) {
-    this.selAssays = this.assayList.filter((d: any) => d.assay_type.includes(type));
-    this.filter = type;
-    this.filter_color = this.getTypeColor(type)[1];
+  filterType(types: string[]) {
+    this.filter = types;
+    this.selAssays = this.assayList.filter((d: any) => (d.type_arr.filter(type => this.filter.includes(type))).length > 0);
+
+    console.log(this.selAssays)
+    this.filter_color = types.map(d => this.getTypeColor(d)[1]);
     this.isFiltered = true;
+    this.getAssayKinds();
   }
 
   removeFilter() {
     this.selAssays = this.assayList;
     this.isFiltered = false;
+    this.getAssayKinds();
+  }
+
+  getAssayKinds() {
+    this.indications = this.selAssays.map(assay => assay.indication);
+    this.types = this.selAssays.map((d: any) => d.type_arr).reduce((acc, val) => acc.concat(val), []);
   }
 
 }
