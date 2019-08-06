@@ -3,10 +3,7 @@ import { RouterModule, Routes, Router, NavigationEnd } from '@angular/router';
 
 import { IntroTextComponent } from './intro-text/intro-text.component';
 import { CompoundSearchComponent } from './compound-search/compound-search.component';
-import { CompoundDataComponent } from './compound-data/compound-data.component';
 import { AboutComponent } from './about/about.component';
-import { AssaysComponent } from './assays/assays.component';
-import { AssayDataComponent } from './assay-data/assay-data.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
@@ -16,16 +13,24 @@ const appRoutes: Routes = [
   { path: '', component: IntroTextComponent, pathMatch: 'full' },
   { path: 'search', component: CompoundSearchComponent, pathMatch: 'full' },
   { path: 'about', component: AboutComponent, pathMatch: 'full' },
-  { path: 'assays', component: AssaysComponent, pathMatch: 'full' },
-  { path: 'assays/:aid', component: AssayDataComponent, pathMatch: 'full' },
-  { path: 'compound_data/:id', component: CompoundDataComponent, runGuardsAndResolvers: 'always' },
+  { path: 'assays', pathMatch: 'full',
+  loadChildren: () => import('./assays/assays.module').then(mod => mod.AssaysModule)
+ },
+
+  { path: 'assays/:aid', pathMatch: 'full',
+    loadChildren: () => import('./assay-data/assay-data.module').then(mod => mod.AssayDataModule)
+  },
+
+  { path: 'compound_data/:id', runGuardsAndResolvers: 'always',
+    loadChildren: () => import('./compound-data/compound-data.module').then(mod => mod.CompoundDataModule)
+  },
   { path: 'confirm/:cid', component: ConfirmEmailComponent, pathMatch: 'full' },
   { path: 'reset_pass/:rid', component: ResetPasswordComponent, pathMatch: 'full' }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes, {onSameUrlNavigation: 'reload'})
+    RouterModule.forRoot(appRoutes, { onSameUrlNavigation: 'reload' })
   ],
   exports: [RouterModule]
 })
@@ -41,4 +46,4 @@ export class AppRoutingModule {
   }
 }
 
-export const routedComponents = [CompoundSearchComponent, AboutComponent, AssaysComponent, AssayDataComponent, CompoundDataComponent, ConfirmEmailComponent, ResetPasswordComponent];
+export const routedComponents = [CompoundSearchComponent, AboutComponent, ConfirmEmailComponent, ResetPasswordComponent];

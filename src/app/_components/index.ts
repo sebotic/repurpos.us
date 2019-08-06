@@ -1,5 +1,3 @@
-export * from './assay-dwnld/assay-dwnld.component';
-export * from './assay-type-btn/assay-type-btn.component';
 export * from './edit-item/index';
 export * from './forgot-pass-button/forgot-pass-button.component';
 export * from './loader/loader.component';
