@@ -159,7 +159,6 @@ export class AssaysComponent implements OnInit {
     this.filter = types;
     this.selAssays = this.assayList.filter((d: any) => (d.type_arr.filter(type => this.filter.includes(type))).length > 0);
 
-    console.log(this.selAssays)
     this.filter_color = types.map(d => this.getTypeColor(d)[1]);
     this.isFiltered = true;
     this.getAssayKinds();
