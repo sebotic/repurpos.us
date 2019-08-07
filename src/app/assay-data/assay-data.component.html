@@ -63,7 +63,7 @@
   <!-- end summary -->
 
   <!-- VIS -->
-  <app-assay-plots></app-assay-plots>
+  <app-assay-plots [aid]="aid" [assay_title]="assayDetails.title_short" *ngIf="assayDetails"></app-assay-plots>
   <!--  end vis -->
 
   <!-- DETAILS -->

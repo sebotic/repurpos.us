@@ -9,7 +9,13 @@ export class SciItalicizePipe implements PipeTransform {
     'C. hominis', 'C. parvum', 'Cryptosporidium', 'Crypto ',
     'Wolbachia ',
     'Candida auris', 'Candida',
+    'Balamuthia mandrillaris', 'Balamuthia',
     'Giardia lamblia', 'Giardia',
+    'Trypanosoma cruzi', 'Trypanosoma',
+    'Entamoeba histolytica', 'Entamoeba',
+    'Naegleria fowleri', 'Naegleria',
+    'Shigella flexneri', 'Shigella',
+    'Acanthamoeba castellanii', 'Acanthamoeba',
     'Brugia malayi', 'B. malayi', 'Brugia pahangi', 'B. pahangi', 'Brugia',
     'Acinetobacter baumannii', 'A. baumannii', 'Acinetobacter',
     'Mycobacterium tuberculosis', 'M. tuberculosis', 'P.falciparum', 'P. falciparum',
@@ -40,7 +46,7 @@ export class SciItalicizePipe implements PipeTransform {
   }
 
   italicize(word: string) {
-    return ("<em>" + word + "</em>");
+    return ("<em class='sci-italicize'>" + word + "</em>");
   }
 
   micronize(word: string) {

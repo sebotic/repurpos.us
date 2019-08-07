@@ -1,7 +1,12 @@
-import { Component, OnInit, OnChanges, ViewChild, ElementRef, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import * as d3Chromatic from 'd3-scale-chromatic';
 import { CmpdTooltipComponent } from './cmpd-tooltip/cmpd-tooltip.component';
+
+import { Subscription } from 'rxjs/subscription';
+
+import { AssayDataService } from '../../_services/index';
+
 
 @Component({
   selector: 'app-dot-plot',
@@ -10,19 +15,23 @@ import { CmpdTooltipComponent } from './cmpd-tooltip/cmpd-tooltip.component';
   encapsulation: ViewEncapsulation.None
 })
 
-export class DotPlotComponent implements OnInit, OnChanges {
+export class DotPlotComponent implements OnInit {
   @ViewChild('chart') private chartContainer: ElementRef;
-  @Input() private data: Array<any>;
-  @Input() public tooltipData: any;
-  @Input() private assay_domain: Array<any>;
+  private data: Array<any>;
+  public tooltipData: any;
 
-  @Output() tooltipEmitter: EventEmitter<any> = new EventEmitter<any>();
-  // @Output() svgHeightEmitter: EventEmitter<number> = new EventEmitter<number>();
+  // Grab the domain of the the assays from the full dataset for a given assay.
+  private assay_domain: number[];
+  private domainSubscription: Subscription;
+  private dataSubscription: Subscription;
+
+  // @Output() svgHeightEmitter: EventEmitter<number> = new EventEmitter<number>(
+  // );
 
   // --- Plot sizing ---
   private element: any;
   private element_dims: any;
-  private margin: any = { top: 70, bottom: 0, left: 160, right: 40, colorbar: 20, xaxis: 15, pages: 40 };
+  private margin: any = { top: 70, bottom: 0, left: 300, right: 40, colorbar: 20, xaxis: 15, pages: 40 };
   private width: number;
   private height: number;
   private min_height: number = 400;
@@ -48,29 +57,39 @@ export class DotPlotComponent implements OnInit, OnChanges {
 
   svg_height: number;
 
-  constructor() { }
+  constructor(private dataSvc: AssayDataService) {
+    this.domainSubscription = dataSvc.assayDomainSubject$.subscribe(domain => {
+      this.assay_domain = domain;
+    })
+
+    this.dataSubscription = this.dataSvc.filteredDataSubject$.subscribe(data => {
+      this.data = data;
+
+      if (this.chart) {
+        this.updateChart();
+      }
+    })
+  }
 
   ngOnInit() {
-    this.tooltipEmitter.emit({ 'on': false, 'data': [], 'x': [], 'y': [] });
-
-
     this.createChart();
     if (this.data) {
       this.updateChart();
     }
   }
 
+
+  ngOnDestroy() {
+    // reset all parameters for the next time...
+    this.dataSvc.clearAssayData();
+
+    this.domainSubscription.unsubscribe();
+    this.dataSubscription.unsubscribe();
+  }
+
   resizePlot(event) {
     this.updateChartSize();
     if (this.data) {
-      this.updateChart();
-    }
-  }
-
-  ngOnChanges() {
-    // console.log(this.data)
-    // console.log(this.tooltipData)
-    if (this.chart) {
       this.updateChart();
     }
   }
@@ -104,9 +123,6 @@ export class DotPlotComponent implements OnInit, OnChanges {
     this.xAxis = d3.axisTop(this.x)
       .tickValues(d3.range(-10, -4, 0.25).map(d => Math.pow(10, d)).filter(d => d <= this.assay_domain[0] && d >= this.assay_domain[1]));
 
-    this.yAxis = d3.axisLeft(this.y);
-
-
     // create initial x & y axis
     d3.select('.axis--x')
       .attr('transform', `translate(${this.margin.left}, ${this.margin.top - this.margin.xaxis})`);
@@ -138,7 +154,24 @@ export class DotPlotComponent implements OnInit, OnChanges {
       .append('svg')
       .attr("class", "svg_dotplot")
       .attr("width", this.width + this.margin.left + this.margin.right)
-      .attr("height", this.height + this.margin.top + this.margin.bottom)
+      .attr("height", this.height + this.margin.top + this.margin.bottom);
+
+    // Container for the gradients
+    // adapted frin http://bl.ocks.org/nbremer/d3189be2788ad3ca825f665df36eed09
+    var defs = svg.append("defs");
+    var filter = defs.append("filter")
+      .attr("id", "glow");
+
+    filter.append("feGaussianBlur")
+      .attr("class", "blur")
+      .attr("stdDeviation", "4.5")
+      .attr("result", "coloredBlur");
+
+    var feMerge = filter.append("feMerge");
+    feMerge.append("feMergeNode")
+      .attr("in", "coloredBlur");
+    feMerge.append("feMergeNode")
+      .attr("in", "SourceGraphic");
 
     // selectors
     this.chart = svg.append("g")
@@ -167,8 +200,6 @@ export class DotPlotComponent implements OnInit, OnChanges {
 
     this.xAxis = d3.axisTop(this.x)
       .tickFormat(d3.format(".0e"));
-
-    this.yAxis = d3.axisLeft(this.y);
 
 
     // create initial x & y axis
@@ -222,16 +253,223 @@ export class DotPlotComponent implements OnInit, OnChanges {
       .attr("class", "annotation-left annotation--x")
       .attr("transform", `translate(0, -${this.margin.colorbar + this.margin.xaxis})`)
       .text("less potent")
+  }
+
+  // Data-dependent calls; will change w/ pagination
+  updateChart() {
+    // console.log(this.data)
+    if (this.data && this.data.length > 0) {
+      var t = d3.transition()
+        .duration(1000);
+
+      // update domains when data changes
+      this.x.domain(this.assay_domain);
+      this.y.domain(this.data.map(d => d.key));
+
+      this.xAxis
+        .tickValues(d3.range(-10, -4, 0.25)
+          .map(d => Math.pow(10, d))
+          .filter(d => d <= this.assay_domain[0] && d >= this.assay_domain[1]));
+
+      // update color domain
+      // Code if using d3.scaleSequential
+      this.colorScale.domain([Math.log10(this.assay_domain[0]),
+      Math.log10(this.assay_domain[1])]);
 
 
+      d3.select('.axis.axis--x')
+        .call(this.xAxis);
+
+
+      // --- COMPOUND NAMES ---
+      // --- REDRAW Y-AXIS as text annotations, not axis, to link to repurpos.us page for each compound ---
+      // NOTE: necessary, since adding in hrefs to an axis is kind of a pain in the ass. Simplest, not necessarily best, method.
+      // enter/update logic based on https://github.com/d3/d3-selection/issues/86
+      // JOIN: bind current data to the links / rectangles.
+      // parent selector: outside `a` element for hyperlink
+      var ylinks = this.cmpd_names.selectAll('.y-link')
+        .data(this.data);
+
+      // EXIT: remove any rectangles that no longer exist.
+      ylinks.exit()
+        .transition(t)
+        .style("fill-opacity", 1e-6)
+        .duration(0)
+        .remove();
+
+      // // child selector: nested rectangle.
+      var ytext = ylinks.select('.cmpd-name');
+      var ytextGlow = ylinks.select('.cmpd-name-shadow');
+
+      // append `a` element to each parent
+      var ylinksEnter = ylinks
+        .enter().append('a')
+        .attr('class', 'y-link');
+
+      // Append text (children to `a` wrapper)
+
+      var ytextGlowEnter = ylinksEnter.append('text')
+        .attr('class', 'cmpd-name-shadow')
+        .attr('x', -6)
+        .attr('y', d => this.y(d.key))
+        .style("fill-opacity", 1e-6)
+        .style("fill", "#f1ff1c")
+        .transition(t)
+        .style("fill-opacity", 0.5);
+
+      var ytextEnter = ylinksEnter.append('text')
+        .attr('class', 'cmpd-name')
+        .attr('x', -6)
+        .attr('y', d => this.y(d.key))
+        // .style("fill-opacity", 1e-6)
+        // .transition(t)
+        .style("fill-opacity", 1);
+
+
+
+
+      // Update the parent links
+      ylinks.merge(ylinksEnter)
+        // .transition(t)
+        .attr('id', function(d) {
+          return d.key;
+        })
+        .attr('xlink:href', function(d) {
+          return d.value.url;
+        });
+
+      // Update the children text values
+      ytextGlow.merge(ytextGlowEnter)
+        .attr('id', d => d.key)
+        .text(d => d.value.main_label)
+        .style("filter", "url(#glow)")
+        .style("fill-opacity", 1)
+        .transition(t)
+        .style("fill-opacity", 1e-5)
+
+      ytext.merge(ytextEnter)
+        .attr('id', d => d.key)
+        .text(d => d.value.main_label)
+
+
+      // --- LOLLIS ---
+      const lollis = this.dotgrp.selectAll('.lollipop')
+        .data(this.data);
+
+      lollis.exit().remove();
+
+
+      var lolliEnter = lollis.enter().append('line')
+        .attr('class', 'lollipop')
+        .attr('x1', 0)
+        .attr('y1', d => this.y(d.key))
+        .attr('y2', d => this.y(d.key))
+        .attr('stroke-dasharray', '6,6');
+
+      lollis.merge(lolliEnter)
+        .transition(t)
+        .attr('x2', d => this.x(d.value.min))
+        .attr('id', d => d.key);
+
+      // --- DOTS - non-average values ---
+      var dotLinks = this.dotgrp.selectAll(".dot-link")
+        .data(this.data);
+
+      dotLinks.exit().remove();
+
+      let dotLinksEnter = dotLinks
+        .enter()
+        .append("a")
+        .attr("class", "ac50 dot-link")
+        .attr("transform", d => `translate(0, ${this.y(d.key)})`);
+
+      // update parent links
+      dotLinks.merge(dotLinksEnter)
+        .attr("id", d => d.key)
+        .attr("xlink:href", d => d.value.url)
+        .classed("pointer", true);
+
+
+      var dots = this.dotgrp
+        .selectAll(".dot-link")
+        .selectAll(".assay-val")
+        .data(d => d.value.ac50);
+
+      dots.exit().remove();
+
+      let dotEnter = dots
+        .enter()
+        .append("circle")
+        .attr("r", this.dot_size * 0.7)
+        .attr("class", "assay-val");
+
+      // update children circles
+      dots.merge(dotEnter)
+        .transition(t)
+        .attr("cx", d => this.x(d))
+
+      // --- AVERAGE DOTS ---
+      var avgLinks = this.dotgrp.selectAll('.avg-link')
+        .data(this.data);
+
+
+      avgLinks.exit()
+        // .transition(t)
+        .remove();
+
+      var avgs = avgLinks.select('.assay-avg');
+
+
+      // append `a` element to each parent
+      var avglinksEnter = avgLinks
+        .enter().append('a')
+        .attr('class', 'ac50 avg-link');
+
+      // Append circle (children to `a` wrapper)
+      var avgEnter = avglinksEnter.append('circle')
+        .attr('class', 'assay-avg')
+        .attr('r', this.dot_size)
+        .attr('cy', d => this.y(d.key));
+
+
+
+      // Update the parent links
+      avgLinks.merge(avglinksEnter)
+        .attr('id', d => d.key)
+        .attr('xlink:href', function(d) {
+          return d.url;
+        })
+        .classed('pointer', true);
+
+      // Update the children dot values
+      avgs.merge(avgEnter)
+        .attr('id', d => d.key)
+        .transition(t)
+        .attr('cx', d => this.x(d.value.avg))
+        .style('fill', d => this.colorScale(Math.log10(d.value.avg)));
+
+
+      // Mouseover behavior: y-axis
+      this.cmpd_names.selectAll('.y-link text')
+        .on('mouseover', () => this.showTooltip(d3.event))
+        .on('mouseout', () => this.hideTooltip(d3.event));
+
+      // Mouseover behavior: dots
+      d3.selectAll('.ac50')
+        // syntax via https://stackoverflow.com/questions/42014434/d3-js-passing-a-parameter-to-event-handler
+        .on('mouseover', () => this.showTooltip(d3.event))
+        .on('mouseout', () => this.hideTooltip(d3.event));
+
+    }
   }
 
   showTooltip(event) {
     // --- calc variables for tooltip ---
     var x = event.x;
     var y = event.y;
-    var cmpd_id = event.target.id;
-    var filtered_data = this.data.filter(d => d.calibr_id == cmpd_id)[0];
+
+    var cmpd_id = event.currentTarget.id;
+    var filtered_data = this.data.filter(d => d.key == cmpd_id)[0];
 
     // --- highlight the current selection ---
     // dim the rest of the axis
@@ -253,7 +491,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
     // calculate position for the structure
     // NOTE: this *should* go in the compound rollover component for better modularity
     // tell structure to turn on with new info.
-    this.tooltipEmitter.emit({ 'on': true, 'data': filtered_data, 'x': this.width - this.struct_width, 'y': 0 });
+    this.tooltipData = { 'on': true, 'data': filtered_data, 'x': this.width - this.struct_width, 'y': 0 };
   }
 
   hideTooltip(event) {
@@ -271,161 +509,7 @@ export class DotPlotComponent implements OnInit, OnChanges {
       .classed("inactive", false);
 
     // tell structure to turn off.
-    this.tooltipEmitter.emit({ 'on': false });
-  }
-
-  // Data-dependent calls; will change w/ pagination
-  updateChart() {
-    var t = d3.transition()
-      .duration(1000);
-
-    // update domains when data changes
-    this.x.domain(this.assay_domain);
-    this.y.domain(this.data.map(function(d) { return d.calibr_id; }));
-
-    this.xAxis.tickValues(d3.range(-10, -4, 0.25).map(d => Math.pow(10, d)).filter(d => d <= this.assay_domain[0] && d >= this.assay_domain[1]));
-
-    // update color domain
-    // Code if using d3.scaleSequential
-    this.colorScale.domain([Math.log10(this.assay_domain[0]),
-    Math.log10(this.assay_domain[1])]);
-
-
-    d3.select('.axis.axis--x')
-      .call(this.xAxis);
-
-
-    // --- COMPOUND NAMES ---
-    // --- REDRAW Y-AXIS as text annotations, not axis, to link to repurpos.us page for each compound ---
-    // NOTE: necessary, since adding in hrefs to an axis is kind of a pain in the ass. Simplest, not necessarily best, method.
-    // enter/update logic based on https://github.com/d3/d3-selection/issues/86
-    // JOIN: bind current data to the links / rectangles.
-    // parent selector: outside `a` element for hyperlink
-    var ylinks = this.cmpd_names.selectAll('.y-link')
-      .data(this.data);
-
-    // EXIT: remove any rectangles that no longer exist.
-    ylinks.exit()
-      // .transition(t)
-      //   .style("fill-opacity", 1e-6)
-      // .duration(2000)
-      .remove();
-
-    // // child selector: nested rectangle.
-    var ytext = ylinks.select('.cmpd-name');
-
-    // append `a` element to each parent
-    var ylinksEnter = ylinks
-      .enter().append('a')
-      .attr('class', 'y-link');
-
-    // Append text (children to `a` wrapper)
-    var ytextEnter = ylinksEnter.append('text')
-      .attr('class', 'cmpd-name')
-      .attr('x', -6)
-      .attr('y', d => this.y(d.calibr_id))
-      .style("fill-opacity", 1e-6)
-      .transition(t)
-      .style("fill-opacity", 1);
-
-    // Update the parent links
-    ylinks.merge(ylinksEnter)
-      .transition(t)
-      .attr('id', function(d) {
-        return d.calibr_id;
-      })
-      .attr('xlink:href', function(d) {
-        return d.url;
-      });
-
-    // Update the children text values
-    ytext.merge(ytextEnter)
-      .classed('pointer', function(d) {
-        if (d.url) {
-          return true;
-        } else {
-          return false;
-        }
-      })
-      .attr('id', d => d.calibr_id)
-      .text(d => d.name)
-      .style("fill-opacity", 1e-6)
-      // .transition(t)
-      .style("fill-opacity", 1);
-
-    // --- LOLLIS ---
-    const lollis = this.dotgrp.selectAll('.lollipop')
-      .data(this.data);
-
-    lollis.exit().remove();
-
-
-    var lolliEnter = lollis.enter().append('line')
-      .attr('class', 'lollipop')
-      .attr('x1', 0)
-      .attr('y1', d => this.y(d.calibr_id))
-      .attr('y2', d => this.y(d.calibr_id))
-      .attr('stroke-dasharray', '6,6');
-
-    lollis.merge(lolliEnter)
-      .transition(t)
-      .attr('x2', d => this.x(d.ac50))
-      .attr('id', d => d.calibr_id);
-
-    // --- DOTS ---
-    var dotLinks = this.dotgrp.selectAll('.dot-link')
-      .data(this.data);
-
-
-    dotLinks.exit()
-      // .transition(t)
-      .remove();
-
-    var dots = dotLinks.select('.assay-avg');
-
-    // append `a` element to each parent
-    var dotlinksEnter = dotLinks
-      .enter().append('a')
-      .attr('class', 'dot-link');
-
-    // Append text (children to `a` wrapper)
-    var dotEnter = dotlinksEnter.append('circle')
-      .attr('class', 'assay-avg')
-      .attr('r', this.dot_size)
-      .attr('cy', d => this.y(d.calibr_id));
-
-    // Update the parent links
-    dotLinks.merge(dotlinksEnter)
-      .attr('id', d => d.calibr_id)
-      .attr('xlink:href', function(d) {
-        return d.url;
-      })
-      .classed('pointer', function(d) {
-        if (d.url) {
-          return true;
-        } else {
-          return false;
-        }
-      });
-
-    // Update the children dot values
-    dots.merge(dotEnter)
-      .attr('id', d => d.calibr_id)
-      .transition(t)
-      .attr('cx', d => this.x(d.ac50))
-      .style('fill', d => this.colorScale(Math.log10(d.ac50)));
-
-    // Mouseover behavior: y-axis
-    this.cmpd_names.selectAll('.y-link text')
-      .on('mouseover', () => this.showTooltip(d3.event))
-      .on('mouseout', () => this.hideTooltip(d3.event));
-
-    // Mouseover behavior: dots
-    this.dotgrp.selectAll('.assay-avg')
-      // syntax via https://stackoverflow.com/questions/42014434/d3-js-passing-a-parameter-to-event-handler
-      .on('mouseover', () => this.showTooltip(d3.event))
-      .on('mouseout', () => this.hideTooltip(d3.event));
-
+    this.tooltipData = { 'on': false };
   }
 
 }

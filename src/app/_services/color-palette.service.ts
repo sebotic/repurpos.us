@@ -12,6 +12,7 @@ import * as chroma from 'chroma-js';
 export class ColorPaletteService {
 
   public uniqueColors: Object = {
+    "white": "#ffffff",
     "aquamarine": "#00b8a0",
     "orange-red": "#ff602c",
     "jade": "#00a650",
@@ -42,10 +43,16 @@ export class ColorPaletteService {
 
   public colorList: string[];
   public indicationList: string[];
+  public indicColorScale: any;
 
-
-  public assaysSubject: BehaviorSubject<AssayDetails[]> = new BehaviorSubject<AssayDetails[]>([]);
+  public assaysSubject: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
   public assaysState = this.assaysSubject.asObservable();
+
+  public selectedIndicationSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public selectedIndicationState = this.selectedIndicationSubject.asObservable();
+
+  public selectedTypeSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(null);
+  public selectedTypeState = this.selectedTypeSubject.asObservable();
 
   constructor(private http2: HttpClient) {
     this.colorList = Object.keys(this.uniqueColors).map(key => this.uniqueColors[key]);
@@ -63,16 +70,22 @@ export class ColorPaletteService {
     }).subscribe((r: any) => {
       let b = r.body;
 
-      this.assaysSubject.next(b);
-
-
       this.indicationList = b.map((d: any) => d.indication);
+      // hijack d3's color scale mapping
+      let value_counts = d3.nest()
+        .key((d: any) => d)
+        .rollup((leaves: any) => leaves.length)
+        .entries(this.indicationList)
+        .sort((a: any, b: any) => b.value - a.value || a.key - b.key);
+      this.indicColorScale = d3.scaleOrdinal().domain(["parent"].concat(value_counts.map(d => d.key))).range(this.colorList);
+      this.assaysSubject.next({ assayList: b, colorScale: this.indicColorScale });
+
     });
   }
 
   getColorPalette = function(color: string, num_vals: number) {
 
-    let vals: number[] = d3.range(0.25, 2.75, (2.5 / Math.floor(num_vals/2)));
+    let vals: number[] = d3.range(0.25, 2.75, (2.5 / Math.floor(num_vals / 2)));
     let arr = [];
 
     for (let i = vals.length - 1; i >= 0; i--) {
@@ -92,14 +105,11 @@ export class ColorPaletteService {
   }
 
 
-
   getIndicColor(indication: string, lt_pct: number = 0.75) {
     // this.getColorPalette('ff602c', 3)
     if (this.indicationList) {
-      let indicColors = this.colorList;
-
       // hijack d3's color scale mapping
-      let indicColorScale = d3.scaleOrdinal().domain(this.indicationList).range(indicColors);
+      let indicColorScale = this.indicColorScale;
 
       let bg = indicColorScale(indication);
       let bg2 = chroma(bg).luminance(0.5);
@@ -109,7 +119,7 @@ export class ColorPaletteService {
       let font_color1 = chroma.contrast(bg, 'white') < 3 ? '#212529' : 'white';
       let font_color2 = chroma.contrast(bg2, 'white') < 3 ? '#212529' : 'white';
 
-      return ({ 'bg1': bg, 'background': bg2, 'bg-lt': chroma(bg).luminance(lt_pct), 'font': font_color2, 'font1': font_color1 })
+      return ({ 'bg1': bg, 'background': bg2, 'bg-lt': chroma(bg).luminance(lt_pct), 'font': font_color2, 'font1': font_color1, scale: "indicColorScale" })
     }
     else {
       return ({ 'background': 'none', 'bg-lt': 'none', 'font': 'none' })

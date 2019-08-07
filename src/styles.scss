@@ -101,6 +101,20 @@ a.launch-search {
   }
 }
 
+// search help
+.help a {
+  margin-left: 18px;
+  font-size: 0.85em;
+  font-family: "Lato", sans-serif;
+  color: #ff602c;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+
 // Font changes
 button.mat-raised-button {
   font-family: "Lato", sans-serif;
@@ -234,4 +248,11 @@ table.cmpd-table {
 .updated {
   font-size: 0.8em;
   color: #8d98a3;
+}
+
+.header-label {
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #b7bec5;
+  font-size: 1em;
 }

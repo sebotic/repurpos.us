@@ -13,6 +13,7 @@ export class Struct2dComponent implements OnInit {
   @Input() smiles: string;
   @Input() structure: string;
   @Input() struct_type: string;
+  @Input() launch_search: boolean = true;
   svg: SafeHtml;
 
   constructor(private domSanitizer: DomSanitizer, private svgSvc: StructureSvgService) { }
@@ -27,8 +28,6 @@ export class Struct2dComponent implements OnInit {
       this.svgSvc.getSVG(this.structure, this.struct_type)
         .subscribe(
           (results: string) => {
-            // console.log(results)
-
             this.svg = this.domSanitizer.bypassSecurityTrustHtml(results);
           },
           (err: any) => {

@@ -11,7 +11,7 @@ import {WDQSData} from "../../_models/index";
     <div class="mat-app-background">
       <h4>More compounds with the same property:</h4>
     <ul>
-      <li *ngFor="let x of otherCompounds"><a href="/#/compound_data/{{x['c'].split('/').pop()}}" target="_blank">{{x['cLabel']}}</a> <sup>{{x['refDBLabel']}}</sup></li>
+      <li *ngFor="let x of otherCompounds"><a href="/compound_data/{{x['c'].split('/').pop()}}" target="_blank">{{x['cLabel']}}</a> <sup>{{x['refDBLabel']}}</sup></li>
   </ul>
     </div>`
 })

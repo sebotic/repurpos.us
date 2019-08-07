@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AssayIndicationComponent } from './assay-indication.component';
+import { BarplotComponent } from './barplot.component';
 
-describe('AssayIndicationComponent', () => {
-  let component: AssayIndicationComponent;
-  let fixture: ComponentFixture<AssayIndicationComponent>;
+describe('BarplotComponent', () => {
+  let component: BarplotComponent;
+  let fixture: ComponentFixture<BarplotComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AssayIndicationComponent ]
+      declarations: [ BarplotComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AssayIndicationComponent);
+    fixture = TestBed.createComponent(BarplotComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
