@@ -64,7 +64,6 @@ export class AssayDwnldComponent {
       dwnld_data += lineDelimiter;
     });
 
-
     save_data(dwnld_data, 'tsv', this.assay_title, this.today)
   }
 
@@ -91,10 +90,13 @@ function save_data(dwnld_data, file_type, assay_title, today) {
   hiddenElement.href = 'data:text/tsv;charset=utf-8,' + encodeURI(dwnld_data);
   hiddenElement.target = '_blank';
 
-  if(assay_title) {
+  if (assay_title) {
     assay_title = assay_title.replace(/\s/g, '-') + "_";
   }
 
   hiddenElement.download = `${assay_title}reframedb-data_${today}.${file_type}`;
+  // Gotta actually append the hidden element to the DOM for the click to work in Firefox
+  // https://support.mozilla.org/en-US/questions/968992
+  document.body.appendChild(hiddenElement);
   hiddenElement.click();
 }
