@@ -15,6 +15,7 @@ export class CompoundWikidataIdsComponent implements OnInit {
   public idData: WikiData[] = [];
   public formula: string;
   public smiles: string;
+  public chirality: string;
   public ikey: string;
 
   constructor(private cmpdSvc: CompoundService) {
@@ -25,7 +26,12 @@ export class CompoundWikidataIdsComponent implements OnInit {
 
     this.cmpdSvc.smilesSubject.subscribe((smiles: string) => {
       this.smiles = smiles;
-    })
+    });
+
+    this.cmpdSvc.chiralityState.subscribe((chirality: string) => {
+      // console.log(smiles)
+      this.chirality = chirality;
+    });
 
     this.cmpdSvc.wikiIDsState.subscribe((ids: Object) => {
       this.chemData = ids['chem'].filter((d: Object) => d['property'] !== 'chemical formula');

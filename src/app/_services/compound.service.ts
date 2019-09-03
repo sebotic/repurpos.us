@@ -62,6 +62,10 @@ export class CompoundService {
   public smilesSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   smilesState = this.smilesSubject.asObservable();
 
+  private chirality: string;
+  public chiralitySubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  chiralityState = this.chiralitySubject.asObservable();
+
   // --- Similarity data ---
   // Parameters for similarity results
   tanimoto: number = 0.85; // threshold for TM score
@@ -508,6 +512,10 @@ export class CompoundService {
             // Pull out SMILES string
             this.smiles = b.smiles;
             this.smilesSubject.next(this.smiles);
+
+            // Pull out SMILES string
+            this.chirality = b.chirality;
+            this.chiralitySubject.next(this.chirality);
 
             // Pull out chemical vendor source data --> compound-header
             this.chemSourceSubject.next(<Object[]>b.chem_vendors);

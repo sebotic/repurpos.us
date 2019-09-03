@@ -88,7 +88,7 @@ export class CompoundDataComponent implements OnInit {
     this.compoundService.smilesState.subscribe((smiles: string) => {
       // console.log(smiles)
       this.smiles = smiles;
-    })
+    });
 
     this.compoundService.nameState.subscribe((cmpdName: string) => {
       if (!cmpdName) {
