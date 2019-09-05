@@ -13,7 +13,7 @@ export class AboutComponent {
     { name: 'description', content: 'About reframeDB, an open and extendable drug repurposing database and screening set of 12,000 compounds' },
     { property: 'og:title', content: 'About reframeDB' },
     { property: 'og:description', content: 'About reframeDB, an open and extendable drug repurposing database and screening set of 12,000 compounds' },
-    { property: 'og:url', content: 'https://reframedb.org/#/about' }
+    { property: 'og:url', content: 'https://reframedb.org/about' }
   ];
 
   constructor(private titleService: Title, private meta: Meta) {
