@@ -40,10 +40,17 @@ export class AssayDwnldComponent {
 
   // download function from https://code-maven.com/create-and-download-csv-with-javascript
   // and https://halistechnology.com/2015/05/28/use-javascript-to-export-your-data-as-csv/
-  dwnldTSV = function() {
+  dwnldTSV() {
+    this.dwnldDelim("\t","tsv");
+  }
+
+  dwnldCSV() {
+    this.dwnldDelim(",", "csv");
+  }
+
+  dwnldDelim(columnDelimiter: string, extension: string) {
     this.prepData();
 
-    const columnDelimiter = '\t'; // technically, tab-separated, since some chemical cmpds have commas in names.
     const lineDelimiter = '\n';
 
     let colnames = Object.keys(this.data[0]);
@@ -57,14 +64,16 @@ export class AssayDwnldComponent {
       let counter = 0;
       colnames.forEach(function(key) {
         if (counter > 0) dwnld_data += columnDelimiter;
-
+        // enquote all data, to deal with commas in data
+        dwnld_data += '"';
         dwnld_data += item[key];
+        dwnld_data += '"';
         counter++;
       });
       dwnld_data += lineDelimiter;
     });
 
-    save_data(dwnld_data, 'tsv', this.assay_title, this.today)
+    save_data(dwnld_data, extension, this.assay_title, this.today)
   }
 
   dwnldJSON() {
