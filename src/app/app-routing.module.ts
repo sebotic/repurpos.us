@@ -3,7 +3,6 @@ import { RouterModule, Routes, Router, NavigationEnd } from '@angular/router';
 
 import { IntroTextComponent } from './intro-text/intro-text.component';
 import { CompoundSearchComponent } from './compound-search/compound-search.component';
-import { AboutComponent } from './about/about.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
@@ -12,7 +11,7 @@ import { environment } from '../environments/environment';
 const appRoutes: Routes = [
   { path: '', component: IntroTextComponent, pathMatch: 'full' },
   { path: 'search', component: CompoundSearchComponent, pathMatch: 'full' },
-  { path: 'about', component: AboutComponent, pathMatch: 'full' },
+  { path: 'about', pathMatch: 'full', loadChildren: () => import('./about/about.module').then(mod => mod.AboutModule) },
   { path: 'assays', pathMatch: 'full',
   loadChildren: () => import('./assays/assays.module').then(mod => mod.AssaysModule)
  },
@@ -46,4 +45,4 @@ export class AppRoutingModule {
   }
 }
 
-export const routedComponents = [CompoundSearchComponent, AboutComponent, ConfirmEmailComponent, ResetPasswordComponent];
+export const routedComponents = [CompoundSearchComponent, ConfirmEmailComponent, ResetPasswordComponent];

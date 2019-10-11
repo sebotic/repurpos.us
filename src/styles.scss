@@ -43,8 +43,6 @@ header {
   font-weight: 300;
   color: #212529;
 }
-
-
 // For reframedb brand
 .bold {
   font-weight: 400;
@@ -54,7 +52,6 @@ header {
   opacity: 0.8;
   padding-left: 1px;
 }
-
 /* initial loading page */
 .loading {
   font-size: 1.25em;
@@ -73,7 +70,6 @@ a:hover {
 a.launch-search {
   color: #212529;
 }
-
 // colors
 .main-color {
   color: #3D6DE0;
@@ -100,7 +96,6 @@ a.launch-search {
     }
   }
 }
-
 // search help
 .help a {
   margin-left: 18px;
@@ -113,14 +108,11 @@ a.launch-search {
     text-decoration: underline;
   }
 }
-
-
 // Font changes
 button.mat-raised-button {
   font-family: "Lato", sans-serif;
   font-size: 16px;
 }
-
 /* • separator */
 .data-separator:after {
   content: "\2022";
@@ -128,8 +120,6 @@ button.mat-raised-button {
   padding-left: 3px;
   padding-right: 3px;
 }
-
-
 /* Radio buttons if data exist */
 $circle_diam: 15px;
 
@@ -147,7 +137,6 @@ $circle_diam: 15px;
 .cmpd-avail .circle {
   background-color: #FF5B67;
 }
-
 // Commonalities across compound report page
 .smiles,
 .wrap {
@@ -157,7 +146,6 @@ $circle_diam: 15px;
 app-clinical-phase {
   display: block;
 }
-
 // vendor/wikidata table commonalities
 .cmpd-table,
 table#cmpd-names,
@@ -226,7 +214,6 @@ table.cmpd-table {
   border-bottom: 1px solid #c3c4c5; */
   word-break: normal;
 }
-
 /* Clearfix */
 @mixin clearfix() {
   &::after {
@@ -239,7 +226,6 @@ table.cmpd-table {
 .element {
   @include clearfix;
 }
-
 // date of last update
 .vendor-title {
   margin-bottom: 0;
@@ -255,4 +241,28 @@ table.cmpd-table {
   text-transform: uppercase;
   color: #b7bec5;
   font-size: 1em;
+}
+
+h3,
+h4 {
+  font-weight: 300;
+  margin-bottom: 3px;
+}
+
+.about-container {
+  padding: 7px 15px;
+  background: #eee;
+  margin-bottom: 35px;
+}
+
+.about-descrip {
+  margin-bottom: 35px;
+}
+
+p {
+  margin-bottom: 0 !important;
+}
+
+p.about-p {
+  margin-bottom: 1rem !important;
 }

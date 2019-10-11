@@ -9,13 +9,15 @@
 }
 
 .capabilities {
-  max-width: 600px;
+  max-width: 650px;
   // border-bottom: 10px solid #c1d0f5;
   // border-top: 10px solid #c1d0f5;
   border-top: 1px solid #3D6DE0;
   border-bottom: 1px solid #3D6DE0;
   background: #edf1fc66;
   padding: 5px 15px;
+  display: flex;
+  align-items: center;
 }
 
 .capabilities li {
@@ -33,9 +35,22 @@
 .intro {
   // border-bottom: 20px solid #c1d0f5;
   border-bottom: 15px solid #d7e1f9;
-  padding: 10px 0 35px 0;
+  padding: 10px 0 35px;
 }
 
 .citation {
   margin-bottom: 25px;
+}
+
+.highlight-label {
+  flex-basis: 90px;
+}
+
+.highlight-content {
+  flex: 1;
+  padding-left: 40px;
+}
+
+#partnerships {
+  margin-top: 20px;
 }
