@@ -5,6 +5,8 @@
 
 <ng-container *ngIf="citations && citations.length >  0">
   <ng-container *ngFor="let citation of citations">
+    <div class="about-container">
+
     <div class="citation">
       <span id="title">
         <a [href]="'https://doi.org/' + citation.DOI" target="_blank" rel="noreferrer">
@@ -28,5 +30,7 @@
       <span class="data-separator"></span>
       <span id="doi">DOI: <a [href]="'https://doi.org/' + citation.DOI" target="_blank" rel="noreferrer">{{ citation.DOI }}</a></span>
     </div>
+
+  </div>
   </ng-container>
 </ng-container>

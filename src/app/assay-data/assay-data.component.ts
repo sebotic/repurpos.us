@@ -23,7 +23,7 @@ export class AssayDataComponent implements OnInit {
 
   meta_tags = [];
 
-  meta_url: string = 'https://reframedb.org/#/assays/';
+  meta_url: string = 'https://reframedb.org/assays/';
   meta_title: string = ' assay data and protocol | reframeDB';
   meta_descrip: string = 'reframeDB assay data and protocol for ';
 

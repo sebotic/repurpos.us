@@ -43,7 +43,7 @@ export class AssaysComponent implements OnInit {
     { property: 'og:title', content: 'reframeDB assay descriptions' },
     { name: 'description', content: 'List of assays performed on the reframeDB compound library' },
     { property: 'og:description', content: 'List of assays performed on the reframeDB compound library' },
-    { property: 'og:url', content: 'https://reframedb.org/#/assays' }
+    { property: 'og:url', content: 'https://reframedb.org/assays' }
   ];
 
   constructor(

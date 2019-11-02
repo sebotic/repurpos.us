@@ -16,11 +16,11 @@ import { MaterialModule } from './material.module';
 import { PipesModule } from './_pipes/pipes.module';
 import { CitationModule } from './citation/citation.module';
 import { Struct2dModule } from './struct2d/struct2d.module';
+import { TermsModule } from './terms/terms.module';
 
 // --- Components ---
 import { AppComponent } from './app.component';
-import { AboutComponent } from './about/about.component';
-import { ForgotPasswordComponent, LoginFailComponent, TermsComponent, UserRegistrationComponent } from './_dialogs/index';
+import { ForgotPasswordComponent, LoginFailComponent, UserRegistrationComponent } from './_dialogs/index';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { HeaderComponent } from './header/header.component';
@@ -81,7 +81,6 @@ import {ShowMoreButtonComponent, ShowMorePane} from "./compound-data";
     SearchResultComponent,
     SearchBoxComponent,
     ConfirmEmailComponent,
-    AboutComponent,
     CompoundSearchOptionsComponent,
     AuthGuard,
     DialogOverviewExample,
@@ -92,7 +91,6 @@ import {ShowMoreButtonComponent, ShowMorePane} from "./compound-data";
     UserLoginComponent,
     UserRegButtonComponent,
     ForgotPassButtonComponent,
-    TermsComponent,
     LoginFailComponent,
     LoaderComponent,
     ForgotPasswordComponent,
@@ -124,6 +122,7 @@ import {ShowMoreButtonComponent, ShowMorePane} from "./compound-data";
     Struct2dModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    TermsModule,
     FormsModule,
     ReactiveFormsModule,
     RecaptchaModule.forRoot(),
@@ -146,7 +145,6 @@ import {ShowMoreButtonComponent, ShowMorePane} from "./compound-data";
     DialogOverviewExample,
     DialogOverviewExampleDialog,
     UserRegistrationComponent,
-    TermsComponent,
     LoginFailComponent,
     ForgotPasswordComponent
   ],
