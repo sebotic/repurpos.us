@@ -11,13 +11,6 @@ import { ColorPaletteService } from '../_services/index';
 
 import { StandardizeAssayTypePipe } from '../_pipes/standardize-assay-type.pipe';
 
-import {
-  HttpClient, HttpHeaders
-  // , HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest,HttpResponse
-} from "@angular/common/http";
-import { environment } from "../../environments/environment";
-
-
 @Component({
   selector: 'app-assays',
   // pipes: [SciItalicizePipe],
@@ -50,8 +43,6 @@ export class AssaysComponent implements OnInit {
     // private route: ActivatedRoute,
     private colorSvc: ColorPaletteService,
     private titleService: Title,
-    // private http: Http,
-    private http2: HttpClient,
     private stdize: StandardizeAssayTypePipe,
     private meta: Meta) {
 
