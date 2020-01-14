@@ -40,7 +40,7 @@
           <button><a (click)="onAnchorClick('protocol')" aria-label="view protocol">view detailed protocol</a></button>
         </div>
 
-        <app-citation [pmid]="assayDetails.refs_PMID"></app-citation>
+        <app-citation [pmid]="assayDetails.bibliography"></app-citation>
 
         <div>
         </div>
@@ -116,5 +116,7 @@
 
       </div>
     </div>
+
+    <span *embedDatasetMetadata="assayDetails"></span>
 
   </div>
