@@ -30,7 +30,6 @@ export class EmbedDatasetMetadataDirective implements OnDestroy {
       "inLanguage": "en",
       "@type": "Dataset",
       "@context": "http://schema.org/",
-      "license": this.schemaSvc.license,
       "publisher": this.schemaSvc.publisher,
       "includedInDataCatalog": this.schemaSvc.dataCatalog,
 
@@ -42,6 +41,7 @@ export class EmbedDatasetMetadataDirective implements OnDestroy {
 
       // properties to add later, hopefully
       // "dateModified", "version",  "funder", "funding"
+      // "license": this.schemaSvc.license,
     };
 
     data2Embed["url"] =  data2Embed.distribution[0].contentUrl;

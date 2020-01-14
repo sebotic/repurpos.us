@@ -5,7 +5,7 @@ export class Schema {
   description: string;
   identifier: string;
   inLanguage: string;
-  license: string;
+  license?: string;
   publisher: Organization;
   includedInDataCatalog: DataCatalog;
   distribution: DataDownload[];
@@ -27,6 +27,7 @@ export class Organization {
   name: string;
   url?: string;
   location?: string;
+  alternateName?: string;
 }
 
 export class DataCatalog {
@@ -35,6 +36,7 @@ export class DataCatalog {
   name: string;
   url: string;
   description: string;
+  funding: Funding[];
 }
 
 export class DataDownload {
@@ -51,4 +53,10 @@ export class Person {
   affiliation?: Organization;
   givenName?: string;
   familyName?: string;
+}
+
+export class Funding {
+  "@type": string;
+  identifier?: string;
+  funder: Organization;
 }

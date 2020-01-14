@@ -27,7 +27,28 @@ export class SchemaService {
     "@type": "DataCatalog",
     "name": environment.site_name,
     "url": environment.url,
-    "description": environment.description
+    "description": environment.description,
+    "funding": [
+      {
+        "@type": "Funding",
+        identifier: "R01 GM089820",
+        funder: {
+          "@context": "http://schema.org/",
+          "@type": "Organization",
+          name: "National Institutes of General Medical Sciences",
+          alternateName: "NIGMS NIH"
+        }
+      },
+      {
+        "@type": "Funding",
+        funder: {
+          "@context": "http://schema.org/",
+          "@type": "Organization",
+          name: "Bill & Melinda Gates Foundation",
+          alternateName: "Gates Foundation"
+        }
+      }
+    ]
   }
 
   constructor() {
