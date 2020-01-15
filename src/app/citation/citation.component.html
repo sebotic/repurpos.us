@@ -26,9 +26,9 @@
     </div>
 
     <div class="links">
-      <span id="pmid">PubMed ID: <a [href]="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + citation.PMID" target="_blank" rel="noreferrer">{{citation.PMID}}</a></span>
+      <span id="pmid" *ngIf="citation.PMID">PubMed ID: <a [href]="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + citation.PMID" target="_blank" rel="noreferrer">{{citation.PMID}}</a></span>
       <span class="data-separator"></span>
-      <span id="doi">DOI: <a [href]="'https://doi.org/' + citation.DOI" target="_blank" rel="noreferrer">{{ citation.DOI }}</a></span>
+      <span id="doi" *ngIf="citation.DOI">DOI: <a [href]="'https://doi.org/' + citation.DOI" target="_blank" rel="noreferrer">{{ citation.DOI }}</a></span>
     </div>
 
   </div>

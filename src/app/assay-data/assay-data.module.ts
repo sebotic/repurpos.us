@@ -8,6 +8,7 @@ import { PipesModule } from '../_pipes/pipes.module';
 import { CitationModule } from '../citation/citation.module';
 import { Struct2dModule } from '../struct2d/struct2d.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EmbedDatasetMetadataDirective } from '../_services/embed-dataset-metadata.directive';
 
 import {
   AssayDataComponent, AssayPaginationComponent, AssayPlotsComponent, DotPlotComponent,
@@ -21,7 +22,7 @@ import {
     PipesModule,
     CitationModule,
     Struct2dModule,
-    NgbModule.forRoot(),
+    NgbModule.forRoot()
   ],
   declarations: [
     AssayDataComponent,
@@ -30,7 +31,8 @@ import {
     AssayPlotsComponent,
     DotPlotComponent,
     AssayPaginationComponent,
-    CmpdTooltipComponent
+    CmpdTooltipComponent,
+    EmbedDatasetMetadataDirective
   ]
 })
 

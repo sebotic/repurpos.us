@@ -11,9 +11,9 @@ import { ActivatedRoute } from '@angular/router';
 export class AboutComponent implements OnInit {
   reframe_pmid: string = "30282735";
   meta_tags = [
-    { name: 'description', content: 'About reframeDB, an open and extendable drug repurposing database and screening set of 12,000 compounds' },
-    { property: 'og:title', content: 'About reframeDB' },
-    { property: 'og:description', content: 'About reframeDB, an open and extendable drug repurposing database and screening set of 12,000 compounds' },
+    { name: 'description', content: 'About ReframeDB, an open and extendable drug repurposing database and screening set of over 12,000 compounds' },
+    { property: 'og:title', content: 'About ReframeDB' },
+    { property: 'og:description', content: 'About ReframeDB, an open and extendable drug repurposing database and screening set of over 12,000 compounds' },
     { property: 'og:url', content: 'https://reframedb.org/about' }
   ];
 

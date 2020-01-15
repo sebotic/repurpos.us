@@ -18,6 +18,7 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
+              "src/sitemap.xml",
               "src/favicon.ico"
             ],
             "styles": [
@@ -37,12 +38,10 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ]
+              "fileReplacements": [{
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }]
             }
           }
         },
@@ -77,6 +76,7 @@
             ],
             "assets": [
               "src/assets",
+              "src/sitemap.xml",
               "src/favicon.ico"
             ]
           }

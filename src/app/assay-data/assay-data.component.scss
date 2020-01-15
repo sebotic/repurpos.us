@@ -114,3 +114,14 @@ a.dwnld-link:hover {
   padding-left: 10px;
   border-bottom: #717e8c 1px dashed;
 }
+
+.citation-container {
+  display: flex;
+  font-size: 0.9em;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.citation-group {
+  margin-top: 5px;
+}
