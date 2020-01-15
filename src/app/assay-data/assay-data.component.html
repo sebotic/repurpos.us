@@ -12,7 +12,7 @@
     <div class="col">
       <h1 class="assay-title">
         <span [outerHTML]="assayDetails.title_short | sciItalicize">
-          </span>
+        </span>
       </h1>
     </div>
     <div class="col-xs-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto align-self-end">
@@ -26,6 +26,13 @@
   <div class="row summary-box">
     <div class="row author" *ngIf="assayDetails.authors">
       by {{ assayDetails.authors }}
+      <div class="citation-container" *ngIf="assayDetails.citations">
+        <div *ngFor="let citation of assayDetails.citations">
+          <span id="pmid" *ngIf="citation.PMID">PubMed ID: <a [href]="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + citation.PMID" target="_blank" rel="noreferrer">{{citation.PMID}}</a></span>
+          <span class="data-separator"></span>
+          <span id="doi" *ngIf="citation.DOI">DOI: <a [href]="'https://doi.org/' + citation.DOI" target="_blank" rel="noreferrer">{{ citation.DOI }}</a></span>
+        </div>
+        </div>
     </div>
 
     <div class='row summary-content'>
@@ -36,11 +43,13 @@
         </div>
 
 
+        <div class="citation-group">
+          <app-citation [citations]="assayDetails.citations" class="citation"></app-citation>
+        </div>
+
         <div id="viewmore" class="view-more">
           <button><a (click)="onAnchorClick('protocol')" aria-label="view protocol">view detailed protocol</a></button>
         </div>
-
-        <app-citation [pmid]="assayDetails.bibliography"></app-citation>
 
         <div>
         </div>

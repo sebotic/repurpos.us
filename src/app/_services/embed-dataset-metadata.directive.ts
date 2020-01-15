@@ -48,8 +48,6 @@ export class EmbedDatasetMetadataDirective implements OnDestroy {
 
     this._document.getElementsByTagName("script")
     this.script_element = this.renderer.createElement('script');
-    console.log(data2Embed)
-
 
     this.script_element.type = `application/ld+json`;
     this.script_element.text = JSON.stringify(data2Embed);

@@ -1,15 +1,13 @@
-import { Component, OnInit, forwardRef, Inject, Injectable, Input } from '@angular/core';
+import { Component, OnInit, forwardRef, Inject, Injectable, Input, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
-import {
-  HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParams, HttpRequest,
-  HttpResponse
-} from "@angular/common/http";
+
+import { Subscription } from 'rxjs';
 
 import { AssayPlotsComponent } from './assay-plots/assay-plots.component'
 import { AssayDetails } from '../_models/assay-details';
 
-import { environment } from "../../environments/environment";
+import { AssayMetadataService } from '../_services/';
 
 @Component({
   selector: 'app-assay-data',
@@ -19,6 +17,7 @@ import { environment } from "../../environments/environment";
 
 export class AssayDataComponent implements OnInit {
   assayDetails: AssayDetails;
+  assayDetailsSubscription: Subscription;
   aid: string;
 
   meta_tags = [];
@@ -30,8 +29,8 @@ export class AssayDataComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private titleService: Title,
-    private http2: HttpClient,
-    private meta: Meta
+    private meta: Meta,
+    private assaySvc: AssayMetadataService
   ) {
     route.params.subscribe(params => {
       this.aid = params['aid'];
@@ -39,37 +38,22 @@ export class AssayDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.retrieveAssayList();
-  }
-
-  retrieveAssayList(): void {
-    this.http2.get(environment.host_url + '/assay_details', {
-      observe: 'response',
-      headers: new HttpHeaders()
-        .set('Accept', 'application/json'),
-      params: new HttpParams()
-        .set('aid', this.aid)
-    }).subscribe((r) => {
-      let v = r.body;
-      // console.log(r)
-      this.assayDetails = v[0];
+    this.assayDetailsSubscription = this.assaySvc.retrieveAssayList(this.aid).subscribe(result => {
+      this.assayDetails = result;
 
       // Set meta tags for description, etc.
-      this.meta_tags.push({name: 'description', content: this.meta_descrip + this.assayDetails.title_short});
-      this.meta_tags.push({property: 'og:description', content: this.meta_descrip + this.assayDetails.title_short});
-      this.meta_tags.push({property: 'og:url', content: this.meta_url + this.aid});
-      this.meta_tags.push({property: 'og:title', content: this.assayDetails.title_short + this.meta_title });
+      this.meta_tags.push({ name: 'description', content: this.meta_descrip + this.assayDetails.title_short });
+      this.meta_tags.push({ property: 'og:description', content: this.meta_descrip + this.assayDetails.title_short });
+      this.meta_tags.push({ property: 'og:url', content: this.meta_url + this.aid });
+      this.meta_tags.push({ property: 'og:title', content: this.assayDetails.title_short + this.meta_title });
 
-      for(let i=0; i < this.meta_tags.length; i++){
+      for (let i = 0; i < this.meta_tags.length; i++) {
         this.meta.updateTag(this.meta_tags[i]);
       }
 
       // Set title for the page
       this.titleService.setTitle(this.assayDetails.title_short + " | reframeDB");
-    },
-      err => { }
-    );
-
+    });
   }
 
   onAnchorClick(anchor_tag: string) {
@@ -77,6 +61,10 @@ export class AssayDataComponent implements OnInit {
     if (anchor_div) {
       anchor_div.scrollIntoView();
     }
+  }
+
+  ngOnDestroy() {
+    this.assayDetailsSubscription.unsubscribe();
   }
 
 

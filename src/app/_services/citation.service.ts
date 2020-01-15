@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
+import { Observable, forkJoin, of } from 'rxjs';
+import { tap, map, pluck } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,16 +29,12 @@ export class CitationService {
 
   constructor(private http: HttpClient) { }
 
-  getCitation(pmids: string[]) {
-    // reset citations
-    this.citations = [];
-    let promises = [];
-    for (let pmid of pmids) {
-      let promise = this.getNCBI(pmid);
-      promises.push(promise)
+  getCitation(pmids: string[]): Observable<Object[]> {
+    if (pmids && pmids.length > 0 && pmids[0]) {
+      return forkJoin(pmids.map(d => this.getNCBI(d)));
+    } else {
+      return of([]);
     }
-
-    return Promise.all(promises).then(_ => this.citations)
   }
 
   // getEntrez(pmid: string): void {
@@ -67,30 +66,16 @@ export class CitationService {
   //
 
 
-// Ex: https://api.ncbi.nlm.nih.gov/lit/ctxp/v1/pubmed/?format=csl&id=30282735
-  getNCBI(pmid: string): Promise<void> {
-    return new Promise<any>((resolve, reject) => {
-      // console.log('calling NCBI')
-      // console.log(pmid)
-      this.http.get(this.ncbi_stub, {
-        observe: 'response',
-        responseType: 'json',
-        headers: new HttpHeaders(),
-        params: new HttpParams()
-          .set('id', pmid)
-          .set('format', 'csl')
-      }).subscribe((r) => {
-        // console.log(r);
-        let v = r.body;
-        this.citations.push(v);
-        // console.log(this.citations)
-        resolve(this.citations)
-      },
-        err => {
-          console.log('err in call to NCBI')
-          console.log(err)
-          resolve("Error in call to get citation")
-        });
-    })
+  // Ex: https://api.ncbi.nlm.nih.gov/lit/ctxp/v1/pubmed/?format=csl&id=30282735
+  getNCBI(pmid: string): Observable<Object[]> {
+    return this.http.get(this.ncbi_stub, {
+      observe: 'response',
+      responseType: 'json',
+      headers: new HttpHeaders(),
+      params: new HttpParams()
+        .set('id', pmid)
+        .set('format', 'csl')
+    }).pipe(
+      pluck("body"))
   }
 }

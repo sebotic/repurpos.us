@@ -14,3 +14,4 @@ export * from './compound.service';
 export * from './color-palette.service';
 export * from './citation.service';
 export * from './assay-data.service';
+export * from './assay-metadata.service';

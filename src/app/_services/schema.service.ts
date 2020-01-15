@@ -30,7 +30,7 @@ export class SchemaService {
     "description": environment.description,
     "funding": [
       {
-        "@type": "Funding",
+        "@type": "MonetaryGrant",
         identifier: "R01 GM089820",
         funder: {
           "@context": "http://schema.org/",
@@ -40,7 +40,7 @@ export class SchemaService {
         }
       },
       {
-        "@type": "Funding",
+        "@type": "MonetaryGrant",
         funder: {
           "@context": "http://schema.org/",
           "@type": "Organization",
