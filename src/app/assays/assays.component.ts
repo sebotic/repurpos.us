@@ -158,6 +158,7 @@ export class AssaysComponent implements OnInit {
   removeFilter() {
     this.selAssays = this.assayList;
     this.isFiltered = false;
+    this.colorSvc.selectedTypeSubject.next(null);
     this.getAssayKinds();
   }
 

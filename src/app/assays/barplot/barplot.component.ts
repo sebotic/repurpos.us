@@ -77,7 +77,7 @@ export class BarplotComponent implements OnInit, OnChanges {
     })
 
     this.value_counts.forEach((d: any) => {
-      d['selected'] = this.selected.includes(d.key) ?
+      d['selected'] = this.selected.includes(d.key) && d.value ?
         true : false;
     })
   }
