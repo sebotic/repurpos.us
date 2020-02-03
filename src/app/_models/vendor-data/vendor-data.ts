@@ -1,4 +1,4 @@
-import { GVKData, IntegrityData, InformaData, AssayData } from './index';
+import { GVKData, IntegrityData, InformaData } from './index';
 
 
 export interface VendorData extends Array<GVKData[] | IntegrityData[] | InformaData[]> {
@@ -6,10 +6,3 @@ export interface VendorData extends Array<GVKData[] | IntegrityData[] | InformaD
   1: IntegrityData[];
   2: InformaData[];
  }
-
-  // // ikey: string;
-  // gvk: GVKData;
-  // integrity: IntegrityData;
-  // informa: InformaData;
-  // assay: Array<AssayData>;
-// }
