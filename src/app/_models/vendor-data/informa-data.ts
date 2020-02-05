@@ -1,8 +1,10 @@
+import { MappedTerm } from './mapped-term';
+
 export interface InformaData {
   drug_name: Array<string>;
   phase: Array<string>;
   highest_phase: string;
-  mechanism: Array<string>;
+  mechanism: MappedTerm[]; // changed as of 2020-02-03
   smiles: string;
   ikey: string;
   wikidata: string;

@@ -1,18 +1,26 @@
+$wikidata-button-color: #ff602c;
 /* // Reset bootstrap */
-.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
   border: none;
 }
 
-
 td.title {
   padding-left: 15px;
+  width: 200px;
 }
 
 td.content {
   padding-right: 15px;
 }
 
-table#cmpd-names, table.cmpd-table, .cmpd-table {
+.cmpd-table,
+table#cmpd-names,
+table.cmpd-table {
   margin-bottom: 35px;
 }
 
@@ -22,4 +30,40 @@ table#cmpd-names, table.cmpd-table, .cmpd-table {
 
 .login-req {
   margin-bottom: 10px;
+}
+// launch search
+
+.launch-search-container {
+  display: flex;
+  flex-wrap: wrap;
+  border-left: 3px solid $wikidata-button-color;
+  padding-left: 5px;
+  margin-top: 5px;
+}
+
+.launch-search-label {
+  flex-basis: 100%;
+  font-size: 0.7em;
+  color: lighten(#212529, 25%);
+  font-size: 80%;
+  padding-bottom: 3px;
+  line-height: 1em;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.launch-search-button {
+  color: white;
+  background: lighten($wikidata-button-color, 10%);
+  padding: 1px 5px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  border-radius: 3px;
+  font-size: 80%;
+  font-weight: 400;
+
+  &:hover {
+    text-decoration: none !important;
+    background: $wikidata-button-color;
+  }
 }

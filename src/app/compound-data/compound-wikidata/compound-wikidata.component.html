@@ -24,7 +24,7 @@
           <td class="title" scope="row">{{ x['property'] }}</td>
           <td class="content" scope="row">
             <span *ngFor="let z of x['values']; let i = index;">
-          <a class="launch-search" [routerLink]="['/search/']" [queryParams]='{ query: "\"" + z + "\"", type: "string" }'>
+          <a class="launch-search" [routerLink]="['/search/']" [queryParams]='{ query: "\"" + z + "\"", type: "string" }' [matTooltip]="'launch search for ' + z">
             {{z}}
           </a>
         <!-- <td class="content" scope="row" [ngClass]="x['property'] === 'InChI' || x['property'] === 'canonical SMILES' || x['property'] === 'isomeric SMILES' ? 'smiles' : ''"><span id="{{x['qids'][i]}}" *ngFor="let z of x['values']; let i = index;">{{z}} -->
