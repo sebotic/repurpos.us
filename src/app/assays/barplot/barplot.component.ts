@@ -50,7 +50,7 @@ export class BarplotComponent implements OnInit, OnChanges {
         this.selected = this.yDomain;
       }
     })
-    
+
     this.createChart();
 
     this.drawChart();
@@ -77,7 +77,7 @@ export class BarplotComponent implements OnInit, OnChanges {
     })
 
     this.value_counts.forEach((d: any) => {
-      d['selected'] = this.selected.includes(d.key) ?
+      d['selected'] = this.selected.includes(d.key) && d.value ?
         true : false;
     })
   }
@@ -131,7 +131,7 @@ export class BarplotComponent implements OnInit, OnChanges {
         .selectAll(".bar-group")
         .data(this.value_counts);
 
-      let barRect = bar_group.select(".assay-rect");
+      let barRect = bar_group.select(".barplot-rect");
       let barText = bar_group.select(".y-label");
       let checkboxes = bar_group.select(".checkbox");
       let checkmarks = bar_group.select(".checkmark");
@@ -146,7 +146,7 @@ export class BarplotComponent implements OnInit, OnChanges {
 
       let barEnter = barGroupEnter
         .append("rect")
-        .attr("class", "rect assay-rect")
+        .attr("class", "rect barplot-rect")
         .attr("height", this.y.bandwidth());
 
       let textEnter = barGroupEnter
