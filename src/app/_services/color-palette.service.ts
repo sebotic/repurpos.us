@@ -63,7 +63,7 @@ export class ColorPaletteService {
 
   // Get the full list of assay indications, to map to a consistent set of values
   retrieveAssayList(): void {
-    this.http2.get(environment.host_url + '/assay_list', {
+    this.http2.get(environment.api_url + '/assay_list', {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),

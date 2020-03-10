@@ -25,7 +25,7 @@ export class UserLoginComponent implements OnInit {
   ngOnInit() {
     
     if(localStorage.getItem('auth_token')){
-      this.http.get(environment.host_url + '/auth/status', {
+      this.http.get(environment.api_url + '/auth/status', {
           observe: 'response',
           // withCredentials: true,
           headers: new HttpHeaders()
@@ -61,7 +61,7 @@ export class UserLoginComponent implements OnInit {
     console.log('submit');
     // console.log(this.user.email, this.user.password);
 
-    this.http.post(environment.host_url + '/auth/login', {"email": this.email.value, "password": this.password.value}, {
+    this.http.post(environment.api_url + '/auth/login', {"email": this.email.value, "password": this.password.value}, {
         observe: 'response',
         // withCredentials: true,
         headers: new HttpHeaders()
@@ -91,7 +91,7 @@ export class UserLoginComponent implements OnInit {
   }
 
   logout(){
-    this.http.post(environment.host_url +  '/auth/logout', {}, {
+    this.http.post(environment.api_url +  '/auth/logout', {}, {
         observe: 'response',
         headers: new HttpHeaders()
           .set('Authorization', localStorage.getItem('auth_token'))

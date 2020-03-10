@@ -50,11 +50,11 @@
           <!-- Assay Measurement bargraph -->
           <td class="align-middle">
             <!-- <td class="col-xl-auto col-lg-auto col-md-auto d-sm-none d-md-block"> -->
-            <app-assay-sparkline [currentVal]="[x['ac50']]" [assayMin]="assayMin"></app-assay-sparkline>
+            <app-assay-sparkline [currentVal]="[x['ac50']]" [assayMin]="assayMin" *ngIf="x['ac50']"></app-assay-sparkline>
           </td>
 
           <!-- Assay Measurement -->
-          <td class="align-middle">{{x['ac50'].toExponential(2)}}</td>
+          <td class="align-middle">{{x['ac50'] ? x['ac50'].toExponential(2) : "NA" }}</td>
 
 
           <!-- Assay Source -->

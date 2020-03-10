@@ -44,7 +44,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit() {
-  	this.http.post(environment.host_url + '/auth/reset_pass/check',
+  	this.http.post(environment.api_url + '/auth/reset_pass/check',
   		{"token": this.rid},
   		{
   			observe: 'response',
@@ -69,7 +69,7 @@ export class ResetPasswordComponent implements OnInit {
    * Submits the form and sends HTTP request to change password
    */
   onSubmit(event) {
-  	this.http.post(environment.host_url + '/auth/reset_pass',
+  	this.http.post(environment.api_url + '/auth/reset_pass',
       {
       	'user_id': this.uid,
       	'password': this.resetPasswordForm.controls.password.value

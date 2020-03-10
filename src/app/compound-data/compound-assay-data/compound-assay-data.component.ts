@@ -21,7 +21,7 @@ export class CompoundAssayDataComponent implements OnInit {
     this.cmpdSvc.assaysState.subscribe((assays: AssayData[]) => {
       this.assayData = assays.sort((a: any, b: any) => a.ac50 - b.ac50);
 
-      this.assayMin = Math.min(...assays.map((d: any) => d.ac50));
+      this.assayMin = Math.min(...assays.filter(d => d.ac50).map((d: any) => d.ac50));
 
     })
 

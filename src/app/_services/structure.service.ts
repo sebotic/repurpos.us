@@ -154,7 +154,7 @@ export class StructureService {
   }
 
   getMolfile(query_string: string): void {
-    this.http.get(environment.host_url + '/molfile', {
+    this.http.get(environment.api_url + '/molfile', {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),

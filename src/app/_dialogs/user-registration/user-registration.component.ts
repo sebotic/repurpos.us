@@ -54,7 +54,7 @@ export class UserRegistrationComponent implements OnInit {
 
   onSubmit(event){
 
-    this.http.post(environment.host_url + '/auth/register',
+    this.http.post(environment.api_url + '/auth/register',
       {"email": this.form.controls.email.value, "password": this.form.controls.password.value, "recaptcha_token": this.recaptchaToken}, {
         observe: 'response',
         // withCredentials: true,

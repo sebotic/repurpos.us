@@ -23,7 +23,7 @@ export class AssayMetadataService {
 
 
   retrieveAssayList(aid: string): Observable<any> {
-    return this.http2.get(environment.host_url + '/assay_details', {
+    return this.http2.get(environment.api_url + '/assay_details', {
       observe: 'response',
       headers: new HttpHeaders()
         .set('Accept', 'application/json'),
