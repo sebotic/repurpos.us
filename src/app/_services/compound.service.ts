@@ -480,7 +480,7 @@ export class CompoundService {
       // console.log('3 retrieving data')
       if (id) {
         if (loggedIn) {
-          this.http2.get<any>(environment.host_url + '/data', {
+          this.http2.get<any>(environment.api_url + '/data', {
             // this.http2.get<VendorData>(environment.host_url + '/data', {
             observe: 'response',
             // withCredentials: true,
