@@ -121,7 +121,7 @@
           <tr *ngIf="x && x.hasOwnProperty('target_name') && x['target_name'].length > 0">
             <td class="title">Target Name</td>
             <td class="content"><span *ngFor="let y of x['target_name']; let i = index">
-                <a class="launch-search" [routerLink]="['/search/']" [queryParams]='{ query: "\"" + y + "\"", type: "string" }' [matTooltip]="'launch search for ' + y">{{y}}</a>
+                <a class="launch-search" [routerLink]="['/search/']" [queryParams]='{ query: "\"" + y + "\"", type: "string" }' [matTooltip]="'launch search for ' + y.label">{{y.label}}</a>
                 <span *ngIf="i + 1 < x['target_name'].length" class='data-separator'></span></span>
             </td>
           </tr>
@@ -131,7 +131,7 @@
           <tr *ngIf="x && x.hasOwnProperty('target_families') && x['target_families'].length > 0">
             <td class="title">Target Family</td>
             <td class="content"><span *ngFor="let y of x['target_families']; let i = index">
-                <a class="launch-search" [routerLink]="['/search/']" [queryParams]='{ query: "\"" + y + "\"", type: "string" }' [matTooltip]="'launch search for ' + y">{{y}}</a>
+                <a class="launch-search" [routerLink]="['/search/']" [queryParams]='{ query: "\"" + y + "\"", type: "string" }' [matTooltip]="'launch search for ' + y.label">{{y.label}}</a>
                 <span *ngIf="i + 1 < x['target_families'].length" class='data-separator'></span></span>
             </td>
           </tr>
