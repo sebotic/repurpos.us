@@ -25,7 +25,7 @@ export class StructureSvgService {
     // console.log(format)
 
     // return this.http.get(environment.api_url + '/search', {
-    return this.http.get(environment.api_url + '/compound_svg', {
+    return this.http.get('/api/compound_svg', {
       observe: 'response',
       // withCredentials: true,
       headers: new HttpHeaders()

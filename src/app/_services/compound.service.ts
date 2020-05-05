@@ -43,7 +43,7 @@ export class CompoundService {
   nameState = this.nameSubject.asObservable();
 
   // TODO: change RFM to bool
-  public rfmSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public rfmSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   rfmState = this.rfmSubject.asObservable();
   public whoSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   whoState = this.whoSubject.asObservable();
@@ -238,7 +238,7 @@ export class CompoundService {
       this.nameSubject.next('');
       this.whoSubject.next('');
       this.smilesSubject.next('');
-      this.rfmSubject.next(false);
+      this.rfmSubject.next('');
       this.aliasSubject.next([]);
       this.chemSourceSubject.next([]);
       this.similarSubject.next([]);
@@ -480,7 +480,7 @@ export class CompoundService {
       // console.log('3 retrieving data')
       if (id) {
         if (loggedIn) {
-          this.http2.get<any>(environment.api_url + '/data', {
+          this.http2.get<any>('/api/data', {
             // this.http2.get<VendorData>(environment.host_url + '/data', {
             observe: 'response',
             // withCredentials: true,
@@ -489,6 +489,7 @@ export class CompoundService {
               .set('Authorization', localStorage.getItem('auth_token')),
             params: new HttpParams()
               .set('qid', id)
+              .set('origin', '*')
           }).subscribe((r) => {
             // search results
             let b = r.body[id];
@@ -504,7 +505,8 @@ export class CompoundService {
             }
 
             // Is it a Reframe compound? --> compound-header
-            this.rfmSubject.next(b.reframe_id.length > 0);
+            console.log(b.reframe_id[0]);
+            this.rfmSubject.next(b.reframe_id[0]);
 
             // Pull out assay data --> compound-assay-data
             this.assaysSubject.next(<AssayData[]>b.assay);

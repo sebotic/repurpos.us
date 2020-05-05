@@ -26,7 +26,7 @@ export class ForgotPasswordComponent implements OnInit {
    * Submits the form and sends HTTP request for new password link
    */
   onSubmit(event) {
-  	this.http.post(environment.api_url + '/auth/reset_pass/link',
+  	this.http.post('/api/auth/reset_pass/link',
       {"email": this.forgotPassForm.controls.email.value }, {
         observe: 'response',
         // withCredentials: true,

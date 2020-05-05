@@ -20,7 +20,7 @@ export class BackendSearchService {
 
   search(query: string, type: string): Observable<SearchResult> {
 
-    return this.http.get(environment.api_url + '/search', {
+    return this.http.get( '/api/search', {
       observe: 'response',
       // withCredentials: true,
       headers: new HttpHeaders()
@@ -37,7 +37,7 @@ export class BackendSearchService {
 
   searchStructExact(query: string, mode: string): Observable<SearchResult> {
 
-    return this.http.get(environment.api_url + '/search', {
+    return this.http.get('/api/search', {
       observe: 'response',
       // withCredentials: true,
       headers: new HttpHeaders()
@@ -55,7 +55,7 @@ export class BackendSearchService {
 
   searchSimilarity(query: string, tanimoto: number): Observable<SearchResult> {
 
-    return this.http.get(environment.api_url + '/search', {
+    return this.http.get('/api/search', {
       observe: 'response',
       // withCredentials: true,
       headers: new HttpHeaders()
