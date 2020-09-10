@@ -142,11 +142,13 @@ export class AssayDataService {
           avg: d3.mean(values, d => d.ac50),
           min: d3.min(values, d => d.ac50),
           ac50: values.map(d => d.ac50),
+          ac_imprecise: values.some(d => d.ac_precision != ""),
+          ac_precision: values.map(d => d.ac_precision),
           efficacy: values.map(d => d.efficacy),
-          r_squared: values.map(d => d.r_sq),
+          r_sq: values.map(d => d.r_sq),
           url: values[0].url.replace("/#/", "/"),
           assay_type: values[0].assay_type,
-          main_label: values[0].name,
+          name: values[0].name,
           id: values[0].calibr_id
 
         }

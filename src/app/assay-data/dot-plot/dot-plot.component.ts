@@ -341,7 +341,7 @@ export class DotPlotComponent implements OnInit {
       // Update the children text values
       ytextGlow.merge(ytextGlowEnter)
         .attr('id', d => d.key)
-        .text(d => d.value.main_label)
+        .text(d => d.value.name)
         .style("filter", "url(#glow)")
         .style("fill-opacity", 1)
         .transition(t)
@@ -349,7 +349,7 @@ export class DotPlotComponent implements OnInit {
 
       ytext.merge(ytextEnter)
         .attr('id', d => d.key)
-        .text(d => d.value.main_label)
+        .text(d => d.value.name)
 
 
       // --- LOLLIS ---
