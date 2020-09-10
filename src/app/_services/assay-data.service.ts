@@ -67,7 +67,6 @@ export class AssayDataService {
         .set('assay', aid)
     }).subscribe((r) => {
       this.assayData = <AssayData[]>r.body;
-      console.log(this.assayData)
 
       // Pull out the limits for the *entire* dataset
       let assayValues = this.assayData.map(function(d: any) { return d.ac50; });
@@ -166,7 +165,6 @@ export class AssayDataService {
     this.assayTypesSource.next(nested.map(d => d.key));
     this.currentAssayTypeSource.next(nested[0].key);
 
-    console.log(nested)
     return (nested);
   }
 
@@ -182,7 +180,6 @@ export class AssayDataService {
 
       // Filter by page number
       let result = filtered[0].values.slice(numPerPage * currentPage, numPerPage * (currentPage + 1))
-      console.log(result)
 
       // append SVGs for tooltips
       result.forEach(cmpd => {
