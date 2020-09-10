@@ -20,14 +20,14 @@ export class BackendSearchService {
 
   search(query: string, type: string): Observable<SearchResult> {
 
-    return this.http.get(environment.api_url + '/search', {
+    return this.http.get( '/api/search', {
       observe: 'response',
       // withCredentials: true,
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
         .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
-        .set('query', query)
+        .set('query', encodeURIComponent(query))
         .set('type', type)
     }).pipe(
       map(item => {
@@ -37,14 +37,14 @@ export class BackendSearchService {
 
   searchStructExact(query: string, mode: string): Observable<SearchResult> {
 
-    return this.http.get(environment.api_url + '/search', {
+    return this.http.get('/api/search', {
       observe: 'response',
       // withCredentials: true,
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
         .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
-        .set('query', query)
+        .set('query', encodeURIComponent(query))
         .set('type', 'structure')
         .set('mode', mode)
     }).pipe(
@@ -55,14 +55,14 @@ export class BackendSearchService {
 
   searchSimilarity(query: string, tanimoto: number): Observable<SearchResult> {
 
-    return this.http.get(environment.api_url + '/search', {
+    return this.http.get('/api/search', {
       observe: 'response',
       // withCredentials: true,
       headers: new HttpHeaders()
         .set('Accept', 'application/json')
         .set('Authorization', localStorage.getItem('auth_token')),
       params: new HttpParams()
-        .set('query', query)
+        .set('query', encodeURIComponent(query))
         .set('type', 'structure')
         .set('tanimoto', tanimoto.toString())
         .set('mode', 'similarity')

@@ -75,7 +75,7 @@ export class SearchResultsTableComponent implements OnInit {
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
         case 'main_label': return item.main_label.toLowerCase();
-        case 'reframeid': return (item.assays + Number(item.reframeid === true) + Number(item.similar_compounds.length > 0) / 2);
+        case 'reframeid': return (item.assays + Number(item.reframeid === 'full' || item.reframeid === 'stereofree' || item.reframeid === 'sub_smiles') + Number(item.similar_compounds.length > 0) / 2);
         case 'assays': return (item.assays + Number(item.reframeid === true));
         default: return item[property];
       }

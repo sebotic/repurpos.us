@@ -27,7 +27,7 @@ export class ConfirmEmailComponent implements OnInit {
   }
 
   ngOnInit() {
-  	this.http.post(environment.api_url + '/auth/confirm',
+  	this.http.post('/api/auth/confirm',
   		{"token": this.cid},
   		{
   			observe: 'response',
@@ -47,7 +47,7 @@ export class ConfirmEmailComponent implements OnInit {
   }
 
   onSubmit(event) {
-  	this.http.post(environment.api_url + '/auth/confirm/link',
+  	this.http.post('/api/auth/confirm/link',
       {"email": this.confirmForm.controls.email.value }, {
         observe: 'response',
         // withCredentials: true,

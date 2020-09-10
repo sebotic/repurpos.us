@@ -26,13 +26,21 @@
 
         <div class="row">
           <div class="col-12">
-            <table class="reframe_cmpd" *ngIf="reframeCmpd">
+            <table class="reframe_cmpd" *ngIf="reframeCmpd === 'full'">
               <td class='rfm-circle circle available'>
               </td>
               <td class="rfm-circle">
                 <span class="bold">reframe</span><span class="thin">db</span> screening collection compound
               </td>
             </table>
+            <table class="reframe_cmpd" *ngIf="reframeCmpd === 'stereofree' || reframeCmpd === 'sub_smiles'">
+              <td class='rfm-circle circle available'>
+              </td>
+              <td class="rfm-circle">
+                <span class="bold">reframe</span><span class="thin">db</span> screening collection compound (stereofree)
+              </td>
+            </table>
+
           </div>
         </div>
 

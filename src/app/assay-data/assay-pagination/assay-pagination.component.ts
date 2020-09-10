@@ -13,7 +13,7 @@ import { combineLatest, Subscription } from 'rxjs';
 export class AssayPaginationComponent implements OnDestroy {
   private current_assay: string;
   private current_page: number;
-  private pages: number[];
+  public pages: number[];
 
   private allSubscription: Subscription;
   private currentSubscription: Subscription;

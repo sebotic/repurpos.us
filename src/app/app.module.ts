@@ -40,7 +40,7 @@ import {
   DialogOverviewExample,
   DialogOverviewExampleDialog,
   MenuBarComponent,
-  MenubarItemComponent
+  MenubarItemComponent, EditItemComponent, MailSignupDialogComponent, MailSignupComponent
 } from './_components/index';
 
 
@@ -62,6 +62,8 @@ import {
   ColorPaletteService,
   BackendSearchService
 } from './_services/index';
+import {IndicationsGraphComponent} from "./compound-data/indications-graph/indications-graph.component";
+import {ShowMoreButtonComponent, ShowMorePane} from "./compound-data";
 
 // import { SearchResultHeaderComponent } from './compound-search/search-result-header/search-result-header.component';
 // import { ReframeFilterComponent } from './compound-search/search-result-header/reframe-filter/reframe-filter.component';
@@ -100,7 +102,14 @@ import {
     KetcherComponent,
     IntroTextComponent,
     AssayIndicationComponent,
-    FooterComponent
+    FooterComponent,
+    EditItemComponent,
+    MailSignupDialogComponent,
+    MailSignupComponent,
+    ShowMorePane,
+    ShowMoreButtonComponent,
+    IndicationsGraphComponent,
+
     // SearchResultHeaderComponent, ReframeFilterComponent, AssaysFilterComponent
   ],
   imports: [

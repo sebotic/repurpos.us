@@ -24,8 +24,11 @@
 
               </div>
 
-              <div *ngIf="element['reframeid'] === true" [matTooltip]="rfmTooltip" [ngClass]="element['reframeid'] === true ? 'cmpd-avail' : 'no-cmpd'">
+              <div *ngIf="element['reframeid'] === 'full'" [matTooltip]="rfmTooltip" [ngClass]="element['reframeid'] === 'full' ? 'cmpd-avail' : 'no-cmpd'">
                 Reframe library compound
+              </div>
+              <div *ngIf="element['reframeid'] === 'stereofree' || element['reframeid'] === 'sub_smiles'" [matTooltip]="rfmTooltip" [ngClass]="element['reframeid'] === 'stereofree' || element['reframeid'] === 'sub_smiles' ? 'cmpd-avail' : 'no-cmpd'">
+                Reframe library compound (stereofree)
               </div>
 
               <!-- <div *ngIf="element['reframeid'] !== true" [matTooltip]="skeletonTooltip" class="skeleton-match">
