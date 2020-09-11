@@ -40,6 +40,7 @@ export class DotPlotComponent implements OnInit {
   // --- Selectors ---
   private chart: any; // dotplot
   private dotgrp: any; // dots + lollipops
+  private imprecisegrp: any; // imprecise group notations
   private cmpd_names: any; // y-axis: compound names + links
   private defs: any; // defs for svg
 
@@ -181,6 +182,9 @@ export class DotPlotComponent implements OnInit {
     this.dotgrp = this.chart.append('g')
       .attr("class", "dots")
       .attr("id", "dots");
+
+    this.imprecisegrp = this.chart.append('g')
+      .attr("id", "imprecise-group");
 
     this.cmpd_names = this.chart.append('g')
       .attr("id", "y-links");
@@ -447,6 +451,31 @@ export class DotPlotComponent implements OnInit {
         .transition(t)
         .attr('cx', d => this.x(d.value.avg))
         .style('fill', d => this.colorScale(Math.log10(d.value.avg)));
+
+
+      let impreciseSelector = this.imprecisegrp.selectAll(".imprecise")
+        .data(this.data.filter(d => d.value.ac_imprecise));
+
+      impreciseSelector.exit()
+        .remove();
+
+      let impreciseEnter = impreciseSelector
+        .enter()
+        .append("text")
+        .attr("class", "imprecise")
+        .attr("dx", 10)
+        .style("fill","#fd5457")
+        .style("font-weight","400")
+        .style("dominant-baseline", "central");
+
+      impreciseSelector.merge(impreciseEnter)
+        .text(d => d.value.ac50.length == 1 ? d.value.ac_precision[0] : "*")
+        .attr('x', d => this.x(d.value.avg))
+        .attr('y', d => this.y(d.key))
+        .style("opacity", 0)
+        .transition(t)
+        .delay(200)
+        .style("opacity", 1);
 
 
       // Mouseover behavior: y-axis
