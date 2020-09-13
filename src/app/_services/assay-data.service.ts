@@ -67,7 +67,6 @@ export class AssayDataService {
         .set('assay', aid)
     }).subscribe((r) => {
       this.assayData = <AssayData[]>r.body;
-      console.log(this.assayData)
 
       // Pull out the limits for the *entire* dataset
       let assayValues = this.assayData.map(function(d: any) { return d.ac50; });
@@ -142,11 +141,13 @@ export class AssayDataService {
           avg: d3.mean(values, d => d.ac50),
           min: d3.min(values, d => d.ac50),
           ac50: values.map(d => d.ac50),
+          ac_imprecise: values.some(d => d.ac_precision != ""),
+          ac_precision: values.map(d => d.ac_precision),
           efficacy: values.map(d => d.efficacy),
-          r_squared: values.map(d => d.r_sq),
+          r_sq: values.map(d => d.r_sq),
           url: values[0].url.replace("/#/", "/"),
           assay_type: values[0].assay_type,
-          main_label: values[0].name,
+          name: values[0].name,
           id: values[0].calibr_id
 
         }
@@ -164,7 +165,6 @@ export class AssayDataService {
     this.assayTypesSource.next(nested.map(d => d.key));
     this.currentAssayTypeSource.next(nested[0].key);
 
-    console.log(nested)
     return (nested);
   }
 
@@ -180,7 +180,6 @@ export class AssayDataService {
 
       // Filter by page number
       let result = filtered[0].values.slice(numPerPage * currentPage, numPerPage * (currentPage + 1))
-      console.log(result)
 
       // append SVGs for tooltips
       result.forEach(cmpd => {

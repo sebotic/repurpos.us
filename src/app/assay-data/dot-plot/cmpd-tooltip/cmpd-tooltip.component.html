@@ -1,7 +1,7 @@
 <div class="cmpd-details" id="structs" *ngIf="dataObj.on" [style.left]="left_coord" [style.top]="top_coord">
   <app-struct2d [structure]="data.value.svg" struct_type="svg" launch_search="false" *ngIf="data.value.svg"></app-struct2d>
 
-  <div id="struct-name">{{ data.value.main_label }}</div>
+  <div id="struct-name">{{ data.value.name }}</div>
   <table>
 
     <thead>
@@ -10,7 +10,18 @@
           {{ data.value.assay_type }} <sub>50</sub>:
         </th>
         <th id="tooltip-avg" [attr.colspan]="data.value.count">
-          {{ data.value.avg.toExponential(2) }}
+          <span *ngIf="!data.value.ac_imprecise">
+            {{ data.value.avg.toExponential(2) }}
+          </span>
+
+          <span *ngIf="data.value.ac_imprecise && data.value.ac50.length > 1">
+            <sup>*</sup> {{ data.value.avg.toExponential(2) }}
+            <div><sup>*</sup> At least one measurement is not exact</div>
+          </span>
+
+          <span *ngIf="data.value.ac_imprecise && data.value.ac50.length == 1">
+            {{data.value.ac_precision[0]}} {{ data.value.avg.toExponential(2) }}
+          </span>
         </th>
       </tr>
     </thead>
@@ -21,8 +32,8 @@
         <td class="meas_id">
           {{ data.value.assay_type }} <sub>50</sub>:
         </td>
-        <td class="meas_val" *ngFor="let measurement of data.value.ac50">
-          {{ measurement.toExponential(2) }}
+        <td class="meas_val" *ngFor="let measurement of data.value.ac50; let idx = index">
+          <span *ngIf="data.value.ac_precision[idx] != ''">{{data.value.ac_precision[idx]}} </span>{{ measurement.toExponential(2) }}
         </td>
       </tr>
 
@@ -30,7 +41,7 @@
         <td class="meas_id">
           r<sup>2</sup>:
         </td>
-        <td class="meas_val" *ngFor="let r_sq of data.value.r_squared">
+        <td class="meas_val" *ngFor="let r_sq of data.value.r_sq">
           {{ r_sq | number:'1.3-3' }}
         </td>
       </tr>

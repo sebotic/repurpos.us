@@ -2,6 +2,7 @@ export interface AssayData {
   chem_vendor?: string;
   chem_vendor_id?: string;
   ac50: number;
+  ac_precision: string;
   activity_type: string;
   assay_id: string;
   assay_title: string;
@@ -13,7 +14,7 @@ export interface AssayData {
   title_short: string;
   wikidata: string;
   calibr_id?: string;
-  name?: string;
+  name: string;
   url?: string;
   r_sq?: number;
   assay_type?: string;
@@ -22,13 +23,15 @@ export interface AssayData {
 // For nesting; converts some of the fields to arrays and adds some additional fields
 export interface AssayDataSets {
   ac50: number[];
+  ac_precision: string[];
+  ac_imprecise: boolean;
   min: number;
   avg: number;
   count: number;
   efficacy: number[];
-  r_squared: number[];
+  r_sq: number[];
   id: string;
-  main_label: string;
+  name: string;
   qid: string;
   svg: string;
 }

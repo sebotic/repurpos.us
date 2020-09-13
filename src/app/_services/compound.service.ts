@@ -511,6 +511,10 @@ export class CompoundService {
             // Pull out assay data --> compound-assay-data
             this.assaysSubject.next(<AssayData[]>b.assay);
 
+            // Pull out title for the compound
+            // this.main_label = b.main_label;
+            // this.nameSubject.next(this.main_label);
+
             // Pull out SMILES string
             this.smiles = b.smiles;
             this.smilesSubject.next(this.smiles);

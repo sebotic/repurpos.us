@@ -34,8 +34,8 @@ export class AssayDwnldComponent {
 
   // Manual dictionary to translate
   colnames_dict = {
-    "ac50": "ac50_value", "assay_title": "assay_title", "assay_type": "assay_type(IC_or_EC)", "calibr_id": "InChIkey",
-    "efficacy": "efficacy", "name": "compound_name", "pubchem_id": "pubchem_id", "r_sq": "r_squared", "url": "reframedb_url"
+    "ac_precision": "ac_precision", "ac50": "ac50_value", "assay_title": "assay_title", "assay_type": "assay_type(IC_or_EC)", "calibr_id": "InChIkey",
+    "efficacy": "efficacy", "name": "compound_name", "pubchem_id": "pubchem_id", "r_sq": "r_sq", "url": "reframedb_url"
   }
 
   // download function from https://code-maven.com/create-and-download-csv-with-javascript

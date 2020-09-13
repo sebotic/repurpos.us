@@ -54,7 +54,9 @@
           </td>
 
           <!-- Assay Measurement -->
-          <td class="align-middle">{{x['ac50'] ? x['ac50'].toExponential(2) : "NA" }}</td>
+          <td class="align-middle">
+            <span *ngIf="x.ac_precision != ''">{{x.ac_precision}} </span>
+            {{x['ac50'] ? x['ac50'].toExponential(2) : "NA" }}</td>
 
 
           <!-- Assay Source -->
