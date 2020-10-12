@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import {Component, OnInit, Input, OnChanges, HostListener} from '@angular/core';
 
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
 import { StructureSvgService } from '../_services/index';
+import { DeferLoadModule } from '@trademe/ng-defer-load'
 
 @Component({
   selector: 'app-struct2d',
@@ -40,5 +41,27 @@ export class Struct2dComponent implements OnInit {
       this.svg = this.domSanitizer.bypassSecurityTrustHtml(this.structure);
     }
   }
+
+  // @HostListener("window:scroll", [])
+  // onScroll(): void {
+  //   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+  //     if (this.struct_type !== 'svg') {
+  //       this.svgSvc.getSVG(this.structure, this.struct_type)
+  //         .subscribe(
+  //           (results: string) => {
+  //             this.svg = this.domSanitizer.bypassSecurityTrustHtml(results);
+  //           },
+  //           (err: any) => {
+  //             // console.log('error in SMILES')
+  //             // console.log(err)
+  //           }
+  //         );
+  //     }
+  //     else {
+  //       this.svg = this.domSanitizer.bypassSecurityTrustHtml(this.structure);
+  //     }
+  //   }
+  // }
+  showMyElement: boolean;
 
 }

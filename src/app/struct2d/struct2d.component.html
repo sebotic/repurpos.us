@@ -1,4 +1,8 @@
-<div class="svg-wrapper group" [innerHTML]="svg">
+
+<div
+  (deferLoad)="showMyElement=true">
+<div class="svg-wrapper group" [innerHTML]="svg" *ngIf="showMyElement;">
+</div>
 </div>
 
 <a [routerLink]="['/search/']" [queryParams]="{ query: smiles, type: 'structure' }" *ngIf="launch_search == true">

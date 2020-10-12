@@ -23,6 +23,7 @@ import { SaltFormComponent } from '../compound-data/salt-form/salt-form.componen
 import { AssaySparklineComponent } from '../compound-data/assay-sparkline/assay-sparkline.component';
 import { SaltWarningDialogComponent } from '../_components/index';
 import { SaltWarningComponent } from '../_dialogs/index';
+import { CompoundPrimaryScreeningDataComponent } from './compound-primary-screening-data/compound-primary-screening-data.component';
 
 // import { IndicationsGraphComponent } from '../compound-data/indications-graph/indications-graph.component';
 // import { ShowMoreButtonComponent, ShowMorePane } from './compound-data/show-more-button/show-more-button.component';
@@ -50,6 +51,7 @@ import { SaltWarningComponent } from '../_dialogs/index';
     AssaySparklineComponent,
     SaltWarningComponent,
     SaltWarningDialogComponent,
+    CompoundPrimaryScreeningDataComponent,
     // IndicationsGraphComponent
   ],
   entryComponents: [

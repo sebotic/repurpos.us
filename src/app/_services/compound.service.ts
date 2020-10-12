@@ -13,6 +13,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { AssayData, GVKData, IntegrityData, InformaData, VendorData, WikiData, AvailableData, WDQSData, Compound, SearchResult, LoginState } from '../_models/index';
 import { LoginStateService } from '../_services/login-state.service';
 import { BackendSearchService } from '../_services/backendsearch.service';
+import {PrimaryScreenData} from "../_models/vendor-data/primary-screen-data";
 // import { WDQService, BackendSearchService, LoginStateService } from '../_services/';
 
 @Injectable({
@@ -35,6 +36,10 @@ export class CompoundService {
   // Assay data holder
   public assaysSubject: BehaviorSubject<AssayData[]> = new BehaviorSubject<AssayData[]>([]);
   assaysState = this.assaysSubject.asObservable();
+
+  // Primary Screening data
+  public primaryDataSubject: BehaviorSubject<PrimaryScreenData[]> = new BehaviorSubject<PrimaryScreenData[]>([]);
+  primaryDataState = this.primaryDataSubject.asObservable();
 
   // --- Header data ---
   private main_label: string;
@@ -235,6 +240,7 @@ export class CompoundService {
 
       // announce changes
       this.assaysSubject.next([]);
+      this.primaryDataSubject.next([]);
       this.nameSubject.next('');
       this.whoSubject.next('');
       this.smilesSubject.next('');
@@ -510,6 +516,9 @@ export class CompoundService {
 
             // Pull out assay data --> compound-assay-data
             this.assaysSubject.next(<AssayData[]>b.assay);
+
+            // Primary screening data, for primary screening data component
+            this.primaryDataSubject.next(<PrimaryScreenData[]>b.primary_screening_data);
 
             // Pull out title for the compound
             // this.main_label = b.main_label;

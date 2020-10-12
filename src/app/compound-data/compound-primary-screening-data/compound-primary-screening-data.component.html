@@ -1,0 +1,59 @@
+<div id='assays'>
+  <div *ngIf="primaryData.length > 0">
+    <div class="d-flex justify-content-between assay-header">
+      <h3 class="header-title-plus-btn">Primary screening data (COVID-19 only)</h3>
+    </div>
+
+
+    <!-- ASSAY TABLE -->
+    <div class="table-responsive">
+      <table class="assay-table table">
+        <tr class="">
+          <th class="header-title align-middle assay-name col">Assay type</th>
+          <th class="header-title align-middle assay-indic">indication</th>
+<!--          <th class="header-title align-middle">Activity<br/>type</th>-->
+          <th class="header-title align-middle">Screening hit</th>
+<!--          <th class="header-title align-middle"><span class="invisible">Measure</span></th>-->
+          <th class="header-title align-middle">Assay Source</th>
+<!--          <th class="header-title align-middle" *ngIf="showVendor">Compound Vendor</th>-->
+<!--          <th class="header-title align-middle" *ngIf="showVendor">Compound Vendor ID</th>-->
+        </tr>
+
+
+
+        <tr class="" *ngFor="let x of primaryData">
+          <!-- Assay Name -->
+          <td class="content align-middle assay-title">
+            <a [routerLink]="['/assays', x['assay_id']]">
+              <span [outerHTML]="x['title_short'] | sciItalicize" *ngIf="x['title_short']; else notitle"></span>
+              <ng-template #notitle> <span [outerHTML]="x['assay_title'] | sciItalicize"></span> </ng-template>
+            </a>
+
+            <!-- <app-assay-indication [assay_name]="x['title_short']" [assay_link]="x['assay_id']"></app-assay-indication> -->
+          </td>
+
+          <td class="content align-middle">
+            <div class="assay-type" *ngIf="x['indication']" [ngStyle]="{'background-color': colorSvc.getIndicColor(x['indication'])['background'], 'color': colorSvc.getIndicColor(x['indication'])['font']}">
+              <!-- <span class="assay-type" [ngStyle]="{'background-color': colorSvc.getIndicColor(x['indication'])['bg-lt']}"> -->
+              <span [outerHTML]="x['indication'] | sciItalicize"></span>
+            </div>
+          </td>
+
+
+          <!-- Screening hit -->
+          <td class="align-middle">
+            <span *ngIf="x['hit']" >primary screening hit</span>
+            <span *ngIf="!x['hit']" >screened, not a selected hit</span>
+          </td>
+
+          <!-- Assay Source -->
+          <td class="align-middle">
+            <a href="https://www.calibr.org/" target="_blank" rel="noreferrer">Calibr</a>
+          </td>
+
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</div>
